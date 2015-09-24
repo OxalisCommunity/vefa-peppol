@@ -12,14 +12,14 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-public class BusdoxReaderTest {
+public class MultiReaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(BusdoxReaderTest.class);
+    private static Logger logger = LoggerFactory.getLogger(MultiReaderTest.class);
 
-    private MetadataReader reader = new BusdoxReader();
+    private MetadataReader reader = new MultiReader();
 
     @Test
-    public void documentIdentifers() throws Exception {
+    public void busdoxDocumentIdentifers() throws Exception {
         List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
@@ -29,7 +29,7 @@ public class BusdoxReaderTest {
     }
 
     @Test
-    public void serviceMetadata() throws Exception {
+    public void busdoxServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-991825827.xml"), null));
 
         assertNull(result.getEndpoint("busdox-transport-start"));

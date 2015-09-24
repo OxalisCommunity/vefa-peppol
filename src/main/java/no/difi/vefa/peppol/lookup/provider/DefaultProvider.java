@@ -10,7 +10,7 @@ public class DefaultProvider implements MetadataProvider {
 
     @Override
     public URI resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier) {
-        return location.resolve(String.format("/%s::%s", participantIdentifier.getScheme(), participantIdentifier.getIdentifier()));
+        return location.resolve(String.format("/%s", participantIdentifier.urlencoded()));
     }
 
     @Override
