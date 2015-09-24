@@ -42,7 +42,11 @@ public class LookupClient {
 
         logger.debug("{}", provider);
 
-        return metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
+        ServiceMetadata serviceMetadata = metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
+
+        // TODO Validate provider certificate
+
+        return serviceMetadata;
     }
 
 }

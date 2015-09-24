@@ -1,6 +1,7 @@
 package no.difi.vefa.peppol.lookup.model;
 
 import java.io.Serializable;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +15,8 @@ public class ServiceMetadata implements Serializable {
 
     private DocumentIdentifier documentIdentifier;
     private ProcessIdentifier processIdentifier;
+
+    private X509Certificate signer;
 
     private List<Endpoint> endpoints = new ArrayList<Endpoint>();
     private Map<String, Endpoint> endpointMap = new HashMap<String, Endpoint>();
@@ -57,5 +60,13 @@ public class ServiceMetadata implements Serializable {
                 return endpointMap.get(transportProfile);
 
         return null;
+    }
+
+    public X509Certificate getSigner() {
+        return signer;
+    }
+
+    public void setSigner(X509Certificate signer) {
+        this.signer = signer;
     }
 }

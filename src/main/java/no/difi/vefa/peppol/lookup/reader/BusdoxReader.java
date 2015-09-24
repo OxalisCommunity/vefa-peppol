@@ -36,8 +36,8 @@ public class BusdoxReader implements MetadataReader {
         }
     }
 
-    @SuppressWarnings("unchecked")
     @Override
+    @SuppressWarnings("unchecked")
     public List<DocumentIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -63,9 +63,10 @@ public class BusdoxReader implements MetadataReader {
             Object o = result.getValue();
 
             if (o instanceof SignedServiceMetadataType) {
-                // TODO Validate SMP certificate
-
-                o = ((SignedServiceMetadataType) o).getServiceMetadata();
+                SignedServiceMetadataType signedServiceMetadataType = (SignedServiceMetadataType) o;
+                // TODO Verify signature
+                // TODO Fetch signer
+                o = signedServiceMetadataType.getServiceMetadata();
             }
 
             if (!(o instanceof ServiceMetadataType))

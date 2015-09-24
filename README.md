@@ -2,7 +2,7 @@
 
 ## Getting started
 
-Include dependency in your pom.xml (TBA):
+Include dependency in your pom.xml:
 
 ```xml
 <dependency>
@@ -15,7 +15,6 @@ Include dependency in your pom.xml (TBA):
 Start making lookups:
 
 ```java
-
 // Prepare an instance of the client.
 LookupClient client = LookupClientBuilder.forProduction().build();
 

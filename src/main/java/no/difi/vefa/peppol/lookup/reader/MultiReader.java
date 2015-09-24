@@ -20,7 +20,7 @@ public class MultiReader implements MetadataReader {
     private static Logger logger = LoggerFactory.getLogger(MultiReader.class);
 
     private static final Pattern rootTagPattern = Pattern.compile("<(\\w*:{0,1}[^<?]*)>", Pattern.MULTILINE);
-    private static final Pattern namespacePattern = Pattern.compile("xmlns:{0,1}([a-z0-9]+)\\w*=\\w*\"(.+?)\"", Pattern.MULTILINE);
+    private static final Pattern namespacePattern = Pattern.compile("xmlns:{0,1}([a-z0-9]*)\\w*=\\w*\"(.+?)\"", Pattern.MULTILINE);
 
     private BusdoxReader busdoxReader = new BusdoxReader();
     private BdxrReader bdxrReader = new BdxrReader();
@@ -60,14 +60,13 @@ public class MultiReader implements MetadataReader {
             Matcher matcher = rootTagPattern.matcher(new String(fileContent));
             if (matcher.find()) {
                 String rootElement = matcher.group(1).trim();
-                logger.debug(rootElement);
+                logger.debug("Root element: {}", rootElement);
                 String rootNs = rootElement.split(" ", 2)[0].contains(":") ? rootElement.substring(0, rootElement.indexOf(":")) : "";
-                logger.debug(rootNs);
+                logger.debug("Namespace: {}", rootNs);
 
                 Matcher nsMatcher = namespacePattern.matcher(rootElement);
                 while (nsMatcher.find()) {
-                    logger.debug(nsMatcher.group(1));
-                    logger.debug(nsMatcher.group(2));
+                    logger.debug(nsMatcher.group(0));
 
                     if (nsMatcher.group(1).equals(rootNs)) {
                         return new FetcherResponse(

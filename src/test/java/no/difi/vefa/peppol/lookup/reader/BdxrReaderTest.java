@@ -12,24 +12,14 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-public class MultiReaderTest {
+public class BdxrReaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(MultiReaderTest.class);
+    private static Logger logger = LoggerFactory.getLogger(BdxrReaderTest.class);
 
-    private MetadataReader reader = new MultiReader();
-
-    @Test
-    public void busdoxDocumentIdentifers() throws Exception {
-        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-991825827.xml"), null));
-
-        assertEquals(result.size(), 7);
-
-        for (DocumentIdentifier documentIdentifier : result)
-            logger.debug("{}", documentIdentifier);
-    }
+    private MetadataReader reader = new BdxrReader();
 
     @Test
-    public void bdxrDocumentIdentifers() throws Exception {
+    public void documentIdentifers() throws Exception {
         List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicegroup-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
@@ -39,17 +29,7 @@ public class MultiReaderTest {
     }
 
     @Test
-    public void busdoxServiceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-991825827.xml"), null));
-
-        assertNull(result.getEndpoint("busdox-transport-start"));
-        assertNotNull(result.getEndpoint("busdox-transport-as2-ver1p0"));
-
-        assertEquals(result.getEndpoint("busdox-transport-as2-ver1p0").getCertificate().getSubjectDN().toString(), "O=EVRY AS, CN=APP_1000000025, C=NO");
-    }
-
-    @Test
-    public void bdxrServiceMetadata() throws Exception {
+    public void serviceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-810418052.xml"), null));
 
         assertNull(result.getEndpoint("busdox-transport-start"));
@@ -57,4 +37,5 @@ public class MultiReaderTest {
 
         assertEquals(result.getEndpoint("busdox-transport-as2-ver1p0").getCertificate().getSubjectDN().toString(), "CN=APP_1000000005, O=DIFI, C=NO");
     }
+
 }
