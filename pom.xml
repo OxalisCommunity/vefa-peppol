@@ -4,7 +4,7 @@
 
     <groupId>no.difi.vefa</groupId>
     <artifactId>peppol-lookup</artifactId>
-    <version>0.9.1-SNAPSHOT</version>
+    <version>0.9.1</version>
 
     <name>VEFA PEPPOL Lookup</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
