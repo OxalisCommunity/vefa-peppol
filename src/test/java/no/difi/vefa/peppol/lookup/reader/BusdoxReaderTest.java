@@ -20,7 +20,7 @@ public class BusdoxReaderTest {
 
     @Test
     public void documentIdentifers() throws Exception {
-        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-991825827.xml"), null));
+        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -30,7 +30,7 @@ public class BusdoxReaderTest {
 
     @Test
     public void serviceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-991825827.xml"), null));
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
 
         assertNull(result.getEndpoint("busdox-transport-start"));
         assertNotNull(result.getEndpoint("busdox-transport-as2-ver1p0"));

@@ -77,11 +77,12 @@
         </dependency>
 
         <!-- Apache Http Components -->
-        <!-- May be excluded if ApacheFetcher is not used. -->
+        <!-- May be included if ApacheFetcher is used. -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
             <version>4.5</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Commons -->

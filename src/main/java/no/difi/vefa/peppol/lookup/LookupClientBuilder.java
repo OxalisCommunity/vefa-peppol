@@ -5,6 +5,7 @@ import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
+import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
@@ -19,7 +20,7 @@ public class LookupClientBuilder {
         return newInstance()
                 .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_PRODUCTION))
                 .provider(new DefaultProvider())
-                .fetcher(new ApacheFetcher())
+                .fetcher(new UrlFetcher())
                 .reader(new MultiReader());
     }
 
@@ -27,7 +28,7 @@ public class LookupClientBuilder {
         return newInstance()
                 .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_TEST))
                 .provider(new DefaultProvider())
-                .fetcher(new ApacheFetcher())
+                .fetcher(new UrlFetcher())
                 .reader(new MultiReader());
     }
 

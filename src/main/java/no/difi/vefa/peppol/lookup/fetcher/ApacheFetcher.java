@@ -10,6 +10,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedInputStream;
 import java.net.URI;
 
 public class ApacheFetcher implements MetadataFetcher {
@@ -35,7 +36,7 @@ public class ApacheFetcher implements MetadataFetcher {
             switch (response.getStatusLine().getStatusCode()) {
                 case 200:
                     return new FetcherResponse(
-                            response.getEntity().getContent(),
+                            new BufferedInputStream(response.getEntity().getContent()),
                             response.containsHeader("X-SMP-Namespace") ? response.getFirstHeader("X-SMP-Namespace").getValue() : null
                     );
                 case 404:

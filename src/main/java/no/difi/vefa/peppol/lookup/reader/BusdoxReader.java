@@ -62,6 +62,8 @@ public class BusdoxReader implements MetadataReader {
             JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(fetcherResponse.getInputStream());
             Object o = result.getValue();
 
+            ServiceMetadata serviceMetadata = new ServiceMetadata();
+
             if (o instanceof SignedServiceMetadataType) {
                 SignedServiceMetadataType signedServiceMetadataType = (SignedServiceMetadataType) o;
                 // TODO Verify signature
@@ -71,8 +73,6 @@ public class BusdoxReader implements MetadataReader {
 
             if (!(o instanceof ServiceMetadataType))
                 throw new LookupException("ServiceMetadata element not found.");
-
-            ServiceMetadata serviceMetadata = new ServiceMetadata();
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
             serviceMetadata.setParticipantIdentifier(new ParticipantIdentifier(

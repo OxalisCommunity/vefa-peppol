@@ -20,7 +20,7 @@ public class MultiReaderTest {
 
     @Test
     public void busdoxDocumentIdentifers() throws Exception {
-        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-991825827.xml"), null));
+        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -30,7 +30,7 @@ public class MultiReaderTest {
 
     @Test
     public void bdxrDocumentIdentifers() throws Exception {
-        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicegroup-991825827.xml"), null));
+        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -40,7 +40,7 @@ public class MultiReaderTest {
 
     @Test
     public void busdoxServiceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-991825827.xml"), null));
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
 
         assertNull(result.getEndpoint("busdox-transport-start"));
         assertNotNull(result.getEndpoint("busdox-transport-as2-ver1p0"));
@@ -49,8 +49,18 @@ public class MultiReaderTest {
     }
 
     @Test
+    public void busdoxServiceMetadataMultiProcess() throws Exception {
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9933-061828591.xml"), null));
+
+        assertNull(result.getEndpoint("busdox-transport-start"));
+        assertNotNull(result.getEndpoint("busdox-transport-as2-ver1p0"));
+
+        assertEquals(result.getEndpoint("busdox-transport-as2-ver1p0").getCertificate().getSubjectDN().toString(), "O=University of Piraeus Research Center, CN=APP_1000000088, C=GR");
+    }
+
+    @Test
     public void bdxrServiceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-810418052.xml"), null));
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-9908-810418052.xml"), null));
 
         assertNull(result.getEndpoint("busdox-transport-start"));
         assertNotNull(result.getEndpoint("busdox-transport-as2-ver1p0"));
