@@ -5,6 +5,7 @@ import no.difi.vefa.edelivery.lookup.api.MetadataReader;
 import no.difi.vefa.edelivery.lookup.api.SecurityException;
 import no.difi.vefa.edelivery.lookup.model.*;
 import no.difi.vefa.edelivery.lookup.security.XmldsigVerifier;
+import no.difi.vefa.edelivery.lookup.util.DomUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.busdox.servicemetadata.publishing._1.*;
 import org.w3c.dom.Document;
@@ -13,7 +14,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayInputStream;
 import java.net.URLDecoder;
@@ -28,14 +28,9 @@ public class BusdoxReader implements MetadataReader {
     public static final String NAMESPACE = "http://busdox.org/serviceMetadata/publishing/1.0/";
 
     private static JAXBContext jaxbContext;
-    private static DocumentBuilderFactory documentBuilderFactory;
-
     static {
         try {
             jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class, ServiceMetadataType.class);
-
-            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setNamespaceAware(true);
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -63,7 +58,7 @@ public class BusdoxReader implements MetadataReader {
     @Override
     public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException {
         try {
-            Document doc = documentBuilderFactory.newDocumentBuilder().parse(fetcherResponse.getInputStream());
+            Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(new DOMSource(doc));

@@ -27,7 +27,7 @@ public class LookupClientTest {
         assertNotNull(serviceMetadata);
     }
 
-    @Test(enabled = false)
+    @Test//(enabled = false)
     public void simple9933() throws EDeliveryException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));

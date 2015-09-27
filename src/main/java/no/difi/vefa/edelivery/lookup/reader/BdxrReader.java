@@ -5,6 +5,7 @@ import no.difi.vefa.edelivery.lookup.api.MetadataReader;
 import no.difi.vefa.edelivery.lookup.api.SecurityException;
 import no.difi.vefa.edelivery.lookup.model.*;
 import no.difi.vefa.edelivery.lookup.security.XmldsigVerifier;
+import no.difi.vefa.edelivery.lookup.util.DomUtils;
 import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
 import org.w3c.dom.Document;
 
@@ -12,7 +13,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayInputStream;
 import java.net.URLDecoder;
@@ -22,22 +22,15 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Currently not implemented.
- */
 public class BdxrReader implements MetadataReader {
 
     public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
 
     private static JAXBContext jaxbContext;
-    private static DocumentBuilderFactory documentBuilderFactory;
 
     static {
         try {
             jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class, ServiceMetadataType.class);
-
-            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setNamespaceAware(true);
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -60,13 +53,12 @@ public class BdxrReader implements MetadataReader {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-
     }
 
     @Override
     public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException{
         try {
-            Document doc = documentBuilderFactory.newDocumentBuilder().parse(fetcherResponse.getInputStream());
+            Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(new DOMSource(doc));
@@ -116,6 +108,5 @@ public class BdxrReader implements MetadataReader {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-
     }
 }
