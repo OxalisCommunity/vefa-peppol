@@ -1,7 +1,7 @@
 package no.difi.vefa.edelivery.lookup.reader;
 
-import no.difi.vefa.edelivery.lookup.api.LookupException;
-import no.difi.vefa.edelivery.lookup.api.MetadataReader;
+import no.difi.vefa.edelivery.lookup.api.*;
+import no.difi.vefa.edelivery.lookup.api.SecurityException;
 import no.difi.vefa.edelivery.lookup.model.DocumentIdentifier;
 import no.difi.vefa.edelivery.lookup.model.FetcherResponse;
 import no.difi.vefa.edelivery.lookup.model.ServiceMetadata;
@@ -30,22 +30,22 @@ public class MultiReader implements MetadataReader {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 
-        if (BusdoxReader.NAMESPACE.equals(fetcherResponse.getNamespace()))
+        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
             return busdoxReader.parseDocumentIdentifiers(fetcherResponse);
-        else if (BdxrReader.NAMESPACE.equals(fetcherResponse.getNamespace()))
+        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
             return bdxrReader.parseDocumentIdentifiers(fetcherResponse);
 
         throw new LookupException(String.format("Unknown namespace: %s", fetcherResponse.getNamespace()));
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException {
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 
-        if (BusdoxReader.NAMESPACE.equals(fetcherResponse.getNamespace()))
+        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
             return busdoxReader.parseServiceMetadata(fetcherResponse);
-        else if (BdxrReader.NAMESPACE.equals(fetcherResponse.getNamespace()))
+        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
             return bdxrReader.parseServiceMetadata(fetcherResponse);
 
         throw new LookupException(String.format("Unknown namespace: %s", fetcherResponse.getNamespace()));

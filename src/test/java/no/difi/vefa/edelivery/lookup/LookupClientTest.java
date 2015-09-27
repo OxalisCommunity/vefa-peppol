@@ -1,6 +1,6 @@
 package no.difi.vefa.edelivery.lookup;
 
-import no.difi.vefa.edelivery.lookup.api.LookupException;
+import no.difi.vefa.edelivery.lookup.api.EDeliveryException;
 import no.difi.vefa.edelivery.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.edelivery.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.edelivery.lookup.model.DocumentIdentifier;
@@ -16,7 +16,7 @@ import static org.testng.Assert.assertNotNull;
 public class LookupClientTest {
 
     @Test
-    public void simple() throws LookupException{
+    public void simple() throws EDeliveryException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new ApacheFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9908:991825827"));
 
@@ -28,7 +28,7 @@ public class LookupClientTest {
     }
 
     @Test(enabled = false)
-    public void simple9933() throws LookupException{
+    public void simple9933() throws EDeliveryException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));
 

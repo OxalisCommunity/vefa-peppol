@@ -1,6 +1,6 @@
 package no.difi.vefa.edelivery.lookup.api;
 
-public class LookupException extends Exception {
+public class LookupException extends EDeliveryException {
 
     private static final long serialVersionUID = -8630614964594045904L;
 

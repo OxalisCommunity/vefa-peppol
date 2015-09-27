@@ -2,14 +2,18 @@ package no.difi.vefa.edelivery.lookup.reader;
 
 import no.difi.vefa.edelivery.lookup.api.LookupException;
 import no.difi.vefa.edelivery.lookup.api.MetadataReader;
+import no.difi.vefa.edelivery.lookup.api.SecurityException;
 import no.difi.vefa.edelivery.lookup.model.*;
 import no.difi.vefa.edelivery.lookup.security.XmldsigVerifier;
 import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
+import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayInputStream;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
@@ -26,13 +30,14 @@ public class BdxrReader implements MetadataReader {
     public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
 
     private static JAXBContext jaxbContext;
-    private static XmldsigVerifier xmldsigVerifier;
-    private static ObjectFactory objectFactory = new ObjectFactory();
+    private static DocumentBuilderFactory documentBuilderFactory;
 
     static {
         try {
             jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class, ServiceMetadataType.class);
-            xmldsigVerifier = new XmldsigVerifier(jaxbContext);
+
+            documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setNamespaceAware(true);
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -59,22 +64,19 @@ public class BdxrReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException{
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException{
         try {
+            Document doc = documentBuilderFactory.newDocumentBuilder().parse(fetcherResponse.getInputStream());
+
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(fetcherResponse.getInputStream());
+            JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(new DOMSource(doc));
             Object o = result.getValue();
 
             ServiceMetadata serviceMetadata = new ServiceMetadata();
 
             if (o instanceof SignedServiceMetadataType) {
-                SignedServiceMetadataType signedServiceMetadataType = (SignedServiceMetadataType) o;
-
-                serviceMetadata.setSigner(xmldsigVerifier.verify(
-                        objectFactory.createSignedServiceMetadata(signedServiceMetadataType)
-                ));
-
-                o = signedServiceMetadataType.getServiceMetadata();
+                serviceMetadata.setSigner(XmldsigVerifier.verify(doc));
+                o = ((SignedServiceMetadataType) o).getServiceMetadata();
             }
 
             if (!(o instanceof ServiceMetadataType))
@@ -110,6 +112,8 @@ public class BdxrReader implements MetadataReader {
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         } catch (CertificateException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
 

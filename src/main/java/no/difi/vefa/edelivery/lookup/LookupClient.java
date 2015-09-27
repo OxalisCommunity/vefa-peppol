@@ -1,6 +1,7 @@
 package no.difi.vefa.edelivery.lookup;
 
 import no.difi.vefa.edelivery.lookup.api.*;
+import no.difi.vefa.edelivery.lookup.api.SecurityException;
 import no.difi.vefa.edelivery.lookup.model.DocumentIdentifier;
 import no.difi.vefa.edelivery.lookup.model.ParticipantIdentifier;
 import no.difi.vefa.edelivery.lookup.model.ServiceMetadata;
@@ -36,7 +37,7 @@ public class LookupClient {
         return metadataReader.parseDocumentIdentifiers(metadataFetcher.fetch(provider));
     }
 
-    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier) throws LookupException {
+    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier) throws LookupException, SecurityException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveServiceMetadata(location, participantIdentifier, documentIdentifier);
 

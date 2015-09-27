@@ -10,6 +10,6 @@ public interface MetadataReader {
 
     List<DocumentIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException;
 
-    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException;
+    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException;
 
 }
