@@ -2,6 +2,10 @@
 
 ## Next release
 
+* Changing namespace.
+
+## 0.9.1
+
 * Support for BDXR.
 
 ## 0.9.0
