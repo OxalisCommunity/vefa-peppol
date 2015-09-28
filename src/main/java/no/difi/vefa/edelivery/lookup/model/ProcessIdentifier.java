@@ -9,6 +9,10 @@ public class ProcessIdentifier implements Serializable {
     private String identifier;
     private String scheme;
 
+    public ProcessIdentifier(String identifier) {
+        this(identifier, "cenbii-procid-ubl");
+    }
+
     public ProcessIdentifier(String identifier, String scheme) {
         this.identifier = identifier;
         this.scheme = scheme;

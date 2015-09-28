@@ -2,12 +2,11 @@ package no.difi.vefa.edelivery.lookup;
 
 import no.difi.vefa.edelivery.lookup.api.*;
 import no.difi.vefa.edelivery.lookup.api.SecurityException;
-import no.difi.vefa.edelivery.lookup.model.DocumentIdentifier;
-import no.difi.vefa.edelivery.lookup.model.ParticipantIdentifier;
-import no.difi.vefa.edelivery.lookup.model.ServiceMetadata;
+import no.difi.vefa.edelivery.lookup.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.print.Doc;
 import java.net.URI;
 import java.util.List;
 
@@ -48,6 +47,11 @@ public class LookupClient {
         // TODO Validate provider certificate
 
         return serviceMetadata;
+    }
+
+    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, SecurityException {
+        ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentIdentifier);
+        return serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
     }
 
 }

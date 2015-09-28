@@ -11,13 +11,13 @@ public class ParticipantIdentifier implements Serializable {
     private String identifier;
     private String scheme;
 
+    public ParticipantIdentifier(String identifier) {
+        this(identifier, "iso6523-actorid-upis");
+    }
+
     public ParticipantIdentifier(String identifier, String scheme) {
         this.identifier = identifier.trim().toLowerCase();
         this.scheme = scheme;
-    }
-
-    public ParticipantIdentifier(String identifier) {
-        this(identifier, "iso6523-actorid-upis");
     }
 
     public String getIdentifier() {
