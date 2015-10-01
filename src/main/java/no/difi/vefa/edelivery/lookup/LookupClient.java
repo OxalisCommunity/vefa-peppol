@@ -6,7 +6,6 @@ import no.difi.vefa.edelivery.lookup.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.print.Doc;
 import java.net.URI;
 import java.util.List;
 
@@ -20,11 +19,16 @@ public class LookupClient {
     private MetadataFetcher metadataFetcher;
     private MetadataReader metadataReader;
 
-    LookupClient(MetadataLocator metadataLocator, MetadataProvider metadataProvider, MetadataFetcher metadataFetcher, MetadataReader metadataReader) {
+    private CertificateValidator providerCertificateValidator;
+    private CertificateValidator endpointCertificateValidator;
+
+    LookupClient(MetadataLocator metadataLocator, MetadataProvider metadataProvider, MetadataFetcher metadataFetcher, MetadataReader metadataReader, CertificateValidator providerCertificateValidator, CertificateValidator endpointCertificateValidator) {
         this.metadataLocator = metadataLocator;
         this.metadataProvider = metadataProvider;
         this.metadataFetcher = metadataFetcher;
         this.metadataReader = metadataReader;
+        this.providerCertificateValidator = providerCertificateValidator;
+        this.endpointCertificateValidator = endpointCertificateValidator;
     }
 
     public List<DocumentIdentifier> getDocumentIdentifiers(ParticipantIdentifier participantIdentifier) throws LookupException {
@@ -44,14 +48,20 @@ public class LookupClient {
 
         ServiceMetadata serviceMetadata = metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
 
-        // TODO Validate provider certificate
+        if (providerCertificateValidator != null)
+            providerCertificateValidator.validate(serviceMetadata.getSigner());
 
         return serviceMetadata;
     }
 
     public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, SecurityException {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentIdentifier);
-        return serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
+        Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
+
+        if (endpointCertificateValidator != null)
+            endpointCertificateValidator.validate(endpoint.getCertificate());
+
+        return endpoint;
     }
 
 }

@@ -1,9 +1,6 @@
 package no.difi.vefa.edelivery.lookup;
 
-import no.difi.vefa.edelivery.lookup.api.MetadataFetcher;
-import no.difi.vefa.edelivery.lookup.api.MetadataLocator;
-import no.difi.vefa.edelivery.lookup.api.MetadataProvider;
-import no.difi.vefa.edelivery.lookup.api.MetadataReader;
+import no.difi.vefa.edelivery.lookup.api.*;
 import no.difi.vefa.edelivery.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.edelivery.lookup.locator.BusdoxLocator;
 import no.difi.vefa.edelivery.lookup.provider.DefaultProvider;
@@ -31,8 +28,10 @@ public class LookupClientBuilder {
 
     private MetadataFetcher metadataFetcher;
     private MetadataLocator metadataLocator;
+    private CertificateValidator providerCertificateValidator;
     private MetadataProvider metadataProvider;
     private MetadataReader metadataReader;
+    private CertificateValidator endpointertificateValidator;
 
     public LookupClientBuilder fetcher(MetadataFetcher metadataFetcher) {
         this.metadataFetcher = metadataFetcher;
@@ -49,8 +48,18 @@ public class LookupClientBuilder {
         return this;
     }
 
+    public LookupClientBuilder providerCertificateValidator(CertificateValidator certificateValidator) {
+        this.providerCertificateValidator = certificateValidator;
+        return this;
+    }
+
     public LookupClientBuilder reader(MetadataReader metadataReader) {
         this.metadataReader = metadataReader;
+        return this;
+    }
+
+    public LookupClientBuilder endpointCertificateValidator(CertificateValidator certificateValidator) {
+        this.endpointertificateValidator = certificateValidator;
         return this;
     }
 
@@ -66,7 +75,7 @@ public class LookupClientBuilder {
         if (metadataReader == null)
             reader(new MultiReader());
 
-        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader);
+        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, providerCertificateValidator, endpointertificateValidator);
     }
 
 }
