@@ -3,22 +3,29 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>no.difi.vefa</groupId>
-    <artifactId>peppol-lookup</artifactId>
+    <artifactId>peppol-parent</artifactId>
+    <packaging>pom</packaging>
     <version>0.9.3-SNAPSHOT</version>
 
-    <name>VEFA eDelivery :: Lookup</name>
+    <name>VEFA PEPPOL</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
-    <url>https://github.com/difi/vefa-peppol-lookup</url>
+    <url>https://github.com/difi/vefa-peppol</url>
+
+    <modules>
+        <module>peppol-common</module>
+        <module>peppol-lookup</module>
+        <module>peppol-security</module>
+    </modules>
 
     <scm>
         <tag>HEAD</tag>
-        <url>https://github.com/difi/vefa-peppol-lookup</url>
-        <connection>scm:git:https://github.com/difi/vefa-peppol-lookup.git</connection>
-        <developerConnection>scm:git:git@github.com:difi/vefa-peppol-lookup.git</developerConnection>
+        <url>https://github.com/difi/vefa-peppol</url>
+        <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
+        <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/difi/vefa-peppol-lookup/issues</url>
+        <url>https://github.com/difi/vefa-peppol/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
@@ -57,39 +64,11 @@
     </properties>
 
     <dependencies>
-        <!-- VEFA Commons -->
-        <dependency>
-            <groupId>no.difi.vefa</groupId>
-            <artifactId>commons-busdox</artifactId>
-            <version>0.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>no.difi.vefa</groupId>
-            <artifactId>commons-bdxr</artifactId>
-            <version>0.9.0</version>
-        </dependency>
-
         <!-- SLF4J -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.12</version>
-        </dependency>
-
-        <!-- Apache Http Components -->
-        <!-- May be included if ApacheFetcher is used. -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- Commons -->
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.10</version>
         </dependency>
 
         <!-- Testing -->
@@ -105,8 +84,55 @@
             <version>1.7.12</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- VEFA PEPPOL -->
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>peppol-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>peppol-lookup</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>peppol-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!-- VEFA Commons -->
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>commons-busdox</artifactId>
+                <version>0.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>commons-bdxr</artifactId>
+                <version>0.9.0</version>
+            </dependency>
+
+            <!-- Apache Http Components -->
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5</version>
+            </dependency>
+
+            <!-- Commons -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.10</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
@@ -155,7 +181,6 @@
             </activation>
             <build>
                 <plugins>
-                    <!--suppress MavenModelInspection -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-release-plugin</artifactId>

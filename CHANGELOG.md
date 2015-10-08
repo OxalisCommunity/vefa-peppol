@@ -3,6 +3,11 @@
 ## Next release
 
 * Changing namespace.
+* Introducing modules peppol-security and peppol-common.
+
+## 0.9.2
+
+* Changing namespace.
 
 ## 0.9.1
 

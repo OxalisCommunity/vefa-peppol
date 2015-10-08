@@ -1,4 +1,4 @@
-# VEFA PEPPOL Lookup
+# VEFA PEPPOL
 
 ## Getting started
 
@@ -8,7 +8,7 @@ Include dependency in your pom.xml:
 <dependency>
 	<groupId>no.difi.vefa</groupId>
 	<artifactId>peppol-lookup</artifactId>
-	<version>0.9.0</version>
+	<version>0.9.2</version>
 </dependency>
 ```
 

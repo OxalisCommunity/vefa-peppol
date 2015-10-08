@@ -1,7 +1,7 @@
 # Ignore these files
 /.idea
-/target
+target
 .settings
 .project
 .classpath
-/*.iml
+*.iml
