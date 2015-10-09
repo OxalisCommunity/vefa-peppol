@@ -6,7 +6,7 @@ import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.security.api.SecurityException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import no.difi.vefa.peppol.lookup.util.DomUtils;
+import no.difi.vefa.peppol.common.util.DomUtils;
 import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
 import org.w3c.dom.Document;
 

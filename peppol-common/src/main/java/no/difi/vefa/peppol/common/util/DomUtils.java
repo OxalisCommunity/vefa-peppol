@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.lookup.util;
+package no.difi.vefa.peppol.common.util;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

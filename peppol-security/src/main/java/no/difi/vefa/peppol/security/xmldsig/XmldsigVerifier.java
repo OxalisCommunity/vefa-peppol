@@ -13,7 +13,7 @@ import java.security.cert.X509Certificate;
 
 public class XmldsigVerifier {
 
-    private static Logger logger = LoggerFactory.getLogger(XmldsigVerifier.class);
+    private static final Logger logger = LoggerFactory.getLogger(XmldsigVerifier.class);
 
     public static X509Certificate verify(Document document) throws SecurityException {
         try {
@@ -24,8 +24,8 @@ public class XmldsigVerifier {
             X509KeySelector keySelector = new X509KeySelector();
             DOMValidateContext valContext = new DOMValidateContext(keySelector, nl.item(0));
 
-            XMLSignatureFactory fac = XMLSignatureFactory.getInstance("DOM");
-            XMLSignature signature = fac.unmarshalXMLSignature(valContext);
+            XMLSignatureFactory xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
+            XMLSignature signature = xmlSignatureFactory.unmarshalXMLSignature(valContext);
 
             if (!signature.validate(valContext))
                 throw new SecurityException("Signature failed.");
@@ -38,5 +38,9 @@ public class XmldsigVerifier {
             logger.warn(e.getMessage(), e);
             throw new SecurityException("Unable to verify document signature.", e);
         }
+    }
+
+    XmldsigVerifier() {
+
     }
 }
