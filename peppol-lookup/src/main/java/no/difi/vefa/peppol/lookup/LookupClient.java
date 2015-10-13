@@ -1,5 +1,7 @@
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
+import no.difi.vefa.peppol.common.api.PeppolException;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.api.SecurityException;
 import no.difi.vefa.peppol.common.model.*;
@@ -55,8 +57,17 @@ public class LookupClient {
         return serviceMetadata;
     }
 
-    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, SecurityException {
+    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, SecurityException, EndpointNotFoundException {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentIdentifier);
+        Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
+
+        if (endpointCertificateValidator != null)
+            endpointCertificateValidator.validate(endpoint.getCertificate());
+
+        return endpoint;
+    }
+
+    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws SecurityException, EndpointNotFoundException {
         Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
 
         if (endpointCertificateValidator != null)

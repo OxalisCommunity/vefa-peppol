@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.common.model.*;
@@ -33,7 +34,13 @@ public class BusdoxReaderTest {
 
         ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii05:ver2.0", "cenbii-procid-ubl");
 
-        assertNull(result.getEndpoint(processIdentifier, TransportProfile.START));
+        try {
+            result.getEndpoint(processIdentifier, TransportProfile.START);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "O=EVRY AS, CN=APP_1000000025, C=NO");

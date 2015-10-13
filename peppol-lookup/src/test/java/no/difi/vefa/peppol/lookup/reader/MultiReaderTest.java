@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.common.model.*;
@@ -43,7 +44,13 @@ public class MultiReaderTest {
 
         ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii05:ver2.0", "cenbii-procid-ubl");
 
-        assertNull(result.getEndpoint(processIdentifier, TransportProfile.START));
+        try {
+            result.getEndpoint(processIdentifier, TransportProfile.START);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "O=EVRY AS, CN=APP_1000000025, C=NO");
@@ -56,12 +63,24 @@ public class MultiReaderTest {
         ProcessIdentifier processIdentifier1 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0", "cenbii-procid-ubl");
         ProcessIdentifier processIdentifier2 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii46:ver1.0", "cenbii-procid-ubl");
 
-        assertNull(result.getEndpoint(processIdentifier1, TransportProfile.START));
+        try {
+            result.getEndpoint(processIdentifier1, TransportProfile.START);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
         assertNotNull(result.getEndpoint(processIdentifier1, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier1, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "O=University of Piraeus Research Center, CN=APP_1000000088, C=GR");
 
-        assertNull(result.getEndpoint(processIdentifier2, TransportProfile.START));
+        try {
+            result.getEndpoint(processIdentifier2, TransportProfile.START);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
         assertNotNull(result.getEndpoint(processIdentifier2, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier2, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "O=University of Piraeus Research Center, CN=APP_1000000088, C=GR");
@@ -73,7 +92,13 @@ public class MultiReaderTest {
 
         ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0", "cenbii-procid-ubl");
 
-        assertNull(result.getEndpoint(processIdentifier, TransportProfile.START));
+        try {
+            result.getEndpoint(processIdentifier, TransportProfile.START);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "CN=APP_1000000005, O=DIFI, C=NO");

@@ -1,5 +1,8 @@
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
+import no.difi.vefa.peppol.common.api.PeppolException;
+
 import java.io.Serializable;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -54,13 +57,13 @@ public class ServiceMetadata implements Serializable {
         return this.endpoints;
     }
 
-    public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) {
+    public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws EndpointNotFoundException{
         for (TransportProfile transportProfile : transportProfiles)
             for (Endpoint endpoint : endpoints)
                 if (endpoint.getTransportProfile().equals(transportProfile) && endpoint.getProcessIdentifier().equals(processIdentifier))
                     return endpoint;
 
-        return null;
+        throw new EndpointNotFoundException(String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier.getIdentifier()));
     }
 
     public X509Certificate getSigner() {

@@ -1,11 +1,9 @@
 package no.difi.vefa.peppol.lookup;
 
 import no.difi.vefa.peppol.common.api.PeppolException;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
-import no.difi.vefa.peppol.common.model.DocumentIdentifier;
-import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.ServiceMetadata;
 import no.difi.vefa.peppol.lookup.LookupClient;
 import no.difi.vefa.peppol.lookup.LookupClientBuilder;
 import org.testng.annotations.Test;
@@ -27,6 +25,20 @@ public class LookupClientTest {
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(new ParticipantIdentifier("9908:991825827"), new DocumentIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
         assertNotNull(serviceMetadata);
+    }
+
+    @Test
+    public void simpleEndpoint() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forProduction().build();
+
+        Endpoint endpoint = client.getEndpoint(
+                new ParticipantIdentifier("9908:991825827"),
+                new DocumentIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"),
+                new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver2.0"),
+                TransportProfile.AS2_1_0
+        );
+
+        assertNotNull(endpoint);
     }
 
     @Test//(enabled = false)
