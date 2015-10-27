@@ -2,6 +2,8 @@
 
 ## Next release
 
+## 0.9.3
+
 * Changing namespace.
 * Introducing modules peppol-security and peppol-common.
 * Renaming SecurityException to PeppolSecurityException.

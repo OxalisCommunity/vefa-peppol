@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <version>0.9.4-SNAPSHOT</version>
 
-    <name>VEFA PEPPOL</name>
+    <name>VEFA PEPPOL :: Parent</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
     <url>https://github.com/difi/vefa-peppol</url>
 
