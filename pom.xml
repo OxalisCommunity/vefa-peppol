@@ -5,7 +5,7 @@
     <groupId>no.difi.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.3</version>
+    <version>0.9.4-SNAPSHOT</version>
 
     <name>VEFA PEPPOL</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
