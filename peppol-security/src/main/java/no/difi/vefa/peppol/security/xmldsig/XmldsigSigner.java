@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
-import no.difi.vefa.peppol.security.api.SecurityException;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -44,11 +44,11 @@ public class XmldsigSigner {
         }
     }
 
-    public static void sign(Document document, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws SecurityException {
+    public static void sign(Document document, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws PeppolSecurityException {
         sign(document.getDocumentElement(), privateKeyEntry, result);
     }
 
-    public static void sign(Element element, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws SecurityException{
+    public static void sign(Element element, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws PeppolSecurityException {
         try {
             Reference reference = xmlSignatureFactory.newReference(
                     "",
@@ -88,7 +88,7 @@ public class XmldsigSigner {
             transformer.setParameter(OutputKeys.INDENT, "no");
             transformer.transform(new DOMSource(element), result);
         } catch (Exception e) {
-            throw new SecurityException(e.getMessage(), e);
+            throw new PeppolSecurityException(e.getMessage(), e);
         }
     }
 

@@ -3,7 +3,7 @@ package no.difi.vefa.peppol.lookup.reader;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.security.api.SecurityException;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import no.difi.vefa.peppol.common.util.DomUtils;
@@ -57,7 +57,7 @@ public class BusdoxReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException {
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, PeppolSecurityException {
         try {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 

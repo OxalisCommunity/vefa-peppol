@@ -1,6 +1,5 @@
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
@@ -9,8 +8,8 @@ import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
-import no.difi.vefa.peppol.security.context.PeppolProduction;
-import no.difi.vefa.peppol.security.context.PeppolTest;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.context.PeppolContext;
 import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
 
 public class LookupClientBuilder {
@@ -20,17 +19,19 @@ public class LookupClientBuilder {
     }
 
     public static LookupClientBuilder forProduction() {
+        PeppolContext peppolContext = new PeppolContext("production");
         return newInstance()
                 .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_PRODUCTION))
-                .endpointCertificateValidator(new DifiCertificateValidator(PeppolProduction.apValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(PeppolProduction.smpValidator()));
+                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
+                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
     }
 
     public static LookupClientBuilder forTest() {
+        PeppolContext peppolContext = new PeppolContext("test");
         return newInstance()
                 .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_TEST))
-                .endpointCertificateValidator(new DifiCertificateValidator(PeppolTest.apValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(PeppolTest.smpValidator()));
+                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
+                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
     }
 
     LookupClientBuilder() {

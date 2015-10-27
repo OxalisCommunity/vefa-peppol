@@ -4,6 +4,7 @@
 
 * Changing namespace.
 * Introducing modules peppol-security and peppol-common.
+* Renaming SecurityException to PeppolSecurityException.
 
 ## 0.9.2
 

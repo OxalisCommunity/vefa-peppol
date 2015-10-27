@@ -6,7 +6,7 @@ import no.difi.vefa.peppol.common.util.XmlUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.security.api.SecurityException;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public class MultiReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, SecurityException {
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, PeppolSecurityException {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 

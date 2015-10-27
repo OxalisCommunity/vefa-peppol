@@ -3,7 +3,7 @@ package no.difi.vefa.peppol.security.util;
 import no.difi.certvalidator.Validator;
 import no.difi.certvalidator.api.CertificateValidationException;
 import no.difi.vefa.peppol.security.api.*;
-import no.difi.vefa.peppol.security.api.SecurityException;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,13 +20,13 @@ public class DifiCertificateValidator implements CertificateValidator {
     }
 
     @Override
-    public void validate(X509Certificate certificate) throws SecurityException {
+    public void validate(X509Certificate certificate) throws PeppolSecurityException {
         try {
             logger.debug("Validating '{}'.", certificate.getSubjectX500Principal().getName());
 
             validator.validate(certificate);
         } catch (CertificateValidationException e) {
-            throw new SecurityException(e.getMessage(), e);
+            throw new PeppolSecurityException(e.getMessage(), e);
         }
     }
 }

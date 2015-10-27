@@ -1,9 +1,8 @@
 package no.difi.vefa.peppol.lookup;
 
 import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
-import no.difi.vefa.peppol.common.api.PeppolException;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
-import no.difi.vefa.peppol.security.api.SecurityException;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.api.*;
 import org.slf4j.Logger;
@@ -43,7 +42,7 @@ public class LookupClient {
         return metadataReader.parseDocumentIdentifiers(metadataFetcher.fetch(provider));
     }
 
-    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier) throws LookupException, SecurityException {
+    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier) throws LookupException, PeppolSecurityException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveServiceMetadata(location, participantIdentifier, documentIdentifier);
 
@@ -57,23 +56,17 @@ public class LookupClient {
         return serviceMetadata;
     }
 
-    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, SecurityException, EndpointNotFoundException {
+    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws PeppolSecurityException, EndpointNotFoundException {
+        Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
+
+        if (endpointCertificateValidator != null)
+            endpointCertificateValidator.validate(endpoint.getCertificate());
+
+        return endpoint;
+    }
+
+    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentIdentifier documentIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, PeppolSecurityException, EndpointNotFoundException {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentIdentifier);
-        Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
-
-        if (endpointCertificateValidator != null)
-            endpointCertificateValidator.validate(endpoint.getCertificate());
-
-        return endpoint;
+        return getEndpoint(serviceMetadata, processIdentifier, transportProfiles);
     }
-
-    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws SecurityException, EndpointNotFoundException {
-        Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
-
-        if (endpointCertificateValidator != null)
-            endpointCertificateValidator.validate(endpoint.getCertificate());
-
-        return endpoint;
-    }
-
 }
