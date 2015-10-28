@@ -9,13 +9,10 @@ import java.net.URISyntaxException;
 
 public class BusdoxLocator extends AbstractLocator {
 
-    public static final String OPENPEPPOL_PRODUCTION = "edelivery.tech.ec.europa.eu";
-    public static final String OPENPEPPOL_TEST = "acc.edelivery.tech.ec.europa.eu";
-
     private String hostname;
 
     public BusdoxLocator() {
-        this(OPENPEPPOL_PRODUCTION);
+        this(DynamicLocator.OPENPEPPOL_PRODUCTION);
     }
 
     public BusdoxLocator(String hostname) {

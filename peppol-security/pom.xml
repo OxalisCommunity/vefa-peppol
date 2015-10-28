@@ -55,14 +55,19 @@
     </licenses>
 
     <dependencies>
+        <!-- VEFA PEPPOL -->
         <dependency>
             <groupId>no.difi.vefa</groupId>
             <artifactId>peppol-common</artifactId>
         </dependency>
+
+        <!-- Difi commons -->
         <dependency>
             <groupId>no.difi.commons</groupId>
             <artifactId>commons-certvalidator</artifactId>
         </dependency>
+
+        <!-- Apache commons -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>

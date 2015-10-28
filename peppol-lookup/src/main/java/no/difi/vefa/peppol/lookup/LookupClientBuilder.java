@@ -5,7 +5,7 @@ import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
-import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
+import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
 import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
@@ -21,7 +21,7 @@ public class LookupClientBuilder {
     public static LookupClientBuilder forProduction() {
         PeppolContext peppolContext = new PeppolContext("production");
         return newInstance()
-                .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_PRODUCTION))
+                .locator(new DynamicLocator(DynamicLocator.OPENPEPPOL_PRODUCTION))
                 .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
                 .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
     }
@@ -29,7 +29,7 @@ public class LookupClientBuilder {
     public static LookupClientBuilder forTest() {
         PeppolContext peppolContext = new PeppolContext("test");
         return newInstance()
-                .locator(new BusdoxLocator(BusdoxLocator.OPENPEPPOL_TEST))
+                .locator(new DynamicLocator(DynamicLocator.OPENPEPPOL_TEST))
                 .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
                 .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
     }

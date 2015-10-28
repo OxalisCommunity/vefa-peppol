@@ -2,6 +2,8 @@
 
 ## Next release
 
+* Support for BDXL.
+
 ## 0.9.3
 
 * Changing namespace.
