@@ -7,6 +7,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.xbill.DNS.*;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.Security;
 import java.util.regex.Matcher;
@@ -36,13 +37,13 @@ public class BdxlLocator extends AbstractLocator {
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-224", BouncyCastleProvider.PROVIDER_NAME);
-            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes());
+            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes(StandardCharsets.UTF_8));
             receiverHash = Hex.encodeHexString(digest);
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }
 
-        String hostname = String.format("b-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), this.hostname);
+        String hostname = String.format("B-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), this.hostname);
 
         try {
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
