@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.common.Mode;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
@@ -16,6 +17,17 @@ public class LookupClientBuilder {
 
     public static LookupClientBuilder newInstance() {
         return new LookupClientBuilder();
+    }
+
+    public static LookupClientBuilder forMode(Mode mode) {
+        switch (mode) {
+            case PRODUCTION:
+                return forProduction();
+            case TEST:
+                return forTest();
+            default:
+                return newInstance();
+        }
     }
 
     public static LookupClientBuilder forProduction() {

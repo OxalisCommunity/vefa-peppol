@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.common.Mode;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
@@ -9,8 +10,8 @@ public class LookupClientBuilderTest {
 
     @Test
     public void success() {
-        assertNotNull(LookupClientBuilder.forProduction().build());
-        assertNotNull(LookupClientBuilder.forTest().build());
+        assertNotNull(LookupClientBuilder.forMode(Mode.PRODUCTION).build());
+        assertNotNull(LookupClientBuilder.forMode(Mode.TEST).build());
     }
 
     @Test(expectedExceptions = IllegalStateException.class)

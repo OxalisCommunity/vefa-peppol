@@ -3,6 +3,7 @@
 ## Next release
 
 * Support for BDXL.
+* Adding Mode enum.
 
 ## 0.9.3
 
