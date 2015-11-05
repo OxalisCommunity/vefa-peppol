@@ -12,10 +12,6 @@ public class BusdoxLocator extends AbstractLocator {
 
     private String hostname;
 
-    public BusdoxLocator() {
-        this(DynamicLocator.OPENPEPPOL_PRODUCTION);
-    }
-
     public BusdoxLocator(String hostname) {
         this.hostname = hostname;
     }

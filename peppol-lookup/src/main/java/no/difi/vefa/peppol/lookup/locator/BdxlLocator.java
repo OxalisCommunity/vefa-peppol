@@ -7,7 +7,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.xbill.DNS.*;
 
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.Security;
 import java.util.regex.Matcher;
@@ -22,10 +21,6 @@ public class BdxlLocator extends AbstractLocator {
 
     private String hostname;
 
-    public BdxlLocator() {
-        this(DynamicLocator.OPENPEPPOL_PRODUCTION);
-    }
-
     public BdxlLocator(String hostname) {
         this.hostname = hostname;
     }
@@ -37,13 +32,13 @@ public class BdxlLocator extends AbstractLocator {
 
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-224", BouncyCastleProvider.PROVIDER_NAME);
-            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes());
             receiverHash = Hex.encodeHexString(digest);
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }
 
-        String hostname = String.format("B-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), this.hostname);
+        String hostname = String.format("b-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), this.hostname);
 
         try {
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
@@ -54,7 +49,6 @@ public class BdxlLocator extends AbstractLocator {
                 NAPTRRecord naptrRecord = (NAPTRRecord) record;
 
                 if ("Meta:SMP".equals(naptrRecord.getService()) && "U".equalsIgnoreCase(naptrRecord.getFlags())) {
-                    System.out.println(record);
                     String result = handleRegex(naptrRecord.getRegexp(), hostname);
                     if (result != null)
                         return URI.create(result);
@@ -69,6 +63,10 @@ public class BdxlLocator extends AbstractLocator {
 
     public static String handleRegex(String naptrRegex, String hostname) {
         String[] regexp = naptrRegex.split("!");
+
+        // DIGIT bug
+        if (regexp[1].equals("^.$"))
+            regexp[1] = "^.*$";
 
         // Simple stupid
         if ("^.*$".equals(regexp[1]))

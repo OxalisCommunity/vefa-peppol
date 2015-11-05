@@ -7,7 +7,7 @@ import static org.testng.Assert.assertEquals;
 
 public class BusdoxLocatorTest {
 
-    private BusdoxLocator busdoxLocator = new BusdoxLocator();
+    private BusdoxLocator busdoxLocator = new BusdoxLocator(DynamicLocator.OPENPEPPOL_PRODUCTION);
 
     @Test
     public void simple() throws LookupException{

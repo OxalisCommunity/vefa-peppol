@@ -20,30 +20,34 @@ public class LookupClientBuilder {
     }
 
     public static LookupClientBuilder forMode(Mode mode) {
+        PeppolContext peppolContext;
+        String locator;
+
         switch (mode) {
             case PRODUCTION:
-                return forProduction();
+                peppolContext = new PeppolContext("production");
+                locator = DynamicLocator.OPENPEPPOL_PRODUCTION;
+                break;
             case TEST:
-                return forTest();
+                peppolContext = new PeppolContext("test");
+                locator = DynamicLocator.OPENPEPPOL_TEST;
+                break;
             default:
                 return newInstance();
         }
+
+        return newInstance()
+                .locator(new DynamicLocator(locator))
+                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
+                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
     }
 
     public static LookupClientBuilder forProduction() {
-        PeppolContext peppolContext = new PeppolContext("production");
-        return newInstance()
-                .locator(new DynamicLocator(DynamicLocator.OPENPEPPOL_PRODUCTION))
-                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
+        return forMode(Mode.PRODUCTION);
     }
 
     public static LookupClientBuilder forTest() {
-        PeppolContext peppolContext = new PeppolContext("test");
-        return newInstance()
-                .locator(new DynamicLocator(DynamicLocator.OPENPEPPOL_TEST))
-                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
+        return forMode(Mode.TEST);
     }
 
     LookupClientBuilder() {
