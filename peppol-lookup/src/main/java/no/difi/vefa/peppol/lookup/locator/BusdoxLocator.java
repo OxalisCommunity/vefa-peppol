@@ -6,6 +6,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 
 public class BusdoxLocator extends AbstractLocator {
 
@@ -22,8 +23,8 @@ public class BusdoxLocator extends AbstractLocator {
     @Override
     public URI lookup(ParticipantIdentifier participantIdentifier) throws LookupException {
         try {
-            String receiverHash = DigestUtils.md5Hex(participantIdentifier.getIdentifier());
-            return new URI(String.format("http://b-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), hostname));
+            String receiverHash = DigestUtils.md5Hex(participantIdentifier.getIdentifier().getBytes(StandardCharsets.UTF_8));
+            return new URI(String.format("http://B-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), hostname));
         } catch (URISyntaxException e) {
             throw new LookupException(e.getMessage(), e);
         }

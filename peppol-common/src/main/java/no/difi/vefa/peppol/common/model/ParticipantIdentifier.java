@@ -3,6 +3,7 @@ package no.difi.vefa.peppol.common.model;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Locale;
 
 public class ParticipantIdentifier implements Serializable {
 
@@ -16,7 +17,7 @@ public class ParticipantIdentifier implements Serializable {
     }
 
     public ParticipantIdentifier(String identifier, String scheme) {
-        this.identifier = identifier.trim().toLowerCase();
+        this.identifier = identifier.trim().toLowerCase(Locale.US);
         this.scheme = scheme;
     }
 
