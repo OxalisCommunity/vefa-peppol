@@ -64,10 +64,6 @@ public class BdxlLocator extends AbstractLocator {
     public static String handleRegex(String naptrRegex, String hostname) {
         String[] regexp = naptrRegex.split("!");
 
-        // DIGIT bug
-        if (regexp[1].equals("^.$"))
-            regexp[1] = "^.*$";
-
         // Simple stupid
         if ("^.*$".equals(regexp[1]))
             return regexp[2];

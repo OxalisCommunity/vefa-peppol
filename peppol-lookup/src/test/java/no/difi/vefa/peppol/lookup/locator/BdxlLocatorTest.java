@@ -28,15 +28,6 @@ public class BdxlLocatorTest {
                 "https://serviceprovider.peppol.eu/eacf0eecc06f3fe1cff9e0e674201d99fc73affaf5aa6eccd3a30565"
         );
 
-        // Digit
-        Assert.assertEquals(
-                BdxlLocator.handleRegex(
-                    "!^.$!http://test-smp.difi.no.publisher.acc.edelivery.tech.ec.europa.eu!",
-                    "B-eacf0eecc06f3fe1cff9e0e674201d99fc73affaf5aa6eccd3a30565.iso6523-actorid-upis.acc.edelivery.tech.ec.europa.eu"
-                ),
-                "http://test-smp.difi.no.publisher.acc.edelivery.tech.ec.europa.eu"
-        );
-
         // Proper
         Assert.assertEquals(
                 BdxlLocator.handleRegex(
