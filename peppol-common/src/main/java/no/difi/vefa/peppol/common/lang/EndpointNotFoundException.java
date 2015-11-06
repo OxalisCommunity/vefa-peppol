@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.common.api;
+package no.difi.vefa.peppol.common.lang;
 
 public class EndpointNotFoundException extends PeppolException {
 

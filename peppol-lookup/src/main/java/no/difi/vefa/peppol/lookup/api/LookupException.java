@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup.api;
 
-import no.difi.vefa.peppol.common.api.PeppolException;
+import no.difi.vefa.peppol.common.lang.PeppolException;
 
 public class LookupException extends PeppolException {
 

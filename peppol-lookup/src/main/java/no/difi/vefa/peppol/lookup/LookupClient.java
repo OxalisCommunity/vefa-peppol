@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
+import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.common.model.*;

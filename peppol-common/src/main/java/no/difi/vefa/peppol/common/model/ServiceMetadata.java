@@ -1,7 +1,6 @@
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
-import no.difi.vefa.peppol.common.api.PeppolException;
+import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 
 import java.io.Serializable;
 import java.security.cert.X509Certificate;

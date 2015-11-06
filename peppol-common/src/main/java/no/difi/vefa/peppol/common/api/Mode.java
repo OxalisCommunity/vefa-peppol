@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.common;
+package no.difi.vefa.peppol.common.api;
 
 public enum Mode {
     PRODUCTION,

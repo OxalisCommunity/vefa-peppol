@@ -1,11 +1,9 @@
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.common.api.PeppolException;
+import no.difi.vefa.peppol.common.lang.PeppolException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
-import no.difi.vefa.peppol.lookup.LookupClient;
-import no.difi.vefa.peppol.lookup.LookupClientBuilder;
 import org.testng.annotations.Test;
 
 import java.util.List;

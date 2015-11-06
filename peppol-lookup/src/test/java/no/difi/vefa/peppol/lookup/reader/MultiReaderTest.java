@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
-import no.difi.vefa.peppol.common.api.EndpointNotFoundException;
+import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.common.model.*;

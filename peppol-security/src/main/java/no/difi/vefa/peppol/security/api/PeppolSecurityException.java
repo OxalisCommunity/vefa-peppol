@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.security.api;
 
-import no.difi.vefa.peppol.common.api.PeppolException;
+import no.difi.vefa.peppol.common.lang.PeppolException;
 
 public class PeppolSecurityException extends PeppolException {
 

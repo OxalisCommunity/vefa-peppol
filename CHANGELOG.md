@@ -4,7 +4,8 @@
 
 * Support for BDXL.
 * Adding Mode enum.
-. Adding no.difi.vefa.peppol.common.model.Scheme and related changes.
+* Adding no.difi.vefa.peppol.common.model.Scheme and related changes.
+* Changing namespace of exceptions.
 
 ## 0.9.3
 
