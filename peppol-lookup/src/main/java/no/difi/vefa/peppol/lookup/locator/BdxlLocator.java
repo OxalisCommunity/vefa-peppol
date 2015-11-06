@@ -12,17 +12,46 @@ import java.security.Security;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Implementation of Business Document Metadata Service Location Version 1.0.
+ *
+ * @see <a href="http://docs.oasis-open.org/bdxr/BDX-Location/v1.0/BDX-Location-v1.0.html">Specification</a>
+ */
 public class BdxlLocator extends AbstractLocator {
 
     static {
+        // Make sure to register Bouncy Castle as a provider.
         if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null)
             Security.addProvider(new BouncyCastleProvider());
     }
 
+    /**
+     * Base hostname for lookup.
+     */
     private String hostname;
+    /**
+     * Algorithm used for geneation of hostname.
+     */
+    private String digestAlgorithm;
 
+    /**
+     * Initiate a new instance of BDXL lookup functionality using SHA-224 for hashing.
+     *
+     * @param hostname Hostname used as base for lookup.
+     */
     public BdxlLocator(String hostname) {
+        this(hostname, "SHA-224");
+    }
+
+    /**
+     * Initiate a new instance of BDXL lookup functionality.
+     *
+     * @param hostname Hostname used as base for lookup.
+     * @param digestAlgorithm Algorithm used for generation of hostname.
+     */
+    public BdxlLocator(String hostname, String digestAlgorithm) {
         this.hostname = hostname;
+        this.digestAlgorithm = digestAlgorithm;
     }
 
     @Override
@@ -31,24 +60,34 @@ public class BdxlLocator extends AbstractLocator {
         String receiverHash;
 
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-224", BouncyCastleProvider.PROVIDER_NAME);
+            // Create digest based on participant identifier.
+            MessageDigest md = MessageDigest.getInstance(digestAlgorithm, BouncyCastleProvider.PROVIDER_NAME);
             byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes());
+
+            // Create hex of digest.
             receiverHash = Hex.encodeHexString(digest);
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }
 
-        String hostname = String.format("b-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), this.hostname);
+        // Create hostname for participant identifier.
+        String hostname = String.format("B-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), this.hostname);
 
         try {
+            // Fetch all records of type NAPTR registered on hostname.
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
             if (records == null)
                 return null;
 
+            // Loop records found.
             for (Record record : records) {
+                // Simple cast.
                 NAPTRRecord naptrRecord = (NAPTRRecord) record;
 
+                // Handle only those having "Meta:SMP" as service.
                 if ("Meta:SMP".equals(naptrRecord.getService()) && "U".equalsIgnoreCase(naptrRecord.getFlags())) {
+
+                    // Create URI and return.
                     String result = handleRegex(naptrRecord.getRegexp(), hostname);
                     if (result != null)
                         return URI.create(result);
