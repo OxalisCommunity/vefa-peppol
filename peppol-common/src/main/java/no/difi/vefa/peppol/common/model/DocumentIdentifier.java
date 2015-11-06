@@ -13,17 +13,22 @@ public class DocumentIdentifier implements Serializable {
 
     private static final long serialVersionUID = -3748163459655880167L;
 
-    private String scheme;
+    private Scheme scheme;
     private String customizationId;
     private String xmlNamespace;
     private String xmlRootElement;
     private String xmlVersion;
 
     public DocumentIdentifier(String documentIdentifier) {
-        this(documentIdentifier, "busdox-docid-qns");
+        this(documentIdentifier, new Scheme("busdox-docid-qns"));
     }
 
+    @Deprecated
     public DocumentIdentifier(String documentIdentifier, String scheme) {
+        this(documentIdentifier, new Scheme(scheme));
+    }
+
+    public DocumentIdentifier(String documentIdentifier, Scheme scheme) {
         String[] parts = documentIdentifier.split("::|##");
 
         xmlNamespace = parts[0];
@@ -34,7 +39,7 @@ public class DocumentIdentifier implements Serializable {
         this.scheme = scheme;
     }
 
-    public String getScheme() {
+    public Scheme getScheme() {
         return scheme;
     }
 

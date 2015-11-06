@@ -38,7 +38,7 @@ public class BdxlLocator extends AbstractLocator {
             throw new LookupException(e.getMessage(), e);
         }
 
-        String hostname = String.format("b-%s.%s.%s", receiverHash, participantIdentifier.getScheme(), this.hostname);
+        String hostname = String.format("b-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), this.hostname);
 
         try {
             Record[] records = new Lookup(hostname, Type.NAPTR).run();

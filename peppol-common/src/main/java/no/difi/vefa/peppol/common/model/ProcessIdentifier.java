@@ -7,13 +7,18 @@ public class ProcessIdentifier implements Serializable {
     private static final long serialVersionUID = 7486398061021950763L;
 
     private String identifier;
-    private String scheme;
+    private Scheme scheme;
 
     public ProcessIdentifier(String identifier) {
-        this(identifier, "cenbii-procid-ubl");
+        this(identifier, new Scheme("cenbii-procid-ubl"));
     }
 
+    @Deprecated
     public ProcessIdentifier(String identifier, String scheme) {
+        this(identifier, new Scheme(scheme));
+    }
+
+    public ProcessIdentifier(String identifier, Scheme scheme) {
         this.identifier = identifier;
         this.scheme = scheme;
     }
@@ -22,7 +27,7 @@ public class ProcessIdentifier implements Serializable {
         return identifier;
     }
 
-    public String getScheme() {
+    public Scheme getScheme() {
         return scheme;
     }
 

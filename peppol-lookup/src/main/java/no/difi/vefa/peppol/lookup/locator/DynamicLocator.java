@@ -13,10 +13,6 @@ public class DynamicLocator extends AbstractLocator {
 
     private MetadataLocator locator;
 
-    public DynamicLocator() {
-        this(OPENPEPPOL_PRODUCTION);
-    }
-
     public DynamicLocator(String hostname) {
         locator = OPENPEPPOL_TEST.equals(hostname) ? new BdxlLocator(hostname) : new BusdoxLocator(hostname);
     }

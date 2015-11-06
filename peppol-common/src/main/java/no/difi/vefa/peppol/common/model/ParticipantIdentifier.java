@@ -10,13 +10,18 @@ public class ParticipantIdentifier implements Serializable {
     private static final long serialVersionUID = -8052874032415088055L;
 
     private String identifier;
-    private String scheme;
+    private Scheme scheme;
 
     public ParticipantIdentifier(String identifier) {
-        this(identifier, "iso6523-actorid-upis");
+        this(identifier, new Scheme("iso6523-actorid-upis"));
     }
 
+    @Deprecated
     public ParticipantIdentifier(String identifier, String scheme) {
+        this(identifier, new Scheme(scheme));
+    }
+
+    public ParticipantIdentifier(String identifier, Scheme scheme) {
         this.identifier = identifier.trim().toLowerCase(Locale.US);
         this.scheme = scheme;
     }
@@ -25,13 +30,13 @@ public class ParticipantIdentifier implements Serializable {
         return identifier;
     }
 
-    public String getScheme() {
+    public Scheme getScheme() {
         return scheme;
     }
 
     public String urlencoded() {
         try {
-            return URLEncoder.encode(String.format("%s::%s", scheme, identifier), "UTF-8");
+            return URLEncoder.encode(String.format("%s::%s", scheme.getValue(), identifier), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
