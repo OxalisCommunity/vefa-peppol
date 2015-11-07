@@ -2,6 +2,7 @@ package no.difi.vefa.peppol.common.model;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLEncoder;
 
 /**
@@ -13,22 +14,24 @@ public class DocumentIdentifier implements Serializable {
 
     private static final long serialVersionUID = -3748163459655880167L;
 
+    public static final Scheme DEFAULT_SCHEME = new Scheme("busdox-docid-qns");
+
     private Scheme scheme;
     private String customizationId;
     private String xmlNamespace;
     private String xmlRootElement;
     private String xmlVersion;
+    private URI uri;
 
     public DocumentIdentifier(String documentIdentifier) {
-        this(documentIdentifier, new Scheme("busdox-docid-qns"));
-    }
-
-    @Deprecated
-    public DocumentIdentifier(String documentIdentifier, String scheme) {
-        this(documentIdentifier, new Scheme(scheme));
+        this(documentIdentifier, DEFAULT_SCHEME, null);
     }
 
     public DocumentIdentifier(String documentIdentifier, Scheme scheme) {
+        this(documentIdentifier, scheme, null);
+    }
+
+    public DocumentIdentifier(String documentIdentifier, Scheme scheme, URI uri) {
         String[] parts = documentIdentifier.split("::|##");
 
         xmlNamespace = parts[0];
@@ -37,6 +40,7 @@ public class DocumentIdentifier implements Serializable {
         xmlVersion = parts[3];
 
         this.scheme = scheme;
+        this.uri = uri;
     }
 
     public Scheme getScheme() {
@@ -63,6 +67,10 @@ public class DocumentIdentifier implements Serializable {
         return xmlVersion;
     }
 
+    public URI getUri() {
+        return uri;
+    }
+
     @Override
     public String toString() {
         return String.format("%s::%s", scheme, getIdentifier());
@@ -75,5 +83,4 @@ public class DocumentIdentifier implements Serializable {
             throw new IllegalStateException("UTF-8 not supported.");
         }
     }
-
 }

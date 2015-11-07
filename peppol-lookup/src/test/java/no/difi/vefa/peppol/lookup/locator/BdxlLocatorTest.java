@@ -13,7 +13,7 @@ public class BdxlLocatorTest {
     public void simple() throws Exception {
         MetadataLocator locator = new BdxlLocator(DynamicLocator.OPENPEPPOL_TEST);
         Assert.assertEquals(locator.lookup(new ParticipantIdentifier("9908:810418052")), URI.create("http://test-smp.difi.no.publisher.acc.edelivery.tech.ec.europa.eu"));
-        Assert.assertNull(locator.lookup(new ParticipantIdentifier("0010:5798000000001")));
+        Assert.assertNull(locator.lookup(new ParticipantIdentifier("0088:5798000000001")));
     }
 
     @Test

@@ -19,7 +19,7 @@ public class BusdoxLocator extends AbstractLocator {
     @Override
     public URI lookup(ParticipantIdentifier participantIdentifier) throws LookupException {
         try {
-            String receiverHash = DigestUtils.md5Hex(participantIdentifier.getIdentifier().getBytes(StandardCharsets.UTF_8));
+            String receiverHash = DigestUtils.md5Hex(participantIdentifier.toString().getBytes(StandardCharsets.UTF_8));
             return new URI(String.format("http://B-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), hostname));
         } catch (URISyntaxException e) {
             throw new LookupException(e.getMessage(), e);

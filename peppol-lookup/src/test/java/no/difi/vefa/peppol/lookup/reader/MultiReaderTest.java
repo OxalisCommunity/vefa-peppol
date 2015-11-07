@@ -42,7 +42,7 @@ public class MultiReaderTest {
     public void busdoxServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
 
-        ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii05:ver2.0", "cenbii-procid-ubl");
+        ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii05:ver2.0");
 
         try {
             result.getEndpoint(processIdentifier, TransportProfile.START);
@@ -60,8 +60,8 @@ public class MultiReaderTest {
     public void busdoxServiceMetadataMultiProcess() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9933-061828591.xml"), null));
 
-        ProcessIdentifier processIdentifier1 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0", "cenbii-procid-ubl");
-        ProcessIdentifier processIdentifier2 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii46:ver1.0", "cenbii-procid-ubl");
+        ProcessIdentifier processIdentifier1 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0");
+        ProcessIdentifier processIdentifier2 = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii46:ver1.0");
 
         try {
             result.getEndpoint(processIdentifier1, TransportProfile.START);
@@ -90,7 +90,7 @@ public class MultiReaderTest {
     public void bdxrServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-9908-810418052.xml"), null));
 
-        ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0", "cenbii-procid-ubl");
+        ProcessIdentifier processIdentifier = new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver1.0");
 
         try {
             result.getEndpoint(processIdentifier, TransportProfile.START);

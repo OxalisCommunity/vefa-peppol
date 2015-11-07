@@ -6,16 +6,13 @@ public class ProcessIdentifier implements Serializable {
 
     private static final long serialVersionUID = 7486398061021950763L;
 
+    public static final Scheme DEFAULT_SCHEME = new Scheme("cenbii-procid-ubl");
+
     private String identifier;
     private Scheme scheme;
 
     public ProcessIdentifier(String identifier) {
-        this(identifier, new Scheme("cenbii-procid-ubl"));
-    }
-
-    @Deprecated
-    public ProcessIdentifier(String identifier, String scheme) {
-        this(identifier, new Scheme(scheme));
+        this(identifier, DEFAULT_SCHEME);
     }
 
     public ProcessIdentifier(String identifier, Scheme scheme) {

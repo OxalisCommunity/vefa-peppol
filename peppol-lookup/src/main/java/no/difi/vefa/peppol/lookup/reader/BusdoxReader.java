@@ -17,6 +17,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayInputStream;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
@@ -47,7 +48,7 @@ public class BusdoxReader implements MetadataReader {
 
             for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
                 String[] parts = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8").split("::", 2);
-                documentIdentifiers.add(new DocumentIdentifier(parts[1], parts[0]));
+                documentIdentifiers.add(new DocumentIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
             }
 
             return documentIdentifiers;
@@ -78,17 +79,21 @@ public class BusdoxReader implements MetadataReader {
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
             serviceMetadata.setParticipantIdentifier(new ParticipantIdentifier(
                     serviceInformation.getParticipantIdentifier().getValue(),
-                    serviceInformation.getParticipantIdentifier().getScheme()
+                    new Scheme(serviceInformation.getParticipantIdentifier().getScheme())
             ));
             serviceMetadata.setDocumentIdentifier(new DocumentIdentifier(
                     serviceInformation.getDocumentIdentifier().getValue(),
-                    serviceInformation.getDocumentIdentifier().getScheme()
+                    new Scheme(serviceInformation.getDocumentIdentifier().getScheme())
             ));
 
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
 
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
-                ProcessIdentifier processIdentifier = new ProcessIdentifier(processType.getProcessIdentifier().getValue(), processType.getProcessIdentifier().getScheme());
+                ProcessIdentifier processIdentifier = new ProcessIdentifier(
+                        processType.getProcessIdentifier().getValue(),
+                        new Scheme(processType.getProcessIdentifier().getScheme())
+                );
+
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
                     serviceMetadata.addEndpoint(new Endpoint(
                             processIdentifier,

@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.common.api.Mode;
+import no.difi.vefa.peppol.common.code.Mode;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;

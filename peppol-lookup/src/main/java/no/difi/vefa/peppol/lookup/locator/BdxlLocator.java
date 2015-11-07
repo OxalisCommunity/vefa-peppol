@@ -62,7 +62,7 @@ public class BdxlLocator extends AbstractLocator {
         try {
             // Create digest based on participant identifier.
             MessageDigest md = MessageDigest.getInstance(digestAlgorithm, BouncyCastleProvider.PROVIDER_NAME);
-            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes());
+            byte[] digest = md.digest(participantIdentifier.toString().getBytes());
 
             // Create hex of digest.
             receiverHash = Hex.encodeHexString(digest);

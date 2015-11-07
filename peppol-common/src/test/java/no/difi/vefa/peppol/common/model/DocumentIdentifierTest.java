@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.lookup.model;
+package no.difi.vefa.peppol.common.model;
 
 import no.difi.vefa.peppol.common.model.DocumentIdentifier;
 import org.testng.annotations.Test;
