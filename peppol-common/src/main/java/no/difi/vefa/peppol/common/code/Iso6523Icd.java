@@ -71,12 +71,12 @@ public enum Iso6523Icd implements Icd {
     ZZZ("ZZZ", "9999", false);
 
     private String identifier;
-    private String icd;
+    private String code;
     private boolean deprecated;
 
-    Iso6523Icd(String identifier, String icd, boolean deprecated) {
+    Iso6523Icd(String identifier, String code, boolean deprecated) {
         this.identifier = identifier;
-        this.icd = icd;
+        this.code = code;
         this.deprecated = deprecated;
     }
 
@@ -86,8 +86,8 @@ public enum Iso6523Icd implements Icd {
     }
 
     @Override
-    public String getIcd() {
-        return icd;
+    public String getCode() {
+        return code;
     }
 
     @Override
@@ -102,7 +102,7 @@ public enum Iso6523Icd implements Icd {
 
     public static Iso6523Icd valueOfIcd(String icd) {
         for (Iso6523Icd v : values())
-            if (v.icd.equals(icd))
+            if (v.code.equals(icd))
                 return v;
 
         throw new IllegalStateException(String.format("Value '%s' is not valid ICD.", icd));

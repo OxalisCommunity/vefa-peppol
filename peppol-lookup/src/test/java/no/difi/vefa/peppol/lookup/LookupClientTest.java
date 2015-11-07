@@ -2,8 +2,11 @@ package no.difi.vefa.peppol.lookup;
 
 import no.difi.vefa.peppol.common.lang.PeppolException;
 import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
+import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
+import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -39,7 +42,7 @@ public class LookupClientTest {
         assertNotNull(endpoint);
     }
 
-    @Test//(enabled = false)
+    @Test(enabled = false)
     public void simple9933() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));
@@ -51,4 +54,17 @@ public class LookupClientTest {
         assertNotNull(serviceMetadata);
     }
 
+    @Test(expectedExceptions = LookupException.class)
+    public void noSmp() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forTest().locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST)).build();
+
+        client.getDocumentIdentifiers(new ParticipantIdentifier("9908:no-smp"));
+    }
+
+    @Test(expectedExceptions = LookupException.class)
+    public void noSml() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forTest().locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST)).build();
+
+        client.getDocumentIdentifiers(new ParticipantIdentifier("9908:no-sml"));
+    }
 }

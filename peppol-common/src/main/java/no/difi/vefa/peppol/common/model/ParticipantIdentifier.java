@@ -103,7 +103,7 @@ public class ParticipantIdentifier implements Serializable {
      */
     public String urlencoded() {
         try {
-            return URLEncoder.encode(String.format("%s::%s:%s", icd.getScheme().getValue(), icd.getIcd(), identifier), "UTF-8");
+            return URLEncoder.encode(String.format("%s::%s:%s", icd.getScheme().getValue(), icd.getCode(), identifier), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
@@ -138,6 +138,6 @@ public class ParticipantIdentifier implements Serializable {
      */
     @Override
     public String toString() {
-        return String.format("%s:%s", icd.getIcd(), identifier);
+        return String.format("%s:%s", icd.getCode(), identifier);
     }
 }

@@ -1,28 +1,33 @@
 package no.difi.vefa.peppol.lookup.locator;
 
-import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import org.apache.commons.codec.digest.DigestUtils;
+import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
+import org.xbill.DNS.Lookup;
+import org.xbill.DNS.TextParseException;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.nio.charset.StandardCharsets;
 
 public class BusdoxLocator extends AbstractLocator {
 
-    private String hostname;
+    private DynamicHostnameGenerator hostnameGenerator;
 
     public BusdoxLocator(String hostname) {
-        this.hostname = hostname;
+        hostnameGenerator = new DynamicHostnameGenerator("B-", hostname, "MD5");
     }
 
     @Override
     public URI lookup(ParticipantIdentifier participantIdentifier) throws LookupException {
+        // Create hostname for participant identifier.
+        String hostname = hostnameGenerator.generate(participantIdentifier);
+
         try {
-            String receiverHash = DigestUtils.md5Hex(participantIdentifier.toString().getBytes(StandardCharsets.UTF_8));
-            return new URI(String.format("http://B-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), hostname));
-        } catch (URISyntaxException e) {
+            if (new Lookup(hostname).run() == null)
+                throw new LookupException(String.format("Identifier '%s' not registered in SML.", participantIdentifier.toString()));
+        } catch (TextParseException e) {
             throw new LookupException(e.getMessage(), e);
         }
+
+        return URI.create(String.format("http://%s", hostname));
     }
 }

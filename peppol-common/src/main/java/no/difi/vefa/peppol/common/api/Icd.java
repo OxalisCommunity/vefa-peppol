@@ -5,7 +5,7 @@ import no.difi.vefa.peppol.common.model.Scheme;
 public interface Icd {
     String getIdentifier();
 
-    String getIcd();
+    String getCode();
 
     Scheme getScheme();
 

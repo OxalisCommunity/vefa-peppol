@@ -2,13 +2,10 @@ package no.difi.vefa.peppol.lookup.locator;
 
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
-import org.apache.commons.codec.binary.Hex;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import org.xbill.DNS.*;
 
 import java.net.URI;
-import java.security.MessageDigest;
-import java.security.Security;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,20 +16,7 @@ import java.util.regex.Pattern;
  */
 public class BdxlLocator extends AbstractLocator {
 
-    static {
-        // Make sure to register Bouncy Castle as a provider.
-        if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null)
-            Security.addProvider(new BouncyCastleProvider());
-    }
-
-    /**
-     * Base hostname for lookup.
-     */
-    private String hostname;
-    /**
-     * Algorithm used for geneation of hostname.
-     */
-    private String digestAlgorithm;
+    private DynamicHostnameGenerator hostnameGenerator;
 
     /**
      * Initiate a new instance of BDXL lookup functionality using SHA-224 for hashing.
@@ -50,34 +34,19 @@ public class BdxlLocator extends AbstractLocator {
      * @param digestAlgorithm Algorithm used for generation of hostname.
      */
     public BdxlLocator(String hostname, String digestAlgorithm) {
-        this.hostname = hostname;
-        this.digestAlgorithm = digestAlgorithm;
+        hostnameGenerator = new DynamicHostnameGenerator("B-", hostname, digestAlgorithm);
     }
 
     @Override
     public URI lookup(ParticipantIdentifier participantIdentifier) throws LookupException {
-
-        String receiverHash;
-
-        try {
-            // Create digest based on participant identifier.
-            MessageDigest md = MessageDigest.getInstance(digestAlgorithm, BouncyCastleProvider.PROVIDER_NAME);
-            byte[] digest = md.digest(participantIdentifier.toString().getBytes());
-
-            // Create hex of digest.
-            receiverHash = Hex.encodeHexString(digest);
-        } catch (Exception e) {
-            throw new LookupException(e.getMessage(), e);
-        }
-
         // Create hostname for participant identifier.
-        String hostname = String.format("B-%s.%s.%s", receiverHash, participantIdentifier.getScheme().getValue(), this.hostname);
+        String hostname = hostnameGenerator.generate(participantIdentifier);
 
         try {
             // Fetch all records of type NAPTR registered on hostname.
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
             if (records == null)
-                return null;
+                throw new LookupException(String.format("Identifier '%s' not registered in SML.", participantIdentifier.toString()));
 
             // Loop records found.
             for (Record record : records) {
@@ -97,7 +66,7 @@ public class BdxlLocator extends AbstractLocator {
             throw new LookupException("Error when handling DNS lookup for BDXL.", e);
         }
 
-        return null;
+        throw new LookupException("Record for SMP not found in SML.");
     }
 
     public static String handleRegex(String naptrRegex, String hostname) {
