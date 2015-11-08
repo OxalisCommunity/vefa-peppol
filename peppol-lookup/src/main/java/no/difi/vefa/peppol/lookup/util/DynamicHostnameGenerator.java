@@ -1,8 +1,8 @@
 package no.difi.vefa.peppol.lookup.util;
 
+import com.google.common.io.BaseEncoding;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
-import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import java.nio.charset.StandardCharsets;
@@ -17,11 +17,18 @@ public class DynamicHostnameGenerator {
             Security.addProvider(new BouncyCastleProvider());
     }
 
+    private static BaseEncoding hexEncoding = BaseEncoding.base16();
+
+    /**
+     * Prefix for generated hostname.
+     */
     private String prefix;
+
     /**
      * Base hostname for lookup.
      */
     private String hostname;
+
     /**
      * Algorithm used for geneation of hostname.
      */
@@ -42,7 +49,7 @@ public class DynamicHostnameGenerator {
             byte[] digest = md.digest(participantIdentifier.toString().getBytes(StandardCharsets.UTF_8));
 
             // Create hex of digest.
-            receiverHash = Hex.encodeHexString(digest);
+            receiverHash = hexEncoding.encode(digest).toLowerCase();
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }

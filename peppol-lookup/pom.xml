@@ -95,10 +95,10 @@
             <artifactId>bcpkix-jdk15on</artifactId>
         </dependency>
 
-        <!-- Commons -->
+        <!-- Google Guava -->
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 

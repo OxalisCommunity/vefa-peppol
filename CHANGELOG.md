@@ -7,6 +7,7 @@
 * Adding no.difi.vefa.peppol.common.model.Scheme and related changes.
 * Changing namespace of exceptions.
 * Adding Icd interface and ISO6523 enum, rewriting ParticipantIdentifier to use it.
+* Adding class for InstanceIdentifier.
 
 ## 0.9.3
 
