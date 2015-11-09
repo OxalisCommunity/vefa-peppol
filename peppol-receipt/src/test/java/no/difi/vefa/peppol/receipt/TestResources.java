@@ -1,0 +1,134 @@
+package no.difi.vefa.peppol.receipt;
+
+import no.difi.vefa.peppol.common.model.DocumentIdentifier;
+import no.difi.vefa.peppol.common.model.InstanceIdentifier;
+import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import org.etsi.uri._02640.v2_.REMEvidenceType;
+
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import javax.xml.bind.JAXBElement;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
+import java.util.Properties;
+
+import static org.testng.Assert.assertNotNull;
+
+/**
+ * Created by soc on 06.11.2015.
+ */
+public class TestResources {
+
+    public static final DocumentIdentifier DOC_TYPE_ID = new DocumentIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
+    public static final InstanceIdentifier INSTANCE_IDENTIFIER = InstanceIdentifier.generateUUID();
+    public static final ParticipantIdentifier SENDER_IDENTIFIER = new ParticipantIdentifier("9908:810017902");
+    public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = new ParticipantIdentifier("9908:123456789");
+
+    private static KeyStore keyStore = null;
+    private static RemEvidenceService remEvidenceService;
+
+
+    /**
+     * Convenient helper method to obtain named Mime message resource from the class path
+     */
+    public static MimeMessage getMimeMessageFromResource(String resourceName) throws MessagingException {
+        InputStream resourceAsStream = TestResourcesTest.class.getClassLoader().getResourceAsStream(resourceName);
+        assertNotNull(resourceAsStream);
+
+        Properties properties = System.getProperties();
+        Session session = Session.getDefaultInstance(properties, null);
+        return new MimeMessage(session, resourceAsStream);
+    }
+
+
+    public static byte[] getSampleMdnSmime() {
+        return getMimeMessageFromResourceAsBytes("as2-mdn-smime.txt");
+    }
+
+    public static byte[] getMimeMessageFromResourceAsBytes(String resourceName) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+        try {
+            MimeMessage mimeMessage = getMimeMessageFromResource(resourceName);
+            mimeMessage.writeTo(baos);
+
+        } catch (MessagingException e) {
+            throw new IllegalStateException("Unable to load mime message from resource " + resourceName + " class path: " + e.getMessage(), e);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to write contents of mime message to byte array " + e.getMessage(), e);
+        }
+
+        return baos.toByteArray();
+    }
+
+    public static synchronized RemEvidenceService getRemEvidenceService() {
+        if (remEvidenceService == null) {
+            remEvidenceService = new RemEvidenceService();
+        }
+
+        return remEvidenceService;
+    }
+
+    public static synchronized KeyStore getKeystore() {
+        if (keyStore != null) {
+            return keyStore;
+        }
+
+        try {
+            keyStore = KeyStore.getInstance("JKS");
+        } catch (KeyStoreException e) {
+            throw new IllegalStateException("Unable to create KeyStore instance ", e);
+        }
+        try {
+            keyStore.load(TestResources.class.getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
+        } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
+            throw new IllegalStateException("Unable to load data into keystore from 'keystore-self-signed.jks'", e);
+        }
+
+        return keyStore;
+    }
+
+    public static KeyStore.PrivateKeyEntry getPrivateKey() {
+        KeyStore keyStore = getKeystore();
+        KeyStore.PrivateKeyEntry privateKeyEntry;
+        try {
+            privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+        } catch (NoSuchAlgorithmException | UnrecoverableEntryException | KeyStoreException e) {
+            throw new IllegalStateException("Unable to load private key entry with alias 'self-signed'", e);
+        }
+
+        return privateKeyEntry;
+    }
+
+
+    /**
+     * Creates sample rem evidence.
+     *
+     * @return sample REMEvidence based upon the resources in test/resources of this project.
+     */
+    public static JAXBElement<REMEvidenceType> createSampleRemEvidence() {
+        RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
+
+        byte[] sampleMdnSmime = TestResources.getSampleMdnSmime();
+        KeyStore.PrivateKeyEntry privateKey = TestResources.getPrivateKey();
+
+        builder.eventCode(EventCode.ACCEPTANCE)
+                .senderIdentifier(TestResources.SENDER_IDENTIFIER)
+                .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
+                .documentTypeId(TestResources.DOC_TYPE_ID)
+                .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
+                .payloadDigest("ThisIsASHA256Digest".getBytes())
+                .transmissionEvidence(sampleMdnSmime)
+        ;
+
+        // Signs and builds the REMEvidenceType instance
+        return builder.buildRemEvidenceInstance(privateKey);
+    }
+}

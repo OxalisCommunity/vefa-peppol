@@ -15,6 +15,7 @@
         <module>peppol-common</module>
         <module>peppol-lookup</module>
         <module>peppol-security</module>
+        <module>peppol-receipt</module>
     </modules>
 
     <scm>
@@ -60,7 +61,7 @@
 
     <properties>
         <java.encoding>UTF-8</java.encoding>
-        <java.version>1.6</java.version>
+        <java.version>1.7</java.version>
     </properties>
 
     <dependencies>
@@ -92,17 +93,22 @@
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
-                <version>${project.version}</version>
+                <version>0.9.4-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
-                <version>${project.version}</version>
+                <version>0.9.4-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
-                <version>${project.version}</version>
+                <version>0.9.4-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
+                <artifactId>peppol-receipt</artifactId>
+                <version>0.9.4-SNAPSHOT</version>
             </dependency>
 
             <!-- VEFA Commons -->

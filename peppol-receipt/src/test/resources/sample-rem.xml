@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DeliveryNonDeliveryToRecipient xmlns="http://uri.etsi.org/02640/v2#" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" xmlns:ns3="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns4="http://uri.etsi.org/02231/v2#" xmlns:ns5="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ns6="http://www.w3.org/2001/04/xmlenc#" xmlns:ns7="http://uri.etsi.org/02640/soapbinding/v1#" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" Id="524bc692-a62f-4eca-9d59-be5fb43b493e" version="2.1.1">
+    <EventCode>http:uri.etsi.org/02640/Event#Delivery</EventCode>
+    <EvidenceIdentifier>524bc692-a62f-4eca-9d59-be5fb43b493e</EvidenceIdentifier>
+    <EvidenceIssuerPolicyID>
+        <PolicyID>http://uri.eu-spocs.eu/eDeliveryPolicy</PolicyID>
+    </EvidenceIssuerPolicyID>
+    <EvidenceIssuerDetails>
+        <NamesPostalAddresses>
+            <NamePostalAddress>
+                <EntityName>
+                    <Name>MD_Germany</Name>
+                </EntityName>
+                <PostalAddress>
+                    <StreetAddress>Hinter dem Schuetting 8</StreetAddress>
+                    <Locality>Bremen</Locality>
+                    <PostalCode>28359</PostalCode>
+                    <CountryName>Germany</CountryName>
+                </PostalAddress>
+            </NamePostalAddress>
+        </NamesPostalAddresses>
+        <AttributedElectronicAddress scheme="mailto">gateway@osci.bos-bremen.de</AttributedElectronicAddress>
+    </EvidenceIssuerDetails>
+    <EventTime>2013-04-24T13:33:15.495+02:00</EventTime>
+    <ReplyToAddress scheme="mailto">govello-1302789399090-000286218@OSCI.BOS-BREMEN.DE</ReplyToAddress>
+    <SenderDetails>
+        <NamesPostalAddresses>
+            <NamePostalAddress>
+                <EntityName>
+                    <Name>EA / PSC Bremen (Spocs-Pilot)</Name>
+                </EntityName>
+                <PostalAddress>
+                    <StreetAddress>Hinter dem Schuetting 8</StreetAddress>
+                    <Locality>Bremen</Locality>
+                    <PostalCode>21895</PostalCode>
+                    <CountryName>DE</CountryName>
+                </PostalAddress>
+            </NamePostalAddress>
+        </NamesPostalAddresses>
+        <AttributedElectronicAddress>govello-1302789399090-000286218@OSCI.BOS-BREMEN.DE</AttributedElectronicAddress>
+    </SenderDetails>
+    <RecipientsDetails>
+        <EntityDetails>
+            <NamesPostalAddresses>
+                <NamePostalAddress>
+                    <EntityName/>
+                </NamePostalAddress>
+            </NamesPostalAddresses>
+            <AttributedElectronicAddress>psc@osci.bos-bremen.de</AttributedElectronicAddress>
+        </EntityDetails>
+    </RecipientsDetails>
+    <SenderMessageDetails isNotification="false">
+        <MessageSubject>Spocs Message from Germany 24.04.2013 - 13:33</MessageSubject>
+        <MessageIdentifierByREMMD>egvp_hb_13668033503192911513881093559397</MessageIdentifierByREMMD>
+    </SenderMessageDetails>
+    <ns2:Signature>
+        <ns2:SignedInfo>
+            <ns2:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#"/>
+            <ns2:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha512"/>
+            <ns2:Reference Type="xml/application" URI="#524bc692-a62f-4eca-9d59-be5fb43b493e" Id="Ref_#524bc692-a62f-4eca-9d59-be5fb43b493e">
+                <ns2:Transforms>
+                    <ns2:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                    <ns2:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#">
+                        <InclusiveNamespaces:InclusiveNamespaces xmlns:InclusiveNamespaces="http://www.w3.org/2001/10/xml-exc-c14n#" xmlns="" xmlns:S="http://www.w3.org/2003/05/soap-envelope" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns15="http://www.w3.org/2001/10/xml-exc-c14n#" PrefixList=""/>
+                    </ns2:Transform>
+                </ns2:Transforms>
+                <ns2:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha512"/>
+                <ns2:DigestValue>x1bhwPYJq489Rmv4Nn2av52EABJBQAYzfC6uFXPBFh7sMqLSRkveviG2mEzvxB86bt1dsCALjgPRMCd3SOesLw==</ns2:DigestValue>
+            </ns2:Reference>
+        </ns2:SignedInfo>
+        <ns2:SignatureValue>STe95zT4jEsaD/V/bpeoQ6ZiSES7s8FAwF52R0SR+nD7cwgy9kysOgybmhi+iOjk3ixsiODm1yWLUlF/R4lHCdsqTh6nUgOjKhGdAm1336AyVFR5D99Go0pi9l1S7K1++fRinXTVbnZDCRIfPWHubGo+21tc8vBKXOJ0BHOXDoDPuqUV/AxQ3oeWLzscNdIrGWmkv0mkSQ6ED0szzN4e/kRS+C5dpt89LW4qiScwDzRCApysDy6nSc6clO2Z0IFBuE1n12JhfZL/zsYzVVQnETEemChy+kFYt9pJCe5KbK3kv2RDoPh9YCe1273vsRYAfp1LqFMZVE7BGvp3bMCaUA==</ns2:SignatureValue>
+        <ns2:KeyInfo>
+            <ns2:X509Data>
+                <ns2:X509Certificate>MIIEPTCCAyWgAwIBAgIIIHnbcA8KCe8wDQYJKoZIhvcNAQELBQAwZDEaMBgGA1UEAwwRYm9zIGFkdmFuY2VkIENBIDIxGDAWBgNVBAsMD3Rlc3R1bml0IGludGVybjEfMB0GA1UECgwWYnJlbWVuIG9ubGluZSBzZXJ2aWNlczELMAkGA1UEBhMCREUwHhcNMTAxMjAyMTQ0MTAxWhcNMTMxMjAxMTQ0MTAxWjBnMR0wGwYDVQQDDBRNRCBHZXJtYW55IHNpZ25hdHVyZTEYMBYGA1UECwwPdGVzdGNlcnRpZmljYXRlMR8wHQYDVQQKDBZicmVtZW4gb25saW5lIHNlcnZpY2VzMQswCQYDVQQGEwJkZTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAOaUrgeu94mm33WAYkkPlnvpLdZm9qeBDCvfBsvCCAxbHBrdkjImIGQuIBtVZTsX42BL+eXzfBows8VhJdwXVRT6rIwPtPJknZtkxF8RG4KJq3x/CjbRQx0p9qcg9SwozJK0OamoOixCZYRTOi6ph3oj3w9NBCBC4Zc7s43QhPsUzJRDMNoqy2qQWWASo5CO5y8es1U/1ZISvidqt6r/AFvPuyrTiC07xA6PuFSwI8kOCH1rYmgB1uCRYBvVnUfzQGtiUjmpUyxb4tal5ORUC5qxW8j3641Ty41RM6qVztoc/G8nqo8pVv8edgM/rK/XXiUje+WxrFPDZqDo4q3jKy0CAwEAAaOB7zCB7DAMBgNVHRMBAf8EAjAAMD8GA1UdJQQ4MDYGCCsGAQUFBwMBBggrBgEFBQcDAgYIKwYBBQUHAwQGCisGAQQBgjcUAgIGCisGAQQBgjcKAwwwHwYDVR0jBBgwFoAUGiUkn7zu6IWNXRVmYK2y7cZUYE4wDgYDVR0PAQH/BAQDAgSwMB0GA1UdDgQWBBTBhVzDn8HxC65pV0ekD7d+AtH93jBLBggrBgEFBQcBAQQ/MD0wOwYIKwYBBQUHMAGGL2h0dHA6Ly9vY3NwLmJvcy1icmVtZW4uZGUvcHVibGljd2ViL3N0YXR1cy9vY3NwMA0GCSqGSIb3DQEBCwUAA4IBAQAtT9cGElVsKPP3pJFp0PDLxww7QU25OKAPZoDJ62YVr7Xb5ERRXzjXKCEyvlB2m4TFm8nxW5y20EmEFaW327D1PM3c+UTMaghsBu+nOB0jfE7Gt43dd8DkWqHsGwDNTvSFSWFmdsNknMXyl/Bn2wjvS0SIpPU4FGAdAcp+htLpH145kEOQ2P6OM6YcAHOYUBY3Mk4vs2T9xLbPx9oaWjU9T0OldnLP4pnFdvLgwzL0jJUXIjBNULU3Uw7W9gqyP5ZZLytwFl1USvKKIxX9tsKRmEphA5Ajh6CDS5+tg8c2nxo5s/hVGljvc2oEwFdkGYjuNehx/lHIf8LBGK8/qa1L</ns2:X509Certificate>
+            </ns2:X509Data>
+        </ns2:KeyInfo>
+    </ns2:Signature>
+</DeliveryNonDeliveryToRecipient>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://peppol.eu/xsd/ticc/receipt/1.0"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#" attributeFormDefault="unqualified"
+           elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://peppol.eu/xsd/ticc/receipt/1.0">
+
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#"
+               schemaLocation="xmldsig-core-schema.xsd"/>
+
+    <!-- Full receipt -->
+    <xs:element name="PeppolReceipt" type="ReceiptType"/>
+    <xs:complexType name="ReceiptType">
+        <xs:sequence>
+            <!-- Version of receipt, default: 1.0 -->
+            <xs:element name="Version" type="xs:string" fixed="1.0"/>
+            <!-- Unique identifier from transmission. -->
+            <xs:element name="TransmissionId" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <!-- Error in case of problems with transmission. -->
+            <xs:element name="ErrorCode" type="ErrorCodeType" minOccurs="0"/>
+            <!-- Transmission data. -->
+            <xs:element name="Transmission" type="TransmissionType" minOccurs="1"/>
+            <!-- Payload data. -->
+            <xs:element name="Payload" type="PayloadType" minOccurs="1"/>
+            <!-- Original protocol specific receipt -->
+            <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0"/>
+            <xs:element ref="ds:Signature"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Privides an extension to be included in the ETSI REMEvidence according to ETSI TS 102 640-2 -->
+    <xs:element name="PeppolRemExtension" type="PeppolRemExtensionType"/>
+    <xs:complexType name="PeppolRemExtensionType">
+        <xs:sequence>
+            <xs:element name="TransmissionProtocol" type="xs:string" minOccurs="1"/>
+            <xs:element name="TransmissionRole" type="TransmissionRole" minOccurs="1"/>
+            <!-- Original protocol specific receipt -->
+            <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <!-- Information regarding the transport -->
+    <xs:complexType name="TransmissionType">
+        <xs:sequence>
+            <!-- Identifier of sender. -->
+            <xs:element name="Sender" type="ParticipantType" minOccurs="1"/>
+            <!-- Identifier of receiver. -->
+            <xs:element name="Receiver" type="ParticipantType" minOccurs="1"/>
+            <!-- Timestamp recorded received, most cases from protocol specific receipt. -->
+            <xs:element name="Timestamp" type="xs:dateTime" minOccurs="1"/>
+            <!-- Protocol used for sending. -->
+            <xs:element name="Protocol" type="xs:string" minOccurs="1"/>
+            <!-- Role of signer in transmission. -->
+            <xs:element name="Role" type="TransmissionRole" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Information regarding the content -->
+    <xs:complexType name="PayloadType">
+        <xs:sequence>
+            <!-- Identifier of payload. -->
+            <xs:element name="Identifier" type="xs:string" minOccurs="1"/>
+            <!-- Process identifier of payload. -->
+            <xs:element name="ProcessId" type="xs:string" minOccurs="1"/>
+            <!-- Document identifier of payload. -->
+            <xs:element name="DocumentId" type="xs:string" minOccurs="1"/>
+            <!-- Digest method used for payload. -->
+            <xs:element ref="ds:DigestMethod" minOccurs="1"/>
+            <!-- Digest value for payload. -->
+            <xs:element ref="ds:DigestValue" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Type for failed sending -->
+    <xs:complexType name="ErrorCodeType">
+        <xs:simpleContent>
+            <!-- In case of error must a reason be provided in english. -->
+            <xs:extension base="xs:string">
+                <xs:attribute name="status" type="ErrorCodeStatus"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Type for participant -->
+    <xs:complexType name="ParticipantType">
+        <xs:simpleContent>
+            <!-- Typical for PEPPOL: 9908:991825827 -->
+            <xs:extension base="xs:string">
+                <!-- Typical for PEPPOL: iso6523-actorid-upis -->
+                <xs:attribute name="schemeId" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Type for original receipt -->
+    <xs:complexType name="OriginalReceiptType">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary">
+                <xs:attribute name="type" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- Status for transmission -->
+    <xs:simpleType name="ErrorCodeStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS"/>
+            <xs:enumeration value="REJECTED"/>
+            <xs:enumeration value="INVALID_SIGNATURE"/>
+            <xs:enumeration value="UNKNOWN_RECEIVER"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Side of transmission -->
+    <xs:simpleType name="TransmissionRole">
+        <xs:restriction base="xs:string">
+            <!-- Sender/outbound -->
+            <xs:enumeration value="C2"/>
+            <!-- Receiver/inbound -->
+            <xs:enumeration value="C3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

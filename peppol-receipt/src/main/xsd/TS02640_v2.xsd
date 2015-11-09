@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xml="http://www.w3.org/XML/1998/namespace"
+           xmlns:xades="http://uri.etsi.org/01903/v1.3.2#"
+           xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+           xmlns:tsl="http://uri.etsi.org/02231/v2#"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
+           xmlns:rem="http://uri.etsi.org/02640/v2#"
+           targetNamespace="http://uri.etsi.org/02640/v2#"
+           elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://uri.etsi.org/01903/v1.3.2#" schemaLocation="XAdES.xsd"/>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+    <xs:import namespace="http://uri.etsi.org/02231/v2#" schemaLocation="ts_102231v030102_xsd.xsd"/>
+    <xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+    <xs:import namespace="urn:oasis:names:tc:SAML:2.0:assertion" schemaLocation="saml-schema-assertion-2.0.xsd"/>
+    <!-- List of evidence -->
+    <xs:element name="SubmissionAcceptanceRejection" type="rem:REMEvidenceType"/>
+    <xs:element name="RelayREMMDAcceptanceRejection" type="rem:REMEvidenceType"/>
+    <xs:element name="RelayREMMDFailure" type="rem:REMEvidenceType"/>
+    <xs:element name="DeliveryNonDeliveryToRecipient" type="rem:REMEvidenceType"/>
+    <xs:element name="DownloadNonDownloadByRecipient" type="rem:REMEvidenceType"/>
+    <xs:element name="RetrievalNonRetrievalByRecipient" type="rem:REMEvidenceType"/>
+    <xs:element name="AcceptanceRejectionByRecipient" type="rem:REMEvidenceType"/>
+    <xs:element name="RelayToNonREMSystem" type="rem:REMEvidenceType"/>
+    <xs:element name="ReceivedFromNonREMSystem" type="rem:REMEvidenceType"/>
+    <!-- EvidenceType definition -->
+    <xs:complexType name="REMEvidenceType">
+        <xs:sequence>
+            <xs:element ref="rem:EventCode" minOccurs="0"/>
+            <xs:element ref="rem:EventReasons" minOccurs="0"/>
+            <xs:element name="EvidenceIdentifier" type="xs:string"/>
+            <xs:element ref="rem:EvidenceIssuerPolicyID" minOccurs="0"/>
+            <xs:element ref="rem:EvidenceIssuerDetails"/>
+            <xs:element ref="rem:SenderAuthenticationDetails" minOccurs="0"/>
+            <xs:element ref="rem:RecipientAuthenticationDetails" minOccurs="0"/>
+            <xs:element name="EventTime" type="xs:dateTime"/>
+            <xs:element name="SubmissionTime" type="xs:dateTime" minOccurs="0"/>
+            <!-- ReplyTo type changed from xs:string to rem:AttributedElectronicAddressType in version #2 -->
+            <xs:choice minOccurs="0">
+                <xs:element name="ReplyTo" type="xs:string"/>
+                <xs:element name="ReplyToAddress" type="rem:AttributedElectronicAddressType"/>
+            </xs:choice>
+            <xs:element ref="rem:SenderDetails"/>
+            <xs:element ref="rem:RecipientsDetails"/>
+            <xs:element ref="rem:RecipientsDelegatesDetails" minOccurs="0"/>
+            <xs:element name="EvidenceRefersToRecipient" type="xs:integer" minOccurs="0"/>
+            <xs:element ref="rem:SenderMessageDetails" minOccurs="0"/>
+            <xs:element ref="rem:NotificationMessageDetails" minOccurs="0"/>
+            <xs:element name="ForwardedToExternalSystem" type="xs:string" minOccurs="0"/>
+            <xs:element ref="rem:TransactionLogInformation" minOccurs="0"/>
+            <xs:element ref="rem:Extensions" minOccurs="0"/>
+            <xs:element ref="ds:Signature" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="version" type="xs:string" use="required"/>
+        <xs:attribute name="Id" type="xs:ID" use="optional"/>
+    </xs:complexType>
+    <!-- EventCode -->
+    <xs:element name="EventCode" type="xs:anyURI"/>
+    <!-- EventReasons -->
+    <xs:element name="EventReasons" type="rem:EventReasonsType"/>
+    <xs:complexType name="EventReasonsType">
+        <xs:sequence>
+            <xs:element ref="rem:EventReason" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="EventReason" type="rem:EventReasonType"/>
+    <xs:complexType name="EventReasonType">
+        <xs:sequence>
+            <xs:element name="Code" type="xs:anyURI"/>
+            <xs:element name="Details" type="xs:string" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- EvidenceIssuerPolicyID-->
+    <xs:element name="EvidenceIssuerPolicyID" type="rem:EvidenceIssuerPolicyIDType"/>
+    <xs:complexType name="EvidenceIssuerPolicyIDType">
+        <xs:sequence>
+            <xs:element name="PolicyID" type="xs:anyURI" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- EntityDetailsType -->
+    <xs:element name="EvidenceIssuerDetails" type="rem:EntityDetailsType"/>
+    <xs:complexType name="EntityDetailsType">
+        <xs:sequence>
+            <xs:element ref="rem:NamesPostalAddresses" minOccurs="0"/>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="rem:AttributedElectronicAddress"/>
+                <xs:element ref="tsl:ElectronicAddress"/>
+            </xs:choice>
+            <xs:element ref="rem:CertificateDetails" minOccurs="0"/>
+            <xs:element ref="xades:Any" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- AttributedElectronicAddressType - introduced in Version #2 as an alternative to tsl:ElectronicAddress -->
+    <xs:complexType name="AttributedElectronicAddressType">
+        <xs:simpleContent>
+            <xs:extension base="tsl:NonEmptyURIType">
+                <xs:attribute name="scheme" type="xs:string" default="mailto">
+                    <xs:annotation>
+                        <xs:documentation>Defaults to mailto, if not present</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="DisplayName" type="tsl:NonEmptyString"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:element name="AttributedElectronicAddress" type="rem:AttributedElectronicAddressType"/>
+    <xs:element name="NamesPostalAddresses" type="rem:NamesPostalAddressListType"/>
+    <xs:complexType name="NamesPostalAddressListType">
+        <xs:sequence>
+            <xs:element ref="rem:NamePostalAddress" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="NamePostalAddress" type="rem:NamePostalAddressType"/>
+    <xs:complexType name="NamePostalAddressType">
+        <xs:sequence>
+            <xs:element ref="rem:EntityName" minOccurs="0"/>
+            <xs:element ref="rem:PostalAddress" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="EntityName" type="rem:EntityNameType"/>
+    <xs:complexType name="EntityNameType">
+        <xs:sequence>
+            <xs:element name="Name" type="tsl:NonEmptyString" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute ref="xml:lang" use="optional"/>
+    </xs:complexType>
+    <xs:element name="PostalAddress" type="rem:PostalAddressType"/>
+    <xs:complexType name="PostalAddressType">
+        <xs:sequence>
+            <xs:element name="StreetAddress" type="tsl:NonEmptyString" maxOccurs="unbounded"/>
+            <xs:element name="Locality" type="tsl:NonEmptyString"/>
+            <xs:element name="StateOrProvince" type="tsl:NonEmptyString" minOccurs="0"/>
+            <xs:element name="PostalCode" type="tsl:NonEmptyString"/>
+            <xs:element name="CountryName" type="tsl:NonEmptyString"/>
+        </xs:sequence>
+        <xs:attribute ref="xml:lang" use="optional"/>
+    </xs:complexType>
+    <xs:element name="CertificateDetails" type="rem:CertificateDetailsType"/>
+    <xs:complexType name="CertificateDetailsType">
+        <xs:choice>
+            <xs:element name="X509Certificate" type="xs:base64Binary"/>
+            <xs:element name="CertID" type="xades:CertIDType"/>
+            <xs:element ref="rem:CertIDAndSignature"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="CertIDAndSignature" type="rem:CertIDAndSignatureType"/>
+    <xs:complexType name="CertIDAndSignatureType">
+        <xs:sequence>
+            <xs:element name="IssuerSerial" type="xades:DigestAlgAndValueType"/>
+            <xs:element name="tbsCertificateDigestDetails" type="xades:DigestAlgAndValueType"/>
+            <xs:element ref="rem:CertSignatureDetails"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="CertSignatureDetails" type="rem:CertSignatureDetailsType"/>
+    <xs:complexType name="CertSignatureDetailsType">
+        <xs:sequence>
+            <xs:element ref="ds:SignatureMethod"/>
+            <xs:element ref="ds:SignatureValue"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- AuthenticationDetailsType -->
+    <xs:element name="SenderAuthenticationDetails" type="rem:AuthenticationDetailsType"/>
+    <xs:element name="RecipientAuthenticationDetails" type="rem:AuthenticationDetailsType"/>
+    <xs:complexType name="AuthenticationDetailsType">
+        <xs:sequence>
+            <xs:choice>
+                <xs:sequence>
+                    <xs:element name="AuthenticationTime" type="xs:dateTime"/>
+                    <xs:element name="AuthenticationMethod" type="xs:anyURI"/>
+                </xs:sequence>
+                <!-- saml:Assertion - introduced in Version #2 as an alternative to rem:AuthenticationTime/Method -->
+                <xs:element ref="saml:Assertion"/>
+            </xs:choice>
+            <xs:element name="AdditionalDetails" type="xades:AnyType" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- EntityDetailsListType -->
+    <xs:element name="SenderDetails" type="rem:EntityDetailsType"/>
+    <xs:element name="RecipientsDetails" type="rem:EntityDetailsListType"/>
+    <xs:complexType name="EntityDetailsListType">
+        <xs:sequence>
+            <xs:element name="EntityDetails" type="rem:EntityDetailsType" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!-- RecipientsDelegatesDetailsType -->
+    <xs:element name="RecipientsDelegatesDetails" type="rem:RecipientsDelegatesType"/>
+    <xs:complexType name="RecipientsDelegatesType">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element name="DelegateDetails" type="rem:EntityDetailsType"/>
+            <xs:element name="DelegatingRecipients" type="rem:ListOfIntegers"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="ListOfIntegers">
+        <xs:list itemType="xs:integer"/>
+    </xs:simpleType>
+    <xs:element name="SenderMessageDetails" type="rem:MessageDetailsType"/>
+    <xs:element name="NotificationMessageDetails" type="rem:MessageDetailsType"/>
+    <xs:complexType name="MessageDetailsType">
+        <xs:sequence>
+            <xs:element name="MessageSubject" type="xs:string"/>
+            <xs:element name="UAMessageIdentifier" type="xs:string" minOccurs="0"/>
+            <xs:element name="MessageIdentifierByREMMD" type="xs:string"/>
+            <xs:element ref="ds:DigestMethod" minOccurs="0"/>
+            <xs:element ref="ds:DigestValue" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="isNotification" type="xs:boolean" use="required"/>
+    </xs:complexType>
+    <xs:element name="TransactionLogInformation" type="rem:TransactionLogInformationType"/>
+    <xs:complexType name="TransactionLogInformationType">
+        <xs:sequence>
+            <xs:element ref="rem:TransactionLog" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="TransactionLog" type="xades:AnyType"/>
+    <xs:element name="Extensions" type="rem:ExtensionsListType"/>
+    <xs:complexType name="ExtensionsListType">
+        <xs:sequence maxOccurs="unbounded">
+            <xs:element ref="rem:Extension"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Extension" type="rem:ExtensionType"/>
+    <xs:complexType name="ExtensionType">
+        <xs:complexContent>
+            <xs:extension base="xades:AnyType">
+                <xs:attribute name="isCritical" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

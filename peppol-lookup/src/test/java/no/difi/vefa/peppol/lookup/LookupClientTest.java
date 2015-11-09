@@ -16,7 +16,7 @@ import static org.testng.Assert.assertNotNull;
 
 public class LookupClientTest {
 
-    @Test
+    @Test(groups = "full")
     public void simple() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new ApacheFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9908:991825827"));
@@ -42,7 +42,7 @@ public class LookupClientTest {
         assertNotNull(endpoint);
     }
 
-    @Test(enabled = false)
+    @Test(groups = "full")
     public void simple9933() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
         List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));
