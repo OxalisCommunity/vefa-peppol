@@ -38,8 +38,8 @@ public class LookupClientBuilder {
 
         return newInstance()
                 .locator(new DynamicLocator(locator))
-                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.apValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.smpValidator()));
+                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.endpointValidator()))
+                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.providerValidator()));
     }
 
     public static LookupClientBuilder forProduction() {
@@ -105,5 +105,4 @@ public class LookupClientBuilder {
 
         return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, providerCertificateValidator, endpointertificateValidator);
     }
-
 }

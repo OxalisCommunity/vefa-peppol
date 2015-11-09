@@ -56,11 +56,11 @@ public class PeppolContext {
         return keyStore;
     }
 
-    public Validator apValidator() {
+    public Validator endpointValidator() {
         return generateValidator(intermediateApCertificates, apCn);
     }
 
-    public Validator smpValidator() {
+    public Validator providerValidator() {
         return generateValidator(intermediateSmpCertificates, smpCn);
     }
 
