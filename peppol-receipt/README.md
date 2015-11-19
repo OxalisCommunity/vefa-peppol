@@ -13,6 +13,11 @@ The purpose of REM is to act as evidence that a certain event has occured during
  
   The standard is very old, almost archaic and as such needed some adjustements for usage in a 4-corner transport model.
 
+## Providing the evidence
+
+In AS2 the signed MDN is included in the "Extensions" of the REM Evidence
+ 
+
 ## How to include this component in your project
    
 This component has been published on Maven central. You may include it in your own Maven-based Java-project by adding
