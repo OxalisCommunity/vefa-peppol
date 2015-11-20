@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
@@ -7,7 +7,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 /**
- * Factory for creating RemEvidenceBuilder instances and holding the JAXBContext, which is costly to create.
+ * Provides various services related to production and consumption of REMEvidenceType objects
+ * in addition to holding the JAXBContext, which is costly to create.
  *
  * This class is thread safe, however due to the cost of creating the JAXBContext you should wrap it in a singleton
  * if you intend to create numerous instances.
@@ -30,15 +31,15 @@ public class RemEvidenceService {
         }
     }
 
-    RemEvidenceBuilder createDeliveryNonDeliveryToRecipientBuilder() {
+    public RemEvidenceBuilder createDeliveryNonDeliveryToRecipientBuilder() {
         return  new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, jaxbContext);
     }
 
-    RemEvidenceBuilder createrelayRemMdAcceptanceRejectionBuilder() {
+    public RemEvidenceBuilder createRelayRemMdAcceptanceRejectionBuilder() {
         return new RemEvidenceBuilder(EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION, jaxbContext);
     }
 
-    RemEvidenceTransformer createRemEvidenceTransformer() {
+    public RemEvidenceTransformer createRemEvidenceTransformer() {
         return new RemEvidenceTransformer(jaxbContext);
     }
 

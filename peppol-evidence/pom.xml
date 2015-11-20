@@ -9,9 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>peppol-receipt</artifactId>
+    <artifactId>peppol-evidence</artifactId>
 
-    <name>VEFA PEPPOL :: Receipt</name>
+    <name>VEFA PEPPOL :: Evidence</name>
     <description>Implementation of ETSI REM evidence according to ETSI TS 102 640-2 with some adjustments.</description>
     <url>https://github.com/difi/vefa-peppol</url>
 

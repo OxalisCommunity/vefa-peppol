@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.common.model.DocumentIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;

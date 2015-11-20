@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;

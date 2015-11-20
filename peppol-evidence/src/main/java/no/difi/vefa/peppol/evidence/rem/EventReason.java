@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 /**
  * Event reason identifiers and codes according to Annex D of ETSI TS 102 640-2 V2.1.1

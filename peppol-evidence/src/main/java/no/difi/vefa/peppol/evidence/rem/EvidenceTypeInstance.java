@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 /**
  * REMEvidenceType is an xml complext type, which must be instantiated, see

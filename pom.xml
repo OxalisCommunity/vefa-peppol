@@ -15,7 +15,7 @@
         <module>peppol-common</module>
         <module>peppol-lookup</module>
         <module>peppol-security</module>
-        <module>peppol-receipt</module>
+        <module>peppol-evidence</module>
     </modules>
 
     <scm>

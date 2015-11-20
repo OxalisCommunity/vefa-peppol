@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
@@ -39,7 +39,7 @@ import java.util.UUID;
  *
  * See unit tests for details on how to use it.
  */
-class RemEvidenceBuilder {
+public class RemEvidenceBuilder {
 
     private String version;
     private final EvidenceTypeInstance evidenceTypeInstance;
@@ -96,6 +96,13 @@ class RemEvidenceBuilder {
         return this;
     }
 
+    /**
+     * The value of <code>//DocumentIdentification/InstanceIdentifier</code> from the SBDH.
+     *
+     * @param instanceIdentifier the unique identification of the SBDH in accordance with UN/CEFACT TS SBDH
+     *
+     * @return reference to the builder
+     */
     public RemEvidenceBuilder instanceIdentifier(InstanceIdentifier instanceIdentifier) {
         this.instanceIdentifier = instanceIdentifier;
         return this;

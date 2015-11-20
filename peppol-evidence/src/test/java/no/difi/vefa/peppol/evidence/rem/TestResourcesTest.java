@@ -1,4 +1,4 @@
-package no.difi.vefa.peppol.receipt;
+package no.difi.vefa.peppol.evidence.rem;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
