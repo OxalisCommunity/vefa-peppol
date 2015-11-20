@@ -25,7 +25,9 @@ This component has been published on Maven central. You may include it in your o
    
 ```xml
     <dependency>
-    ...
+        <groupId>no.difi.vefa</groupId>
+        <artifactId>peppol-evidence</artifactid>
+        <version>the latest version </version>
     <dependency>
 ```
 
