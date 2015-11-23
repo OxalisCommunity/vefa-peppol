@@ -8,6 +8,7 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
+import java.util.Date;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
@@ -47,6 +48,7 @@ public class RemEvidenceBuilderTest    {
         RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, remEvidenceService.getJaxbContext());
 
         builder.eventCode(EventCode.ACCEPTANCE)
+                .eventTime(new Date())
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)

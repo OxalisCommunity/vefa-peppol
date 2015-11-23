@@ -1,7 +1,7 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 /**
- * REMEvidenceType is an xml complext type, which must be instantiated, see
+ * REMEvidenceType is an xml complex type, which must be instantiated, see
  * ETSI TS 102 640-2 V2.1.1 section B2
  *
  * @author steinar

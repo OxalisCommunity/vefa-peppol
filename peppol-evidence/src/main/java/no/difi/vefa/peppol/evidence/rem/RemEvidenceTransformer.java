@@ -3,7 +3,6 @@ package no.difi.vefa.peppol.evidence.rem;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 
 import javax.xml.bind.*;
-import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -14,6 +13,7 @@ public class RemEvidenceTransformer {
 
 
     private JAXBContext jaxbContext;
+    private boolean formattedOutput = false;
 
     public RemEvidenceTransformer(JAXBContext jaxbContext) {
 
@@ -23,7 +23,8 @@ public class RemEvidenceTransformer {
     public void transformToXml(JAXBElement<REMEvidenceType> remEvidenceInstance, OutputStream outputStream) {
         try {
             Marshaller marshaller = jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            // This will cause the signed XML document to fail validation
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
             marshaller.marshal(remEvidenceInstance, outputStream);
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to create JAXB Marshaller",e);
@@ -47,5 +48,13 @@ public class RemEvidenceTransformer {
             throw new IllegalStateException("Unable to parse input stream", e);
         }
         return result;
+    }
+
+    public boolean isFormattedOutput() {
+        return formattedOutput;
+    }
+
+    public void setFormattedOutput(boolean formattedOutput) {
+        this.formattedOutput = formattedOutput;
     }
 }

@@ -3,22 +3,52 @@ package no.difi.vefa.peppol.security.xmldsig;
 import no.difi.vefa.peppol.common.util.DomUtils;
 import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.crypto.dsig.XMLSignatureFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableEntryException;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 
 public class XmldsigTest {
 
+    private KeyStore.PrivateKeyEntry privateKeyEntry;
+
+    @BeforeClass
+    public void setUp() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, UnrecoverableEntryException {
+        KeyStore keyStore = KeyStore.getInstance("JKS");
+        keyStore.load(getClass().getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
+
+        privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+
+    }
+
     @Test
     public void simple() throws Exception {
+/*
         KeyStore keyStore = KeyStore.getInstance("JKS");
         keyStore.load(getClass().getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
 
         KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+*/
 
         ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
         XmldsigSigner.sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
@@ -37,5 +67,41 @@ public class XmldsigTest {
     public void simpleContructors() {
         new XmldsigSigner();
         new XmldsigVerifier();
+    }
+
+    /**
+     * Verifies that a simple class annotated with JAXB can be signed and validated.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void signAndValidate() throws Exception {
+
+        Sample sample = new Sample();
+        sample.setInfo("The quick brown fox");
+
+        JAXBContext jaxbContext = JAXBContext.newInstance(Sample.class);
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        DOMResult domResult = new DOMResult();
+
+        marshaller.marshal(sample, domResult);
+
+        Document node = (Document) domResult.getNode();
+        Element documentElement = node.getDocumentElement();
+        DOMResult signedResult = new DOMResult();
+        XmldsigSigner.sign(documentElement, privateKeyEntry, signedResult);
+
+        // Verify the signature from the signed DOM document
+        Document signedDocument = (Document) signedResult.getNode();
+        X509Certificate verify = XmldsigVerifier.verify(signedDocument);
+
+/*
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer t = tf.newTransformer();
+        DOMSource source = new DOMSource(domResult.getNode());
+        StreamResult result = new StreamResult(System.out);
+        t.transform(source, result);
+*/
+
     }
 }

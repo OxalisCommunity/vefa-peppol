@@ -48,7 +48,9 @@ public class RemEvidenceBuilder {
     private EventReason eventReason;
     private String evidenceIdentifier = UUID.randomUUID().toString();
 
+    // The timestamp of the delivery, defaults to current date and time.
     private Date eventTime = new Date();
+
     private ParticipantIdentifier senderIdentifier;
     private ParticipantIdentifier recipientIdentifier;
     private DocumentIdentifier documentTypeId;
@@ -77,6 +79,11 @@ public class RemEvidenceBuilder {
      */
     public RemEvidenceBuilder eventReason(EventReason eventReason) {
         this.eventReason = eventReason;
+        return this;
+    }
+
+    public RemEvidenceBuilder eventTime(Date date) {
+        this.eventTime = date;
         return this;
     }
 
@@ -117,6 +124,7 @@ public class RemEvidenceBuilder {
         this.specificReceiptBytes = specificReceiptBytes;
         return this;
     }
+
 
     public JAXBElement<REMEvidenceType> buildRemEvidenceInstance(KeyStore.PrivateKeyEntry privateKeyEntry) {
 
@@ -218,6 +226,7 @@ public class RemEvidenceBuilder {
         }
 
 
+        // Creates object to hold our signed result
         JAXBResult signedResult = null;
         try {
             signedResult = new JAXBResult(jaxbContext);
@@ -237,7 +246,6 @@ public class RemEvidenceBuilder {
             throw new IllegalStateException("Unable to obtain result from JAXBResult and cast into JAXBElement<REMEvidenceType>", e);
         }
     }
-
 
     /**
      * Transforms the REMEvidenceType, which is an XML Type into an XML instance represented in Java as
@@ -262,6 +270,7 @@ public class RemEvidenceBuilder {
         }
         return remEvidenceTypeXmlInstance;
     }
+
 
     /**
      * Injects the the PEPPOL extensions, which includes the bytes of the original specific transport receipt.
@@ -299,7 +308,6 @@ public class RemEvidenceBuilder {
         remEvidenceType.getExtensions().getExtension().add(extensionType);
     }
 
-
     /**
      * Injects the details of the transmission meta data, which are typically contained within the SBDH.
      *
@@ -335,5 +343,4 @@ public class RemEvidenceBuilder {
         } else
             throw new IllegalStateException("Must supply the digest of the original payload of the SBDH");
     }
-
 }
