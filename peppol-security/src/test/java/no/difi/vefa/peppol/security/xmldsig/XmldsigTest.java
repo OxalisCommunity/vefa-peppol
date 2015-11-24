@@ -43,13 +43,6 @@ public class XmldsigTest {
 
     @Test
     public void simple() throws Exception {
-/*
-        KeyStore keyStore = KeyStore.getInstance("JKS");
-        keyStore.load(getClass().getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
-
-        KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
-*/
-
         ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
         XmldsigSigner.sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
 
@@ -94,7 +87,7 @@ public class XmldsigTest {
         // Verify the signature from the signed DOM document
         Document signedDocument = (Document) signedResult.getNode();
         X509Certificate verify = XmldsigVerifier.verify(signedDocument);
-
+        Assert.assertNotNull(verify);
 /*
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer t = tf.newTransformer();
