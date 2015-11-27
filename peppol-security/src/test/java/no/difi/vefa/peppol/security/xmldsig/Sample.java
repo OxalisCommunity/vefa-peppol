@@ -18,8 +18,6 @@ public class Sample {
     @XmlElement
     private String info;
 
-    // @XmlElement(name = "Signature", namespace = "http://www.w3.org/2000/09/xmldsig#")
-
     public String getInfo() {
         return info;
     }

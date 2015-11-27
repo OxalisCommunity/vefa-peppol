@@ -8,16 +8,14 @@ import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
+import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._01903.v1_3.*;
 import org.etsi.uri._02640.v2_.*;
 import org.etsi.uri._02640.v2_.ObjectFactory;
 import org.w3._2000._09.xmldsig_.DigestMethodType;
 import org.w3c.dom.Document;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
 import javax.xml.bind.util.JAXBResult;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -25,6 +23,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -33,13 +39,13 @@ import java.util.UUID;
 /**
  * Builds instances of REMEvidenceType represented as instances of JAXBElement&lt;REMEvidenceType&gt;
  *
- * NOTE! Use RemEvidenceBuilderFac
+ * NOTE! Use RemEvidenceBuilder
  *
  * Created by steinar on 08.11.2015.
  *
  * See unit tests for details on how to use it.
  */
-public class RemEvidenceBuilder {
+class RemEvidenceBuilder {
 
     private String version;
     private final EvidenceTypeInstance evidenceTypeInstance;
@@ -190,8 +196,10 @@ public class RemEvidenceBuilder {
 
         injectTransmissionMetaData(r, documentTypeId.getIdentifier(), instanceIdentifier.getValue(), payloadDigest);
 
+        // Injects the transport level receipt, i.e. AS2 MDN or AS4 Soap Headers
         injectPeppolExtensions(r, specificReceiptBytes);
 
+        // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = createRemEvidenceTypeXmlInstance(r, evidenceTypeInstance);
 
         JAXBElement<REMEvidenceType> signedRemEvidenceTypeXmlInstance = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);
@@ -201,6 +209,14 @@ public class RemEvidenceBuilder {
     }
 
 
+    /**
+     * Marshals the JAXBElement&lt;REMEvidenceType&gt; into a W3C DOM object, which is digitally signed.
+     *
+     * @param privateKeyEntry the private key and certificate of the signer
+     * @param remEvidenceTypeXmlInstance the REMEvidenceType instance to be signed
+     *
+     * @return W3C DOM Document with the signature
+     */
     private JAXBElement<REMEvidenceType> injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance)   {
         // Convert into DOM object for signing
         Marshaller marshaller = null;
@@ -218,9 +234,9 @@ public class RemEvidenceBuilder {
         } catch (ParserConfigurationException e) {
             throw new IllegalStateException("Unable to create a DOM document builder", e);
         }
-        Document document = documentBuilder.newDocument();
+        Document unsignedRemEvidenceDocument = documentBuilder.newDocument();
         try {
-            marshaller.marshal(remEvidenceTypeXmlInstance, document);
+            marshaller.marshal(remEvidenceTypeXmlInstance, unsignedRemEvidenceDocument);
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to marshal RemEvidenceType into a DOM document");
         }
@@ -234,17 +250,54 @@ public class RemEvidenceBuilder {
             throw new IllegalStateException("Unable to create a JAXBResult object into which the signed contents should be placed",e);
         }
 
+        // Performs the actual signing of the document
+        Document signedRemEvidenceDocument = documentBuilder.newDocument();
+        DOMResult domResult = new DOMResult(signedRemEvidenceDocument);
         try {
-            XmldsigSigner.sign(document, privateKeyEntry, signedResult);
+
+            // XmldsigSigner.sign(unsignedRemEvidenceDocument, privateKeyEntry, signedResult);
+            XmldsigSigner.sign(unsignedRemEvidenceDocument, privateKeyEntry, domResult);
         } catch (PeppolSecurityException e) {
             throw new IllegalStateException("Unable to sign RemEvidenceType " + e.getMessage(), e);
         }
 
+        // TODO: Remove this once everything works.
+        try {
+            XmldsigVerifier.verify(signedRemEvidenceDocument);
+        } catch (PeppolSecurityException e) {
+            throw new IllegalStateException("Verification failed");
+        }
+
+        try {
+            TransformerFactory tf = TransformerFactory.newInstance();
+            Transformer t = tf.newTransformer();
+            DOMSource source = new DOMSource(domResult.getNode());
+            StreamResult result = new StreamResult(new FileOutputStream("/tmp/rem-dom.xml"));
+            t.transform(source, result);
+        } catch (TransformerException e) {
+            throw new IllegalStateException("Unable to transform DOM Document to text");
+        } catch (FileNotFoundException e) {
+            throw new IllegalStateException("Unable to create file ");
+        }
+
+        try {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemEvidenceDocument, REMEvidenceType.class);
+            marshaller.marshal(remEvidenceTypeJAXBElement, new FileOutputStream("/tmp/rem-jaxb.xml"));
+            return remEvidenceTypeJAXBElement;
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to create unmarshaller");
+        } catch (FileNotFoundException e) {
+            throw new IllegalStateException("Unable to create REM output file");
+        }
+
+        /**
         try {
             return (JAXBElement<REMEvidenceType>)signedResult.getResult();
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to obtain result from JAXBResult and cast into JAXBElement<REMEvidenceType>", e);
         }
+         */
     }
 
     /**

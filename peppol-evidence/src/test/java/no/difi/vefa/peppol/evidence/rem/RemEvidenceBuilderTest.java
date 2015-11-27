@@ -1,13 +1,21 @@
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.util.DomUtils;
+import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.Marshaller;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.dom.DOMResult;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
+import java.security.cert.X509Certificate;
 import java.util.Date;
 
 import static org.testng.Assert.assertEquals;
@@ -42,7 +50,7 @@ public class RemEvidenceBuilderTest    {
     }
 
     @Test
-    public void createSampleInstance() throws Exception {
+    public void createSampleRemEvidence() throws Exception {
 
 
         RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, remEvidenceService.getJaxbContext());
@@ -60,17 +68,13 @@ public class RemEvidenceBuilderTest    {
         // Signs and builds the REMEvidenceType instance
         JAXBElement<REMEvidenceType> remEvidenceInstance = builder.buildRemEvidenceInstance(privateKeyEntry);
 
-
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
         Marshaller marshaller = remEvidenceService.getJaxbContext().createMarshaller();
-
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         marshaller.marshal(remEvidenceInstance, baos);
-
         String xmlOutput = baos.toString();
         System.out.println(xmlOutput);
+
 
         assertTrue(xmlOutput.contains(TestResources.DOC_TYPE_ID.getIdentifier()), "Document type id has not been included in the REM XML");
         assertTrue(xmlOutput.contains(TestResources.INSTANCE_IDENTIFIER.getValue()), "Instance identifier missing");
@@ -86,6 +90,18 @@ public class RemEvidenceBuilderTest    {
 
         REMEvidenceType value = remEvidenceInstance.getValue();
         assertEquals(value.getEventCode(), EventCode.ACCEPTANCE.getValue().toString());
+
+
+        // Verifies the signature
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+
+        DOMResult domResult = new DOMResult(document);
+        marshaller.marshal(remEvidenceInstance, domResult);
+
+        X509Certificate certificateUsedForSignature = XmldsigVerifier.verify(document);
 
     }
 
