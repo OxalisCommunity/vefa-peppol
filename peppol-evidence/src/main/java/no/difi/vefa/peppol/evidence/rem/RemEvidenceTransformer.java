@@ -1,53 +1,94 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import org.etsi.uri._02640.v2_.REMEvidenceType;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
-import javax.xml.bind.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * Transforms SignedRemEvidence back and forth between various representations.
+ * <p>
+ * The constructor is package protected as you are expected to use the {@link RemEvidenceService}  to
+ * create instances of this class.
+ * <p>
  * Created by steinar on 08.11.2015.
  */
-public class RemEvidenceTransformer {
+class RemEvidenceTransformer {
 
 
     private JAXBContext jaxbContext;
-    private boolean formattedOutput = false;
+    private boolean formattedOutput = true;
 
     public RemEvidenceTransformer(JAXBContext jaxbContext) {
 
         this.jaxbContext = jaxbContext;
     }
 
-    public void transformToXml(JAXBElement<REMEvidenceType> remEvidenceInstance, OutputStream outputStream) {
+    /**
+     * Transforms the supplied signed REM Evidence into it's XML representation.
+     * <p>
+     * NOTE! Do not use this XML representation for signature validation as
+     *
+     * @param signedRemEvidence
+     * @param outputStream
+     */
+    public void formatAsXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
+        Transformer transformer = null;
         try {
-            Marshaller marshaller = jaxbContext.createMarshaller();
-            // This will cause the signed XML document to fail validation
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, formattedOutput);
-            marshaller.marshal(remEvidenceInstance, outputStream);
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create JAXB Marshaller",e);
+            transformer = TransformerFactory.newInstance().newTransformer();
+        } catch (TransformerConfigurationException e) {
+            throw new IllegalStateException("Unable to crate a new transformer");
+        }
+
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+        StreamResult result = new StreamResult(outputStream);
+        DOMSource source = new DOMSource(signedRemEvidence.getSignedRemEvidenceDocument());
+        try {
+            transformer.transform(source, result);
+        } catch (TransformerException e) {
+            throw new IllegalStateException("Transformation of SignedRemEvidence to XML failed:" + e.getMessage(), e);
         }
     }
 
-    public JAXBElement<REMEvidenceType> parse(InputStream inputStream) {
+    /**
+     * Parses the contents of an InputStream, which is expected to supply
+     * a signed REMEvidenceType.
+     *
+     * Step 1: parses xml into W3C Document
+     * Step 2: converts W3C Document into JAXBElement
+     *
+     * @param inputStream holding the xml representation of a signed REM evidence.
+     * @return
+     */
+    public SignedRemEvidence parse(InputStream inputStream) {
 
-        JAXBElement<REMEvidenceType> result = null;
-
+        Document parsedDocument;
         try {
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            Object unmarshal = unmarshaller.unmarshal(inputStream);
-            if (unmarshal instanceof JAXBElement) {
-                result = (JAXBElement<REMEvidenceType>) unmarshal;
-            } else {
-                throw new IllegalStateException("InputStream converted into unknown Class: " + unmarshal.getClass().getName());
-            }
-
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to parse input stream", e);
+            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+            documentBuilderFactory.setNamespaceAware(true);
+            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+            parsedDocument = documentBuilder.parse(inputStream);
+        } catch (ParserConfigurationException e) {
+            throw new IllegalStateException("Unable to create DocumentBuilder " + e.getMessage(), e);
+        } catch (SAXException | IOException e) {
+            throw new IllegalStateException("Unable to parse xml input " + e.getMessage(), e);
         }
-        return result;
+
+        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = RemEvidenceBuilder.convertRemFromDocumentToJaxb(parsedDocument, jaxbContext);
+
+        return new SignedRemEvidence(remEvidenceTypeJAXBElement, parsedDocument);
     }
 
     public boolean isFormattedOutput() {

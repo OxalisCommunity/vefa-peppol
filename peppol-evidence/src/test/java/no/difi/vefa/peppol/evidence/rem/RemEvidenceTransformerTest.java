@@ -25,7 +25,7 @@ public class RemEvidenceTransformerTest {
         RemEvidenceService remEvidenceService = TestResources.getRemEvidenceService();
 
         // Creates the sample REMEvidenceType
-        JAXBElement<REMEvidenceType> remEvidenceInstance = TestResources.createSampleRemEvidence();
+        SignedRemEvidence signedRemEvidence = TestResources.createSampleRemEvidence();
 
         // Creates the transformer
         RemEvidenceTransformer remEvidenceTransformer = remEvidenceService.createRemEvidenceTransformer();
@@ -34,14 +34,14 @@ public class RemEvidenceTransformerTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // performs the actual transformation into XML representation
-        remEvidenceTransformer.transformToXml(remEvidenceInstance, baos);
+        remEvidenceTransformer.formatAsXml(signedRemEvidence, baos);
 
         System.out.println(baos.toString());
 
         // Attempts to parse the XML transformed REMEvidence
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = remEvidenceTransformer.parse(new ByteArrayInputStream(baos.toByteArray()));
+        SignedRemEvidence remEvidence = remEvidenceTransformer.parse(new ByteArrayInputStream(baos.toByteArray()));
 
-        assertNotNull(remEvidenceTypeJAXBElement);
+        assertNotNull(remEvidence);
     }
 
 }

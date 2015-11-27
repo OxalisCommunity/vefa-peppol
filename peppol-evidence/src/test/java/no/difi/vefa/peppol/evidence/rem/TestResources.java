@@ -3,12 +3,10 @@ package no.difi.vefa.peppol.evidence.rem;
 import no.difi.vefa.peppol.common.model.DocumentIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import org.etsi.uri._02640.v2_.REMEvidenceType;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
-import javax.xml.bind.JAXBElement;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,7 +111,7 @@ public class TestResources {
      *
      * @return sample REMEvidence based upon the resources in test/resources of this project.
      */
-    public static JAXBElement<REMEvidenceType> createSampleRemEvidence() {
+    public static SignedRemEvidence createSampleRemEvidence() {
         RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
 
         byte[] sampleMdnSmime = TestResources.getSampleMdnSmime();

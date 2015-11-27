@@ -1,21 +1,13 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.dom.DOMResult;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
-import java.security.cert.X509Certificate;
 import java.util.Date;
 
 import static org.testng.Assert.assertEquals;
@@ -37,21 +29,20 @@ public class RemEvidenceBuilderTest    {
 
     @BeforeClass
     public void setUp() {
-
+        // Provides sample AS2 MDN to be included as evidence in the REM
         specificReceiptBytes = TestResources.getSampleMdnSmime();
 
+        // Grabs our private key and certificate to be used for signing the REM
         privateKeyEntry = TestResources.getPrivateKey();
 
         // Allows us the obtain the JAXBContext, which is needed when creating instances of RemEvidenceBuilder
         // RemEvidenceBuilder instances can only be created by using the factory, but since this is a unit test,
         // we are allowed to go behind the scenes.
         remEvidenceService = new RemEvidenceService();
-
     }
 
     @Test
     public void createSampleRemEvidence() throws Exception {
-
 
         RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, remEvidenceService.getJaxbContext());
 
@@ -66,14 +57,15 @@ public class RemEvidenceBuilderTest    {
         ;
 
         // Signs and builds the REMEvidenceType instance
-        JAXBElement<REMEvidenceType> remEvidenceInstance = builder.buildRemEvidenceInstance(privateKeyEntry);
+        SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
+
+        // Grabs the REMEvidenceType instance in order to make some assertions.
+        JAXBElement<REMEvidenceType> remEvidenceInstance = signedRemEvidence.getJaxbElement();
 
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
-        Marshaller marshaller = remEvidenceService.getJaxbContext().createMarshaller();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        marshaller.marshal(remEvidenceInstance, baos);
-        String xmlOutput = baos.toString();
-        System.out.println(xmlOutput);
+        remEvidenceService.createRemEvidenceTransformer().formatAsXml(signedRemEvidence,baos);
+        String xmlOutput = baos.toString("UTF-8");
 
 
         assertTrue(xmlOutput.contains(TestResources.DOC_TYPE_ID.getIdentifier()), "Document type id has not been included in the REM XML");
@@ -92,17 +84,8 @@ public class RemEvidenceBuilderTest    {
         assertEquals(value.getEventCode(), EventCode.ACCEPTANCE.getValue().toString());
 
 
-        // Verifies the signature
-        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        documentBuilderFactory.setNamespaceAware(true);
-        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-        Document document = documentBuilder.newDocument();
-
-        DOMResult domResult = new DOMResult(document);
-        marshaller.marshal(remEvidenceInstance, domResult);
-
-        X509Certificate certificateUsedForSignature = XmldsigVerifier.verify(document);
-
+        // Verifies the signature using the rem evidence bytes
+        XmldsigVerifier.verify(signedRemEvidence.getSignedRemEvidenceDocument());
     }
 
 
