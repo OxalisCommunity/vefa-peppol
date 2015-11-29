@@ -7,15 +7,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 /**
- * Provides various services related to production and consumption of REMEvidenceType objects
+ * Provides various services related to production and consumption of REMEvidence,
  * in addition to holding the JAXBContext, which is costly to create.
  *
  * This class is thread safe, however due to the cost of creating the JAXBContext you should wrap it in a singleton
  * if you intend to create numerous instances.
  *
- * <pre>
- *
- * </pre>
  * Created by steinar on 08.11.2015.
  */
 public class RemEvidenceService {
@@ -39,6 +36,12 @@ public class RemEvidenceService {
         return new RemEvidenceBuilder(EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION, jaxbContext);
     }
 
+    /**
+     * Creates a transformer which can transform a an existing signed REM evidence between various representations like
+     * W3C Document, JAXB object graph (REMEvidenceType) and XML.
+     *
+     * @return
+     */
     public RemEvidenceTransformer createRemEvidenceTransformer() {
         return new RemEvidenceTransformer(jaxbContext);
     }

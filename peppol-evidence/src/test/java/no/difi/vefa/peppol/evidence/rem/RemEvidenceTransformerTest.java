@@ -1,13 +1,14 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import org.etsi.uri._02640.v2_.REMEvidenceType;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBElement;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.fail;
 
 /**
  * Created by steinar on 08.11.2015.
@@ -34,14 +35,22 @@ public class RemEvidenceTransformerTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
         // performs the actual transformation into XML representation
-        remEvidenceTransformer.formatAsXml(signedRemEvidence, baos);
+        remEvidenceTransformer.formattedXml(signedRemEvidence, baos);
 
         System.out.println(baos.toString());
 
-        // Attempts to parse the XML transformed REMEvidence
+        // Attempts to parse the XML transformed REMEvidence, signature verification should fail
+        // as the XML is formatted
         SignedRemEvidence remEvidence = remEvidenceTransformer.parse(new ByteArrayInputStream(baos.toByteArray()));
 
         assertNotNull(remEvidence);
+
+        try {
+            XmldsigVerifier.verify(remEvidence.getDocument());
+            fail("Tthe formatted xml should not constitute a valid signature");
+        } catch (PeppolSecurityException e) {
+            // This is expected
+        }
     }
 
 }

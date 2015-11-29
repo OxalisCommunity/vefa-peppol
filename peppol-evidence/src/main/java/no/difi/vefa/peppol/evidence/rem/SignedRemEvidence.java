@@ -6,13 +6,11 @@ import org.w3c.dom.Document;
 import javax.xml.bind.JAXBElement;
 
 /**
- * Holds a signed REMEvidenceType instance in various representations, i.e. JAXBElement&lt;REMEvidenceType&gt; and
- * XML representation.
+ * Holds a signed REMEvidence. Internally it is held in two representations; REMEvidenceType and
+ * W3C Document.
  *
- * <em>Note!</em> the JAXBElement is not suitable for signature verification.
- *
- * For signature verification, use the XML representation, which may be access via
- * {@link #getSignedRemEvidenceDocument()}
+ * Only the W3C Document representation may be used for signature validation
+ * {@link #getDocument()}
  *
  * @author steinar
  *         Date: 27.11.2015
@@ -28,11 +26,11 @@ public class SignedRemEvidence {
         this.signedRemEvidenceXml = signedRemEvidenceXml;
     }
 
-    public JAXBElement<REMEvidenceType> getJaxbElement() {
-        return jaxbElement;
+    public REMEvidenceType getRemEvidenceType() {
+        return jaxbElement.getValue();
     }
 
-    public Document getSignedRemEvidenceDocument() {
+    public Document getDocument() {
         return signedRemEvidenceXml;
     }
 }

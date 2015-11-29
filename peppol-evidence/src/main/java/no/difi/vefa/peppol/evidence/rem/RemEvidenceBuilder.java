@@ -6,7 +6,6 @@ import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
 import org.etsi.uri._01903.v1_3.AnyType;
@@ -28,13 +27,11 @@ import java.util.GregorianCalendar;
 import java.util.UUID;
 
 /**
- * Builds instances of REMEvidenceType represented as instances of JAXBElement&lt;REMEvidenceType&gt;
- * <p>
- * NOTE! Use RemEvidenceBuilder
- * <p>
- * Created by steinar on 08.11.2015.
+ * Builds instances of SignedRemEvidence based upon the properties supplied.
  * <p>
  * See unit tests for details on how to use it.
+ * <p>
+ * Created by steinar on 08.11.2015.
  */
 class RemEvidenceBuilder {
 
@@ -157,6 +154,25 @@ class RemEvidenceBuilder {
             throw new IllegalStateException("Must supply the digest of the original payload of the SBDH");
     }
 
+    /**
+     * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
+     * It is package protected as this is not something that should not be done outside of this package.
+     *
+     * @param signedRemDocument
+     * @param jaxbContext
+     * @return
+     */
+    static JAXBElement<REMEvidenceType> convertRemFromDocumentToJaxb(Document signedRemDocument, JAXBContext jaxbContext) {
+        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
+        try {
+            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to create unmarshaller");
+        }
+        return remEvidenceTypeJAXBElement;
+    }
+
     public RemEvidenceBuilder eventCode(EventCode eventCode) {
         this.eventCode = eventCode;
         return this;
@@ -216,10 +232,15 @@ class RemEvidenceBuilder {
         return this;
     }
 
+    /**
+     * Builds an instance of SignedRemEvidence based upon the previously supplied parameters.
+     *
+     * @param privateKeyEntry the private key and certificate to be used for the XMLDsig signature
+     * @return a signed RemEvidence represented as an instance of SignedRemEvidence
+     */
     public SignedRemEvidence buildRemEvidenceInstance(KeyStore.PrivateKeyEntry privateKeyEntry) {
 
         REMEvidenceType r = new REMEvidenceType();
-
 
         r.setVersion(version);
 
@@ -295,18 +316,6 @@ class RemEvidenceBuilder {
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, signedRemDocument);
     }
 
-    static JAXBElement<REMEvidenceType> convertRemFromDocumentToJaxb(Document signedRemDocument, JAXBContext jaxbContext) {
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
-        try {
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create unmarshaller");
-        }
-        return remEvidenceTypeJAXBElement;
-    }
-
-
     /**
      * Marshals the JAXBElement&lt;REMEvidenceType&gt; into a W3C DOM object, which is digitally signed.
      *
@@ -314,7 +323,7 @@ class RemEvidenceBuilder {
      * @param remEvidenceTypeXmlInstance the REMEvidenceType instance to be signed
      * @return W3C DOM Document with the signature
      */
-    private Document injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance) {
+    Document injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance) {
 
         // Marshals the JAXBElement into DOM object for signing
         Marshaller marshaller = null;

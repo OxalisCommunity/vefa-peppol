@@ -5,16 +5,16 @@ import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBElement;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
 import java.util.Date;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
- * Internal test ensuring that the RemEvidenceBuilder works as expected.
+ * Ensures that the RemEvidenceBuilder works as expected.
  *
  * @author steinar
  *         Date: 04.11.2015
@@ -60,11 +60,12 @@ public class RemEvidenceBuilderTest    {
         SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
 
         // Grabs the REMEvidenceType instance in order to make some assertions.
-        JAXBElement<REMEvidenceType> remEvidenceInstance = signedRemEvidence.getJaxbElement();
+        REMEvidenceType remEvidenceInstance = signedRemEvidence.getRemEvidenceType();
+        assertEquals(remEvidenceInstance.getEventCode(), EventCode.ACCEPTANCE.getValue().toString());
 
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        remEvidenceService.createRemEvidenceTransformer().formatAsXml(signedRemEvidence,baos);
+        remEvidenceService.createRemEvidenceTransformer().formattedXml(signedRemEvidence,baos);
         String xmlOutput = baos.toString("UTF-8");
 
 
@@ -80,13 +81,13 @@ public class RemEvidenceBuilderTest    {
         assertTrue(xmlOutput.contains("SignatureValue>"));
         assertTrue(xmlOutput.contains("KeyInfo>"));
 
-        REMEvidenceType value = remEvidenceInstance.getValue();
-        assertEquals(value.getEventCode(), EventCode.ACCEPTANCE.getValue().toString());
-
-
         // Verifies the signature using the rem evidence bytes
-        XmldsigVerifier.verify(signedRemEvidence.getSignedRemEvidenceDocument());
+        XmldsigVerifier.verify(signedRemEvidence.getDocument());
     }
 
+    @Test
+    public void transformBetweenRepresentationsAndVerifySignature() throws Exception {
+        fail("Must be implemented");
 
+    }
 }

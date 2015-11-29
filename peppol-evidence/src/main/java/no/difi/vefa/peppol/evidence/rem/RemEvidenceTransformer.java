@@ -17,7 +17,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Transforms SignedRemEvidence back and forth between various representations.
+ * Transforms SignedRemEvidence back and forth between various representations like for instance
+ * W3C Document and XML.
+ *
  * <p>
  * The constructor is package protected as you are expected to use the {@link RemEvidenceService}  to
  * create instances of this class.
@@ -43,7 +45,7 @@ class RemEvidenceTransformer {
      * @param signedRemEvidence
      * @param outputStream
      */
-    public void formatAsXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
+    public void formattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
         Transformer transformer = null;
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
@@ -54,7 +56,7 @@ class RemEvidenceTransformer {
         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
         transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
         StreamResult result = new StreamResult(outputStream);
-        DOMSource source = new DOMSource(signedRemEvidence.getSignedRemEvidenceDocument());
+        DOMSource source = new DOMSource(signedRemEvidence.getDocument());
         try {
             transformer.transform(source, result);
         } catch (TransformerException e) {
@@ -64,7 +66,7 @@ class RemEvidenceTransformer {
 
     /**
      * Parses the contents of an InputStream, which is expected to supply
-     * a signed REMEvidenceType.
+     * a signed REMEvidenceType in XML representation.
      *
      * Step 1: parses xml into W3C Document
      * Step 2: converts W3C Document into JAXBElement

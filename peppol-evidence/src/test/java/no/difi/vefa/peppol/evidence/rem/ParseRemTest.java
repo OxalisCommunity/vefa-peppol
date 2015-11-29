@@ -21,6 +21,11 @@ public class ParseRemTest {
 
     public static final String SAMPLE_REM_XML = "sample-rem.xml";
 
+    /**
+     * Uses JAXB to parse the sample REM evidence provided by Jörg Apitzsch.
+     *
+     * @throws Exception
+     */
     @Test
     public void parseSampleRem() throws Exception {
 
