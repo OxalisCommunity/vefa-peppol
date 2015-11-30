@@ -1,12 +1,16 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
 /**
+ * Entry point for most operations pertaining to REM evidence.
+ *
  * Provides various services related to production and consumption of REMEvidence,
  * in addition to holding the JAXBContext, which is costly to create.
  *
@@ -54,5 +58,9 @@ public class RemEvidenceService {
      */
     public JAXBContext getJaxbContext() {
         return jaxbContext;
+    }
+
+    public static void verifySignature(SignedRemEvidence signedRemEvidence) throws PeppolSecurityException {
+        XmldsigVerifier.verify(signedRemEvidence.getDocument());
     }
 }

@@ -65,7 +65,7 @@ public class RemEvidenceBuilderTest    {
 
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        remEvidenceService.createRemEvidenceTransformer().formattedXml(signedRemEvidence,baos);
+        remEvidenceService.createRemEvidenceTransformer().toFormattedXml(signedRemEvidence,baos);
         String xmlOutput = baos.toString("UTF-8");
 
 
@@ -85,9 +85,5 @@ public class RemEvidenceBuilderTest    {
         XmldsigVerifier.verify(signedRemEvidence.getDocument());
     }
 
-    @Test
-    public void transformBetweenRepresentationsAndVerifySignature() throws Exception {
-        fail("Must be implemented");
 
-    }
 }

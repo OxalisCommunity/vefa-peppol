@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
+import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -31,5 +32,22 @@ public enum EventCode {
 
     public URI getValue() {
         return value;
+    }
+
+    public static EventCode valueFor(String valueToLookup){
+        if (valueToLookup == null) {
+            throw new IllegalArgumentException("null is invalid argument!");
+        }
+        try {
+            URI uri = new URI(valueToLookup);
+            for (EventCode eventCode : values()) {
+                if (eventCode.getValue().toString().equals(uri.toString())) {
+                    return eventCode;
+                }
+            }
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(valueToLookup + " does not represent a valid URI " + e.getMessage(), e);
+        }
+        throw new IllegalArgumentException(valueToLookup + " does not represent a valid EventCode");
     }
 }

@@ -49,4 +49,18 @@ public enum EventReason {
     public String getCode() {
         return code;
     }
+
+    public static EventReason valueForCode(String code) {
+        if (code == null){
+            throw new IllegalArgumentException("argument 'code' is required!");
+        }
+
+        for (EventReason eventReason : values()) {
+            if (eventReason.getCode().equals(code)) {
+                return eventReason;
+            }
+        }
+
+        throw new IllegalStateException(code + " is not a valid code for EventReason");
+    }
 }

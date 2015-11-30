@@ -53,7 +53,7 @@ class RemEvidenceBuilder {
     private byte[] specificReceiptBytes;
 
 
-    public RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance, final JAXBContext jaxbContext) {
+    protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance, final JAXBContext jaxbContext) {
         this.evidenceTypeInstance = evidenceTypeInstance;
         this.jaxbContext = jaxbContext;
     }
@@ -154,24 +154,7 @@ class RemEvidenceBuilder {
             throw new IllegalStateException("Must supply the digest of the original payload of the SBDH");
     }
 
-    /**
-     * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
-     * It is package protected as this is not something that should not be done outside of this package.
-     *
-     * @param signedRemDocument
-     * @param jaxbContext
-     * @return
-     */
-    static JAXBElement<REMEvidenceType> convertRemFromDocumentToJaxb(Document signedRemDocument, JAXBContext jaxbContext) {
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
-        try {
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create unmarshaller");
-        }
-        return remEvidenceTypeJAXBElement;
-    }
+
 
     public RemEvidenceBuilder eventCode(EventCode eventCode) {
         this.eventCode = eventCode;
@@ -311,7 +294,7 @@ class RemEvidenceBuilder {
         Document signedRemDocument = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);
 
         // Transforms the REMEvidenceType DOM Document instance it's JAXB representation.
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = convertRemFromDocumentToJaxb(signedRemDocument, jaxbContext);
+        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = RemEvidenceTransformer.toJaxb(signedRemDocument, jaxbContext);
 
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, signedRemDocument);
     }
