@@ -28,7 +28,7 @@ import java.io.OutputStream;
  * <p>
  * Created by steinar on 08.11.2015.
  */
-class RemEvidenceTransformer {
+public class RemEvidenceTransformer {
 
 
     private JAXBContext jaxbContext;

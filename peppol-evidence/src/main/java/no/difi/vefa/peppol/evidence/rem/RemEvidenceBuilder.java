@@ -34,7 +34,7 @@ import java.util.UUID;
  * <p>
  * Created by steinar on 08.11.2015.
  */
-class RemEvidenceBuilder {
+public class RemEvidenceBuilder {
 
     private final EvidenceTypeInstance evidenceTypeInstance;
     private final JAXBContext jaxbContext;
