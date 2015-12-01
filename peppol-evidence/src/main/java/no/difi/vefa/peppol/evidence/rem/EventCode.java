@@ -1,6 +1,5 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import java.awt.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 

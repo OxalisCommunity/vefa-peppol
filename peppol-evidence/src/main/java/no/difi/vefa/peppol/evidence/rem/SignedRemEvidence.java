@@ -120,6 +120,7 @@ public class SignedRemEvidence {
         return e().getSenderMessageDetails().getDigestValue();
     }
 
+    @SuppressWarnings("unchecked")
     public PeppolRemExtension getTransmissionEvidence() {
 
         ExtensionType extensionType = e().getExtensions().getExtension().get(0);
@@ -127,7 +128,6 @@ public class SignedRemEvidence {
         JAXBElement<AnyType> anyType = (JAXBElement<AnyType>) extensionType.getContent().get(0);
         AnyType value = anyType.getValue();
 
-        PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value.getContent().get(0);
-        return peppolRemExtension;
+        return (PeppolRemExtension) value.getContent().get(0);
     }
 }

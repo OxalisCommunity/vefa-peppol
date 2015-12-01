@@ -212,10 +212,11 @@ public class RemEvidenceBuilder {
         return this;
     }
 
-    public void protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProfile transportProfile, byte[] protocolSpecificBytes) {
+    public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProfile transportProfile, byte[] protocolSpecificBytes) {
         this.transmissionRole = transmissionRole;
         this.transportProfile = transportProfile;
         this.protocolSpecificBytes = protocolSpecificBytes;
+        return this;
     }
 
 
@@ -314,7 +315,7 @@ public class RemEvidenceBuilder {
     Document injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance) {
 
         // Marshals the JAXBElement into DOM object for signing
-        Marshaller marshaller = null;
+        Marshaller marshaller;
         try {
             marshaller = jaxbContext.createMarshaller();
         } catch (JAXBException e) {
@@ -323,7 +324,7 @@ public class RemEvidenceBuilder {
 
 
         DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder documentBuilder = null;
+        DocumentBuilder documentBuilder;
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {

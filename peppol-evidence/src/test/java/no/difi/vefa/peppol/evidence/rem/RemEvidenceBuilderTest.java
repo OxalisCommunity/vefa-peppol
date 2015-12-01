@@ -9,16 +9,11 @@ import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._01903.v1_3.AnyType;
 import org.etsi.uri._02640.v2_.ExtensionType;
-import org.etsi.uri._02640.v2_.ObjectFactory;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Marshaller;
-import javax.xml.transform.dom.DOMResult;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
 import java.util.Date;

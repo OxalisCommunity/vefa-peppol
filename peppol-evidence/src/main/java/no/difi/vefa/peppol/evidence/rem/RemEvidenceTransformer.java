@@ -30,7 +30,6 @@ import java.io.OutputStream;
  */
 public class RemEvidenceTransformer {
 
-
     private JAXBContext jaxbContext;
     private boolean formattedOutput = true;
 
@@ -52,9 +51,6 @@ public class RemEvidenceTransformer {
      * Transforms the supplied signed REM Evidence into it's XML representation.
      * <p>
      * NOTE! Do not use this XML representation for signature validation as this will fail.
-     *
-     * @param signedRemEvidence
-     * @param outputStream
      */
     public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
         format(signedRemEvidence, outputStream, true);
@@ -67,7 +63,7 @@ public class RemEvidenceTransformer {
      * @param formatted indicates whether the output should be formatted (true) or not (false)
      */
     protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) {
-        Transformer transformer = null;
+        Transformer transformer;
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException e) {
@@ -90,10 +86,6 @@ public class RemEvidenceTransformer {
     /**
      * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
      * It is package protected as this is not something that should not be done outside of this package.
-     *
-     * @param signedRemDocument
-     * @param jaxbContext
-     * @return
      */
     protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument, JAXBContext jaxbContext) {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
@@ -115,7 +107,6 @@ public class RemEvidenceTransformer {
      * Step 2: converts W3C Document into JAXBElement
      *
      * @param inputStream holding the xml representation of a signed REM evidence.
-     * @return
      */
     public SignedRemEvidence parse(InputStream inputStream) {
 

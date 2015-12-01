@@ -21,7 +21,6 @@ import javax.xml.bind.JAXBException;
  */
 public class RemEvidenceService {
 
-
     private final JAXBContext jaxbContext;
 
     public RemEvidenceService() {
@@ -41,10 +40,8 @@ public class RemEvidenceService {
     }
 
     /**
-     * Creates a transformer which can transform a an existing signed REM evidence between various representations like
+     * Creates a transformer which can transform an existing signed REM evidence between various representations like
      * W3C Document, JAXB object graph (REMEvidenceType) and XML.
-     *
-     * @return
      */
     public RemEvidenceTransformer createRemEvidenceTransformer() {
         return new RemEvidenceTransformer(jaxbContext);
@@ -53,10 +50,8 @@ public class RemEvidenceService {
     /**
      * Provides access to JAXBContext, which was initialized during the construction of this object.
      * It might be useful for creating instances of Marshaller objects, which are not thread safe.
-     *
-     * @return
      */
-    public JAXBContext getJaxbContext() {
+    JAXBContext getJaxbContext() {
         return jaxbContext;
     }
 
