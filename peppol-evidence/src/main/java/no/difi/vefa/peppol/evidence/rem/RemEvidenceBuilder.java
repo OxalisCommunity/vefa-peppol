@@ -1,7 +1,7 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
@@ -97,15 +97,12 @@ class RemEvidenceBuilder {
         JAXBElement<AnyType> extensionAny = objectFactory.createAny(anyType);
 
         // //PeppolRemExtension
-        PeppolRemExtensionType peppolRemExtensionType = new PeppolRemExtensionType();
-        peppolRemExtensionType.setTransmissionProtocol("AS2");
-        peppolRemExtensionType.setTransmissionRole(TransmissionRole.C_3);
+        PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
+        peppolRemExtension.setTransmissionProtocol("AS2");
+        peppolRemExtension.setTransmissionRole(TransmissionRole.C_3);
         OriginalReceiptType originalReceiptType = new OriginalReceiptType();
         originalReceiptType.setValue(specificReceiptBytes);
-        peppolRemExtensionType.setOriginalReceipt(originalReceiptType);
-
-        eu.peppol.xsd.ticc.receipt._1.ObjectFactory peppolRemExtensionObjectFactory = new eu.peppol.xsd.ticc.receipt._1.ObjectFactory();
-        JAXBElement<PeppolRemExtensionType> peppolRemExtension = peppolRemExtensionObjectFactory.createPeppolRemExtension(peppolRemExtensionType);
+        peppolRemExtension.setOriginalReceipt(originalReceiptType);
 
         // xpath: //Any/PeppolRemExtension
         anyType.getContent().add(peppolRemExtension);

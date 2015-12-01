@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -120,15 +120,15 @@ public class SignedRemEvidence {
         return e().getSenderMessageDetails().getDigestValue();
     }
 
-    public PeppolRemExtensionType getTransmissionEvidence() {
+    public PeppolRemExtension getTransmissionEvidence() {
 
         ExtensionType extensionType = e().getExtensions().getExtension().get(0);
 
         JAXBElement<AnyType> anyType = (JAXBElement<AnyType>) extensionType.getContent().get(0);
         AnyType value = anyType.getValue();
 
-        JAXBElement<PeppolRemExtensionType> peppolRemExtensionTypeJAXBElement = (JAXBElement<PeppolRemExtensionType>) value.getContent().get(0);
-        PeppolRemExtensionType peppolRemExtensionType = peppolRemExtensionTypeJAXBElement.getValue();
-        return peppolRemExtensionType;
+        JAXBElement<PeppolRemExtension> peppolRemExtensionTypeJAXBElement = (JAXBElement<PeppolRemExtension>) value.getContent().get(0);
+        PeppolRemExtension peppolRemExtension = peppolRemExtensionTypeJAXBElement.getValue();
+        return peppolRemExtension;
     }
 }

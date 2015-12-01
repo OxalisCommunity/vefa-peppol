@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
@@ -26,7 +26,7 @@ public class RemEvidenceService {
 
     public RemEvidenceService() {
         try {
-            jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtensionType.class);
+            jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to create JAXBContext ", e);
         }

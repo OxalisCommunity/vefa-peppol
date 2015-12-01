@@ -28,16 +28,16 @@
     </xs:complexType>
 
     <!-- Privides an extension to be included in the ETSI REMEvidence according to ETSI TS 102 640-2 -->
-    <xs:element name="PeppolRemExtension" type="PeppolRemExtensionType"/>
-    <xs:complexType name="PeppolRemExtensionType">
-        <xs:sequence>
-            <xs:element name="TransmissionProtocol" type="xs:string" minOccurs="1"/>
-            <xs:element name="TransmissionRole" type="TransmissionRole" minOccurs="1"/>
-            <!-- Original protocol specific receipt -->
-            <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
-
+    <xs:element name="PeppolRemExtension">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="TransmissionProtocol" type="xs:string" minOccurs="1"/>
+                <xs:element name="TransmissionRole" type="TransmissionRole" minOccurs="1"/>
+                <!-- Original protocol specific receipt -->
+                <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <!-- Information regarding the transport -->
     <xs:complexType name="TransmissionType">

@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -155,12 +155,12 @@ public class RemEvidenceBuilderTest    {
         AnyType value = anyTypeJAXBElement.getValue();
 
 
-        Unmarshaller unmarshaller = remEvidenceService.getJaxbContext().createUnmarshaller();
-        Node node = (Node) value.getContent().get(0);
+        // Unmarshaller unmarshaller = remEvidenceService.getJaxbContext().createUnmarshaller();
+        // Node node = (Node) value.getContent().get(0);
 
         // Performs the correct unmarshalling
-        JAXBElement<PeppolRemExtensionType> peppolRemExtensionTypeJAXBElement = unmarshaller.unmarshal(node, PeppolRemExtensionType.class);
-        assertTrue(peppolRemExtensionTypeJAXBElement.getValue() instanceof PeppolRemExtensionType);
+        // JAXBElement<PeppolRemExtension> peppolRemExtensionTypeJAXBElement = unmarshaller.unmarshal(node, PeppolRemExtension.class);
+        assertTrue(value.getContent().get(0) instanceof PeppolRemExtension);
 
     }
 }
