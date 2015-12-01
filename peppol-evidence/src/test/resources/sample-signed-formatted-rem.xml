@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<DeliveryNonDeliveryToRecipient xmlns="http://uri.etsi.org/02640/v2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#"
+                                xmlns:ns4="http://uri.etsi.org/01903/v1.3.2#"
+                                xmlns:ns7="http://peppol.eu/xsd/ticc/receipt/1.0">
+
+    <!-- NOTE! This sample REM Evidence will fail XML signature verification due to formatting issues -->
+    <EventCode>http:uri.etsi.org/02640/Event#Acceptance</EventCode>
+    <EventReasons>
+        <EventReason>
+            <Code>22</Code>
+            <Details>http:uri.etsi.org/REM/EventReason#Other</Details>
+        </EventReason>
+    </EventReasons>
+    <EvidenceIdentifier>2f5d87ca-cb3f-4eec-8b39-d70a902a3f22</EvidenceIdentifier>
+    <EventTime>2015-12-01T15:32:00.728+01:00</EventTime>
+    <SenderDetails>
+        <AttributedElectronicAddress scheme="iso6523-actorid-upis">9908:810017902</AttributedElectronicAddress>
+    </SenderDetails>
+    <RecipientsDetails>
+        <EntityDetails>
+            <AttributedElectronicAddress scheme="iso6523-actorid-upis">9908:123456789</AttributedElectronicAddress>
+        </EntityDetails>
+    </RecipientsDetails>
+    <SenderMessageDetails isNotification="false">
+        <MessageSubject>urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1</MessageSubject>
+        <UAMessageIdentifier>03c940dd-4db8-45e5-980c-45e142a40b7f</UAMessageIdentifier>
+        <ns3:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <ns3:DigestValue>VGhpc0lzQVNIQTI1NkRpZ2VzdA==</ns3:DigestValue>
+    </SenderMessageDetails>
+    <Extensions>
+        <Extension>
+            <ns4:Any>
+                <ns7:PeppolRemExtension>
+                    <ns7:TransmissionProtocol>no.difi.vefa.peppol.common.model.TransportProfile@bf16137f</ns7:TransmissionProtocol>
+                    <ns7:TransmissionRole>C3</ns7:TransmissionRole>
+                    <ns7:OriginalReceipt>
+                        TWVzc2FnZS1JRDogPDQwNzY5NzM1OS4zLjE0NDg5Nzk0Mzg5NjkuSmF2YU1haWwuc3RlaW5hckBtYWNzdGVpbmFyMy5sb2NhbD4NCk1JTUUtVmVyc2lvbjogMS4wDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9zaWduZWQ7IHByb3RvY29sPSJhcHBsaWNhdGlvbi9wa2NzNy1zaWduYXR1cmUiOyBtaWNhbGc9c2hhLTE7IA0KCWJvdW5kYXJ5PSItLS0tPV9QYXJ0XzJfMzMxNDE4NTAzLjE0NDg5Nzk0Mzg5NjMiDQoNCi0tLS0tLT1fUGFydF8yXzMzMTQxODUwMy4xNDQ4OTc5NDM4OTYzDQpDb250ZW50LVR5cGU6IG11bHRpcGFydC9yZXBvcnQ7IHJlcG9ydC10eXBlPWRpc3Bvc2l0aW9uLW5vdGlmaWNhdGlvbjsgDQoJYm91bmRhcnk9Ii0tLS09X1BhcnRfMF8zMjk2NDU2MTkuMTQ0ODk3OTQzODMyOSINCg0KLS0tLS0tPV9QYXJ0XzBfMzI5NjQ1NjE5LjE0NDg5Nzk0MzgzMjkNCkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbg0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogN2JpdA0KDQpUaGUgZm9sbG93aW5nIGhlYWRlcnMgd2VyZSByZWNlaXZlZDoNCg0KVGhlIG1lc3NhZ2Ugc2VudCB0byBBUzIgU3lzdGVtIGlkIEFQXzAwMDA0IG9uIHRpLCAwMSBkZXMgMjAxNSAxNToxNzoxOCArMDEwMCB3aXRoIHN1YmplY3QgTUROIHdpdGggUGF5bG9hZERpZ2VzdCBoYXMgYmVlbiByZWNlaXZlZC4NCkl0IGhhcyBiZWVuIHByb2Nlc3NlZCBzdWNjZXNzZnVsbHkuDQoNCi0tLS0tLT1fUGFydF8wXzMyOTY0NTYxOS4xNDQ4OTc5NDM4MzI5DQpDb250ZW50LVR5cGU6IG1lc3NhZ2UvZGlzcG9zaXRpb24tbm90aWZpY2F0aW9uDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA3Yml0DQoNClJlcG9ydGluZy1VQTogT3hhbGlzDQpEaXNwb3NpdGlvbjogYXV0b21hdGljLWFjdGlvbi9NRE4tc2VudC1hdXRvbWF0aWNhbGx5OyBwcm9jZXNzZWQNCk9yaWdpbmFsLVJlY2lwaWVudDogcmZjODIyOyBBUF8wMDAwNA0KRmluYWwtUmVjaXBpZW50OiByZmM4MjI7IEFQXzAwMDA0DQpPcmlnaW5hbC1NZXNzYWdlLUlEOiANClgtUEVQUE9MLVRpbWVTdGFtcDogMjAxNS0xMi0wMVQxNToxNzoxOC4zMTYrMDE6MDANClgtT3JpZ2luYWwtTWVzc2FnZS1kaWdlc3Q6IGZUaTF6U1dpdXZoYTA3dGJreEU0UG1jYWloUXVzd0t6Sk5TbCs2aDBqR2s9DQpYLU9yaWdpbmFsLU1lc3NhZ2UtYWxnOiBTSEEtMjU2DQpSZWNlaXZlZC1Db250ZW50LU1JQzogZWVXTmtPVHg3eUpZcjJFVzhDUjg1STdRSlFZPSwgc2hhMQ0KDQoNCi0tLS0tLT1fUGFydF8wXzMyOTY0NTYxOS4xNDQ4OTc5NDM4MzI5LS0NCg0KLS0tLS0tPV9QYXJ0XzJfMzMxNDE4NTAzLjE0NDg5Nzk0Mzg5NjMNCkNvbnRlbnQtVHlwZTogYXBwbGljYXRpb24vcGtjczctc2lnbmF0dXJlOyBuYW1lPXNtaW1lLnA3czsgc21pbWUtdHlwZT1zaWduZWQtZGF0YQ0KQ29udGVudC1UcmFuc2Zlci1FbmNvZGluZzogYmFzZTY0DQpDb250ZW50LURpc3Bvc2l0aW9uOiBhdHRhY2htZW50OyBmaWxlbmFtZT0ic21pbWUucDdzIg0KQ29udGVudC1EZXNjcmlwdGlvbjogUy9NSU1FIENyeXB0b2dyYXBoaWMgU2lnbmF0dXJlDQoNCk1JQUdDU3FHU0liM0RRRUhBcUNBTUlBQ0FRRXhDekFKQmdVckRnTUNHZ1VBTUlBR0NTcUdTSWIzRFFFSEFRQUFvSUF3Z2dSNU1JSUQNCllhQURBZ0VDQWhBR2d0WjBNRDB4Y2ZNNTZ3cFJyQWxZTUEwR0NTcUdTSWIzRFFFQkN3VUFNSDB4Q3pBSkJnTlZCQVlUQWtSTE1TY3cNCkpRWURWUVFLRXg1T1FWUkpUMDVCVENCSlZDQkJUa1FnVkVWTVJVTlBUU0JCUjBWT1Exa3hIekFkQmdOVkJBc1RGa1pQVWlCVVJWTlUNCklGQlZVbEJQVTBWVElFOU9URmt4SkRBaUJnTlZCQU1URzFCRlVGQlBUQ0JCUTBORlUxTWdVRTlKVGxRZ1ZFVlRWQ0JEUVRBZUZ3MHgNCk5URXdNRFl3TURBd01EQmFGdzB4TnpFd01EVXlNelU1TlRsYU1Fc3hDekFKQmdOVkJBWVRBazVQTVNNd0lRWURWUVFLREJwRVNVWkoNCklDaFBlR0ZzYVhNZ2NtVnVaWGRoYkNCMFpYTjBLVEVYTUJVR0ExVUVBd3dPUVZCUVh6RXdNREF3TURBeE16VXdnZ0VpTUEwR0NTcUcNClNJYjNEUUVCQVFVQUE0SUJEd0F3Z2dFS0FvSUJBUURRMVRuSmZpTGhuQW5QQWlKV3V4WGc4a21OM3lQWnUrd1gyNG9XaEJXbWpIL20NCmFsdXoydFVCTWJRbmJxQ1dDbW9SZFV2cEl1dkZudFpCVFdOQ3BFdldJaWpSS1dha05pME1qenFyUHBYaGlNSnhxb3J2UjFXc3Z1SmoNCjJNRUlERDBXK1A4ZldXdkdVVyt6U2RIWU5NYkZodkFDUythVTZuWE9GUTVaRnZRUzFuVGRIdHJBbU1DR0owZmplWU9jc0xhNklZUkgNCnlWNDIxVnowQ0IrYlBWeUx3WjFLWXdLL0tKd3oyZTc5elB3eGkzNVk0d01KT1F4ZDVUMFZwRlZ1b282NjFiR2VUdzVLeEFmbnBnL0wNCkJuRzhLQjV0ZVFyR2hpUTVKVW00cmgzQjd3TWd5S1JjYlgvNFdkcW0zSGd3L2dTanhncWljNWtRT1c5bVBLUkJsTGZ0QWdNQkFBR2oNCmdnRWxNSUlCSVRBSkJnTlZIUk1FQWpBQU1Bc0dBMVVkRHdRRUF3SUR1REIyQmdOVkhSOEViekJ0TUd1Z2FhQm5obVZvZEhSd09pOHYNCmNHbHNiM1J2Ym5OcGRHVmpjbXd1ZG1WeWFYTnBaMjR1WTI5dEwwUnBaMmwwWVd4cGMyVnlhVzVuYzNOMGVYSmxiSE5sYmxCcGJHOTANClQzQmxibEJGVUZCUFRFRkRRMFZUVTFCUFNVNVVRMEV2VEdGMFpYTjBRMUpNTG1OeWJEQWZCZ05WSFNNRUdEQVdnQlQzbG9zWlRLN2kNClZpRUF2b2I5ZWtlc25jb0ZkVEFkQmdOVkhRNEVGZ1FVVmdGRld2UnpiYkcyMk5rRjdhWVpnZzVrcXhFd09nWUlLd1lCQlFVSEFRRUUNCkxqQXNNQ29HQ0NzR0FRVUZCekFCaGg1b2RIUndPaTh2Y0dsc2IzUXRiMk56Y0M1MlpYSnBjMmxuYmk1amIyMHdFd1lEVlIwbEJBd3cNCkNnWUlLd1lCQlFVSEF3SXdEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQWVLOW9tWkZBNmRJUlNOc1BBSmtPV29QY2dIN3gvcmVBcUMNCkY3QXBQdXpLaWxGNzdlY2JEbU5GckhSRmozWG5aVTBDTUZjOFBiWHhadHpwREhGTVVFL2NxcUpwVE84aDFPT1E1NFpIL0lhcThqb0INCmcwMzNaY3pMVE5OYWtaOFBKU0ZRUTdHejJldStJNkZ2ZjhhSE1GK1N4RnZtSFp0OFNLVDkzZGhZYXpwc0pHaUMrN0VGODE5QzViL0UNClpKRnNQcUx5VitEejB3L09sVnZGUnlFbFN6U1hFTVFmdEVqYmFvc2liVEQxMFFsTlFEY3d5MUJueWtHdEN1WlRDdmtQQUpwUmJLcUMNCjMvZnlYZXFXLzBML1lCNEc2SkpHajJaSnd2N1NXWm9UT2Zac20xL2xNUXJyMUtuRHFyLytSQzhGQ3FWVGEyT21FdGxoVmNlZ2lEUkENCmc0QUFBREdDQWtRd2dnSkFBZ0VCTUlHUk1IMHhDekFKQmdOVkJBWVRBa1JMTVNjd0pRWURWUVFLRXg1T1FWUkpUMDVCVENCSlZDQkINClRrUWdWRVZNUlVOUFRTQkJSMFZPUTFreEh6QWRCZ05WQkFzVEZrWlBVaUJVUlZOVUlGQlZVbEJQVTBWVElFOU9URmt4SkRBaUJnTlYNCkJBTVRHMUJGVUZCUFRDQkJRME5GVTFNZ1VFOUpUbFFnVkVWVFZDQkRRUUlRQm9MV2REQTlNWEh6T2VzS1Vhd0pXREFKQmdVckRnTUMNCkdnVUFvSUdJTUJnR0NTcUdTSWIzRFFFSkF6RUxCZ2txaGtpRzl3MEJCd0V3SEFZSktvWklodmNOQVFrRk1ROFhEVEUxTVRJd01URTANCk1UY3hPVm93SXdZSktvWklodmNOQVFrRU1SWUVGTFJlMDFLNFhraGtZeElBN2Q2WXlSWjhlRHdmTUNrR0NTcUdTSWIzRFFFSk5ERWMNCk1Cb3dDUVlGS3c0REFob0ZBS0VOQmdrcWhraUc5dzBCQVFFRkFEQU5CZ2txaGtpRzl3MEJBUUVGQUFTQ0FRQk4yTlNpc0YwWGhab2kNCm5QOGNHUzlkYlllRDExL05kaGZGRXFjbnJZRm50aUpVN1N2WUt4bXZrYXI4cFBGbVVGRWEwbjZQR0k2WFI2WVVYUlNzZ0o4RTFCdDYNCjh5bjdUNGQzNVR4UDU5TjdKeEdTU1VVWE04UEdwWVpldCtlMnQva1VybWFET3JIZHd2bGlXM2dhVWRaYXVTTzQvL2pXMEZGWFByck8NClBYaXpFL0VtbHo4VnVtTEdVUEx1K3BiZkJxbTNrRE5TQnU3aGV0TncySHlKTU5BYU1aM0lpN1pHakh6TjkrMVdqMGlYNmRxOE9zNkINCmZDOUZNWnNiQjErSXR2eFV5Slh6TjdONEZIYlYvYnVHN2VGc05pb3ZDc2FTZC80MHhqZjhhQ3ZnZlV3U3VOd1VQRmthSFE5eGFmNysNCitvTEN0M0svVHpIWXN6Y25TWnRKVXlZYUFBQUFBQUFBDQotLS0tLS09X1BhcnRfMl8zMzE0MTg1MDMuMTQ0ODk3OTQzODk2My0tDQo=
+                    </ns7:OriginalReceipt>
+                </ns7:PeppolRemExtension>
+            </ns4:Any>
+        </Extension>
+    </Extensions>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+                <DigestValue>3K162O169IBXiZzDQIjOH0tWh6E=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>KBk+nFm5vhAlCTrGdxmERAWSifqB4qiGG82kLQpTY4hh+O5814/cmMtF+HN2S+0o+eorfEK1sbo3
+            EEWUHObWFFzQhGamdU5PC+RWxgi7OLkDslAAyUun6FeD5gAb6ByEs/51zJpOhZ2WXxpO+dPAq4PX
+            glUYudJcl8FyXfbrYfsHezgZmvOUmMmOS0LD+j57gnnzamC4wR0tZaf+vA6Vhm71+xcntNpHtQT5
+            QzQMXS/KH7nquA7zAqpsxMw6sumwzLPZndTQITreLy9ju+mV/pI11SE0WVg/O54SUJpFNEI+Ip4D
+            k+NETcQKpJnbw7C+x1Q2O/ALKBsrE10gfSjVow==
+        </SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509SubjectName>CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown</X509SubjectName>
+                <X509Certificate>MIIDnTCCAoWgAwIBAgIEZ/LuJzANBgkqhkiG9w0BAQsFADB/MRAwDgYDVQQGEwdVbmtub3duMRAw
+                    DgYDVQQIEwdVbmtub3duMRAwDgYDVQQHEwdVbmtub3duMRAwDgYDVQQKEwdVbmtub3duMRAwDgYD
+                    VQQLEwdVbmtub3duMSMwIQYDVQQDExpWRUZBIFZhbGlkYXRvciBzZWxmLXNpZ25lZDAeFw0xNTA3
+                    MjkwODQ2MzNaFw0yNTA3MjYwODQ2MzNaMH8xEDAOBgNVBAYTB1Vua25vd24xEDAOBgNVBAgTB1Vu
+                    a25vd24xEDAOBgNVBAcTB1Vua25vd24xEDAOBgNVBAoTB1Vua25vd24xEDAOBgNVBAsTB1Vua25v
+                    d24xIzAhBgNVBAMTGlZFRkEgVmFsaWRhdG9yIHNlbGYtc2lnbmVkMIIBIjANBgkqhkiG9w0BAQEF
+                    AAOCAQ8AMIIBCgKCAQEAlY6vI3hwqam0IxYnJOjNHsftaAYBq3urJhkDNCpnOVdLKCzbdJrI+yeo
+                    cXDXXYGixA9ICbsSGpCsrSMlM2T3IT4lQmoyLgn1xa7nJGKb3Oy4t18fNdngAWGLLSiFW75Ik4/c
+                    phWUEiUKPYzwvHNu/qGRCwwDRX1oMsDu8B2dqryrAfvfQ3HkfnuhQEUGa3g3OMVH9Vxd5wP+ojey
+                    fI6wDvOQgLWF7JBiilLnT+OEDCqCsJdAUHSXOiRyF56ediijk/rPmlbKw6bsBkQwWDiZYhkaNM4j
+                    HJIrwoJqsUeQMy4b8Y+4vjgG9l6Nl0KWTDd7zXPbqS8+etwsnBahcpFNkwIDAQABoyEwHzAdBgNV
+                    HQ4EFgQUYzVe0TGmzGbWz4t44cpC/sUmosswDQYJKoZIhvcNAQELBQADggEBAEKB24VmDXoz6Xo3
+                    sr/Gbew3lpKMVGmpZAxvnl54iU+SqewtvshSjkOnBzpr9qH+XwMJ9s7xlu9N30pBTMErvUKdWjLw
+                    GgTpmKigxosMwXaUOCCB4aLsSsRrL8DvXihm4l2USnMcUt0qpsggTeISr/vNZd/rItZenmR0k6Bi
+                    eEZSAwcCd1fGtie/84zRCw3BAShGXKJVSECMLh3fvQnHefTNhkUEyYMaRnA78Ko93bIq88mlTQ9L
+                    YH96BYwjxKcRPh02sJTYEAe9JL/yJXoSgQHS1iVmilhXrnc5V89Yq7LEeGC7y/W5eMG7q1QFe5My
+                    SdxJmuJ8MJgpaNUPp/mZCR0=
+                </X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
+</DeliveryNonDeliveryToRecipient>

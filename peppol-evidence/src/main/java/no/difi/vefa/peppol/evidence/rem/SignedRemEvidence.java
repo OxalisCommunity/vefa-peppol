@@ -127,8 +127,7 @@ public class SignedRemEvidence {
         JAXBElement<AnyType> anyType = (JAXBElement<AnyType>) extensionType.getContent().get(0);
         AnyType value = anyType.getValue();
 
-        JAXBElement<PeppolRemExtension> peppolRemExtensionTypeJAXBElement = (JAXBElement<PeppolRemExtension>) value.getContent().get(0);
-        PeppolRemExtension peppolRemExtension = peppolRemExtensionTypeJAXBElement.getValue();
+        PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value.getContent().get(0);
         return peppolRemExtension;
     }
 }

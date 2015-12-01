@@ -31,6 +31,30 @@ This component has been published on Maven central. You may include it in your o
     <dependency>
 ```
 
+## How to use it
+
+The following example is an extract from [RemEvidenceBuilderTest](src/test/java/no/difi/vefa/peppol/evidence/rem/RemEvidenceBuilderTest.java)
+
+```java
+    RemEvidenceService remEvidenceService = new RemEvidenceService();
+    RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
+    builder.eventCode(EventCode.ACCEPTANCE)
+            .eventTime(new Date())
+            .eventReason(EventReason.OTHER)
+            .senderIdentifier(TestResources.SENDER_IDENTIFIER)
+            .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
+            .documentTypeId(TestResources.DOC_TYPE_ID)
+            .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
+            .payloadDigest("ThisIsASHA256Digest".getBytes())
+            .protocolSpecificEvidence(TransmissionRole.C_3, TransportProfile.AS2_1_0, specificReceiptBytes)
+    ;
+
+
+    // Signs and builds the REMEvidenceType instance
+    SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
+```
+
+
 ## Inclusion of transport specific receipt
 
 Every transport protocol has some sort of receipt created on the receiving side and returned synchronously to the 
@@ -86,7 +110,7 @@ For AS2 it is recommended that the entire S/MIME message, including the headers,
                     <ns7:TransmissionProtocol>AS2</ns7:TransmissionProtocol>
                     <ns7:TransmissionRole>C3</ns7:TransmissionRole>
                     <ns7:OriginalReceipt>
-                        TUlNRS1WZXJzaW9uOiAxLjANCkNvbnRlbnQtVHlwZTogbXVsdG ...... truncated for readability
+                        TUlNRS1WZXJzaW9uOiAxLjANCkNvbnRlbnQtVHogbXVsdG ...... AS2 MDN in base64, truncated for readability
                     </ns7:OriginalReceipt>
                 </ns7:PeppolRemExtension>
             </ns4:Any>
@@ -119,6 +143,36 @@ For AS2 it is recommended that the entire S/MIME message, including the headers,
     </ns3:Signature>
 </DeliveryNonDeliveryToRecipient>
 ```
+
+
+## Inspecting REM Evidence with embedded AS2 MDN
+
+
+In [src/test/resources](src/test/resources) you will find the sample files being used in this short tutorial
+
+`sample-signed-formatted-rem.xml` contains a sample REM Evidence with an AS2 MDN embedded within the `<Extensions>` element.
+
+Here are some interesting stuff you can do, given that you extract the 
+entire contents inside the `<OriginalReceipt>` element (namespace omitted for brevity) and save it into a file named
+`as2-mdn.b64`
+
+
+Inspecting the contents of the AS2 MDN:
+```
+ openssl base64 -d -A <as2-mdn.b64 
+```
+
+The following command will decode from base64 and verify the signature of the AS2 MDN, leaving the X.509 certificate in `cert.pem` and
+the actual text of the MDN in `textdata`
+```
+openssl base64 -d -A |openssl smime -verify -noverify -signer cert.pem -out textdata
+```
+
+To inspect the certificate:
+```
+openssl x509 -in cert.pem -noout -text
+```
+
 
 ### AS4 original receipt (SOAP Headers)
   

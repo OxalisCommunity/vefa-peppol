@@ -1,6 +1,6 @@
 # VEFA PEPPOL
 
-## Getting started
+## Getting started with peppol-lookup
 
 Include dependency in your pom.xml:
 
@@ -43,3 +43,7 @@ Endpoint endpoint = client.getEndpoint(
 );
 // Note: fetching endpoint directly from service metadata doesn't involve validation of endpoint certificate.
 ```
+
+## Getting started with peppol-evidence
+
+Please see [README file for peppol-evidence](peppol-evidence/README.md)

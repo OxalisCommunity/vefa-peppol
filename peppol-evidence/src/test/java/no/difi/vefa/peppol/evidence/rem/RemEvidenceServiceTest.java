@@ -1,12 +1,13 @@
 package no.difi.vefa.peppol.evidence.rem;
 
+import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
+import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.testng.annotations.Test;
 
 import java.security.KeyStore;
 
 import static org.junit.Assert.assertNotNull;
-import static org.testng.Assert.assertEquals;
 
 /**
  * Created by steinar on 08.11.2015.
@@ -30,7 +31,8 @@ public class RemEvidenceServiceTest {
                 .documentTypeId(TestResources.DOC_TYPE_ID)
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
-                .transmissionEvidence(sampleMdnSmime)
+                .protocolSpecificEvidence(TransmissionRole.C_3, TransportProfile.AS2_1_0, "Jabla jabla fake MDN".getBytes());
+
         ;
 
         // Signs and builds the REMEvidenceType instance

@@ -1,8 +1,10 @@
 package no.difi.vefa.peppol.evidence.rem;
 
+import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.TransportProfile;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -123,7 +125,7 @@ public class TestResources {
                 .documentTypeId(TestResources.DOC_TYPE_ID)
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
-                .transmissionEvidence(sampleMdnSmime)
+                .protocolSpecificEvidence(TransmissionRole.C_3, TransportProfile.AS2_1_0, sampleMdnSmime);
         ;
 
         // Signs and builds the REMEvidenceType instance
