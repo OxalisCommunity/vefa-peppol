@@ -12,7 +12,7 @@ public class ServiceMetadata implements Serializable {
     private static final long serialVersionUID = -7523336374349545534L;
 
     private ParticipantIdentifier participantIdentifier;
-    private DocumentIdentifier documentIdentifier;
+    private DocumentTypeIdentifier documentTypeIdentifier;
 
     private List<ProcessIdentifier> processIdentifiers = new ArrayList<ProcessIdentifier>();
     private List<TransportProfile> transportProfiles = new ArrayList<TransportProfile>();
@@ -29,12 +29,12 @@ public class ServiceMetadata implements Serializable {
         this.participantIdentifier = participantIdentifier;
     }
 
-    public DocumentIdentifier getDocumentIdentifier() {
-        return documentIdentifier;
+    public DocumentTypeIdentifier getDocumentTypeIdentifier() {
+        return documentTypeIdentifier;
     }
 
-    public void setDocumentIdentifier(DocumentIdentifier documentIdentifier) {
-        this.documentIdentifier = documentIdentifier;
+    public void setDocumentTypeIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
+        this.documentTypeIdentifier = documentTypeIdentifier;
     }
 
     public List<ProcessIdentifier> getProcessIdentifiers() {

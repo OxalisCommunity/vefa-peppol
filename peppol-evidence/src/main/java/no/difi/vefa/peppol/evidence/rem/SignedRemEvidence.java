@@ -1,11 +1,12 @@
 package no.difi.vefa.peppol.evidence.rem;
 
+import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
-import org.etsi.uri._02640.v2_.AttributedElectronicAddressType;
-import org.etsi.uri._02640.v2_.EntityDetailsType;
-import org.etsi.uri._02640.v2_.EventReasonType;
-import org.etsi.uri._02640.v2_.REMEvidenceType;
+import org.etsi.uri._01903.v1_3.AnyType;
+import org.etsi.uri._02640.v2_.*;
 import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBElement;
@@ -27,6 +28,7 @@ public class SignedRemEvidence {
 
     private final JAXBElement<REMEvidenceType> jaxbElement;
     private final Document signedRemEvidenceXml;
+    private InstanceIdentifier instanceIdentifier;
 
     public SignedRemEvidence(JAXBElement<REMEvidenceType> jaxbElement, Document signedRemEvidenceXml) {
         this.jaxbElement = jaxbElement;
@@ -55,7 +57,7 @@ public class SignedRemEvidence {
         assert e() != null : "jaxbElement.getValue() returned null";
         assert e().getEventReasons() != null : "There are no event reasons";
         assert e().getEventReasons().getEventReason() != null : "getEventReasons() returned null";
-        assert e().getEventReasons().getEventReason().isEmpty() : "List of event reasons is empty";
+        assert !e().getEventReasons().getEventReason().isEmpty() : "List of event reasons is empty";
 
         EventReasonType eventReasonType = e().getEventReasons().getEventReason().get(0);
         return EventReason.valueForCode(eventReasonType.getCode());
@@ -83,4 +85,50 @@ public class SignedRemEvidence {
         return jaxbElement.getValue();
     }
 
+    public ParticipantIdentifier getRecipientIdentifier() {
+        EntityDetailsListType entityDetailsListType = e().getRecipientsDetails();
+        EntityDetailsType entityDetailsType = entityDetailsListType.getEntityDetails().get(0);
+        List<Object> objectList = entityDetailsType.getAttributedElectronicAddressOrElectronicAddress();
+
+        AttributedElectronicAddressType attributedElectronicAddressType = (AttributedElectronicAddressType) objectList.get(0);
+        String scheme = attributedElectronicAddressType.getScheme();
+        String value = attributedElectronicAddressType.getValue();
+
+
+        return new ParticipantIdentifier(value, new Scheme(scheme));
+    }
+
+    public DocumentTypeIdentifier getDocumentTypeIdentifier() {
+        MessageDetailsType senderMessageDetails = e().getSenderMessageDetails();
+        String messageSubject = senderMessageDetails.getMessageSubject();
+
+        DocumentTypeIdentifier documentTypeIdentifier = new DocumentTypeIdentifier(messageSubject);
+
+        return documentTypeIdentifier;
+    }
+
+    public InstanceIdentifier getInstanceIdentifier() {
+        String uaMessageIdentifier = e().getSenderMessageDetails().getUAMessageIdentifier();
+
+        return new InstanceIdentifier(uaMessageIdentifier);
+    }
+
+    public byte[] getPayloadDigestValue() {
+        assert e() != null : "jaxbElement.getValue() returned null";
+        assert e().getSenderMessageDetails() != null : "getSenderMessageDetails() returned null";
+
+        return e().getSenderMessageDetails().getDigestValue();
+    }
+
+    public PeppolRemExtensionType getTransmissionEvidence() {
+
+        ExtensionType extensionType = e().getExtensions().getExtension().get(0);
+
+        JAXBElement<AnyType> anyType = (JAXBElement<AnyType>) extensionType.getContent().get(0);
+        AnyType value = anyType.getValue();
+
+        JAXBElement<PeppolRemExtensionType> peppolRemExtensionTypeJAXBElement = (JAXBElement<PeppolRemExtensionType>) value.getContent().get(0);
+        PeppolRemExtensionType peppolRemExtensionType = peppolRemExtensionTypeJAXBElement.getValue();
+        return peppolRemExtensionType;
+    }
 }

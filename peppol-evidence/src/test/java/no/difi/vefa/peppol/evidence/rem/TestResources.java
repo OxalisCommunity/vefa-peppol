@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.model.DocumentIdentifier;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 
@@ -24,7 +24,7 @@ import static org.testng.Assert.assertNotNull;
  */
 public class TestResources {
 
-    public static final DocumentIdentifier DOC_TYPE_ID = new DocumentIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
+    public static final DocumentTypeIdentifier DOC_TYPE_ID = new DocumentTypeIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
     public static final InstanceIdentifier INSTANCE_IDENTIFIER = InstanceIdentifier.generateUUID();
     public static final ParticipantIdentifier SENDER_IDENTIFIER = new ParticipantIdentifier("9908:810017902");
     public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = new ParticipantIdentifier("9908:123456789");

@@ -20,12 +20,12 @@ public class BusdoxReaderTest {
 
     @Test
     public void documentIdentifers() throws Exception {
-        List<DocumentIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
-        for (DocumentIdentifier documentIdentifier : result)
-            logger.debug("{}", documentIdentifier);
+        for (DocumentTypeIdentifier documentTypeIdentifier : result)
+            logger.debug("{}", documentTypeIdentifier);
     }
 
     @Test

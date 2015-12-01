@@ -6,11 +6,11 @@ import java.net.URI;
 import java.net.URLEncoder;
 
 /**
- * DocumentIdentifier is a combination of XML type and customizationId.
+ * DocumentTypeIdentifier is a combination of XML type and customizationId.
  *
  * Pattern: [xml namespace]::[xml root element]##[customizationId]::[xml version]
  */
-public class DocumentIdentifier implements Serializable {
+public class DocumentTypeIdentifier implements Serializable {
 
     private static final long serialVersionUID = -3748163459655880167L;
 
@@ -23,15 +23,15 @@ public class DocumentIdentifier implements Serializable {
     private String xmlVersion;
     private URI uri;
 
-    public DocumentIdentifier(String documentIdentifier) {
+    public DocumentTypeIdentifier(String documentIdentifier) {
         this(documentIdentifier, DEFAULT_SCHEME, null);
     }
 
-    public DocumentIdentifier(String documentIdentifier, Scheme scheme) {
+    public DocumentTypeIdentifier(String documentIdentifier, Scheme scheme) {
         this(documentIdentifier, scheme, null);
     }
 
-    public DocumentIdentifier(String documentIdentifier, Scheme scheme, URI uri) {
+    public DocumentTypeIdentifier(String documentIdentifier, Scheme scheme, URI uri) {
         String[] parts = documentIdentifier.split("::|##");
 
         xmlNamespace = parts[0];

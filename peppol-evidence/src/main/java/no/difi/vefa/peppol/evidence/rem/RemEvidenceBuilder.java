@@ -3,7 +3,7 @@ package no.difi.vefa.peppol.evidence.rem;
 import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtensionType;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
-import no.difi.vefa.peppol.common.model.DocumentIdentifier;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
@@ -47,7 +47,7 @@ class RemEvidenceBuilder {
 
     private ParticipantIdentifier senderIdentifier;
     private ParticipantIdentifier recipientIdentifier;
-    private DocumentIdentifier documentTypeId;
+    private DocumentTypeIdentifier documentTypeId;
     private InstanceIdentifier instanceIdentifier;
     private byte[] payloadDigest;
     private byte[] specificReceiptBytes;
@@ -188,7 +188,7 @@ class RemEvidenceBuilder {
         return this;
     }
 
-    public RemEvidenceBuilder documentTypeId(DocumentIdentifier documentTypeId) {
+    public RemEvidenceBuilder documentTypeId(DocumentTypeIdentifier documentTypeId) {
 
         this.documentTypeId = documentTypeId;
         return this;
@@ -238,6 +238,7 @@ class RemEvidenceBuilder {
             EventReasonType eventReasonType = new EventReasonType();
             eventReasonType.setCode(eventReason.getCode());
             eventReasonType.setDetails(eventReason.getDetails());
+
             EventReasonsType reasonsType = new EventReasonsType();
             reasonsType.getEventReason().add(eventReasonType);
             r.setEventReasons(reasonsType);

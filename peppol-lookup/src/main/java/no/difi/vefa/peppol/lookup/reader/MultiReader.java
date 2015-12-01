@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
-import no.difi.vefa.peppol.common.model.DocumentIdentifier;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
 import no.difi.vefa.peppol.common.util.XmlUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
@@ -19,7 +19,7 @@ public class MultiReader implements MetadataReader {
     private BdxrReader bdxrReader = new BdxrReader();
 
     @Override
-    public List<DocumentIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
+    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 

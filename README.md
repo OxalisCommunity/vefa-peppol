@@ -19,7 +19,7 @@ Start making lookups:
 LookupClient client = LookupClientBuilder.forProduction().build();
 
 // Fetch document identifiers supported by a participant.
-List<DocumentIdentifier> documentIdentifiers = client.getDocumentIdentifiers(
+List<DocumentIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
     new ParticipantIdentifier("9908:991825827")
 );
 

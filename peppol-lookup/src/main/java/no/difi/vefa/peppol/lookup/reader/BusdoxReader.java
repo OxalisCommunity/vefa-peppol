@@ -40,18 +40,18 @@ public class BusdoxReader implements MetadataReader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<DocumentIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
+    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             ServiceGroupType serviceGroup = ((JAXBElement<ServiceGroupType>) unmarshaller.unmarshal(fetcherResponse.getInputStream())).getValue();
-            List<DocumentIdentifier> documentIdentifiers = new ArrayList<DocumentIdentifier>();
+            List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<DocumentTypeIdentifier>();
 
             for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
                 String[] parts = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8").split("::", 2);
-                documentIdentifiers.add(new DocumentIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
+                documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
             }
 
-            return documentIdentifiers;
+            return documentTypeIdentifiers;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -81,7 +81,7 @@ public class BusdoxReader implements MetadataReader {
                     serviceInformation.getParticipantIdentifier().getValue(),
                     new Scheme(serviceInformation.getParticipantIdentifier().getScheme())
             ));
-            serviceMetadata.setDocumentIdentifier(new DocumentIdentifier(
+            serviceMetadata.setDocumentTypeIdentifier(new DocumentTypeIdentifier(
                     serviceInformation.getDocumentIdentifier().getValue(),
                     new Scheme(serviceInformation.getDocumentIdentifier().getScheme())
             ));
