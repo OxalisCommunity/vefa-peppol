@@ -29,7 +29,7 @@ public class RemEvidenceTransformerTest {
         SignedRemEvidence signedRemEvidence = TestResources.createSampleRemEvidence();
 
         // Creates the transformer
-        RemEvidenceTransformer remEvidenceTransformer = remEvidenceService.createRemEvidenceTransformer();
+        RemEvidenceTransformer remEvidenceTransformer = new RemEvidenceTransformer();
 
         // where to place the transformed output
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -67,7 +67,7 @@ public class RemEvidenceTransformerTest {
         SignedRemEvidence signedRemEvidence = TestResources.createSampleRemEvidence();
 
         // Transforms evidence to XML representation
-        RemEvidenceTransformer remEvidenceTransformer = remEvidenceService.createRemEvidenceTransformer();
+        RemEvidenceTransformer remEvidenceTransformer = new RemEvidenceTransformer();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         remEvidenceTransformer.setFormattedOutput(false);
         remEvidenceTransformer.toUnformattedXml(signedRemEvidence,baos);

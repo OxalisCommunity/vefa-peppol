@@ -8,22 +8,25 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-class JaxbContextHolder {
+enum JaxbContextHolder {
 
-    private static JAXBContext jaxbContext;
+    INSTANCE;
 
-    private static synchronized JAXBContext getJaxbContext() throws JAXBException {
-        if (jaxbContext == null)
+    private JAXBContext jaxbContext;
+
+    private JaxbContextHolder() {
+        try {
             jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
-
-        return jaxbContext;
+        } catch (JAXBException e) {
+            throw new IllegalStateException("Unable to create JAXBContext for REMEvidence " + e.getMessage(), e);
+        }
     }
 
-    static Marshaller getMarshaller() throws JAXBException {
-        return getJaxbContext().createMarshaller();
+    Marshaller getMarshaller() throws JAXBException {
+        return jaxbContext.createMarshaller();
     }
 
-    static Unmarshaller getUnmarshaller() throws JAXBException {
-        return getJaxbContext().createUnmarshaller();
+    Unmarshaller getUnmarshaller() throws JAXBException {
+        return jaxbContext.createUnmarshaller();
     }
 }

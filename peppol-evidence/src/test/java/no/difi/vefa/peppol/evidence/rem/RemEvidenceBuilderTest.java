@@ -74,7 +74,7 @@ public class RemEvidenceBuilderTest {
 
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        this.remEvidenceService.createRemEvidenceTransformer().toFormattedXml(signedRemEvidence, baos);
+        new RemEvidenceTransformer().toFormattedXml(signedRemEvidence, baos);
         String xmlOutput = baos.toString("UTF-8");
 
         System.out.println(xmlOutput);
@@ -131,7 +131,7 @@ public class RemEvidenceBuilderTest {
     @Test
     public void testUnmarshal() throws Exception {
 
-        RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, remEvidenceService.getJaxbContext());
+        RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT);
 
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())

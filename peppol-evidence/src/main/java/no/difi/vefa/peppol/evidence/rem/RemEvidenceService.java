@@ -21,38 +21,12 @@ import javax.xml.bind.JAXBException;
  */
 public class RemEvidenceService {
 
-    private final JAXBContext jaxbContext;
-
-    public RemEvidenceService() {
-        try {
-            jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
-        } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create JAXBContext ", e);
-        }
-    }
-
     public RemEvidenceBuilder createDeliveryNonDeliveryToRecipientBuilder() {
-        return  new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT, jaxbContext);
+        return  new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT);
     }
 
     public RemEvidenceBuilder createRelayRemMdAcceptanceRejectionBuilder() {
-        return new RemEvidenceBuilder(EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION, jaxbContext);
-    }
-
-    /**
-     * Creates a transformer which can transform an existing signed REM evidence between various representations like
-     * W3C Document, JAXB object graph (REMEvidenceType) and XML.
-     */
-    public RemEvidenceTransformer createRemEvidenceTransformer() {
-        return new RemEvidenceTransformer(jaxbContext);
-    }
-
-    /**
-     * Provides access to JAXBContext, which was initialized during the construction of this object.
-     * It might be useful for creating instances of Marshaller objects, which are not thread safe.
-     */
-    JAXBContext getJaxbContext() {
-        return jaxbContext;
+        return new RemEvidenceBuilder(EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION);
     }
 
     public static void verifySignature(SignedRemEvidence signedRemEvidence) throws PeppolSecurityException {

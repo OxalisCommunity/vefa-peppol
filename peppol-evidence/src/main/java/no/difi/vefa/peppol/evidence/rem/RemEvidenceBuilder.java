@@ -37,7 +37,6 @@ import java.util.UUID;
 public class RemEvidenceBuilder {
 
     private final EvidenceTypeInstance evidenceTypeInstance;
-    private final JAXBContext jaxbContext;
     private String version;
     private EventCode eventCode;
     private EventReason eventReason;
@@ -56,9 +55,8 @@ public class RemEvidenceBuilder {
     private byte[] protocolSpecificBytes;
 
 
-    protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance, final JAXBContext jaxbContext) {
+    protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance) {
         this.evidenceTypeInstance = evidenceTypeInstance;
-        this.jaxbContext = jaxbContext;
     }
 
     /**
@@ -300,7 +298,7 @@ public class RemEvidenceBuilder {
         Document signedRemDocument = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);
 
         // Transforms the REMEvidenceType DOM Document instance it's JAXB representation.
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = RemEvidenceTransformer.toJaxb(signedRemDocument, jaxbContext);
+        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = RemEvidenceTransformer.toJaxb(signedRemDocument);
 
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, signedRemDocument);
     }
@@ -317,7 +315,7 @@ public class RemEvidenceBuilder {
         // Marshals the JAXBElement into DOM object for signing
         Marshaller marshaller;
         try {
-            marshaller = jaxbContext.createMarshaller();
+            marshaller = JaxbContextHolder.INSTANCE.getMarshaller();
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to create marshaller for transformation into a DOM object for creating the signature", e);
         }

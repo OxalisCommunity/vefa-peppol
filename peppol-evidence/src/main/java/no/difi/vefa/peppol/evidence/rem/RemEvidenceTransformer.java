@@ -30,12 +30,7 @@ import java.io.OutputStream;
  */
 public class RemEvidenceTransformer {
 
-    private JAXBContext jaxbContext;
     private boolean formattedOutput = true;
-
-    RemEvidenceTransformer(JAXBContext jaxbContext) {
-        this.jaxbContext = jaxbContext;
-    }
 
     /**
      * Transforms SignedRemEvidence into XML representation suitable for signature verification etc.
@@ -87,10 +82,10 @@ public class RemEvidenceTransformer {
      * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
      * It is package protected as this is not something that should not be done outside of this package.
      */
-    protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument, JAXBContext jaxbContext) {
+    protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
         try {
-            Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+            Unmarshaller unmarshaller = JaxbContextHolder.INSTANCE.getUnmarshaller();
             remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
         } catch (JAXBException e) {
             throw new IllegalStateException("Unable to create unmarshaller");
@@ -124,7 +119,7 @@ public class RemEvidenceTransformer {
         }
 
         // 2) Parses it into the JAXB representation.
-        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = toJaxb(parsedDocument, jaxbContext);
+        JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = toJaxb(parsedDocument);
 
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, parsedDocument);
     }
