@@ -3,10 +3,7 @@ package no.difi.vefa.peppol.evidence.rem;
 import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.InstanceIdentifier;
-import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.TransportProfile;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
 import org.etsi.uri._01903.v1_3.AnyType;
@@ -51,7 +48,7 @@ public class RemEvidenceBuilder {
     private InstanceIdentifier instanceIdentifier;
     private byte[] payloadDigest;
     private TransmissionRole transmissionRole;
-    private TransportProfile transportProfile;
+    private TransportProtocol transportProtocol;
     private byte[] protocolSpecificBytes;
 
 
@@ -85,12 +82,11 @@ public class RemEvidenceBuilder {
 
     /**
      * Injects the the PEPPOL extensions, which includes the bytes of the original specific transport receipt.
-     *
-     * @param remEvidenceType
+     *  @param remEvidenceType
      * @param transmissionRole
-     * @param transportProfile
+     * @param transportProtocol
      */
-    static void injectPeppolExtensions(REMEvidenceType remEvidenceType, TransmissionRole transmissionRole, TransportProfile transportProfile, byte[] specificReceiptBytes) {
+    static void injectPeppolExtensions(REMEvidenceType remEvidenceType, TransmissionRole transmissionRole, TransportProtocol transportProtocol, byte[] specificReceiptBytes) {
         // Include the original transport receipt
         org.etsi.uri._01903.v1_3.ObjectFactory objectFactory = new org.etsi.uri._01903.v1_3.ObjectFactory();
 
@@ -101,7 +97,7 @@ public class RemEvidenceBuilder {
 
         // //PeppolRemExtension
         PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
-        peppolRemExtension.setTransmissionProtocol(transportProfile.toString());
+        peppolRemExtension.setTransmissionProtocol(transportProtocol.getIdentifier());
         peppolRemExtension.setTransmissionRole(transmissionRole);
         OriginalReceiptType originalReceiptType = new OriginalReceiptType();
         originalReceiptType.setValue(specificReceiptBytes);
@@ -210,9 +206,9 @@ public class RemEvidenceBuilder {
         return this;
     }
 
-    public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProfile transportProfile, byte[] protocolSpecificBytes) {
+    public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProtocol transportProtocol, byte[] protocolSpecificBytes) {
         this.transmissionRole = transmissionRole;
-        this.transportProfile = transportProfile;
+        this.transportProtocol = transportProtocol;
         this.protocolSpecificBytes = protocolSpecificBytes;
         return this;
     }
@@ -289,7 +285,7 @@ public class RemEvidenceBuilder {
         injectTransmissionMetaData(r, documentTypeId.getIdentifier(), instanceIdentifier.getValue(), payloadDigest);
 
         // Injects the transport level receipt, i.e. AS2 MDN or AS4 Soap Headers
-        injectPeppolExtensions(r, transmissionRole, transportProfile, protocolSpecificBytes);
+        injectPeppolExtensions(r, transmissionRole, transportProtocol, protocolSpecificBytes);
 
         // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = createRemEvidenceTypeXmlInstance(r, evidenceTypeInstance);
