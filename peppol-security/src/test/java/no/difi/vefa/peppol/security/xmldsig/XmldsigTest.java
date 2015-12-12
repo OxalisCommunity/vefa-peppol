@@ -1,22 +1,16 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
+import com.google.common.io.ByteStreams;
 import no.difi.vefa.peppol.common.util.DomUtils;
-import org.apache.commons.io.IOUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import javax.xml.crypto.dsig.XMLSignatureFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMResult;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -47,7 +41,7 @@ public class XmldsigTest {
         XmldsigSigner.sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
 
         ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
-        IOUtils.copy(getClass().getResourceAsStream("/xmldsig-test-output.xml"), expectedStream);
+        ByteStreams.copy(getClass().getResourceAsStream("/xmldsig-test-output.xml"), expectedStream);
 
         Assert.assertEquals(generatedStream.toByteArray(), expectedStream.toByteArray());
 
