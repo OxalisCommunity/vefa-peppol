@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/difi/vefa-peppol.svg?branch=master)](https://travis-ci.org/difi/vefa-peppol)
+
 # VEFA PEPPOL
 
 ## Getting started with peppol-lookup
