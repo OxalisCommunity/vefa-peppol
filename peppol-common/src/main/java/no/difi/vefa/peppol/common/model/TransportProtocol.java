@@ -2,9 +2,12 @@ package no.difi.vefa.peppol.common.model;
 
 import no.difi.vefa.peppol.common.lang.PeppolException;
 
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class TransportProtocol {
+public class TransportProtocol implements Serializable {
+
+    private static final long serialVersionUID = -5938766453542971103L;
 
     private static Pattern pattern = Pattern.compile("[\\p{Upper}\\d]+");
 

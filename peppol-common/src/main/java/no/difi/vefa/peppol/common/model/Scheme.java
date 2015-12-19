@@ -1,6 +1,10 @@
 package no.difi.vefa.peppol.common.model;
 
-public class Scheme {
+import java.io.Serializable;
+
+public class Scheme implements Serializable {
+
+    private static final long serialVersionUID = -6022267082161778285L;
 
     private String value;
 
