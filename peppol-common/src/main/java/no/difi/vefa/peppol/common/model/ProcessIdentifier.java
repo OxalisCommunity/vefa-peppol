@@ -46,4 +46,9 @@ public class ProcessIdentifier implements Serializable {
         result = 31 * result + (scheme != null ? scheme.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s::%s", scheme, identifier);
+    }
 }

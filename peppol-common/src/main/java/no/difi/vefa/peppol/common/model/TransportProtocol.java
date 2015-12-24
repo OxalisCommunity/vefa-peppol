@@ -47,4 +47,9 @@ public class TransportProtocol implements Serializable {
     public int hashCode() {
         return identifier != null ? identifier.hashCode() : 0;
     }
+
+    @Override
+    public String toString() {
+        return "TransportProtocol{" + identifier + '}';
+    }
 }
