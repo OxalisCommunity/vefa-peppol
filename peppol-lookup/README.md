@@ -13,7 +13,7 @@ Functionality for looking up participants in PEPPOL.
   * [PEPPOL SMP](https://joinup.ec.europa.eu/svn/peppol/PEPPOL_EIA/1-ICT_Architecture/1-ICT-Transport_Infrastructure/13-ICT-Models/ICT-Transport-SMP_Service_Specification-110.pdf)
   * [OASIS BDXR SMP](http://docs.oasis-open.org/bdxr/bdx-smp/v1.0/bdx-smp-v1.0.html)
 * Validates signatures.
-* Uses [peppol-security](peppol-security) to verify certificates.
+* Uses [peppol-security](/peppol-security) to verify certificates.
 * API for extensions.
 
 
