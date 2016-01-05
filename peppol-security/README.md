@@ -18,6 +18,6 @@ Include dependency in your pom.xml:
 <dependency>
 	<groupId>no.difi.vefa</groupId>
 	<artifactId>peppol-security</artifactId>
-	<version>0.9.3</version>
+	<version>0.9.4</version>
 </dependency>
 ```

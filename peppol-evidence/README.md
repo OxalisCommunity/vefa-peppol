@@ -16,7 +16,7 @@ Include dependency in your pom.xml:
 <dependency>
 	<groupId>no.difi.vefa</groupId>
 	<artifactId>peppol-evidence</artifactId>
-	<version>TBA</version>
+	<version>0.9.4</version>
 </dependency>
 ```
 
