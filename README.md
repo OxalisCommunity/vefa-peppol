@@ -4,22 +4,9 @@
 
 This project implements some aspects of PEPPOL for inclusion in other projects.
 
+* [Common](peppol-common) - Data model for PEPPOL functionality.
+* [Evidence](peppol-evidence) - Implementation of ETSI REM Evidence.
+* [Lookup](peppol-lookup) - Functionality for looking up participants in PEPPOL.
+* [Security](peppol-security) - Security features for PEPPOL.
 
-## [Common](peppol-common)
-
-Data model for PEPPOL functionality.
-
-
-## [Evidence](peppol-evidence)
-
-Implementation of ETSI REM Evidence.
-
-
-## [Lookup](peppol-lookup)
-
-Functionality for looking up participants in PEPPOL.
-
-
-## [Security](peppol-security)
-
-Security features for PEPPOL.
+Please see [changelog](/CHANGELOG.md) for changes.

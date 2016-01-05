@@ -8,6 +8,8 @@
 * Changing namespace of exceptions.
 * Adding Icd interface and ISO6523 enum, rewriting ParticipantIdentifier to use it.
 * Adding class for InstanceIdentifier.
+* Introduction of peppol-evidence.
+* All classes in the model are serializable.
 
 ## 0.9.3
 

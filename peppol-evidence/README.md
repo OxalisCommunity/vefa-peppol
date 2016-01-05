@@ -1,4 +1,4 @@
-# Implementation of ETSI REM Evidence
+# VEFA PEPPOL Evidence
 
 This module contains an implementation of the ETSI TS 102 640-2 V2.1.1 also known as "REM".
 
@@ -7,55 +7,56 @@ The XML Schema originally provided by ETSI has been modified:
  * Slight adjustments made by Jörg Apitzsch
  * Inclusion of PEPPOL AS2 MDN receipts in the ```Extensions``` element.
 
-## The purpose of REM
 
-The purpose of REM is to act as evidence that a certain event has occured during message transfer.
- 
-  The standard is very old, almost archaic and as such needed some adjustements for usage in a 4-corner transport model.
+## Getting started
 
-## Providing the evidence
+Include dependency in your pom.xml:
 
-In AS2 the signed MDN is included in the "Extensions" of the REM Evidence
- 
-
-## How to include this component in your project
-   
-This component has been published on Maven central. You may include it in your own Maven-based Java-project by adding
-   the following to your ```pom.xml```
-   
 ```xml
-    <dependency>
-        <groupId>no.difi.vefa</groupId>
-        <artifactId>peppol-evidence</artifactid>
-        <version>the latest version </version>
-    <dependency>
+<dependency>
+	<groupId>no.difi.vefa</groupId>
+	<artifactId>peppol-evidence</artifactId>
+	<version>TBA</version>
+</dependency>
 ```
-
-## How to use it
 
 The following example is an extract from [RemEvidenceBuilderTest](src/test/java/no/difi/vefa/peppol/evidence/rem/RemEvidenceBuilderTest.java)
 
 ```java
-    RemEvidenceService remEvidenceService = new RemEvidenceService();
-    RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
-    builder.eventCode(EventCode.ACCEPTANCE)
-            .eventTime(new Date())
-            .eventReason(EventReason.OTHER)
-            .senderIdentifier(TestResources.SENDER_IDENTIFIER)
-            .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
-            .documentTypeId(TestResources.DOC_TYPE_ID)
-            .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
-            .payloadDigest("ThisIsASHA256Digest".getBytes())
-            .protocolSpecificEvidence(TransmissionRole.C_3, TransportProfile.AS2_1_0, specificReceiptBytes)
-    ;
+RemEvidenceService remEvidenceService = new RemEvidenceService();
+RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
+builder.eventCode(EventCode.ACCEPTANCE)
+        .eventTime(new Date())
+        .eventReason(EventReason.OTHER)
+        .senderIdentifier(TestResources.SENDER_IDENTIFIER)
+        .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
+        .documentTypeId(TestResources.DOC_TYPE_ID)
+        .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
+        .payloadDigest("ThisIsASHA256Digest".getBytes())
+        .protocolSpecificEvidence(TransmissionRole.C_3, TransportProfile.AS2_1_0, specificReceiptBytes)
+;
 
-
-    // Signs and builds the REMEvidenceType instance
-    SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
+// Signs and builds the REMEvidenceType instance
+SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
 ```
 
 
-## Inclusion of transport specific receipt
+## Understanding evidence
+
+
+### The purpose of REM
+
+The purpose of REM is to act as evidence that a certain event has occured during message transfer.
+ 
+The standard is very old, almost archaic and as such needed some adjustements for usage in a 4-corner transport model.
+
+
+### Providing the evidence
+
+In AS2 the signed MDN is included in the "Extensions" of the REM Evidence
+ 
+
+### Inclusion of transport specific receipt
 
 Every transport protocol has some sort of receipt created on the receiving side and returned synchronously to the 
 sending party.
@@ -65,6 +66,7 @@ for publication to neither the issuer of the original message, nor the final des
 
 This implementation will henceforth include the transport protocol specific receipt inside the REMEvidence using
 the extensions mechanism.
+
 
 ### AS2 message delivery notification (MDN)
 
@@ -145,7 +147,7 @@ For AS2 it is recommended that the entire S/MIME message, including the headers,
 ```
 
 
-## Inspecting REM Evidence with embedded AS2 MDN
+### Inspecting REM Evidence with embedded AS2 MDN
 
 
 In [src/test/resources](src/test/resources) you will find the sample files being used in this short tutorial
@@ -177,7 +179,3 @@ openssl x509 -in cert.pem -noout -text
 ### AS4 original receipt (SOAP Headers)
   
   To be done (sorry)
-
-
-  
-
