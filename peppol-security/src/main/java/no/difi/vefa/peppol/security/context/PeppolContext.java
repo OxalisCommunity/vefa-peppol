@@ -10,7 +10,6 @@ import no.difi.certvalidator.rule.*;
 import no.difi.certvalidator.util.KeyStoreCertificateBucket;
 import no.difi.certvalidator.util.SimpleCrlCache;
 import no.difi.certvalidator.util.SimplePrincipalNameProvider;
-import sun.security.provider.certpath.OCSP;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -74,9 +73,7 @@ public class PeppolContext {
 
         validatorBuilder.addRule(new ChainRule(rootCertificates, intermediateCertificates));
         validatorBuilder.addRule(new CRLRule(crlCache));
-
-        if (!"test".endsWith(scope)) // TODO Remove when OCSP for test certificates respond correct.
-            validatorBuilder.addRule(new OCSPRule(intermediateCertificates));
+        validatorBuilder.addRule(new OCSPRule(intermediateCertificates));
 
         return validatorBuilder.build();
     }
