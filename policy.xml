@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="yes"?>
+<PolicySet PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides" PolicySetId="optin-xcpd" xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os http://docs.oasis-open.org/xacml/access_control-xacml-2.0-policy-schema-os.xsd">
+    <Description>Check for the action</Description>
+    <Target/>
+    <Policy PolicyId="eProcPolicyId-1" RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+        <Target/>
+       
+        <Rule Effect="Permit" RuleId="permitId">
+            <Target>
+                <Actions>
+                    <Action>
+                        <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:specification:ubl:schema:xsd:Tender::Tender</AttributeValue>
+                            <ActionAttributeDesignator AttributeId="urn:eSENS:documentType" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                        </ActionMatch>
+                        <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">reception</AttributeValue>
+                            <ActionAttributeDesignator AttributeId="urn:eSENS:action" DataType="http://www.w3.org/2001/XMLSchema#string"/>
+                        </ActionMatch>
+                    </Action>
+                </Actions>
+            </Target>
+        </Rule>
+        <Rule Effect="Deny" RuleId="denyID"/>
+       
+        <Obligations>          
+            <Obligation ObligationId="urn:eSENS:obligations:eproc:nrr:ETSIREM" FulfillOn="Permit">
+                <AttributeAssignment AttributeId="urn:eSENS:obligations:eproc:nrr:ETSIREM:EvidenceIssuerDetails" DataType="http://www.w3.org/2001/XMLSchema#string">
+                    UPRC Access Point
+                </AttributeAssignment>                
+            </Obligation>
+            <Obligation ObligationId="urn:eSENS:obligations:eproc:nrr:ETSIREM" FulfillOn="Deny">
+            </Obligation>
+        </Obligations>
+    </Policy>
+</PolicySet>
+
