@@ -28,9 +28,9 @@ public class MainStub {
      */
      private static final org.slf4j.Logger LOG = LoggerFactory.getLogger(MainStub.class);
     public static void main(String[] args) throws IOException {
-        String sSBDHFolder = "./SBDDrop";
-        String sEvidenceFolder = "./REMFolder";
-        String sPolicyFile = "./policy.xml";
+        String sSBDHFolder = "SBDDrop";
+        String sEvidenceFolder = "REMFolder";
+        String sPolicyFile = "policy.xml";
         
         
         Path SBDHPath = Paths.get(sSBDHFolder);       

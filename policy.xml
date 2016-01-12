@@ -29,8 +29,6 @@
                     UPRC Access Point
                 </AttributeAssignment>                
             </Obligation>
-            <Obligation ObligationId="urn:eSENS:obligations:eproc:nrr:ETSIREM" FulfillOn="Deny">
-            </Obligation>
         </Obligations>
     </Policy>
 </PolicySet>
