@@ -5,7 +5,11 @@ This module contains an implementation of the ETSI TS 102 640-2 V2.1.1 also know
 The XML Schema originally provided by ETSI has been modified:
 
  * Slight adjustments made by Jörg Apitzsch
- * Inclusion of PEPPOL AS2 MDN receipts in the ```Extensions``` element.
+ * Inclusion of protocol specific transport evidence represented by for instance PEPPOL AS2 MDN or AS4 Soap headers in the ```Extensions``` element. 
+   
+    **NOTE!** The transport protocol evidence is included as a stream of Base64 bytes in order to preserve white space etc., which must not be changed in order to preserve any
+    digital signatures.
+   
 
 
 ## Getting started

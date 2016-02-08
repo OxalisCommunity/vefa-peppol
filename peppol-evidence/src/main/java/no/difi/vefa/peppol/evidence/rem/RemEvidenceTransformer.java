@@ -43,7 +43,7 @@ public class RemEvidenceTransformer {
     }
 
     /**
-     * Transforms the supplied signed REM Evidence into it's XML representation.
+     * Transforms the supplied signed REM Evidence into it's formatted XML representation.
      * <p>
      * NOTE! Do not use this XML representation for signature validation as this will fail.
      */
