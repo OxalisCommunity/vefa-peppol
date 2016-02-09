@@ -67,6 +67,13 @@ public class RemEvidenceBuilderTest {
 
         // Grabs the REMEvidenceType instance in order to make some assertions.
         REMEvidenceType remEvidenceInstance = signedRemEvidence.getRemEvidenceType();
+
+        // Issue #2
+        assertNotNull(remEvidenceInstance.getVersion(), "The version attribute was not set!");
+        assertEquals(remEvidenceInstance.getVersion(), "1");
+        // ------------- Issue #2 --------------
+
+
         assertEquals(remEvidenceInstance.getEventCode(), EventCode.ACCEPTANCE.getValue().toString());
 
         // Transforms the rem evidence instance into an XML representation suitable for some checks.
