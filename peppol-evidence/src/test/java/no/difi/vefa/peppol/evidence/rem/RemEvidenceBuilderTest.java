@@ -70,7 +70,7 @@ public class RemEvidenceBuilderTest {
 
         // Issue #2
         assertNotNull(remEvidenceInstance.getVersion(), "The version attribute was not set!");
-        assertEquals(remEvidenceInstance.getVersion(), "1");
+        assertEquals(remEvidenceInstance.getVersion(), RemEvidenceBuilder.REM_VERSION);
         // ------------- Issue #2 --------------
 
 

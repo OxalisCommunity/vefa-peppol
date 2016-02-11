@@ -33,8 +33,10 @@ import java.util.UUID;
  */
 public class RemEvidenceBuilder {
 
+    public static final String REM_VERSION = "2";
+
     private final EvidenceTypeInstance evidenceTypeInstance;
-    private final String version = "1";
+    private final String version = REM_VERSION;
     private EventCode eventCode;
     private EventReason eventReason;
     private String evidenceIdentifier = UUID.randomUUID().toString();
