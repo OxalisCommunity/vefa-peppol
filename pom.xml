@@ -5,7 +5,7 @@
     <groupId>no.difi.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.9.5</version>
+    <version>0.9.6-SNAPSHOT</version>
 
     <name>VEFA PEPPOL :: Parent</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
@@ -94,17 +94,17 @@
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
-                <version>0.9.5</version>
+                <version>0.9.6-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
-                <version>0.9.5</version>
+                <version>0.9.6-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
-                <version>0.9.5</version>
+                <version>0.9.6-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
