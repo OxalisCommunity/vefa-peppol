@@ -11,6 +11,7 @@ import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.SequenceInputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class MultiReader implements MetadataReader {
@@ -44,11 +45,11 @@ public class MultiReader implements MetadataReader {
         throw new LookupException(String.format("Unknown namespace: %s", fetcherResponse.getNamespace()));
     }
 
-    @SuppressWarnings("all")
     public FetcherResponse detect(FetcherResponse fetcherResponse) throws LookupException {
         try {
             byte[] fileContent = new byte[1024];
-            fetcherResponse.getInputStream().read(fileContent);
+            int size = fetcherResponse.getInputStream().read(fileContent);
+            fileContent = Arrays.copyOfRange(fileContent, 0, size);
 
             String namespace = XmlUtils.extractRootNamespace(new String(fileContent));
             if (namespace != null) {

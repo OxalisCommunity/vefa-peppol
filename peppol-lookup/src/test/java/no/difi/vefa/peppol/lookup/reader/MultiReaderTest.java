@@ -6,6 +6,7 @@ import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.common.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -102,5 +103,11 @@ public class MultiReaderTest {
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
         assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "CN=APP_1000000005, O=DIFI, C=NO");
+    }
+
+    @Test
+    public void busdoxServiceGroup() throws Exception {
+        List<DocumentTypeIdentifier> identifiers = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9915-setcce-test.xml"), null));
+        assertEquals(identifiers.size(), 1);
     }
 }

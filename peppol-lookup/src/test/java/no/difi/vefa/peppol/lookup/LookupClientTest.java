@@ -7,6 +7,7 @@ import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
+import no.difi.vefa.peppol.lookup.reader.BusdoxReader;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -40,6 +41,15 @@ public class LookupClientTest {
         );
 
         assertNotNull(endpoint);
+    }
+
+    @Test(groups = "full")
+    public void simple9915() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forTest().fetcher(new UrlFetcher()).build();
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9915:setcce-test"));
+
+        assertNotNull(documentTypeIdentifiers);
+        assertNotEquals(documentTypeIdentifiers.size(), 0);
     }
 
     @Test(groups = "full")
