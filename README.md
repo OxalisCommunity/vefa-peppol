@@ -2,7 +2,7 @@
 
 # VEFA PEPPOL
 
-Current version: **[0.9.4](https://github.com/difi/vefa-peppol/releases/tag/0.9.4)**
+Current version: **[0.9.5](https://github.com/difi/vefa-peppol/releases/tag/0.9.5)**
 
 This project implements some aspects of PEPPOL for inclusion in other projects.
 
