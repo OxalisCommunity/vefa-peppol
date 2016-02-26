@@ -62,7 +62,7 @@
     <properties>
         <java.encoding>UTF-8</java.encoding>
         <java.version>1.7</java.version>
-        <slf4j.version>1.7.13</slf4j.version>
+        <slf4j.version>1.7.16</slf4j.version>
     </properties>
 
     <dependencies>
@@ -149,7 +149,7 @@
             <dependency>
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcpkix-jdk15on</artifactId>
-                <version>1.53</version>
+                <version>1.54</version>
             </dependency>
 
             <!-- Google Guava -->
