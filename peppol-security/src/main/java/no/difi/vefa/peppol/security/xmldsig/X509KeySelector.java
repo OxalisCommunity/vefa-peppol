@@ -33,7 +33,9 @@ class X509KeySelector extends KeySelector {
                 // with the method.
                 if (algEquals(method.getAlgorithm(), key.getAlgorithm())) {
                     return new KeySelectorResult() {
-                        public Key getKey() { return key; }
+                        public Key getKey() {
+                            return key;
+                        }
                     };
                 }
             }
@@ -44,7 +46,9 @@ class X509KeySelector extends KeySelector {
     static boolean algEquals(String algURI, String algName) {
         return (
                 (algName.equalsIgnoreCase("DSA") && algURI.equalsIgnoreCase(SignatureMethod.DSA_SHA1)) ||
-                (algName.equalsIgnoreCase("RSA") && algURI.equalsIgnoreCase(SignatureMethod.RSA_SHA1))
+                (algName.equalsIgnoreCase("RSA") && algURI.equalsIgnoreCase(SignatureMethod.RSA_SHA1)) ||
+                (algName.equalsIgnoreCase("RSA") && algURI.equalsIgnoreCase(ExtraSignatureMethod.RSA_SHA256)) ||
+                (algName.equalsIgnoreCase("RSA") && algURI.equalsIgnoreCase(ExtraSignatureMethod.RSA_SHA512))
         );
     }
 

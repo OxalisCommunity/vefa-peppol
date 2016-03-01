@@ -7,7 +7,6 @@ import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
-import no.difi.vefa.peppol.lookup.reader.BusdoxReader;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import static org.testng.Assert.assertNotNull;
 
 public class LookupClientTest {
 
-    @Test(groups = "full")
+    @Test(enabled = false)
     public void simple() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new ApacheFetcher()).build();
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9908:991825827"));
@@ -43,7 +42,7 @@ public class LookupClientTest {
         assertNotNull(endpoint);
     }
 
-    @Test(groups = "full")
+    @Test(enabled = false)
     public void simple9915() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest().fetcher(new UrlFetcher()).build();
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9915:setcce-test"));
@@ -52,7 +51,7 @@ public class LookupClientTest {
         assertNotEquals(documentTypeIdentifiers.size(), 0);
     }
 
-    @Test(groups = "full")
+    @Test(enabled = false)
     public void simple9933() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));

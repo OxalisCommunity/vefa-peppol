@@ -32,13 +32,12 @@ public class XmldsigTest {
         keyStore.load(getClass().getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
 
         privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
-
     }
 
     @Test
     public void simple() throws Exception {
         ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
-        XmldsigSigner.sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
+        XmldsigSigner.SHA1().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
 
         ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
         ByteStreams.copy(getClass().getResourceAsStream("/xmldsig-test-output.xml"), expectedStream);
@@ -51,8 +50,22 @@ public class XmldsigTest {
     }
 
     @Test
+    public void simpleSHA256() throws Exception {
+        ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
+        XmldsigSigner.SHA256().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
+
+        ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
+        ByteStreams.copy(getClass().getResourceAsStream("/xmldsig-test-output-sha256.xml"), expectedStream);
+
+        Assert.assertEquals(generatedStream.toByteArray(), expectedStream.toByteArray());
+
+        X509Certificate x509Certificate = XmldsigVerifier.verify(DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
+
+        Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(), "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
+    }
+
+    @Test
     public void simpleContructors() {
-        new XmldsigSigner();
         new XmldsigVerifier();
     }
 
@@ -76,7 +89,7 @@ public class XmldsigTest {
         Document node = (Document) domResult.getNode();
         Element documentElement = node.getDocumentElement();
         DOMResult signedResult = new DOMResult();
-        XmldsigSigner.sign(documentElement, privateKeyEntry, signedResult);
+        XmldsigSigner.SHA1().sign(documentElement, privateKeyEntry, signedResult);
 
         // Verify the signature from the signed DOM document
         Document signedDocument = (Document) signedResult.getNode();

@@ -337,7 +337,7 @@ public class RemEvidenceBuilder {
         Document signedRemEvidenceDocument = documentBuilder.newDocument();
         DOMResult domResult = new DOMResult(signedRemEvidenceDocument);
         try {
-            XmldsigSigner.sign(unsignedRemEvidenceDocument, privateKeyEntry, domResult);
+            XmldsigSigner.SHA256().sign(unsignedRemEvidenceDocument, privateKeyEntry, domResult);
         } catch (PeppolSecurityException e) {
             throw new IllegalStateException("Unable to sign RemEvidenceType " + e.getMessage(), e);
         }
