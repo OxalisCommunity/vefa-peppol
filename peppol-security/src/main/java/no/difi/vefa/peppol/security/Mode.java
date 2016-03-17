@@ -1,0 +1,86 @@
+package no.difi.vefa.peppol.security;
+
+import no.difi.certvalidator.Validator;
+import no.difi.certvalidator.ValidatorBuilder;
+import no.difi.certvalidator.api.CertificateBucket;
+import no.difi.certvalidator.api.CertificateBucketException;
+import no.difi.certvalidator.api.CrlCache;
+import no.difi.certvalidator.rule.*;
+import no.difi.certvalidator.util.KeyStoreCertificateBucket;
+import no.difi.certvalidator.util.SimpleCrlCache;
+import no.difi.certvalidator.util.SimplePrincipalNameProvider;
+import no.difi.vefa.peppol.common.code.Service;
+import no.difi.vefa.peppol.security.api.ModeDescription;
+import no.difi.vefa.peppol.security.mode.ProductionMode;
+import no.difi.vefa.peppol.security.mode.TestMode;
+import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Mode {
+
+    public static final String PRODUCTION = "PRODUCTION";
+    public static final String TEST = "TEST";
+
+    private static Map<String, ModeDescription> modeDescriptions = new HashMap<>();
+
+    static {
+        add(new ProductionMode());
+        add(new TestMode());
+    }
+
+    /**
+     * Register new modes if identifier is unique.
+     *
+     * @param modeDescription Implementation of mode.
+     */
+    public static void add(ModeDescription modeDescription) {
+        if (!modeDescriptions.containsKey(modeDescription.getIdentifier()))
+            modeDescriptions.put(modeDescription.getIdentifier(), modeDescription);
+    }
+
+    public static Mode valueOf(String identifier) {
+        if (modeDescriptions.containsKey(identifier))
+            return new Mode(modeDescriptions.get(identifier));
+
+        throw new IllegalStateException(String.format("Mode '%s' not found.", identifier));
+    }
+
+    private CrlCache crlCache = new SimpleCrlCache();
+    private KeyStoreCertificateBucket keyStore;
+    private Map<Service, CertificateBucket> certificateBuckets = new HashMap<>();
+
+    private ModeDescription mode;
+
+    private Mode(ModeDescription mode) {
+        this.mode = mode;
+
+        try {
+            keyStore = new KeyStoreCertificateBucket(mode.getKeystore(), "peppol");
+
+            certificateBuckets.put(null, keyStore.toSimple("peppol-root"));
+            certificateBuckets.put(Service.AP, keyStore.toSimple("peppol-ap"));
+            certificateBuckets.put(Service.SMP, keyStore.toSimple("peppol-smp"));
+        } catch (CertificateBucketException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public KeyStoreCertificateBucket getKeyStoreBucket() {
+        return keyStore;
+    }
+
+    public DifiCertificateValidator validator(Service service) {
+        ValidatorBuilder validatorBuilder = ValidatorBuilder.newInstance();
+        validatorBuilder.addRule(new ExpirationRule());
+        validatorBuilder.addRule(SigningRule.PublicSignedOnly());
+        validatorBuilder.addRule(new PrincipalNameRule("CN", new SimplePrincipalNameProvider(mode.getIssuers(service)), PrincipalNameRule.Principal.ISSUER));
+        validatorBuilder.addRule(new ChainRule(certificateBuckets.get(null), certificateBuckets.get(service)));
+        validatorBuilder.addRule(new CRLRule(crlCache));
+        validatorBuilder.addRule(new OCSPRule(certificateBuckets.get(service)));
+
+        return new DifiCertificateValidator(validatorBuilder.build());
+    }
+
+}

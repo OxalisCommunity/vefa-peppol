@@ -4,7 +4,6 @@ import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;

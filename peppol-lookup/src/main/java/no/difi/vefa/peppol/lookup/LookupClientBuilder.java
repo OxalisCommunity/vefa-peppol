@@ -1,6 +1,6 @@
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.common.code.Mode;
+import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
@@ -9,9 +9,8 @@ import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
 import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
+import no.difi.vefa.peppol.security.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
-import no.difi.vefa.peppol.security.context.PeppolContext;
-import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
 
 public class LookupClientBuilder {
 
@@ -19,17 +18,15 @@ public class LookupClientBuilder {
         return new LookupClientBuilder();
     }
 
-    public static LookupClientBuilder forMode(Mode mode) {
-        PeppolContext peppolContext;
+    public static LookupClientBuilder forMode(String modeIdentifier) {
+        Mode mode = Mode.valueOf(modeIdentifier);
         String locator;
 
-        switch (mode) {
-            case PRODUCTION:
-                peppolContext = new PeppolContext("production");
+        switch (modeIdentifier) {
+            case "PRODUCTION":
                 locator = DynamicLocator.OPENPEPPOL_PRODUCTION;
                 break;
-            case TEST:
-                peppolContext = new PeppolContext("test");
+            case "TEST":
                 locator = DynamicLocator.OPENPEPPOL_TEST;
                 break;
             default:
@@ -38,16 +35,16 @@ public class LookupClientBuilder {
 
         return newInstance()
                 .locator(new DynamicLocator(locator))
-                .endpointCertificateValidator(new DifiCertificateValidator(peppolContext.endpointValidator()))
-                .providerCertificateValidator(new DifiCertificateValidator(peppolContext.providerValidator()));
+                .endpointCertificateValidator(mode.validator(Service.AP))
+                .providerCertificateValidator(mode.validator(Service.SMP));
     }
 
     public static LookupClientBuilder forProduction() {
-        return forMode(Mode.PRODUCTION);
+        return forMode("PRODUCTION");
     }
 
     public static LookupClientBuilder forTest() {
-        return forMode(Mode.TEST);
+        return forMode("TEST");
     }
 
     LookupClientBuilder() {

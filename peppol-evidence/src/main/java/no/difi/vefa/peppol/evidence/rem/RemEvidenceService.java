@@ -1,12 +1,7 @@
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.etsi.uri._02640.v2_.REMEvidenceType;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 
 /**
  * Entry point for most operations pertaining to REM evidence.
