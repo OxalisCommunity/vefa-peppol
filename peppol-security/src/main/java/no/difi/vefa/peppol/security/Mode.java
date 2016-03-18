@@ -49,7 +49,7 @@ public class Mode {
         throw new IllegalStateException(String.format("Mode '%s' not found.", identifier));
     }
 
-    public static String detect(X509Certificate certificate) throws PeppolSecurityException{
+    public static String detect(X509Certificate certificate) throws PeppolSecurityException {
         for (ModeDescription modeDescription : modeDescriptions.values()) {
             try {
                 new Mode(modeDescription).validator(Service.ALL).validate(certificate);
