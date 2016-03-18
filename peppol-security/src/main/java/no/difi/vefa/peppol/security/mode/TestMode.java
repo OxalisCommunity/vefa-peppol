@@ -1,12 +1,11 @@
 package no.difi.vefa.peppol.security.mode;
 
-import no.difi.vefa.peppol.security.api.ModeDescription;
 import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.security.Mode;
 
 import java.io.InputStream;
 
-public class TestMode implements ModeDescription {
+public class TestMode extends AbstractPeppolMode {
 
     private static String[] issuersAp = new String[] {"PEPPOL ACCESS POINT TEST CA"};
     private static String[] issuersSmp = new String[] {"PEPPOL SERVICE METADATA PUBLISHER TEST CA"};
@@ -17,7 +16,7 @@ public class TestMode implements ModeDescription {
     }
 
     @Override
-    public String[] getIssuers(Service service) {
+    public String[] getIssuersInternal(Service service) {
         switch (service) {
             case AP:
                 return issuersAp;

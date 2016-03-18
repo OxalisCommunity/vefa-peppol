@@ -1,6 +1,5 @@
 package no.difi.vefa.peppol.security;
 
-import no.difi.certvalidator.Validator;
 import no.difi.certvalidator.ValidatorBuilder;
 import no.difi.certvalidator.api.CertificateBucket;
 import no.difi.certvalidator.api.CertificateBucketException;
@@ -10,11 +9,14 @@ import no.difi.certvalidator.util.KeyStoreCertificateBucket;
 import no.difi.certvalidator.util.SimpleCrlCache;
 import no.difi.certvalidator.util.SimplePrincipalNameProvider;
 import no.difi.vefa.peppol.common.code.Service;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.api.ModeDescription;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.mode.ProductionMode;
 import no.difi.vefa.peppol.security.mode.TestMode;
 import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
 
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +49,19 @@ public class Mode {
         throw new IllegalStateException(String.format("Mode '%s' not found.", identifier));
     }
 
+    public static String detect(X509Certificate certificate) throws PeppolSecurityException{
+        for (ModeDescription modeDescription : modeDescriptions.values()) {
+            try {
+                new Mode(modeDescription).validator(Service.ALL).validate(certificate);
+                return modeDescription.getIdentifier();
+            } catch (PeppolSecurityException e) {
+                // No action.
+            }
+        }
+
+        throw new PeppolSecurityException(String.format("Unable to detect mode for certificate '%s'.", certificate.getSubjectDN().toString()));
+    }
+
     private CrlCache crlCache = new SimpleCrlCache();
     private KeyStoreCertificateBucket keyStore;
     private Map<Service, CertificateBucket> certificateBuckets = new HashMap<>();
@@ -60,6 +75,7 @@ public class Mode {
             keyStore = new KeyStoreCertificateBucket(mode.getKeystore(), "peppol");
 
             certificateBuckets.put(null, keyStore.toSimple("peppol-root"));
+            certificateBuckets.put(Service.ALL, keyStore.toSimple("peppol-ap", "peppol-smp"));
             certificateBuckets.put(Service.AP, keyStore.toSimple("peppol-ap"));
             certificateBuckets.put(Service.SMP, keyStore.toSimple("peppol-smp"));
         } catch (CertificateBucketException e) {
@@ -71,7 +87,7 @@ public class Mode {
         return keyStore;
     }
 
-    public DifiCertificateValidator validator(Service service) {
+    public CertificateValidator validator(Service service) {
         ValidatorBuilder validatorBuilder = ValidatorBuilder.newInstance();
         validatorBuilder.addRule(new ExpirationRule());
         validatorBuilder.addRule(SigningRule.PublicSignedOnly());
@@ -82,5 +98,4 @@ public class Mode {
 
         return new DifiCertificateValidator(validatorBuilder.build());
     }
-
 }
