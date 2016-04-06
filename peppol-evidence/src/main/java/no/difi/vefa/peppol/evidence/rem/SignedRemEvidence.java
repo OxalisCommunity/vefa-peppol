@@ -1,6 +1,9 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
+import java.util.Date;
+import java.util.List;
+import javax.xml.bind.JAXBElement;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -8,10 +11,6 @@ import no.difi.vefa.peppol.common.model.Scheme;
 import org.etsi.uri._01903.v1_3.AnyType;
 import org.etsi.uri._02640.v2_.*;
 import org.w3c.dom.Document;
-
-import javax.xml.bind.JAXBElement;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Holds a signed REMEvidence. Internally it is held in two representations; REMEvidenceType and
@@ -108,9 +107,9 @@ public class SignedRemEvidence {
     }
 
     public InstanceIdentifier getInstanceIdentifier() {
-        String uaMessageIdentifier = e().getSenderMessageDetails().getUAMessageIdentifier();
+        String remMDMessageIdentifier = e().getSenderMessageDetails().getMessageIdentifierByREMMD();
 
-        return new InstanceIdentifier(uaMessageIdentifier);
+        return new InstanceIdentifier(remMDMessageIdentifier);
     }
 
     public byte[] getPayloadDigestValue() {
