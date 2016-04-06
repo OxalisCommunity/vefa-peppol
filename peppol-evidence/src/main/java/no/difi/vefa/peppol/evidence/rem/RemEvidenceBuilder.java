@@ -3,14 +3,10 @@ package no.difi.vefa.peppol.evidence.rem;
 import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
-import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
-import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
-import org.etsi.uri._01903.v1_3.AnyType;
-import org.etsi.uri._02640.v2_.*;
-import org.w3._2000._09.xmldsig_.DigestMethodType;
-import org.w3c.dom.Document;
-
+import java.security.KeyStore;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.UUID;
 import javax.xml.bind.*;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -19,10 +15,13 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMResult;
-import java.security.KeyStore;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.UUID;
+import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
+import org.etsi.uri._01903.v1_3.AnyType;
+import org.etsi.uri._02640.v2_.*;
+import org.w3._2000._09.xmldsig_.DigestMethodType;
+import org.w3c.dom.Document;
 
 /**
  * Builds instances of SignedRemEvidence based upon the properties supplied.
@@ -286,8 +285,9 @@ public class RemEvidenceBuilder {
 
         injectTransmissionMetaData(r, documentTypeId.getIdentifier(), instanceIdentifier.getValue(), payloadDigest);
 
-        // Injects the transport level receipt, i.e. AS2 MDN or AS4 Soap Headers
-        injectPeppolExtensions(r, transmissionRole, transportProtocol, protocolSpecificBytes);
+        // Injects the transport level receipt (if supplied), i.e. AS2 MDN or AS4 Soap Header
+        if (protocolSpecificBytes != null)
+            injectPeppolExtensions(r, transmissionRole, transportProtocol, protocolSpecificBytes);
 
         // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = createRemEvidenceTypeXmlInstance(r, evidenceTypeInstance);
