@@ -136,7 +136,7 @@ public class RemEvidenceBuilder {
 
         // Instance identifier from SBDH
         if (instanceIdentifier != null) {
-            messageDetailsType.setUAMessageIdentifier(instanceIdentifier);
+            messageDetailsType.setMessageIdentifierByREMMD(instanceIdentifier);
         } else
             throw new IllegalStateException("Must supply message instance identifier");
 
