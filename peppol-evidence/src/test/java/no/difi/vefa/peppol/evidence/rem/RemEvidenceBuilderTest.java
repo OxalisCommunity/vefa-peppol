@@ -2,20 +2,19 @@ package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
+import java.io.ByteArrayOutputStream;
+import java.security.KeyStore;
+import java.util.Date;
+import javax.xml.bind.JAXBElement;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._01903.v1_3.AnyType;
 import org.etsi.uri._02640.v2_.ExtensionType;
+import org.etsi.uri._02640.v2_.ExtensionsListType;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
+import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
-import javax.xml.bind.JAXBElement;
-import java.io.ByteArrayOutputStream;
-import java.security.KeyStore;
-import java.util.Date;
-
-import static org.testng.Assert.*;
 
 /**
  * Ensures that the RemEvidenceBuilder works as expected.
@@ -23,6 +22,8 @@ import static org.testng.Assert.*;
  * @author steinar
  *         Date: 04.11.2015
  *         Time: 21.05
+ * @author Sander Fieten
+ *         Date: 06.04.2016
  */
 public class RemEvidenceBuilderTest {
 
@@ -166,5 +167,40 @@ public class RemEvidenceBuilderTest {
         PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value.getContent().get(0);
         byte[] evidenceBytes = peppolRemExtension.getOriginalReceipt().getValue();
 
+        assertEquals(evidenceBytes, specificReceiptBytes);
     }
+    
+    /**
+     * Verifies that the PeppolRemExtension is optional.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testExtensionOptional() throws Exception {
+
+        RemEvidenceBuilder builder = new RemEvidenceBuilder(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT);
+
+        builder.eventCode(EventCode.ACCEPTANCE)
+                .eventTime(new Date())
+                .eventReason(EventReason.OTHER)
+                .senderIdentifier(TestResources.SENDER_IDENTIFIER)
+                .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
+                .documentTypeId(TestResources.DOC_TYPE_ID)
+                .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
+                .payloadDigest("ThisIsASHA256Digest".getBytes())
+        ;
+
+
+        // Signs and builds the REMEvidenceType instance
+        SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
+
+        // Grabs the REMEvidenceType instance in order to make some assertions.
+        REMEvidenceType remEvidenceInstance = signedRemEvidence.getRemEvidenceType();
+
+
+        ExtensionsListType extensions = signedRemEvidence.getRemEvidenceType().getExtensions();
+        
+        assertNull(extensions);
+    }
+    
 }
