@@ -1,21 +1,26 @@
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
-import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import no.difi.vefa.peppol.common.util.DomUtils;
 import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
@@ -25,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BdxrReader implements MetadataReader {
+
+    private static Logger logger = LoggerFactory.getLogger(BdxrReader.class);
 
     public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
 
@@ -44,11 +51,17 @@ public class BdxrReader implements MetadataReader {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             ServiceGroupType serviceGroup = ((JAXBElement<ServiceGroupType>) unmarshaller.unmarshal(fetcherResponse.getInputStream())).getValue();
-            List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<DocumentTypeIdentifier>();
+            List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
 
             for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
-                String[] parts = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8").split("::", 2);
-                documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
+                String hrefDocumentTypeIdentifier = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
+                String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
+
+                try {
+                    documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
+                }
             }
 
             return documentTypeIdentifiers;
@@ -107,11 +120,7 @@ public class BdxrReader implements MetadataReader {
             }
 
             return serviceMetadata;
-        } catch (JAXBException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (CertificateException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (Exception e) {
+        } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
