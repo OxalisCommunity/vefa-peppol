@@ -74,10 +74,10 @@ public class Mode {
         try {
             keyStore = new KeyStoreCertificateBucket(mode.getKeystore(), "peppol");
 
-            certificateBuckets.put(null, keyStore.toSimple("peppol-root"));
-            certificateBuckets.put(Service.ALL, keyStore.toSimple("peppol-ap", "peppol-smp"));
-            certificateBuckets.put(Service.AP, keyStore.toSimple("peppol-ap"));
-            certificateBuckets.put(Service.SMP, keyStore.toSimple("peppol-smp"));
+            certificateBuckets.put(null, keyStore.startsWith("root-"));
+            certificateBuckets.put(Service.ALL, keyStore.startsWith("ap-", "smp-", "sts-"));
+            certificateBuckets.put(Service.AP, keyStore.startsWith("ap-"));
+            certificateBuckets.put(Service.SMP, keyStore.startsWith("smp-"));
         } catch (CertificateBucketException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

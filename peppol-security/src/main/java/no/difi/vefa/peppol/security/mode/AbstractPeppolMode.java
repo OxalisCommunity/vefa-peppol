@@ -23,5 +23,5 @@ abstract class AbstractPeppolMode implements ModeDescription {
         }
     }
 
-    public abstract String[] getIssuersInternal(Service service);
+    protected abstract String[] getIssuersInternal(Service service);
 }

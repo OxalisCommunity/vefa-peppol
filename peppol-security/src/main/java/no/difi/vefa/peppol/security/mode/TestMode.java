@@ -16,7 +16,7 @@ public class TestMode extends AbstractPeppolMode {
     }
 
     @Override
-    public String[] getIssuersInternal(Service service) {
+    protected String[] getIssuersInternal(Service service) {
         switch (service) {
             case AP:
                 return issuersAp;
