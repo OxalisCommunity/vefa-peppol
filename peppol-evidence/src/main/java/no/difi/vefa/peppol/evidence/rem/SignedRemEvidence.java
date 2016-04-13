@@ -65,7 +65,7 @@ public class SignedRemEvidence {
         return e().getEventTime().toGregorianCalendar().getTime();
     }
    
-    public String getEventIssuerDetails() {
+    public String getEvidenceIssuerDetails() {
         try {
             return e().getEvidenceIssuerDetails()
                             .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
