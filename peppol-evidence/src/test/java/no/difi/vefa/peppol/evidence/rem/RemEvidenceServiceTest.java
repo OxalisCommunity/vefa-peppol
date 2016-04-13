@@ -1,13 +1,11 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
+import java.security.KeyStore;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.testng.annotations.Test;
-
-import java.security.KeyStore;
-
 import static org.junit.Assert.assertNotNull;
+import org.testng.annotations.Test;
 
 /**
  * Created by steinar on 08.11.2015.
@@ -26,6 +24,7 @@ public class RemEvidenceServiceTest {
         KeyStore.PrivateKeyEntry privateKey = TestResources.getPrivateKey();
 
         builder.eventCode(EventCode.ACCEPTANCE)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
                 .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)

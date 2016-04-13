@@ -26,6 +26,7 @@ public class TestResources {
     public static final ParticipantIdentifier SENDER_IDENTIFIER = new ParticipantIdentifier("9908:810017902");
     public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = new ParticipantIdentifier("9908:123456789");
 
+    public static final String EVIDENCE_ISSUER_POLICY_ID = "http://ev_policyid.issuer.test/clause15";
     public static final String EVIDENCE_ISSUER_NAME = "RemBuilderTest";
     
     private static KeyStore keyStore = null;
@@ -117,6 +118,7 @@ public class TestResources {
         KeyStore.PrivateKeyEntry privateKey = TestResources.getPrivateKey();
 
         builder.eventCode(EventCode.ACCEPTANCE)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
                 .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
