@@ -105,7 +105,7 @@ public class RemEvidenceBuilderTest {
         Date eventTime = signedRemEvidence.getEventTime();
         
         // Check entity name of evidence issuer (issue #11)
-        assertEquals(signedRemEvidence.getEventIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
+        assertEquals(signedRemEvidence.getEvidenceIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
         
         ParticipantIdentifier senderIdentifier = signedRemEvidence.getSenderIdentifier();
         assertNotNull(senderIdentifier);
