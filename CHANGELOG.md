@@ -2,6 +2,18 @@
 
 ## Next release
 
+## 0.9.6
+
+* Contributions from [sfieten](https://github.com/sfieten) to peppol-evidence with pull requests [#6](https://github.com/difi/vefa-peppol/pull/6), [#8](https://github.com/difi/vefa-peppol/pull/8), [#12](https://github.com/difi/vefa-peppol/pull/12), [#14](https://github.com/difi/vefa-peppol/pull/14) and [#15](https://github.com/difi/vefa-peppol/pull/15).
+* Refactoring implementation of modes.
+
+## 0.9.5
+
+* Fixing missing attribute version. [#2](https://github.com/difi/vefa-peppol/issues/2)
+* Fixing error when using MultiReader on very short responses
+
+## 0.9.4
+
 * Support for BDXL.
 * Adding Mode enum.
 * Adding no.difi.vefa.peppol.common.model.Scheme and related changes.
