@@ -29,6 +29,7 @@ import org.w3c.dom.Document;
  * See unit tests for details on how to use it.
  * <p>
  * Created by steinar on 08.11.2015.
+ * Edited by sanderf to fix issues #4, #5, #11
  */
 public class RemEvidenceBuilder {
 
@@ -39,7 +40,8 @@ public class RemEvidenceBuilder {
     private EventCode eventCode;
     private EventReason eventReason;
     private String evidenceIdentifier = UUID.randomUUID().toString();
-
+    private String evidenceIssuerDetails;
+    
     // The timestamp of the delivery, defaults to current date and time.
     private Date eventTime = new Date();
 
@@ -175,6 +177,11 @@ public class RemEvidenceBuilder {
         return this;
     }
 
+    public RemEvidenceBuilder eventIssuerDetails(String evidenceIssuerDetails) {
+        this.evidenceIssuerDetails = evidenceIssuerDetails;
+        return this;
+    }
+
     public RemEvidenceBuilder senderIdentifier(ParticipantIdentifier senderIdentifier) {
         this.senderIdentifier = senderIdentifier;
         return this;
@@ -256,7 +263,20 @@ public class RemEvidenceBuilder {
         } catch (DatatypeConfigurationException e) {
             throw new IllegalStateException("Unable to set eventTime " + e.getMessage(), e);
         }
-
+        
+        // EvidenceIssuerDetails
+        if (evidenceIssuerDetails == null)
+            throw new IllegalStateException("Issuer details missing");
+        EntityNameType entityName = new EntityNameType();
+        entityName.getName().add(evidenceIssuerDetails);
+        NamePostalAddressType evidenceIssuerNameAndAddressType = new NamePostalAddressType();
+        evidenceIssuerNameAndAddressType.setEntityName(entityName);
+        NamesPostalAddressListType namesAndAddressList = new NamesPostalAddressListType();
+        namesAndAddressList.getNamePostalAddress().add(evidenceIssuerNameAndAddressType);
+        EntityDetailsType evidenceIssuerDetailsType = new EntityDetailsType();
+        evidenceIssuerDetailsType.setNamesPostalAddresses(namesAndAddressList);
+        r.setEvidenceIssuerDetails(evidenceIssuerDetailsType);
+        
         // SenderDetails
         if (senderIdentifier != null) {
 
