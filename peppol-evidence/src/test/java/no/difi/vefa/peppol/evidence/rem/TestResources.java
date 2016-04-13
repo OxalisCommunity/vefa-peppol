@@ -28,6 +28,8 @@ public class TestResources {
     public static final ParticipantIdentifier SENDER_IDENTIFIER = new ParticipantIdentifier("9908:810017902");
     public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = new ParticipantIdentifier("9908:123456789");
 
+    public static final String EVIDENCE_ISSUER_NAME = "RemBuilderTest";
+    
     private static KeyStore keyStore = null;
     private static RemEvidenceService remEvidenceService;
 

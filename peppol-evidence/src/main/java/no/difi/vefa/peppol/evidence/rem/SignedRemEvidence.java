@@ -26,9 +26,8 @@ import org.w3c.dom.Document;
 public class SignedRemEvidence {
 
     private final JAXBElement<REMEvidenceType> jaxbElement;
-    private final Document signedRemEvidenceXml;
-    private InstanceIdentifier instanceIdentifier;
-
+    private final Document signedRemEvidenceXml;   
+    
     public SignedRemEvidence(JAXBElement<REMEvidenceType> jaxbElement, Document signedRemEvidenceXml) {
         this.jaxbElement = jaxbElement;
         this.signedRemEvidenceXml = signedRemEvidenceXml;
@@ -65,7 +64,16 @@ public class SignedRemEvidence {
     public Date getEventTime() {
         return e().getEventTime().toGregorianCalendar().getTime();
     }
-
+   
+    public String getEventIssuerDetails() {
+        try {
+            return e().getEvidenceIssuerDetails()
+                            .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
+        } catch (NullPointerException npe) {
+            throw new IllegalStateException("There are no Event Issuer Details");
+        }            
+    }
+    
     public ParticipantIdentifier getSenderIdentifier() {
 
         EntityDetailsType senderDetails = e().getSenderDetails();

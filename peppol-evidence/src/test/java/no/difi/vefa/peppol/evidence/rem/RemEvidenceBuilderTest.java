@@ -53,6 +53,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
@@ -102,12 +103,15 @@ public class RemEvidenceBuilderTest {
         EventCode eventCode = signedRemEvidence.getEventCode();
         EventReason eventReason = signedRemEvidence.getEventReason();
         Date eventTime = signedRemEvidence.getEventTime();
+        
+        // Check entity name of evidence issuer (issue #11)
+        assertEquals(signedRemEvidence.getEventIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
+        
         ParticipantIdentifier senderIdentifier = signedRemEvidence.getSenderIdentifier();
         assertNotNull(senderIdentifier);
 
         ParticipantIdentifier receiverIdentifier = signedRemEvidence.getRecipientIdentifier();
         assertNotNull(receiverIdentifier);
-
 
         DocumentTypeIdentifier documentTypeIdentifier = signedRemEvidence.getDocumentTypeIdentifier();
         assertNotNull(documentTypeIdentifier);
@@ -141,6 +145,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
@@ -160,7 +165,6 @@ public class RemEvidenceBuilderTest {
         ExtensionType extensionType = signedRemEvidence.getRemEvidenceType().getExtensions().getExtension().get(0);
         JAXBElement<AnyType> anyTypeJAXBElement = (JAXBElement<AnyType>) extensionType.getContent().get(0);
         AnyType value = anyTypeJAXBElement.getValue();
-
 
         assertTrue(value.getContent().get(0) instanceof PeppolRemExtension);
 
@@ -183,6 +187,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
