@@ -3,8 +3,6 @@
 
 # VEFA PEPPOL
 
-Current version: **[0.9.5](https://github.com/difi/vefa-peppol/releases/tag/0.9.5)**
-
 This project implements some aspects of PEPPOL for inclusion in other projects.
 
 * [Common](peppol-common) - Data model for PEPPOL functionality.
