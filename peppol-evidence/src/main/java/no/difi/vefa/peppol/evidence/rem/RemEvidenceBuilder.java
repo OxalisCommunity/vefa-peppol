@@ -177,7 +177,7 @@ public class RemEvidenceBuilder {
         return this;
     }
 
-    public RemEvidenceBuilder eventIssuerDetails(String evidenceIssuerDetails) {
+    public RemEvidenceBuilder evidenceIssuerDetails(String evidenceIssuerDetails) {
         this.evidenceIssuerDetails = evidenceIssuerDetails;
         return this;
     }
