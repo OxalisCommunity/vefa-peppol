@@ -53,6 +53,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
                 .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
@@ -104,6 +105,9 @@ public class RemEvidenceBuilderTest {
         EventReason eventReason = signedRemEvidence.getEventReason();
         Date eventTime = signedRemEvidence.getEventTime();
         
+        // Check the policy id
+        assertEquals(signedRemEvidence.getEvidenceIssuerPolicyID(), TestResources.EVIDENCE_ISSUER_POLICY_ID);
+        
         // Check entity name of evidence issuer (issue #11)
         assertEquals(signedRemEvidence.getEvidenceIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
         
@@ -145,6 +149,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
                 .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
@@ -187,6 +192,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
                 .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)

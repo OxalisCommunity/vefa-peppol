@@ -41,6 +41,7 @@ public class RemEvidenceBuilder {
     private EventReason eventReason;
     private String evidenceIdentifier = UUID.randomUUID().toString();
     private String evidenceIssuerDetails;
+    private String evidenceIssuerPolicyID;
     
     // The timestamp of the delivery, defaults to current date and time.
     private Date eventTime = new Date();
@@ -177,6 +178,11 @@ public class RemEvidenceBuilder {
         return this;
     }
 
+    public RemEvidenceBuilder evidenceIssuerPolicyID(String evidencePolicyID) {
+        this.evidenceIssuerPolicyID = evidencePolicyID;
+        return this;
+    }
+
     public RemEvidenceBuilder evidenceIssuerDetails(String evidenceIssuerDetails) {
         this.evidenceIssuerDetails = evidenceIssuerDetails;
         return this;
@@ -263,6 +269,13 @@ public class RemEvidenceBuilder {
         } catch (DatatypeConfigurationException e) {
             throw new IllegalStateException("Unable to set eventTime " + e.getMessage(), e);
         }
+        
+        // EvidencePolicyID
+        if (evidenceIssuerPolicyID == null) 
+            throw new IllegalStateException("Evidence Issuer Policy ID missing");
+        EvidenceIssuerPolicyIDType policyIDs = new EvidenceIssuerPolicyIDType();
+        policyIDs.getPolicyID().add(evidenceIssuerPolicyID);
+        r.setEvidenceIssuerPolicyID(policyIDs);
         
         // EvidenceIssuerDetails
         if (evidenceIssuerDetails == null)

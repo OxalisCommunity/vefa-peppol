@@ -65,6 +65,13 @@ public class SignedRemEvidence {
         return e().getEventTime().toGregorianCalendar().getTime();
     }
    
+    public String getEvidenceIssuerPolicyID() {
+        if (e().getEvidenceIssuerPolicyID() == null) 
+            throw new IllegalStateException("Evidence issuer policy ID is not set");
+        else
+            return e().getEvidenceIssuerPolicyID().getPolicyID().get(0);
+    }
+    
     public String getEvidenceIssuerDetails() {
         try {
             return e().getEvidenceIssuerDetails()
