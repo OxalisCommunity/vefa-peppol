@@ -1,11 +1,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
-import no.difi.vefa.peppol.common.model.*;
-
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +10,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
 import java.util.Properties;
-
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import no.difi.vefa.peppol.common.model.*;
 import static org.testng.Assert.assertNotNull;
 
 /**
@@ -119,6 +117,7 @@ public class TestResources {
         KeyStore.PrivateKeyEntry privateKey = TestResources.getPrivateKey();
 
         builder.eventCode(EventCode.ACCEPTANCE)
+                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
