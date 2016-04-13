@@ -26,7 +26,7 @@ public class RemEvidenceServiceTest {
         KeyStore.PrivateKeyEntry privateKey = TestResources.getPrivateKey();
 
         builder.eventCode(EventCode.ACCEPTANCE)
-                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
+                .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)

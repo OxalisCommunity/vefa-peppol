@@ -53,7 +53,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
-                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
+                .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
@@ -105,7 +105,7 @@ public class RemEvidenceBuilderTest {
         Date eventTime = signedRemEvidence.getEventTime();
         
         // Check entity name of evidence issuer (issue #11)
-        assertEquals(signedRemEvidence.getEventIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
+        assertEquals(signedRemEvidence.getEvidenceIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
         
         ParticipantIdentifier senderIdentifier = signedRemEvidence.getSenderIdentifier();
         assertNotNull(senderIdentifier);
@@ -145,7 +145,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
-                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
+                .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
@@ -187,7 +187,7 @@ public class RemEvidenceBuilderTest {
         builder.eventCode(EventCode.ACCEPTANCE)
                 .eventTime(new Date())
                 .eventReason(EventReason.OTHER)
-                .eventIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
+                .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
