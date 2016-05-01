@@ -21,10 +21,13 @@ public class ParticipantIdentifier implements Serializable {
     public static final Scheme DEFAULT_SCHEME = new Scheme("iso6523-actorid-upis");
 
     private Icd icd;
+
     private String identifier;
 
+    private String name;
+
     /**
-     * Creation of identifier.
+     * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
      *
      * @param identifier Normal identifier like '9908:987654321'.
      */
@@ -33,10 +36,10 @@ public class ParticipantIdentifier implements Serializable {
     }
 
     /**
-     * Creation of identifier.
+     * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
      *
      * @param identifier Normal identifier like '9908:987654321'.
-     * @param scheme Scheme for ICD in identifier.
+     * @param scheme     Scheme for ICD in identifier.
      */
     public ParticipantIdentifier(String identifier, Scheme scheme) {
         identifier = identifier.trim();
@@ -52,7 +55,7 @@ public class ParticipantIdentifier implements Serializable {
     /**
      * Creation of identifier.
      *
-     * @param icd ICD used for identifier, like Iso6523Icd.NO_ORGNR.
+     * @param icd        ICD used for identifier, like Iso6523Icd.NO_ORGNR.
      * @param identifier Identifier without ICD, like '987654321'.
      */
     public ParticipantIdentifier(Icd icd, String identifier) {
@@ -62,7 +65,7 @@ public class ParticipantIdentifier implements Serializable {
     /**
      * Simple population of fields.
      *
-     * @param icd ICD used for identifier, like Iso6523Icd.NO_ORGNR.
+     * @param icd        ICD used for identifier, like Iso6523Icd.NO_ORGNR.
      * @param identifier Identifier without ICD, like '987654321'.
      */
     private void populate(Icd icd, String identifier) {
@@ -90,10 +93,22 @@ public class ParticipantIdentifier implements Serializable {
 
     /**
      * Scheme of ICD.
+     *
      * @return Scheme.
      */
     public Scheme getScheme() {
         return icd.getScheme();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public ParticipantIdentifier setName(String name) {
+        ParticipantIdentifier participantIdentifier = new ParticipantIdentifier(icd, identifier);
+        participantIdentifier.name = name;
+
+        return participantIdentifier;
     }
 
     /**
