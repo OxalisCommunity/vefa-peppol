@@ -39,13 +39,13 @@ public class TransportProtocol implements Serializable {
 
         TransportProtocol that = (TransportProtocol) o;
 
-        return !(identifier != null ? !identifier.equals(that.identifier) : that.identifier != null);
+        return identifier.equals(that.identifier);
 
     }
 
     @Override
     public int hashCode() {
-        return identifier != null ? identifier.hashCode() : 0;
+        return identifier.hashCode();
     }
 
     @Override
