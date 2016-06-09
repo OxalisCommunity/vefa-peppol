@@ -59,7 +59,7 @@ public class ApacheFetcher extends AbstractFetcher {
         } catch (SocketTimeoutException | SocketException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
         } catch (Exception e) {
-            throw new LookupException(e);
+            throw new LookupException(e.getMessage(), e);
         }
     }
 }

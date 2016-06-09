@@ -22,8 +22,9 @@ public class ProductionMode extends AbstractPeppolMode {
                 return issuersAp;
             case SMP:
                 return issuersSmp;
+            default:
+                return new String[0];
         }
-        return new String[0];
     }
 
     @Override

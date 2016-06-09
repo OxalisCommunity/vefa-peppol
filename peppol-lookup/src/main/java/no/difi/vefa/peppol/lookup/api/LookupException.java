@@ -13,8 +13,4 @@ public class LookupException extends PeppolException {
     public LookupException(String message, Throwable cause) {
         super(message, cause);
     }
-
-    public LookupException(Throwable cause) {
-        super(cause);
-    }
 }

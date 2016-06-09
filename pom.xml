@@ -81,6 +81,12 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>${slf4j.version}</version>
@@ -98,18 +104,8 @@
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
-                <artifactId>peppol-lookup</artifactId>
-                <version>0.9.7-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
                 <version>0.9.7-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>no.difi.vefa</groupId>
-                <artifactId>peppol-receipt</artifactId>
-                <version>0.9.4-SNAPSHOT</version>
             </dependency>
 
             <!-- VEFA Commons -->
@@ -183,7 +179,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.5.201505241946</version>
+                <version>0.7.7.201606060606</version>
                 <executions>
                     <execution>
                         <goals>

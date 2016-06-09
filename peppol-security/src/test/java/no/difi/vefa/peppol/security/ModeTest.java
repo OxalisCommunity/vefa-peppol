@@ -40,6 +40,30 @@ public class ModeTest {
     }
 
     @Test
+    public void verifyModeIsNotOverriddenByAccident() throws Exception {
+        Mode.add(new ModeDescription() {
+            @Override
+            public String getIdentifier() {
+                return Mode.PRODUCTION;
+            }
+
+            @Override
+            public String[] getIssuers(Service service) {
+                return new String[0];
+            }
+
+            @Override
+            public InputStream getKeystore() {
+                return null;
+            }
+        });
+
+        Mode mode = Mode.valueOf("PRODUCTION");
+        Assert.assertNotNull(mode);
+        Assert.assertNotNull(mode.getKeyStoreBucket());
+    }
+
+    @Test
     public void exceptionOnErrorLoading() throws Exception {
         Mode.add(new ModeDescription() {
             @Override
