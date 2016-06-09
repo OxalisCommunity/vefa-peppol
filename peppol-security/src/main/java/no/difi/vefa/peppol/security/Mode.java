@@ -42,6 +42,10 @@ public class Mode {
             modeDescriptions.put(modeDescription.getIdentifier(), modeDescription);
     }
 
+    public static void remove(String identifer) {
+        modeDescriptions.remove(identifer);
+    }
+
     public static Mode valueOf(String identifier) {
         if (modeDescriptions.containsKey(identifier))
             return new Mode(modeDescriptions.get(identifier));
