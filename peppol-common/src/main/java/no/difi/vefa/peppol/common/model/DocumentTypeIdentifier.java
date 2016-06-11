@@ -6,7 +6,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 
 /**
- * DocumentTypeIdentifier is a combination of XML type and customizationId.
+ * DocumentTypeIdentifier is a combination of XML type and customizationId. Immutable object.
  *
  * Pattern: [xml namespace]::[xml root element]##[customizationId]::[xml version]
  */
@@ -82,5 +82,20 @@ public class DocumentTypeIdentifier implements Serializable {
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DocumentTypeIdentifier that = (DocumentTypeIdentifier) o;
+
+        return toString().equals(that.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
     }
 }

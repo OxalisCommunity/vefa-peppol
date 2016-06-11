@@ -2,6 +2,9 @@ package no.difi.vefa.peppol.common.model;
 
 import java.io.Serializable;
 
+/**
+ * Immutable object.
+ */
 public class ProcessIdentifier implements Serializable {
 
     private static final long serialVersionUID = 7486398061021950763L;
@@ -35,15 +38,15 @@ public class ProcessIdentifier implements Serializable {
 
         ProcessIdentifier that = (ProcessIdentifier) o;
 
-        if (identifier != null ? !identifier.equals(that.identifier) : that.identifier != null) return false;
-        return !(scheme != null ? !scheme.equals(that.scheme) : that.scheme != null);
+        if (!identifier.equals(that.identifier)) return false;
+        return scheme.equals(that.scheme);
 
     }
 
     @Override
     public int hashCode() {
-        int result = identifier != null ? identifier.hashCode() : 0;
-        result = 31 * result + (scheme != null ? scheme.hashCode() : 0);
+        int result = identifier.hashCode();
+        result = 31 * result + scheme.hashCode();
         return result;
     }
 

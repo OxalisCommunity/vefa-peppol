@@ -9,7 +9,7 @@ import java.net.URLEncoder;
 import java.util.Locale;
 
 /**
- * Representation of a participant identifier.
+ * Representation of a participant identifier. Immutable object.
  */
 public class ParticipantIdentifier implements Serializable {
 
@@ -124,9 +124,6 @@ public class ParticipantIdentifier implements Serializable {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -134,17 +131,17 @@ public class ParticipantIdentifier implements Serializable {
 
         ParticipantIdentifier that = (ParticipantIdentifier) o;
 
-        if (icd != null ? !icd.equals(that.icd) : that.icd != null) return false;
-        return !(identifier != null ? !identifier.equals(that.identifier) : that.identifier != null);
+        if (!icd.equals(that.icd)) return false;
+        if (!identifier.equals(that.identifier)) return false;
+        return !(name != null ? !name.equals(that.name) : that.name != null);
+
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
-        int result = icd != null ? icd.hashCode() : 0;
-        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
+        int result = icd.hashCode();
+        result = 31 * result + identifier.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
