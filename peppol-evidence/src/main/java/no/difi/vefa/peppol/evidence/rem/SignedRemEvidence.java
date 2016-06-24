@@ -47,6 +47,26 @@ public class SignedRemEvidence {
         return signedRemEvidenceXml;
     }
 
+    public EvidenceTypeInstance getEvidenceType() {
+        try {
+            String evElementName = signedRemEvidenceXml.getDocumentElement().getLocalName();
+            switch (evElementName) {
+                case "DeliveryNonDeliveryToRecipient" : 
+                    return EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT;
+                case "RelayREMMDAcceptanceRejection" :
+                    return EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION;
+                default:
+                    return null;
+             }
+        } catch (NullPointerException npe) {
+            return null;
+        }
+    }
+    
+    public String getEvidenceIdentifier() {
+        return e().getEvidenceIdentifier();
+    }
+    
     public EventCode getEventCode() {
         return EventCode.valueFor(e().getEventCode());
     }
