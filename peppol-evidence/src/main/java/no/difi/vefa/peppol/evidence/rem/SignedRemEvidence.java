@@ -120,6 +120,10 @@ public class SignedRemEvidence {
 
         return documentTypeIdentifier;
     }
+    
+    public String getDocumentTypeInstanceIdentifier() {
+        return e().getSenderMessageDetails().getUAMessageIdentifier();
+    }
 
     public InstanceIdentifier getInstanceIdentifier() {
         String remMDMessageIdentifier = e().getSenderMessageDetails().getMessageIdentifierByREMMD();

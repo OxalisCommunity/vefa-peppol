@@ -43,6 +43,9 @@ public class RemEvidenceBuilder {
     private String evidenceIssuerDetails;
     private String evidenceIssuerPolicyID;
     
+    // This will used to set the uaMessageIdentifier element
+    private String documentTypeInstanceId;
+    
     // The timestamp of the delivery, defaults to current date and time.
     private Date eventTime = new Date();
 
@@ -123,10 +126,14 @@ public class RemEvidenceBuilder {
      *
      * @param remEvidenceType
      * @param documentTypeId
+     * @param documentTypeInstanceId
      * @param instanceIdentifier
      * @param payloadDigest
      */
-    static void injectTransmissionMetaData(REMEvidenceType remEvidenceType, String documentTypeId, String instanceIdentifier, byte[] payloadDigest) {
+    static void injectTransmissionMetaData(REMEvidenceType remEvidenceType, 
+                                           String documentTypeId,
+                                           String documentTypeInstanceId,
+                                           String instanceIdentifier, byte[] payloadDigest) {
         // Sender message details
         MessageDetailsType messageDetailsType = new MessageDetailsType();
         remEvidenceType.setSenderMessageDetails(messageDetailsType);
@@ -137,6 +144,10 @@ public class RemEvidenceBuilder {
         } else
             throw new IllegalStateException("Must supply document type identifier");
 
+        // Document type instance id from SBDH
+        if (documentTypeInstanceId != null)
+            messageDetailsType.setUAMessageIdentifier(documentTypeInstanceId);
+        
         // Instance identifier from SBDH
         if (instanceIdentifier != null) {
             messageDetailsType.setMessageIdentifierByREMMD(instanceIdentifier);
@@ -199,11 +210,15 @@ public class RemEvidenceBuilder {
     }
 
     public RemEvidenceBuilder documentTypeId(DocumentTypeIdentifier documentTypeId) {
-
         this.documentTypeId = documentTypeId;
         return this;
     }
 
+    public RemEvidenceBuilder documentTypeInstanceIdentifier(String documentTypeInstanceId) {
+        this.documentTypeInstanceId = documentTypeInstanceId;
+        return this;
+    }
+    
     /**
      * The value of <code>//DocumentIdentification/InstanceIdentifier</code> from the SBDH.
      *
@@ -316,7 +331,8 @@ public class RemEvidenceBuilder {
         }
 
 
-        injectTransmissionMetaData(r, documentTypeId.getIdentifier(), instanceIdentifier.getValue(), payloadDigest);
+        injectTransmissionMetaData(r, documentTypeId.getIdentifier(), documentTypeInstanceId,
+                                    instanceIdentifier.getValue(), payloadDigest);
 
         // Injects the transport level receipt (if supplied), i.e. AS2 MDN or AS4 Soap Header
         if (protocolSpecificBytes != null)
