@@ -58,6 +58,7 @@ public class RemEvidenceBuilderTest {
                 .senderIdentifier(TestResources.SENDER_IDENTIFIER)
                 .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
                 .documentTypeId(TestResources.DOC_TYPE_ID)
+                .documentTypeInstanceIdentifier(TestResources.DOC_TYPE_INSTANCE_ID)
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
                 .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, specificReceiptBytes)
@@ -120,8 +121,8 @@ public class RemEvidenceBuilderTest {
         DocumentTypeIdentifier documentTypeIdentifier = signedRemEvidence.getDocumentTypeIdentifier();
         assertNotNull(documentTypeIdentifier);
 
-        InstanceIdentifier instanceIdentifier = signedRemEvidence.getInstanceIdentifier();
-        assertNotNull(instanceIdentifier);
+        String documentTypeInstanceId = signedRemEvidence.getDocumentTypeInstanceIdentifier();
+        assertEquals(documentTypeInstanceId, TestResources.DOC_TYPE_INSTANCE_ID);
 
         byte[] digestBytes = signedRemEvidence.getPayloadDigestValue();
         assertNotNull(digestBytes);
@@ -213,5 +214,29 @@ public class RemEvidenceBuilderTest {
         
         assertNull(extensions);
     }
-    
+
+    @Test
+    public void testOptionalDocumentTypeInstanceId() throws Exception {
+
+        RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
+        builder.eventCode(EventCode.ACCEPTANCE)
+                .eventTime(new Date())
+                .eventReason(EventReason.OTHER)
+                .evidenceIssuerPolicyID(TestResources.EVIDENCE_ISSUER_POLICY_ID)
+                .evidenceIssuerDetails(TestResources.EVIDENCE_ISSUER_NAME)
+                .senderIdentifier(TestResources.SENDER_IDENTIFIER)
+                .recipientIdentifer(TestResources.RECIPIENT_IDENTIFIER)
+                .documentTypeId(TestResources.DOC_TYPE_ID)
+                .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
+                .payloadDigest("ThisIsASHA256Digest".getBytes())
+                .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, specificReceiptBytes)
+        ;
+
+
+        // Signs and builds the REMEvidenceType instance
+        SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
+        
+        assertNull(signedRemEvidence.getDocumentTypeInstanceIdentifier());
+        
+    }    
 }
