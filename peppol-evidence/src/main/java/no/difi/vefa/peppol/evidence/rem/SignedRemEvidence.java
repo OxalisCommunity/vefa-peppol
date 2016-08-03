@@ -39,11 +39,11 @@ public class SignedRemEvidence {
      *
      * @return
      */
-    protected REMEvidenceType getRemEvidenceType() {
+    public REMEvidenceType getRemEvidenceType() {
         return e();
     }
 
-    protected Document getDocument() {
+    public Document getDocument() {
         return signedRemEvidenceXml;
     }
 
