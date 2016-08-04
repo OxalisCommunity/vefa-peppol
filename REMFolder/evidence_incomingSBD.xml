@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DeliveryNonDeliveryToRecipient version="2" xmlns="http://uri.etsi.org/02640/v1#" xmlns:ns2="http://uri.etsi.org/02231/v2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#" xmlns:ns4="http://uri.etsi.org/01903/v1.3.2#" xmlns:ns5="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ns6="http://www.w3.org/2001/04/xmlenc#">
+  <EventCode>Delivery</EventCode>
+  <EvidenceIdentifier>f7a0ab5f-f5b9-4362-b165-77c773823c8f</EvidenceIdentifier>
+  <EvidenceIssuerDetails>
+    <NamesPostalAddresses>
+      <NamePostalAddress>
+        <EntityName>
+          <Name>UPRC Access Point</Name>
+        </EntityName>
+      </NamePostalAddress>
+    </NamesPostalAddresses>
+  </EvidenceIssuerDetails>
+  <EventTime>2016-01-12T17:35:44.437+02:00</EventTime>
+  <SenderDetails>
+    <AttributedElectronicAddress scheme="iso6523-actorid-upis">0000:testSender</AttributedElectronicAddress>
+  </SenderDetails>
+  <RecipientsDetails>
+    <EntityDetails>
+      <AttributedElectronicAddress scheme="iso6523-actorid-upis">0000:testReceiver</AttributedElectronicAddress>
+    </EntityDetails>
+  </RecipientsDetails>
+  <SenderMessageDetails isNotification="false">
+    <MessageSubject>urn:oasis:names:specification:ubl:schema:xsd:Tender::Tender</MessageSubject>
+    <UAMessageIdentifier>e275dd1d-f636-4c46-a4f4-489f162e334f</UAMessageIdentifier>
+    <ns3:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+    <ns3:DigestValue>jEwd5cgVrl0ntpjwdYQ7WD5EDNSRZiJCMRpMc1hTaxc=</ns3:DigestValue>
+  </SenderMessageDetails>
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <ds:SignedInfo>
+      <ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+      <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/>
+      <ds:Reference URI="">
+        <ds:Transforms>
+          <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+          <ds:Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/>
+        </ds:Transforms>
+        <ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/>
+        <ds:DigestValue>P89a0g3N/i6CD7gG/gV70fRAT8dw7rxUxv3Y86wbBP0=</ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+Ifp3DqQxcVIOO6i294y9wkN71BGRNpIiaIGyvQQWgl4U17rBo/qS1PMczLGJRivgTZby4JdyZi/R
+/mBEZmQaS69asVswv7vlPYkm3446MHGtR5eGI3fsHeRuila/2tk8nzoxZaqbDAIvI0sK3LVvEkH1
+Zy55wLkBDPwCikkSXJ7uK628sAqdqZY6EXyYJV7uZrU9PyLczmusuEL3HFbkGEzCRhuDCdzUlwqF
++HhiMyJLkxJ+jI74PiMfV84CrVB/NdYK4tHzXT3Fm8JDeFaTrHKs4H04ShFL5ZTS5FmIL4ttF9uh
+6k1afcxOh9Vuc0qgXBqPDBoM0hHCwzCGZjSWNg==
+</ds:SignatureValue>
+    <ds:KeyInfo>
+      <ds:X509Data>
+        <ds:X509Certificate>
+MIIEQTCCAymgAwIBAgIBAzANBgkqhkiG9w0BAQUFADCBrDELMAkGA1UEBhMCQVQxEDAOBgNVBAgT
+B0F1c3RyaWExDzANBgNVBAcTBlZpZW5uYTEaMBgGA1UEChMRVGlhbmkgU3Bpcml0IEdtYkgxGTAX
+BgNVBAsTEERlbW8gRW52aXJvbm1lbnQxEDAOBgNVBAMTB1Rlc3QgQ0ExMTAvBgkqhkiG9w0BCQEW
+Im1hc3NpbWlsaWFuby5tYXNpQHRpYW5pLXNwaXJpdC5jb20wIBcNMTEwNzI3MDgyMTUyWhgPMjE5
+MDEyMzEwODIxNTJaMIGbMQswCQYDVQQGEwJBVDEQMA4GA1UECBMHQXVzdHJpYTEaMBgGA1UEChMR
+VGlhbmkgU3Bpcml0IEdtYkgxGTAXBgNVBAsTEERlbW8gRW52aXJvbm1lbnQxEDAOBgNVBAMTB3Nl
+cnZlcjExMTAvBgkqhkiG9w0BCQEWIm1hc3NpbWlsaWFuby5tYXNpQHRpYW5pLXNwaXJpdC5jb20w
+ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDcEpmyaFK8aKKrvaFZL6IGttOwI3ImGCUi
+wINIc+fcuVWRyT7Deb8tymnwVBfHVD/8Mh5ufwiS9YU774Ta2aB8H/Gwr5QIndu4eG9+adDEV3+D
+i6e3HhiA/8RP8CXCMGY4LOAjaNwUh/EEsn1S2oa+Dsiff5Ba8wmddc6pyYiwmhDfwEF0YBXDjvB8
+iexcLcOLvo/pl2hP87g/ptDXy0VUWWPzX9qxc6YtqhkS7EtmhzMW5deWvmRiPzJ2NVfCuvpcsK2T
+ii+MgCYbLXCLYkCg+5ZpV7esrqb5hWOf2tKUsDlu/sjck2lflsWTE1woKr0tbp7IxLzvGKx9hERB
+0hzJAgMBAAGjezB5MAkGA1UdEwQCMAAwLAYJYIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVk
+IENlcnRpZmljYXRlMB0GA1UdDgQWBBQU7M3dSaInYi+0MCDYpbACOCjvBzAfBgNVHSMEGDAWgBRk
+wihuUTlGpNDxrnZFbW84FXj72jANBgkqhkiG9w0BAQUFAAOCAQEAjEqNtOb2Hk6BpBDRXk9vd+0v
+vJSOWvdZnL3I2Kr30oN6nQOMud68FPI1JC1QwLni05ZVDTyMYOk/HRPK2jSByFmLZECaE6Q5Z1BT
+D9vR/AqtmTOvub922uS5gTpVEWijSW1o9j+LFzGC4k8l4xWidPtKa3o1aXSGcWSw0i1BKgxM3pMz
+SvKieZ2KQaHgZSb7bfk4uR4kAaida5hv6kveiDKRRG+8AeBvBD5lofaqUaUN9q/YIOucc8gHQBzG
+rmkObvyykzyPz5wddLmouqrZZqfufPTNh4whyABbXCPXsptDZZss8DlKS37rFVUKLHEhcfd1J+IO
+ioaTnaPhgY/dXg==
+</ds:X509Certificate>
+      </ds:X509Data>
+      <ds:KeyValue>
+        <ds:RSAKeyValue>
+          <ds:Modulus>
+3BKZsmhSvGiiq72hWS+iBrbTsCNyJhglIsCDSHPn3LlVkck+w3m/Lcpp8FQXx1Q//DIebn8IkvWF
+O++E2tmgfB/xsK+UCJ3buHhvfmnQxFd/g4untx4YgP/ET/AlwjBmOCzgI2jcFIfxBLJ9UtqGvg7I
+n3+QWvMJnXXOqcmIsJoQ38BBdGAVw47wfInsXC3Di76P6ZdoT/O4P6bQ18tFVFlj81/asXOmLaoZ
+EuxLZoczFuXXlr5kYj8ydjVXwrr6XLCtk4ovjIAmGy1wi2JAoPuWaVe3rK6m+YVjn9rSlLA5bv7I
+3JNpX5bFkxNcKCq9LW6eyMS87xisfYREQdIcyQ==
+</ds:Modulus>
+          <ds:Exponent>AQAB</ds:Exponent>
+        </ds:RSAKeyValue>
+      </ds:KeyValue>
+    </ds:KeyInfo>
+  </ds:Signature>
+</DeliveryNonDeliveryToRecipient>

@@ -10,7 +10,7 @@
                 <Actions>
                     <Action>
                         <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
-                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:specification:ubl:schema:xsd:Tender::Tender</AttributeValue>
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1</AttributeValue>
                             <ActionAttributeDesignator AttributeId="urn:eSENS:documentType" DataType="http://www.w3.org/2001/XMLSchema#string"/>
                         </ActionMatch>
                         <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
