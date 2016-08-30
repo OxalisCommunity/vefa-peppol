@@ -34,7 +34,18 @@ public class BdxlLocator extends AbstractLocator {
      * @param digestAlgorithm Algorithm used for generation of hostname.
      */
     public BdxlLocator(String hostname, String digestAlgorithm) {
-        hostnameGenerator = new DynamicHostnameGenerator("B-", hostname, digestAlgorithm);
+        this("B-", hostname, digestAlgorithm);
+    }
+
+    /**
+     * Initiate a new instance of BDXL lookup functionality.
+     *
+     * @param prefix Value attached in front of calculated hash.
+     * @param hostname Hostname used as base for lookup.
+     * @param digestAlgorithm Algorithm used for generation of hostname.
+     */
+    public BdxlLocator(String prefix, String hostname, String digestAlgorithm) {
+        hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, digestAlgorithm);
     }
 
     @Override
