@@ -16,15 +16,20 @@ public class LookupClient {
     private static Logger logger = LoggerFactory.getLogger(LookupClient.class);
 
     private MetadataLocator metadataLocator;
+
     private MetadataProvider metadataProvider;
 
     private MetadataFetcher metadataFetcher;
+
     private MetadataReader metadataReader;
 
     private CertificateValidator providerCertificateValidator;
+
     private CertificateValidator endpointCertificateValidator;
 
-    LookupClient(MetadataLocator metadataLocator, MetadataProvider metadataProvider, MetadataFetcher metadataFetcher, MetadataReader metadataReader, CertificateValidator providerCertificateValidator, CertificateValidator endpointCertificateValidator) {
+    LookupClient(MetadataLocator metadataLocator, MetadataProvider metadataProvider, MetadataFetcher metadataFetcher,
+                 MetadataReader metadataReader, CertificateValidator providerCertificateValidator,
+                 CertificateValidator endpointCertificateValidator) {
         this.metadataLocator = metadataLocator;
         this.metadataProvider = metadataProvider;
         this.metadataFetcher = metadataFetcher;
@@ -33,7 +38,8 @@ public class LookupClient {
         this.endpointCertificateValidator = endpointCertificateValidator;
     }
 
-    public List<DocumentTypeIdentifier> getDocumentIdentifiers(ParticipantIdentifier participantIdentifier) throws LookupException {
+    public List<DocumentTypeIdentifier> getDocumentIdentifiers(ParticipantIdentifier participantIdentifier)
+            throws LookupException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveDocumentIdentifiers(location, participantIdentifier);
 
@@ -42,7 +48,8 @@ public class LookupClient {
         return metadataReader.parseDocumentIdentifiers(metadataFetcher.fetch(provider));
     }
 
-    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier) throws LookupException, PeppolSecurityException {
+    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier)
+            throws LookupException, PeppolSecurityException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
 
@@ -56,7 +63,8 @@ public class LookupClient {
         return serviceMetadata;
     }
 
-    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws PeppolSecurityException, EndpointNotFoundException {
+    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
+            throws PeppolSecurityException, EndpointNotFoundException {
         Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
 
         if (endpointCertificateValidator != null)
@@ -65,7 +73,9 @@ public class LookupClient {
         return endpoint;
     }
 
-    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws LookupException, PeppolSecurityException, EndpointNotFoundException {
+    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
+                                ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
+            throws LookupException, PeppolSecurityException, EndpointNotFoundException {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentTypeIdentifier);
         return getEndpoint(serviceMetadata, processIdentifier, transportProfiles);
     }

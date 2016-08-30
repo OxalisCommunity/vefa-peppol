@@ -12,9 +12,11 @@ public class ServiceMetadata implements Serializable {
     private static final long serialVersionUID = -7523336374349545534L;
 
     private ParticipantIdentifier participantIdentifier;
+
     private DocumentTypeIdentifier documentTypeIdentifier;
 
     private List<ProcessIdentifier> processIdentifiers = new ArrayList<ProcessIdentifier>();
+
     private List<TransportProfile> transportProfiles = new ArrayList<TransportProfile>();
 
     private X509Certificate signer;
@@ -56,7 +58,8 @@ public class ServiceMetadata implements Serializable {
         return this.endpoints;
     }
 
-    public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles) throws EndpointNotFoundException{
+    public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
+            throws EndpointNotFoundException {
         for (TransportProfile transportProfile : transportProfiles)
             for (Endpoint endpoint : endpoints)
                 if (endpoint.getTransportProfile().equals(transportProfile) && endpoint.getProcessIdentifier().equals(processIdentifier))

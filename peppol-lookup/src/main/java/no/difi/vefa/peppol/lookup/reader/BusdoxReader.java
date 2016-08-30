@@ -20,6 +20,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -37,9 +38,11 @@ public class BusdoxReader implements MetadataReader {
     public static final String NAMESPACE = "http://busdox.org/serviceMetadata/publishing/1.0/";
 
     private static JAXBContext jaxbContext;
+
     static {
         try {
-            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class, ServiceMetadataType.class);
+            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
+                    ServiceMetadataType.class);
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -47,22 +50,24 @@ public class BusdoxReader implements MetadataReader {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
+    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
+            throws LookupException {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            ServiceGroupType serviceGroup = ((JAXBElement<ServiceGroupType>) unmarshaller.unmarshal(fetcherResponse.getInputStream())).getValue();
+            ServiceGroupType serviceGroup = unmarshaller.unmarshal(new StreamSource(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
             List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
 
-                for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
-                    String hrefDocumentTypeIdentifier = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
-                    String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
+            for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
+                String hrefDocumentTypeIdentifier = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
+                String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
 
-                    try {
-                        documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                        logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
-                    }
+                try {
+                    documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }
+            }
+
             return documentTypeIdentifiers;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -70,7 +75,8 @@ public class BusdoxReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, PeppolSecurityException {
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+            throws LookupException, PeppolSecurityException {
         try {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 
@@ -120,7 +126,7 @@ public class BusdoxReader implements MetadataReader {
 
             return serviceMetadata;
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new LookupException(e.getMessage(), e);
         }
     }
 }

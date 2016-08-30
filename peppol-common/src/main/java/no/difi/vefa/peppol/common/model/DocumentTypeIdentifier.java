@@ -17,10 +17,15 @@ public class DocumentTypeIdentifier implements Serializable {
     public static final Scheme DEFAULT_SCHEME = new Scheme("busdox-docid-qns");
 
     private Scheme scheme;
+
     private String customizationId;
+
     private String xmlNamespace;
+
     private String xmlRootElement;
+
     private String xmlVersion;
+
     private URI uri;
 
     public DocumentTypeIdentifier(String documentIdentifier) {

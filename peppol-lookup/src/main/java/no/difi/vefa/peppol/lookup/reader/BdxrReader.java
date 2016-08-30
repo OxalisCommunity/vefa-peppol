@@ -19,6 +19,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -39,7 +40,8 @@ public class BdxrReader implements MetadataReader {
 
     static {
         try {
-            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class, ServiceMetadataType.class);
+            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
+                    ServiceMetadataType.class);
         } catch (JAXBException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -50,7 +52,7 @@ public class BdxrReader implements MetadataReader {
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            ServiceGroupType serviceGroup = ((JAXBElement<ServiceGroupType>) unmarshaller.unmarshal(fetcherResponse.getInputStream())).getValue();
+            ServiceGroupType serviceGroup = unmarshaller.unmarshal(new StreamSource(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
             List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
 
             for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {

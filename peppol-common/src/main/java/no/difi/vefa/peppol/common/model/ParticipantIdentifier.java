@@ -118,7 +118,8 @@ public class ParticipantIdentifier implements Serializable {
      */
     public String urlencoded() {
         try {
-            return URLEncoder.encode(String.format("%s::%s:%s", icd.getScheme().getValue(), icd.getCode(), identifier), "UTF-8");
+            return URLEncoder.encode(
+                    String.format("%s::%s:%s", icd.getScheme().getValue(), icd.getCode(), identifier), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }

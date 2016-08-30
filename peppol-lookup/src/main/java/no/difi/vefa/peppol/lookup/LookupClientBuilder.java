@@ -47,16 +47,21 @@ public class LookupClientBuilder {
         return forMode("TEST");
     }
 
+    private MetadataFetcher metadataFetcher;
+
+    private MetadataLocator metadataLocator;
+
+    private CertificateValidator providerCertificateValidator;
+
+    private MetadataProvider metadataProvider;
+
+    private MetadataReader metadataReader;
+
+    private CertificateValidator endpointertificateValidator;
+
     LookupClientBuilder() {
         // No action
     }
-
-    private MetadataFetcher metadataFetcher;
-    private MetadataLocator metadataLocator;
-    private CertificateValidator providerCertificateValidator;
-    private MetadataProvider metadataProvider;
-    private MetadataReader metadataReader;
-    private CertificateValidator endpointertificateValidator;
 
     public LookupClientBuilder fetcher(MetadataFetcher metadataFetcher) {
         this.metadataFetcher = metadataFetcher;
@@ -100,6 +105,7 @@ public class LookupClientBuilder {
         if (metadataReader == null)
             reader(new MultiReader());
 
-        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, providerCertificateValidator, endpointertificateValidator);
+        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader,
+                providerCertificateValidator, endpointertificateValidator);
     }
 }

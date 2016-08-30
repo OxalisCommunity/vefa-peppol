@@ -12,7 +12,9 @@ public class TransportProtocol implements Serializable {
     private static Pattern pattern = Pattern.compile("[\\p{Upper}\\d]+");
 
     public static final TransportProtocol AS2 = new TransportProtocol("AS2");
+
     public static final TransportProtocol AS4 = new TransportProtocol("AS4");
+
     public static final TransportProtocol INTERNAL = new TransportProtocol("INTERNAL");
 
     public static TransportProtocol forIdentifier(String identifier) throws PeppolException {
