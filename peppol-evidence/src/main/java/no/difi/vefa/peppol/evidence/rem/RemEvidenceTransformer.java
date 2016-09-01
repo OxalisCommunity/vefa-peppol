@@ -36,8 +36,10 @@ public class RemEvidenceTransformer {
      * I.e. the output is not formatted.
      *
      * @param signedRemEvidence instance to be formatted.
+     * @param outputStream
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
-    public void toUnformattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
+    public void toUnformattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
         format(signedRemEvidence, outputStream, false);
     }
 
@@ -45,8 +47,11 @@ public class RemEvidenceTransformer {
      * Transforms the supplied signed REM Evidence into it's formatted XML representation.
      * <p>
      * NOTE! Do not use this XML representation for signature validation as this will fail.
+     * @param signedRemEvidence
+     * @param outputStream
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
-    public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) {
+    public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
         format(signedRemEvidence, outputStream, true);
     }
 
@@ -55,13 +60,14 @@ public class RemEvidenceTransformer {
      * @param signedRemEvidence rem evidence to transform
      * @param outputStream into which the formatted output should be emitted.
      * @param formatted indicates whether the output should be formatted (true) or not (false)
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
-    protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) {
+    protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) throws RemEvidenceException {
         Transformer transformer;
         try {
             transformer = TransformerFactory.newInstance().newTransformer();
         } catch (TransformerConfigurationException e) {
-            throw new IllegalStateException("Unable to crate a new transformer");
+            throw new RemEvidenceException("Unable to crate a new transformer");
         }
 
         if (formatted) {
@@ -73,21 +79,24 @@ public class RemEvidenceTransformer {
         try {
             transformer.transform(source, result);
         } catch (TransformerException e) {
-            throw new IllegalStateException("Transformation of SignedRemEvidence to XML failed:" + e.getMessage(), e);
+            throw new RemEvidenceException("Transformation of SignedRemEvidence to XML failed:" + e.getMessage(), e);
         }
     }
 
     /**
      * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
      * It is package protected as this is not something that should not be done outside of this package.
+     * @param signedRemDocument
+     * @return 
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException 
      */
-    protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) {
+    protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) throws RemEvidenceException {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
         try {
             Unmarshaller unmarshaller = JaxbContextHolder.INSTANCE.getUnmarshaller();
             remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
         } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create unmarshaller");
+            throw new RemEvidenceException("Unable to create unmarshaller");
         }
         return remEvidenceTypeJAXBElement;
     }
@@ -101,8 +110,10 @@ public class RemEvidenceTransformer {
      * Step 2: converts W3C Document into JAXBElement
      *
      * @param inputStream holding the xml representation of a signed REM evidence.
+     * @return SignedRemEvidence
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
-    public SignedRemEvidence parse(InputStream inputStream) {
+    public SignedRemEvidence parse(InputStream inputStream) throws RemEvidenceException {
 
         // 1) Parses XML into W3C Document
         Document parsedDocument;
@@ -112,9 +123,9 @@ public class RemEvidenceTransformer {
             DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             parsedDocument = documentBuilder.parse(inputStream);
         } catch (ParserConfigurationException e) {
-            throw new IllegalStateException("Unable to create DocumentBuilder " + e.getMessage(), e);
+            throw new RemEvidenceException("Unable to create DocumentBuilder " + e.getMessage(), e);
         } catch (SAXException | IOException e) {
-            throw new IllegalStateException("Unable to parse xml input " + e.getMessage(), e);
+            throw new RemEvidenceException("Unable to parse xml input " + e.getMessage(), e);
         }
 
         // 2) Parses it into the JAXB representation.

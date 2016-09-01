@@ -36,6 +36,9 @@ public class TestResources {
 
     /**
      * Convenient helper method to obtain named Mime message resource from the class path
+     * @param resourceName
+     * @return 
+     * @throws javax.mail.MessagingException
      */
     public static MimeMessage getMimeMessageFromResource(String resourceName) throws MessagingException {
         InputStream resourceAsStream = TestResourcesTest.class.getClassLoader().getResourceAsStream(resourceName);
@@ -95,10 +98,10 @@ public class TestResources {
     }
 
     public static KeyStore.PrivateKeyEntry getPrivateKey() {
-        KeyStore keyStore = getKeystore();
+        KeyStore localKeyStore = getKeystore();
         KeyStore.PrivateKeyEntry privateKeyEntry;
         try {
-            privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+            privateKeyEntry = (KeyStore.PrivateKeyEntry) localKeyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
         } catch (NoSuchAlgorithmException | UnrecoverableEntryException | KeyStoreException e) {
             throw new IllegalStateException("Unable to load private key entry with alias 'self-signed'", e);
         }
@@ -111,8 +114,9 @@ public class TestResources {
      * Creates sample rem evidence.
      *
      * @return sample REMEvidence based upon the resources in test/resources of this project.
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
-    public static SignedRemEvidence createSampleRemEvidence() {
+    public static SignedRemEvidence createSampleRemEvidence() throws RemEvidenceException {
         RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();
 
         byte[] sampleMdnSmime = TestResources.getSampleMdnSmime();
@@ -127,9 +131,9 @@ public class TestResources {
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
                 .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, sampleMdnSmime);
-        ;
 
-        // Signs and builds the REMEvidenceType instance
-        return builder.buildRemEvidenceInstance(privateKey);
+        
+            return builder.buildRemEvidenceInstance(privateKey);
+        
     }
 }
