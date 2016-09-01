@@ -68,11 +68,12 @@ public enum Iso6523Icd implements Icd {
     VA_VAT("VA:VAT", "9953", false),
     NL_ION("NL:ION", "9954", false),
     SE_VAT("SE:VAT", "9955", false),
+    DE_EPROC("DE:EPROC", "9956", false),
     ZZZ("ZZZ", "9999", false);
 
-    private String identifier;
-    private String code;
-    private boolean deprecated;
+    private final String identifier;
+    private final String code;
+    private final boolean deprecated;
 
     Iso6523Icd(String identifier, String code, boolean deprecated) {
         this.identifier = identifier;
