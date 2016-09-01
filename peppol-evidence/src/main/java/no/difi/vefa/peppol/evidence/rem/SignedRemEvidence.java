@@ -85,19 +85,19 @@ public class SignedRemEvidence {
         return e().getEventTime().toGregorianCalendar().getTime();
     }
    
-    public String getEvidenceIssuerPolicyID() {
+    public String getEvidenceIssuerPolicyID() throws RemEvidenceException {
         if (e().getEvidenceIssuerPolicyID() == null) 
-            throw new IllegalStateException("Evidence issuer policy ID is not set");
+            throw new RemEvidenceException("Evidence issuer policy ID is not set");
         else
             return e().getEvidenceIssuerPolicyID().getPolicyID().get(0);
     }
     
-    public String getEvidenceIssuerDetails() {
+    public String getEvidenceIssuerDetails() throws RemEvidenceException {
         try {
             return e().getEvidenceIssuerDetails()
                             .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
         } catch (NullPointerException npe) {
-            throw new IllegalStateException("There are no Event Issuer Details");
+            throw new RemEvidenceException("There are no Event Issuer Details");
         }            
     }
     
