@@ -62,16 +62,21 @@
 
     <dependencies>
 
+        <!-- VEFA PEPPOL -->
+        <dependency>
+            <groupId>no.difi.vefa</groupId>
+            <artifactId>peppol-common</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.difi.vefa</groupId>
+            <artifactId>peppol-security</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
             <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>no.difi.vefa</groupId>
-            <artifactId>peppol-security</artifactId>
         </dependency>
 
     </dependencies>

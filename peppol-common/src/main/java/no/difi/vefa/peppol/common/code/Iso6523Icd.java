@@ -100,19 +100,19 @@ public enum Iso6523Icd implements Icd {
         return deprecated;
     }
 
-    public static Iso6523Icd valueOfIcd(String icd) {
+    public static Icd valueOfIcd(String icd) {
         for (Iso6523Icd v : values())
             if (v.code.equals(icd))
                 return v;
 
-        throw new IllegalStateException(String.format("Value '%s' is not valid ICD.", icd));
+        throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", icd));
     }
 
-    public static Iso6523Icd valueOfIdentifier(String identifier) {
+    public static Icd valueOfIdentifier(String identifier) {
         for (Iso6523Icd v : values())
             if (v.identifier.equals(identifier))
                 return v;
 
-        throw new IllegalStateException(String.format("Value '%s' is not valid ICD.", identifier));
+        throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", identifier));
     }
 }

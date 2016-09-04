@@ -17,12 +17,12 @@ public class Iso6523IcdTest {
         Assert.assertNotNull(Iso6523Icd.valueOf("NO_ORGNR"));
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void throwExceptionOnInvalidIcd() {
         Iso6523Icd.valueOfIcd("Invalid");
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
+    @Test(expectedExceptions = IllegalArgumentException.class)
     public void throwExceptionOnInvalidIdentifier() {
         Iso6523Icd.valueOfIdentifier("Invalid");
     }

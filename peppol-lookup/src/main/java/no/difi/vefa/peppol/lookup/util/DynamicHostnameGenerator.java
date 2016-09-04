@@ -17,7 +17,7 @@ public class DynamicHostnameGenerator {
             Security.addProvider(new BouncyCastleProvider());
     }
 
-    private static BaseEncoding hexEncoding = BaseEncoding.base16();
+    private BaseEncoding encoding;
 
     /**
      * Prefix for generated hostname.
@@ -35,9 +35,14 @@ public class DynamicHostnameGenerator {
     private String digestAlgorithm;
 
     public DynamicHostnameGenerator(String prefix, String hostname, String digestAlgorithm) {
+        this(prefix, hostname, digestAlgorithm, BaseEncoding.base16());
+    }
+
+    public DynamicHostnameGenerator(String prefix, String hostname, String digestAlgorithm, BaseEncoding encoding) {
         this.prefix = prefix;
         this.hostname = hostname;
         this.digestAlgorithm = digestAlgorithm;
+        this.encoding = encoding;
     }
 
     public String generate(ParticipantIdentifier participantIdentifier) throws LookupException {
@@ -49,7 +54,7 @@ public class DynamicHostnameGenerator {
             byte[] digest = md.digest(participantIdentifier.toString().getBytes(StandardCharsets.UTF_8));
 
             // Create hex of digest.
-            receiverHash = hexEncoding.encode(digest).toLowerCase();
+            receiverHash = encoding.encode(digest).toLowerCase();
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }

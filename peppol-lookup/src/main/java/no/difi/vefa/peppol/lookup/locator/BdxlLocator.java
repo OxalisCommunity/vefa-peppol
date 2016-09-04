@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup.locator;
 
+import com.google.common.io.BaseEncoding;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
@@ -24,34 +25,46 @@ public class BdxlLocator extends AbstractLocator {
      * @param hostname Hostname used as base for lookup.
      */
     public BdxlLocator(String hostname) {
-        this(hostname, "SHA-224");
+        this(hostname, "SHA-256");
     }
 
     /**
      * Initiate a new instance of BDXL lookup functionality.
      *
-     * @param hostname Hostname used as base for lookup.
+     * @param hostname        Hostname used as base for lookup.
      * @param digestAlgorithm Algorithm used for generation of hostname.
      */
     public BdxlLocator(String hostname, String digestAlgorithm) {
-        this("B-", hostname, digestAlgorithm);
+        this("", hostname, digestAlgorithm);
     }
 
     /**
      * Initiate a new instance of BDXL lookup functionality.
      *
-     * @param prefix Value attached in front of calculated hash.
-     * @param hostname Hostname used as base for lookup.
+     * @param prefix          Value attached in front of calculated hash.
+     * @param hostname        Hostname used as base for lookup.
      * @param digestAlgorithm Algorithm used for generation of hostname.
      */
     public BdxlLocator(String prefix, String hostname, String digestAlgorithm) {
-        hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, digestAlgorithm);
+        this(prefix, hostname, digestAlgorithm, BaseEncoding.base32());
+    }
+
+    /**
+     * Initiate a new instance of BDXL lookup functionality.
+     *
+     * @param prefix          Value attached in front of calculated hash.
+     * @param hostname        Hostname used as base for lookup.
+     * @param digestAlgorithm Algorithm used for generation of hostname.
+     * @param encoding        Encoding of hash for hostname.
+     */
+    public BdxlLocator(String prefix, String hostname, String digestAlgorithm, BaseEncoding encoding) {
+        hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, digestAlgorithm, encoding);
     }
 
     @Override
     public URI lookup(ParticipantIdentifier participantIdentifier) throws LookupException {
         // Create hostname for participant identifier.
-        String hostname = hostnameGenerator.generate(participantIdentifier);
+        String hostname = hostnameGenerator.generate(participantIdentifier).replaceAll("=*", "");
 
         try {
             // Fetch all records of type NAPTR registered on hostname.

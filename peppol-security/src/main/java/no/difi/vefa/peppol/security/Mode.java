@@ -23,6 +23,7 @@ import java.util.Map;
 public class Mode {
 
     public static final String PRODUCTION = "PRODUCTION";
+
     public static final String TEST = "TEST";
 
     private static Map<String, ModeDescription> modeDescriptions = new HashMap<>();
@@ -67,7 +68,9 @@ public class Mode {
     }
 
     private CrlCache crlCache = new SimpleCrlCache();
+
     private KeyStoreCertificateBucket keyStore;
+
     private Map<Service, CertificateBucket> certificateBuckets = new HashMap<>();
 
     private ModeDescription mode;
