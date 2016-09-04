@@ -39,7 +39,7 @@ public class RemEvidenceBuilder {
     private final String version = REM_VERSION;
     private EventCode eventCode;
     private EventReason eventReason;
-    private String evidenceIdentifier = UUID.randomUUID().toString();
+    private final String evidenceIdentifier = UUID.randomUUID().toString();
     private String evidenceIssuerDetails;
     private String evidenceIssuerPolicyID;
     
@@ -71,7 +71,7 @@ public class RemEvidenceBuilder {
      * @param evidenceTypeInstance
      * @return
      */
-    static JAXBElement<REMEvidenceType> createRemEvidenceTypeXmlInstance(REMEvidenceType remEvidenceType, EvidenceTypeInstance evidenceTypeInstance) {
+    static JAXBElement<REMEvidenceType> createRemEvidenceTypeXmlInstance(REMEvidenceType remEvidenceType, EvidenceTypeInstance evidenceTypeInstance) throws RemEvidenceException {
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance;
         ObjectFactory objectFactory = new ObjectFactory();
         switch (evidenceTypeInstance) {
@@ -82,7 +82,7 @@ public class RemEvidenceBuilder {
                 remEvidenceTypeXmlInstance = objectFactory.createRelayREMMDAcceptanceRejection(remEvidenceType);
                 break;
             default:
-                throw new IllegalStateException("Invalid or unsupported evidenceType " + evidenceTypeInstance);
+                throw new RemEvidenceException("Invalid or unsupported evidenceType " + evidenceTypeInstance);
         }
         return remEvidenceTypeXmlInstance;
     }
@@ -133,7 +133,7 @@ public class RemEvidenceBuilder {
     static void injectTransmissionMetaData(REMEvidenceType remEvidenceType, 
                                            String documentTypeId,
                                            String documentTypeInstanceId,
-                                           String instanceIdentifier, byte[] payloadDigest) {
+                                           String instanceIdentifier, byte[] payloadDigest) throws RemEvidenceException {
         // Sender message details
         MessageDetailsType messageDetailsType = new MessageDetailsType();
         remEvidenceType.setSenderMessageDetails(messageDetailsType);
@@ -142,7 +142,7 @@ public class RemEvidenceBuilder {
         if (documentTypeId != null) {
             messageDetailsType.setMessageSubject(documentTypeId);
         } else
-            throw new IllegalStateException("Must supply document type identifier");
+            throw new RemEvidenceException("Must supply document type identifier");
 
         // Document type instance id from SBDH
         if (documentTypeInstanceId != null)
@@ -152,7 +152,7 @@ public class RemEvidenceBuilder {
         if (instanceIdentifier != null) {
             messageDetailsType.setMessageIdentifierByREMMD(instanceIdentifier);
         } else
-            throw new IllegalStateException("Must supply message instance identifier");
+            throw new RemEvidenceException("Must supply message instance identifier");
 
         // The digest value of the actual payload
         DigestMethodType digestMethodType = new DigestMethodType();
@@ -162,7 +162,7 @@ public class RemEvidenceBuilder {
         if (payloadDigest != null) {
             messageDetailsType.setDigestValue(payloadDigest);
         } else
-            throw new IllegalStateException("Must supply the digest of the original payload of the SBDH");
+            throw new RemEvidenceException("Must supply the digest of the original payload of the SBDH");
     }
 
 
@@ -248,8 +248,9 @@ public class RemEvidenceBuilder {
      *
      * @param privateKeyEntry the private key and certificate to be used for the XMLDsig signature
      * @return a signed RemEvidence represented as an instance of SignedRemEvidence
+     * @throws RemEvidenceException when the properties provided are not correct or missing
      */
-    public SignedRemEvidence buildRemEvidenceInstance(KeyStore.PrivateKeyEntry privateKeyEntry) {
+    public SignedRemEvidence buildRemEvidenceInstance(KeyStore.PrivateKeyEntry privateKeyEntry) throws RemEvidenceException {
 
         REMEvidenceType r = new REMEvidenceType();
 
@@ -257,7 +258,7 @@ public class RemEvidenceBuilder {
 
         //
         if (eventCode == null) {
-            throw new IllegalStateException("REM EventCode is required");
+            throw new RemEvidenceException("REM EventCode is required");
         }
         r.setEventCode(eventCode.getValue().toString());
 
@@ -282,19 +283,19 @@ public class RemEvidenceBuilder {
             XMLGregorianCalendar date2 = DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
             r.setEventTime(date2);
         } catch (DatatypeConfigurationException e) {
-            throw new IllegalStateException("Unable to set eventTime " + e.getMessage(), e);
+            throw new RemEvidenceException("Unable to set eventTime " + e.getMessage(), e);
         }
         
         // EvidencePolicyID
         if (evidenceIssuerPolicyID == null) 
-            throw new IllegalStateException("Evidence Issuer Policy ID missing");
+            throw new RemEvidenceException("Evidence Issuer Policy ID missing");
         EvidenceIssuerPolicyIDType policyIDs = new EvidenceIssuerPolicyIDType();
         policyIDs.getPolicyID().add(evidenceIssuerPolicyID);
         r.setEvidenceIssuerPolicyID(policyIDs);
         
         // EvidenceIssuerDetails
         if (evidenceIssuerDetails == null)
-            throw new IllegalStateException("Issuer details missing");
+            throw new RemEvidenceException("Issuer details missing");
         EntityNameType entityName = new EntityNameType();
         entityName.getName().add(evidenceIssuerDetails);
         NamePostalAddressType evidenceIssuerNameAndAddressType = new NamePostalAddressType();
@@ -315,7 +316,7 @@ public class RemEvidenceBuilder {
             r.setSenderDetails(new EntityDetailsType());
             r.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().add(sendersAttributedElectronicAddressType);
         } else
-            throw new IllegalStateException("Sender details missing");
+            throw new RemEvidenceException("Sender details missing");
 
         // Receiver details
         if (recipientIdentifier != null) {
@@ -357,14 +358,14 @@ public class RemEvidenceBuilder {
      * @param remEvidenceTypeXmlInstance the REMEvidenceType instance to be signed
      * @return W3C DOM Document with the signature
      */
-    Document injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance) {
+    Document injectSignature(KeyStore.PrivateKeyEntry privateKeyEntry, JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance) throws RemEvidenceException {
 
         // Marshals the JAXBElement into DOM object for signing
         Marshaller marshaller;
         try {
             marshaller = JaxbContextHolder.INSTANCE.getMarshaller();
         } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to create marshaller for transformation into a DOM object for creating the signature", e);
+            throw new RemEvidenceException("Unable to create marshaller for transformation into a DOM object for creating the signature", e);
         }
 
 
@@ -373,13 +374,13 @@ public class RemEvidenceBuilder {
         try {
             documentBuilder = documentBuilderFactory.newDocumentBuilder();
         } catch (ParserConfigurationException e) {
-            throw new IllegalStateException("Unable to create a DOM document builder", e);
+            throw new RemEvidenceException("Unable to create a DOM document builder", e);
         }
         Document unsignedRemEvidenceDocument = documentBuilder.newDocument();
         try {
             marshaller.marshal(remEvidenceTypeXmlInstance, unsignedRemEvidenceDocument);
         } catch (JAXBException e) {
-            throw new IllegalStateException("Unable to marshal RemEvidenceType into a DOM document");
+            throw new RemEvidenceException("Unable to marshal RemEvidenceType into a DOM document");
         }
 
         // Performs the actual signing of the document
@@ -388,7 +389,7 @@ public class RemEvidenceBuilder {
         try {
             XmldsigSigner.SHA256().sign(unsignedRemEvidenceDocument, privateKeyEntry, domResult);
         } catch (PeppolSecurityException e) {
-            throw new IllegalStateException("Unable to sign RemEvidenceType " + e.getMessage(), e);
+            throw new RemEvidenceException("Unable to sign RemEvidenceType " + e.getMessage(), e);
         }
 
         return signedRemEvidenceDocument;
