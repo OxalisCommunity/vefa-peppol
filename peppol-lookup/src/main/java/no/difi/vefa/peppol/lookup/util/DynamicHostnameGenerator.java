@@ -51,7 +51,7 @@ public class DynamicHostnameGenerator {
         try {
             // Create digest based on participant identifier.
             MessageDigest md = MessageDigest.getInstance(digestAlgorithm, BouncyCastleProvider.PROVIDER_NAME);
-            byte[] digest = md.digest(participantIdentifier.toString().getBytes(StandardCharsets.UTF_8));
+            byte[] digest = md.digest(participantIdentifier.getIdentifier().getBytes(StandardCharsets.UTF_8));
 
             // Create hex of digest.
             receiverHash = encoding.encode(digest).toLowerCase();

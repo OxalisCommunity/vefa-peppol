@@ -60,7 +60,7 @@ public class BdxrReader implements MetadataReader {
                 String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
 
                 try {
-                    documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], new Scheme(parts[0]), URI.create(reference.getHref())));
+                    documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }
@@ -92,27 +92,27 @@ public class BdxrReader implements MetadataReader {
                 throw new LookupException("ServiceMetadata element not found.");
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
-            serviceMetadata.setParticipantIdentifier(new ParticipantIdentifier(
+            serviceMetadata.setParticipantIdentifier(ParticipantIdentifier.of(
                     serviceInformation.getParticipantIdentifier().getValue(),
-                    new Scheme(serviceInformation.getParticipantIdentifier().getScheme())
+                    Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
             ));
-            serviceMetadata.setDocumentTypeIdentifier(new DocumentTypeIdentifier(
+            serviceMetadata.setDocumentTypeIdentifier(DocumentTypeIdentifier.of(
                     serviceInformation.getDocumentIdentifier().getValue(),
-                    new Scheme(serviceInformation.getDocumentIdentifier().getScheme())
+                    Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
             ));
 
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
 
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
-                ProcessIdentifier processIdentifier = new ProcessIdentifier(
+                ProcessIdentifier processIdentifier = ProcessIdentifier.of(
                         processType.getProcessIdentifier().getValue(),
-                        new Scheme(processType.getProcessIdentifier().getScheme())
+                        Scheme.of(processType.getProcessIdentifier().getScheme())
                 );
 
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
                     serviceMetadata.addEndpoint(new Endpoint(
                             processIdentifier,
-                            new TransportProfile(endpointType.getTransportProfile()),
+                            TransportProfile.of(endpointType.getTransportProfile()),
                             endpointType.getEndpointURI(),
                             (X509Certificate) certificateFactory.generateCertificate(
                                     new ByteArrayInputStream(endpointType.getCertificate())

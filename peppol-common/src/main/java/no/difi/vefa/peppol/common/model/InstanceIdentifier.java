@@ -11,10 +11,14 @@ public class InstanceIdentifier implements Serializable {
     private static final long serialVersionUID = 3616828001672136897L;
 
     public static InstanceIdentifier generateUUID() {
-        return new InstanceIdentifier(UUID.randomUUID().toString());
+        return InstanceIdentifier.of(UUID.randomUUID().toString());
     }
 
     private String value;
+
+    public static InstanceIdentifier of(String value) {
+        return new InstanceIdentifier(value);
+    }
 
     public InstanceIdentifier(String value) {
         this.value = value;

@@ -21,11 +21,11 @@ import static org.testng.Assert.assertNotNull;
  */
 public class TestResources {
 
-    public static final DocumentTypeIdentifier DOC_TYPE_ID = new DocumentTypeIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
+    public static final DocumentTypeIdentifier DOC_TYPE_ID = DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
     public static final String DOC_TYPE_INSTANCE_ID = "doc-type-instance-id";
     public static final InstanceIdentifier INSTANCE_IDENTIFIER = InstanceIdentifier.generateUUID();
-    public static final ParticipantIdentifier SENDER_IDENTIFIER = new ParticipantIdentifier("9908:810017902");
-    public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = new ParticipantIdentifier("9908:123456789");
+    public static final ParticipantIdentifier SENDER_IDENTIFIER = ParticipantIdentifier.of("9908:810017902");
+    public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = ParticipantIdentifier.of("9908:123456789");
 
     public static final String EVIDENCE_ISSUER_POLICY_ID = "http://ev_policyid.issuer.test/clause15";
     public static final String EVIDENCE_ISSUER_NAME = "RemBuilderTest";

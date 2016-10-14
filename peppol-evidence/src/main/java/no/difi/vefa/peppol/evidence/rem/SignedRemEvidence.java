@@ -136,7 +136,7 @@ public class SignedRemEvidence {
         MessageDetailsType senderMessageDetails = e().getSenderMessageDetails();
         String messageSubject = senderMessageDetails.getMessageSubject();
 
-        DocumentTypeIdentifier documentTypeIdentifier = new DocumentTypeIdentifier(messageSubject);
+        DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier.of(messageSubject);
 
         return documentTypeIdentifier;
     }
@@ -148,7 +148,7 @@ public class SignedRemEvidence {
     public InstanceIdentifier getInstanceIdentifier() {
         String remMDMessageIdentifier = e().getSenderMessageDetails().getMessageIdentifierByREMMD();
 
-        return new InstanceIdentifier(remMDMessageIdentifier);
+        return InstanceIdentifier.of(remMDMessageIdentifier);
     }
 
     public byte[] getPayloadDigestValue() {

@@ -9,11 +9,19 @@ public class ProcessIdentifier implements Serializable {
 
     private static final long serialVersionUID = 7486398061021950763L;
 
-    public static final Scheme DEFAULT_SCHEME = new Scheme("cenbii-procid-ubl");
+    public static final Scheme DEFAULT_SCHEME = Scheme.of("cenbii-procid-ubl");
 
     private String identifier;
 
     private Scheme scheme;
+
+    public static ProcessIdentifier of(String identifier) {
+        return new ProcessIdentifier(identifier);
+    }
+
+    public static ProcessIdentifier of(String identifier, Scheme scheme) {
+        return new ProcessIdentifier(identifier, scheme);
+    }
 
     public ProcessIdentifier(String identifier) {
         this(identifier, DEFAULT_SCHEME);

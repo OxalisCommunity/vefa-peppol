@@ -15,13 +15,13 @@ public class ServiceMetadata implements Serializable {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessIdentifier> processIdentifiers = new ArrayList<ProcessIdentifier>();
+    private List<ProcessIdentifier> processIdentifiers = new ArrayList<>();
 
-    private List<TransportProfile> transportProfiles = new ArrayList<TransportProfile>();
+    private List<TransportProfile> transportProfiles = new ArrayList<>();
 
     private X509Certificate signer;
 
-    private List<Endpoint> endpoints = new ArrayList<Endpoint>();
+    private List<Endpoint> endpoints = new ArrayList<>();
 
     public ParticipantIdentifier getParticipantIdentifier() {
         return participantIdentifier;

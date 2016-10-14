@@ -8,6 +8,10 @@ public class Scheme implements Serializable {
 
     private String value;
 
+    public static Scheme of(String value) {
+        return new Scheme(value);
+    }
+
     public Scheme(String value) {
         this.value = value;
     }
@@ -29,7 +33,6 @@ public class Scheme implements Serializable {
         Scheme scheme = (Scheme) o;
 
         return value.equals(scheme.value);
-
     }
 
     @Override

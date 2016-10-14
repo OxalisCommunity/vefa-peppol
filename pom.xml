@@ -16,6 +16,7 @@
         <module>peppol-evidence</module>
         <module>peppol-lookup</module>
         <module>peppol-security</module>
+        <module>peppol-icd</module>
     </modules>
 
     <scm>

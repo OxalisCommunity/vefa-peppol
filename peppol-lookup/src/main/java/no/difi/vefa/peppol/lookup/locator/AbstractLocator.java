@@ -10,6 +10,6 @@ public abstract class AbstractLocator implements MetadataLocator {
 
     @Override
     public URI lookup(String identifier) throws LookupException {
-        return lookup(new ParticipantIdentifier(identifier));
+        return lookup(ParticipantIdentifier.of(identifier));
     }
 }

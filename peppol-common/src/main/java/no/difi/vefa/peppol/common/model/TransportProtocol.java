@@ -17,14 +17,14 @@ public class TransportProtocol implements Serializable {
 
     public static final TransportProtocol INTERNAL = new TransportProtocol("INTERNAL");
 
-    public static TransportProtocol forIdentifier(String identifier) throws PeppolException {
+    private String identifier;
+
+    public static TransportProtocol of(String identifier) throws PeppolException {
         if (!pattern.matcher(identifier).matches())
             throw new PeppolException("Identifier not according to pattern.");
 
         return new TransportProtocol(identifier);
     }
-
-    private String identifier;
 
     private TransportProtocol(String identifier) {
         this.identifier = identifier;

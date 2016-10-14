@@ -1,19 +1,15 @@
 package no.difi.vefa.peppol.lookup;
 
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
-import no.difi.vefa.peppol.security.api.CertificateValidator;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.api.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 
 import java.net.URI;
 import java.util.List;
 
 public class LookupClient {
-
-    private static Logger logger = LoggerFactory.getLogger(LookupClient.class);
 
     private MetadataLocator metadataLocator;
 
@@ -43,8 +39,6 @@ public class LookupClient {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveDocumentIdentifiers(location, participantIdentifier);
 
-        logger.debug("{}", provider);
-
         return metadataReader.parseDocumentIdentifiers(metadataFetcher.fetch(provider));
     }
 
@@ -52,8 +46,6 @@ public class LookupClient {
             throws LookupException, PeppolSecurityException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
-
-        logger.debug("{}", provider);
 
         ServiceMetadata serviceMetadata = metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
 

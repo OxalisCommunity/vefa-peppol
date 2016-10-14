@@ -8,7 +8,7 @@ public class TransportProtocolTest {
 
     @Test
     public void simple() throws PeppolException {
-        Assert.assertTrue(TransportProtocol.AS2.equals(TransportProtocol.forIdentifier(TransportProtocol.AS2.getIdentifier())));
+        Assert.assertTrue(TransportProtocol.AS2.equals(TransportProtocol.of(TransportProtocol.AS2.getIdentifier())));
 
         Assert.assertTrue(throwsException("As2"));
         Assert.assertTrue(throwsException("as2"));
@@ -31,7 +31,7 @@ public class TransportProtocolTest {
 
     private boolean throwsException(String identifier) {
         try {
-            TransportProtocol.forIdentifier(identifier);
+            TransportProtocol.of(identifier);
             return false;
         } catch (PeppolException e) {
             return true;

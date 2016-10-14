@@ -1,8 +1,5 @@
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.api.Icd;
-import no.difi.vefa.peppol.common.code.Iso6523Icd;
-
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,13 +15,19 @@ public class ParticipantIdentifier implements Serializable {
     /**
      * Default scheme used when no scheme or ICD specified.
      */
-    public static final Scheme DEFAULT_SCHEME = new Scheme("iso6523-actorid-upis");
+    public static final Scheme DEFAULT_SCHEME = Scheme.of("iso6523-actorid-upis");
 
-    private Icd icd;
+    private Scheme scheme;
 
     private String identifier;
 
-    private String name;
+    public static ParticipantIdentifier of(String identifier) {
+        return of(identifier, DEFAULT_SCHEME);
+    }
+
+    public static ParticipantIdentifier of(String identifier, Scheme scheme) {
+        return new ParticipantIdentifier(identifier, scheme);
+    }
 
     /**
      * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
@@ -36,50 +39,14 @@ public class ParticipantIdentifier implements Serializable {
     }
 
     /**
-     * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
+     * Creation of participant identifier.
      *
      * @param identifier Normal identifier like '9908:987654321'.
-     * @param scheme     Scheme for ICD in identifier.
+     * @param scheme     Scheme for identifier.
      */
     public ParticipantIdentifier(String identifier, Scheme scheme) {
-        identifier = identifier.trim();
-
-        if (identifier.charAt(4) != ':')
-            throw new IllegalStateException(String.format("Identifier '%s' not valid.", identifier));
-        if (!DEFAULT_SCHEME.equals(scheme))
-            throw new IllegalStateException(String.format("Scheme '%s' not recognized.", scheme.getValue()));
-
-        populate(Iso6523Icd.valueOfIcd(identifier.substring(0, 4)), identifier.substring(5));
-    }
-
-    /**
-     * Creation of identifier.
-     *
-     * @param icd        ICD used for identifier, like Iso6523Icd.NO_ORGNR.
-     * @param identifier Identifier without ICD, like '987654321'.
-     */
-    public ParticipantIdentifier(Icd icd, String identifier) {
-        populate(icd, identifier);
-    }
-
-    /**
-     * Simple population of fields.
-     *
-     * @param icd        ICD used for identifier, like Iso6523Icd.NO_ORGNR.
-     * @param identifier Identifier without ICD, like '987654321'.
-     */
-    private void populate(Icd icd, String identifier) {
-        this.icd = icd;
         this.identifier = identifier.trim().toLowerCase(Locale.US);
-    }
-
-    /**
-     * ICD belonging to identifier.
-     *
-     * @return ICD.
-     */
-    public Icd getIcd() {
-        return icd;
+        this.scheme = scheme;
     }
 
     /**
@@ -97,18 +64,7 @@ public class ParticipantIdentifier implements Serializable {
      * @return Scheme.
      */
     public Scheme getScheme() {
-        return icd.getScheme();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public ParticipantIdentifier setName(String name) {
-        ParticipantIdentifier participantIdentifier = new ParticipantIdentifier(icd, identifier);
-        participantIdentifier.name = name;
-
-        return participantIdentifier;
+        return scheme;
     }
 
     /**
@@ -119,7 +75,7 @@ public class ParticipantIdentifier implements Serializable {
     public String urlencoded() {
         try {
             return URLEncoder.encode(
-                    String.format("%s::%s:%s", icd.getScheme().getValue(), icd.getCode(), identifier), "UTF-8");
+                    String.format("%s::%s", scheme.getValue(), identifier), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
@@ -132,17 +88,15 @@ public class ParticipantIdentifier implements Serializable {
 
         ParticipantIdentifier that = (ParticipantIdentifier) o;
 
-        if (!icd.equals(that.icd)) return false;
-        if (!identifier.equals(that.identifier)) return false;
-        return !(name != null ? !name.equals(that.name) : that.name != null);
+        if (!scheme.equals(that.scheme)) return false;
+        return identifier.equals(that.identifier);
 
     }
 
     @Override
     public int hashCode() {
-        int result = icd.hashCode();
+        int result = scheme.hashCode();
         result = 31 * result + identifier.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
@@ -151,6 +105,6 @@ public class ParticipantIdentifier implements Serializable {
      */
     @Override
     public String toString() {
-        return String.format("%s:%s", icd.getCode(), identifier);
+        return String.format("%s::%s", scheme, identifier);
     }
 }

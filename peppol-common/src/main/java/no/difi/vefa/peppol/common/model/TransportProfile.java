@@ -4,15 +4,19 @@ import java.io.Serializable;
 
 public class TransportProfile implements Serializable {
 
-    public static final TransportProfile START = new TransportProfile("busdox-transport-start");
+    public static final TransportProfile START = TransportProfile.of("busdox-transport-start");
 
-    public static final TransportProfile AS2_1_0 = new TransportProfile("busdox-transport-as2-ver1p0");
+    public static final TransportProfile AS2_1_0 = TransportProfile.of("busdox-transport-as2-ver1p0");
 
-    public static final TransportProfile AS4 = new TransportProfile("bdxr-transport-ebms3-as4-v1p0"); // busdox-transport-ebms3-as4
+    public static final TransportProfile AS4 = TransportProfile.of("bdxr-transport-ebms3-as4-v1p0"); // busdox-transport-ebms3-as4
 
     private static final long serialVersionUID = -8215053834194901976L;
 
     private String identifier;
+
+    public static TransportProfile of(String identifier) {
+        return new TransportProfile(identifier);
+    }
 
     public TransportProfile(String identifier) {
         this.identifier = identifier;

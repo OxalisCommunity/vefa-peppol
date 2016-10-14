@@ -14,7 +14,7 @@ public class DocumentTypeIdentifier implements Serializable {
 
     private static final long serialVersionUID = -3748163459655880167L;
 
-    public static final Scheme DEFAULT_SCHEME = new Scheme("busdox-docid-qns");
+    public static final Scheme DEFAULT_SCHEME = Scheme.of("busdox-docid-qns");
 
     private Scheme scheme;
 
@@ -28,12 +28,20 @@ public class DocumentTypeIdentifier implements Serializable {
 
     private URI uri;
 
+    public static DocumentTypeIdentifier of(String identifier) {
+        return new DocumentTypeIdentifier(identifier);
+    }
+
+    public static DocumentTypeIdentifier of(String identifier, Scheme scheme) {
+        return new DocumentTypeIdentifier(identifier, scheme);
+    }
+
     public DocumentTypeIdentifier(String documentIdentifier) {
         this(documentIdentifier, DEFAULT_SCHEME, null);
     }
 
-    public DocumentTypeIdentifier(String documentIdentifier, Scheme scheme) {
-        this(documentIdentifier, scheme, null);
+    public DocumentTypeIdentifier(String identifier, Scheme scheme) {
+        this(identifier, scheme, null);
     }
 
     public DocumentTypeIdentifier(String documentIdentifier, Scheme scheme, URI uri) {

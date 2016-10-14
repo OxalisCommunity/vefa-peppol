@@ -19,12 +19,12 @@ public class LookupClientTest {
     @Test(enabled = false)
     public void simple() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new ApacheFetcher()).build();
-        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9908:991825827"));
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:991825827"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
 
-        ServiceMetadata serviceMetadata = client.getServiceMetadata(new ParticipantIdentifier("9908:991825827"), new DocumentTypeIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
+        ServiceMetadata serviceMetadata = client.getServiceMetadata(ParticipantIdentifier.of("9908:991825827"), DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
         assertNotNull(serviceMetadata);
     }
 
@@ -33,9 +33,9 @@ public class LookupClientTest {
         LookupClient client = LookupClientBuilder.forProduction().build();
 
         Endpoint endpoint = client.getEndpoint(
-                new ParticipantIdentifier("9908:991825827"),
-                new DocumentTypeIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"),
-                new ProcessIdentifier("urn:www.cenbii.eu:profile:bii04:ver2.0"),
+                ParticipantIdentifier.of("9908:991825827"),
+                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biitrns010:ver2.0:extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"),
+                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"),
                 TransportProfile.AS2_1_0
         );
 
@@ -45,7 +45,7 @@ public class LookupClientTest {
     @Test(enabled = false)
     public void simple9915() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest().fetcher(new UrlFetcher()).build();
-        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9915:setcce-test"));
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(ParticipantIdentifier.of("9915:setcce-test"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
@@ -54,12 +54,12 @@ public class LookupClientTest {
     @Test(enabled = false)
     public void simple9933() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
-        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(new ParticipantIdentifier("9933:061828591"));
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(ParticipantIdentifier.of("9933:061828591"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
 
-        ServiceMetadata serviceMetadata = client.getServiceMetadata(new ParticipantIdentifier("9933:061828591"), new DocumentTypeIdentifier("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"));
+        ServiceMetadata serviceMetadata = client.getServiceMetadata(ParticipantIdentifier.of("9933:061828591"), DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"));
         assertNotNull(serviceMetadata);
     }
 
@@ -67,13 +67,13 @@ public class LookupClientTest {
     public void noSmp() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest().locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST)).build();
 
-        client.getDocumentIdentifiers(new ParticipantIdentifier("9908:no-smp"));
+        client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
     }
 
     @Test(expectedExceptions = LookupException.class)
     public void noSml() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest().locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST)).build();
 
-        client.getDocumentIdentifiers(new ParticipantIdentifier("9908:no-sml"));
+        client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-sml"));
     }
 }

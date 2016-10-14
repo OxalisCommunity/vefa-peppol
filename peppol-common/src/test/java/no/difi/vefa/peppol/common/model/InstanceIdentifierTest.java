@@ -9,7 +9,7 @@ public class InstanceIdentifierTest {
     public void simple() {
         Assert.assertNotNull(InstanceIdentifier.generateUUID().getValue());
 
-        InstanceIdentifier identifier = new InstanceIdentifier("TEST");
+        InstanceIdentifier identifier = InstanceIdentifier.of("TEST");
 
         Assert.assertEquals(identifier.getValue(), "TEST");
         Assert.assertEquals(identifier.toString(), "TEST");
