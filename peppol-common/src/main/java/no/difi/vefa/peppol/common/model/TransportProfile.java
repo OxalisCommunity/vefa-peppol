@@ -8,7 +8,7 @@ public class TransportProfile implements Serializable {
 
     public static final TransportProfile AS2_1_0 = TransportProfile.of("busdox-transport-as2-ver1p0");
 
-    public static final TransportProfile AS4 = TransportProfile.of("bdxr-transport-ebms3-as4-v1p0"); // busdox-transport-ebms3-as4
+    public static final TransportProfile AS4 = TransportProfile.of("bdxr-transport-ebms3-as4-v1p0");
 
     private static final long serialVersionUID = -8215053834194901976L;
 

@@ -62,10 +62,12 @@ public class ServiceMetadata implements Serializable {
             throws EndpointNotFoundException {
         for (TransportProfile transportProfile : transportProfiles)
             for (Endpoint endpoint : endpoints)
-                if (endpoint.getTransportProfile().equals(transportProfile) && endpoint.getProcessIdentifier().equals(processIdentifier))
+                if (endpoint.getTransportProfile().equals(transportProfile)
+                        && endpoint.getProcessIdentifier().equals(processIdentifier))
                     return endpoint;
 
-        throw new EndpointNotFoundException(String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier.getIdentifier()));
+        throw new EndpointNotFoundException(
+                String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));
     }
 
     public X509Certificate getSigner() {

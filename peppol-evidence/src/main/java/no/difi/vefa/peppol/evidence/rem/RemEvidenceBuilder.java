@@ -36,11 +36,17 @@ public class RemEvidenceBuilder {
     public static final String REM_VERSION = "2";
 
     private final EvidenceTypeInstance evidenceTypeInstance;
+
     private final String version = REM_VERSION;
-    private EventCode eventCode;
-    private EventReason eventReason;
+
     private final String evidenceIdentifier = UUID.randomUUID().toString();
+
+    private EventCode eventCode;
+
+    private EventReason eventReason;
+
     private String evidenceIssuerDetails;
+
     private String evidenceIssuerPolicyID;
     
     // This will used to set the uaMessageIdentifier element
@@ -50,14 +56,20 @@ public class RemEvidenceBuilder {
     private Date eventTime = new Date();
 
     private ParticipantIdentifier senderIdentifier;
-    private ParticipantIdentifier recipientIdentifier;
-    private DocumentTypeIdentifier documentTypeId;
-    private InstanceIdentifier instanceIdentifier;
-    private byte[] payloadDigest;
-    private TransmissionRole transmissionRole;
-    private TransportProtocol transportProtocol;
-    private byte[] protocolSpecificBytes;
 
+    private ParticipantIdentifier recipientIdentifier;
+
+    private DocumentTypeIdentifier documentTypeId;
+
+    private InstanceIdentifier instanceIdentifier;
+
+    private byte[] payloadDigest;
+
+    private TransmissionRole transmissionRole;
+
+    private TransportProtocol transportProtocol;
+
+    private byte[] protocolSpecificBytes;
 
     protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance) {
         this.evidenceTypeInstance = evidenceTypeInstance;

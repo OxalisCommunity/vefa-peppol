@@ -71,6 +71,8 @@ public enum Iso6523Icd implements Icd {
     VA_VAT("VA:VAT", "9953"),
     NL_ION("NL:ION", "9954"),
     SE_VAT("SE:VAT", "9955"),
+    BE_CBE("BE:CBE", "9956"),
+    FR_VAT("FR:VAT", "9957"),
     ZZZ("ZZZ", "9999");
 
     private static final Scheme SCHEME = Scheme.of("iso6523-actorid-upis");

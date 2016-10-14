@@ -8,6 +8,7 @@ import java.io.InputStream;
 public class TestMode extends AbstractPeppolMode {
 
     private static String[] issuersAp = new String[]{"PEPPOL ACCESS POINT TEST CA"};
+    
     private static String[] issuersSmp = new String[]{"PEPPOL SERVICE METADATA PUBLISHER TEST CA"};
 
     @Override

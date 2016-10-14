@@ -27,41 +27,49 @@ public class XmldsigTest {
     private KeyStore.PrivateKeyEntry privateKeyEntry;
 
     @BeforeClass
-    public void setUp() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, UnrecoverableEntryException {
+    public void setUp() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException,
+            UnrecoverableEntryException {
         KeyStore keyStore = KeyStore.getInstance("JKS");
         keyStore.load(getClass().getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
 
-        privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+        privateKeyEntry = (KeyStore.PrivateKeyEntry) keyStore.getEntry("self-signed",
+                new KeyStore.PasswordProtection("changeit".toCharArray()));
     }
 
     @Test
     public void simple() throws Exception {
         ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
-        XmldsigSigner.SHA1().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
+        XmldsigSigner.SHA1().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")),
+                privateKeyEntry, new StreamResult(generatedStream));
 
         ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
         ByteStreams.copy(getClass().getResourceAsStream("/xmldsig-test-output.xml"), expectedStream);
 
         Assert.assertEquals(generatedStream.toByteArray(), expectedStream.toByteArray());
 
-        X509Certificate x509Certificate = XmldsigVerifier.verify(DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
+        X509Certificate x509Certificate = XmldsigVerifier.verify(
+                DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
 
-        Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(), "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
+        Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(),
+                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
     }
 
     @Test
     public void simpleSHA256() throws Exception {
         ByteArrayOutputStream generatedStream = new ByteArrayOutputStream();
-        XmldsigSigner.SHA256().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")), privateKeyEntry, new StreamResult(generatedStream));
+        XmldsigSigner.SHA256().sign(DomUtils.parse(getClass().getResourceAsStream("/xmldsig-test-input.xml")),
+                privateKeyEntry, new StreamResult(generatedStream));
 
         ByteArrayOutputStream expectedStream = new ByteArrayOutputStream();
         ByteStreams.copy(getClass().getResourceAsStream("/xmldsig-test-output-sha256.xml"), expectedStream);
 
         Assert.assertEquals(generatedStream.toByteArray(), expectedStream.toByteArray());
 
-        X509Certificate x509Certificate = XmldsigVerifier.verify(DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
+        X509Certificate x509Certificate = XmldsigVerifier.verify(
+                DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
 
-        Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(), "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
+        Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(),
+                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
     }
 
     @Test

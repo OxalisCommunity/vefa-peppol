@@ -42,7 +42,8 @@ public class LookupClient {
         return metadataReader.parseDocumentIdentifiers(metadataFetcher.fetch(provider));
     }
 
-    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier)
+    public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier,
+                                              DocumentTypeIdentifier documentTypeIdentifier)
             throws LookupException, PeppolSecurityException {
         URI location = metadataLocator.lookup(participantIdentifier);
         URI provider = metadataProvider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
@@ -55,7 +56,8 @@ public class LookupClient {
         return serviceMetadata;
     }
 
-    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
+    public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier,
+                                TransportProfile... transportProfiles)
             throws PeppolSecurityException, EndpointNotFoundException {
         Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
 
@@ -65,8 +67,9 @@ public class LookupClient {
         return endpoint;
     }
 
-    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
-                                ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
+    public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier,
+                                DocumentTypeIdentifier documentTypeIdentifier, ProcessIdentifier processIdentifier,
+                                TransportProfile... transportProfiles)
             throws LookupException, PeppolSecurityException, EndpointNotFoundException {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentTypeIdentifier);
         return getEndpoint(serviceMetadata, processIdentifier, transportProfiles);

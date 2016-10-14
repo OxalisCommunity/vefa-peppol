@@ -6,7 +6,9 @@ import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import java.net.URI;
 
 public interface MetadataProvider {
+    
     URI resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier);
 
-    URI resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier);
+    URI resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
+                               DocumentTypeIdentifier documentTypeIdentifier);
 }

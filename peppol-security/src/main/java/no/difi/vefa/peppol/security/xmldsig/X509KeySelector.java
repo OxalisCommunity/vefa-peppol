@@ -12,7 +12,8 @@ import java.util.Iterator;
 class X509KeySelector extends KeySelector {
     private X509Certificate certificate;
 
-    public KeySelectorResult select(KeyInfo keyInfo, KeySelector.Purpose purpose, AlgorithmMethod method, XMLCryptoContext context) throws KeySelectorException {
+    public KeySelectorResult select(KeyInfo keyInfo, KeySelector.Purpose purpose, AlgorithmMethod method,
+                                    XMLCryptoContext context) throws KeySelectorException {
         Iterator ki = keyInfo.getContent().iterator();
         while (ki.hasNext()) {
             XMLStructure info = (XMLStructure) ki.next();
