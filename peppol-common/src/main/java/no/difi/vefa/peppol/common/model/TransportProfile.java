@@ -18,6 +18,7 @@ public class TransportProfile implements Serializable {
         return new TransportProfile(identifier);
     }
 
+    @Deprecated
     public TransportProfile(String identifier) {
         this.identifier = identifier;
     }

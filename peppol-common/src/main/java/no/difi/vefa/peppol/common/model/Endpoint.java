@@ -15,6 +15,12 @@ public class Endpoint implements Serializable {
 
     private X509Certificate certificate;
 
+    public static Endpoint of(ProcessIdentifier processIdentifier, TransportProfile transportProfile, String address,
+                              X509Certificate certificate) {
+        return new Endpoint(processIdentifier, transportProfile, address, certificate);
+    }
+
+    @Deprecated
     public Endpoint(ProcessIdentifier processIdentifier, TransportProfile transportProfile, String address,
                     X509Certificate certificate) {
         this.processIdentifier = processIdentifier;

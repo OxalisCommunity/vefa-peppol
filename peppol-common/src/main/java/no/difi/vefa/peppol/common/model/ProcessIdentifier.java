@@ -23,10 +23,12 @@ public class ProcessIdentifier implements Serializable {
         return new ProcessIdentifier(identifier, scheme);
     }
 
+    @Deprecated
     public ProcessIdentifier(String identifier) {
         this(identifier, DEFAULT_SCHEME);
     }
 
+    @Deprecated
     public ProcessIdentifier(String identifier, Scheme scheme) {
         this.identifier = identifier;
         this.scheme = scheme;

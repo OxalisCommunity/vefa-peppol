@@ -12,6 +12,7 @@ public class Scheme implements Serializable {
         return new Scheme(value);
     }
 
+    @Deprecated
     public Scheme(String value) {
         this.value = value;
     }

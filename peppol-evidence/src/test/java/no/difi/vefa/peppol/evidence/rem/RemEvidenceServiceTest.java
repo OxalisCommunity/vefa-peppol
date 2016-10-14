@@ -47,8 +47,6 @@ public class RemEvidenceServiceTest {
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
                 .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, specificReceiptBytes);
 
-        ;
-
         // Signs and builds the REMEvidenceType instance
         SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
 
@@ -77,8 +75,6 @@ public class RemEvidenceServiceTest {
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
                 .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, "Jabla jabla fake MDN".getBytes());
-
-        ;
 
         // Signs and builds the REMEvidenceType instance
         SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKey);

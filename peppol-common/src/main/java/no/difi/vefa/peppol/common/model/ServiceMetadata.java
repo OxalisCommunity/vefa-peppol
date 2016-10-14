@@ -21,22 +21,35 @@ public class ServiceMetadata implements Serializable {
 
     private X509Certificate signer;
 
-    private List<Endpoint> endpoints = new ArrayList<>();
+    private List<Endpoint> endpoints;
+
+    public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
+                                     DocumentTypeIdentifier documentTypeIdentifier, List<Endpoint> endpoints,
+                                     X509Certificate signer) {
+
+        ServiceMetadata serviceMetadata = new ServiceMetadata();
+        serviceMetadata.participantIdentifier = participantIdentifier;
+        serviceMetadata.documentTypeIdentifier = documentTypeIdentifier;
+        serviceMetadata.endpoints = endpoints;
+        serviceMetadata.signer = signer;
+
+        for (Endpoint endpoint : endpoints)
+            if (!serviceMetadata.processIdentifiers.contains(endpoint.getProcessIdentifier()))
+                serviceMetadata.processIdentifiers.add(endpoint.getProcessIdentifier());
+
+        return serviceMetadata;
+    }
+
+    @Deprecated
+    public ServiceMetadata() {
+    }
 
     public ParticipantIdentifier getParticipantIdentifier() {
         return participantIdentifier;
     }
 
-    public void setParticipantIdentifier(ParticipantIdentifier participantIdentifier) {
-        this.participantIdentifier = participantIdentifier;
-    }
-
     public DocumentTypeIdentifier getDocumentTypeIdentifier() {
         return documentTypeIdentifier;
-    }
-
-    public void setDocumentTypeIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
-        this.documentTypeIdentifier = documentTypeIdentifier;
     }
 
     public List<ProcessIdentifier> getProcessIdentifiers() {
@@ -45,13 +58,6 @@ public class ServiceMetadata implements Serializable {
 
     public List<TransportProfile> getTransportProfiles() {
         return transportProfiles;
-    }
-
-    public void addEndpoint(Endpoint endpoint) {
-        if (!processIdentifiers.contains(endpoint.getProcessIdentifier()))
-            processIdentifiers.add(endpoint.getProcessIdentifier());
-
-        this.endpoints.add(endpoint);
     }
 
     public List<Endpoint> getEndpoints() {
@@ -72,9 +78,5 @@ public class ServiceMetadata implements Serializable {
 
     public X509Certificate getSigner() {
         return signer;
-    }
-
-    public void setSigner(X509Certificate signer) {
-        this.signer = signer;
     }
 }

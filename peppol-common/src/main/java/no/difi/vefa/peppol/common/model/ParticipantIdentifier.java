@@ -34,6 +34,7 @@ public class ParticipantIdentifier implements Serializable {
      *
      * @param identifier Normal identifier like '9908:987654321'.
      */
+    @Deprecated
     public ParticipantIdentifier(String identifier) {
         this(identifier, DEFAULT_SCHEME);
     }
@@ -44,6 +45,7 @@ public class ParticipantIdentifier implements Serializable {
      * @param identifier Normal identifier like '9908:987654321'.
      * @param scheme     Scheme for identifier.
      */
+    @Deprecated
     public ParticipantIdentifier(String identifier, Scheme scheme) {
         this.identifier = identifier.trim().toLowerCase(Locale.US);
         this.scheme = scheme;

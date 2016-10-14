@@ -39,11 +39,14 @@ public class BusdoxReader implements MetadataReader {
 
     private static JAXBContext jaxbContext;
 
+    private static CertificateFactory certificateFactory;
+
     static {
         try {
             jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
                     ServiceMetadataType.class);
-        } catch (JAXBException e) {
+            certificateFactory = CertificateFactory.getInstance("X.509");
+        } catch (JAXBException | CertificateException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -84,10 +87,9 @@ public class BusdoxReader implements MetadataReader {
             JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(new DOMSource(doc));
             Object o = result.getValue();
 
-            ServiceMetadata serviceMetadata = new ServiceMetadata();
-
+            X509Certificate signer = null;
             if (o instanceof SignedServiceMetadataType) {
-                serviceMetadata.setSigner(XmldsigVerifier.verify(doc));
+                signer = XmldsigVerifier.verify(doc);
                 o = ((SignedServiceMetadataType) o).getServiceMetadata();
             }
 
@@ -95,36 +97,35 @@ public class BusdoxReader implements MetadataReader {
                 throw new LookupException("ServiceMetadata element not found.");
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
-            serviceMetadata.setParticipantIdentifier(ParticipantIdentifier.of(
-                    serviceInformation.getParticipantIdentifier().getValue(),
-                    Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
-            ));
-            serviceMetadata.setDocumentTypeIdentifier(DocumentTypeIdentifier.of(
-                    serviceInformation.getDocumentIdentifier().getValue(),
-                    Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
-            ));
 
-            CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-
+            List<Endpoint> endpoints = new ArrayList<>();
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
-                ProcessIdentifier processIdentifier = ProcessIdentifier.of(
-                        processType.getProcessIdentifier().getValue(),
-                        Scheme.of(processType.getProcessIdentifier().getScheme())
-                );
-
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
-                    serviceMetadata.addEndpoint(new Endpoint(
-                            processIdentifier,
+                    endpoints.add(Endpoint.of(
+                            ProcessIdentifier.of(
+                                    processType.getProcessIdentifier().getValue(),
+                                    Scheme.of(processType.getProcessIdentifier().getScheme())
+                            ),
                             TransportProfile.of(endpointType.getTransportProfile()),
                             endpointType.getEndpointReference().getAddress().getValue(),
                             (X509Certificate) certificateFactory.generateCertificate(
-                                    new ByteArrayInputStream(Base64.decodeBase64(endpointType.getCertificate()))
-                            )
+                                    new ByteArrayInputStream(Base64.decodeBase64(endpointType.getCertificate())))
                     ));
                 }
             }
 
-            return serviceMetadata;
+            return ServiceMetadata.of(
+                    ParticipantIdentifier.of(
+                            serviceInformation.getParticipantIdentifier().getValue(),
+                            Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
+                    ),
+                    DocumentTypeIdentifier.of(
+                            serviceInformation.getDocumentIdentifier().getValue(),
+                            Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
+                    ),
+                    endpoints,
+                    signer
+            );
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new LookupException(e.getMessage(), e);
         }

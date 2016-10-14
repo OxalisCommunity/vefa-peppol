@@ -42,7 +42,7 @@ public class TestResources {
 
     public static final String EVIDENCE_ISSUER_NAME = "RemBuilderTest";
 
-    private static KeyStore keyStore = null;
+    private static KeyStore keyStore;
 
     private static RemEvidenceService remEvidenceService;
 
@@ -76,7 +76,7 @@ public class TestResources {
 
         } catch (MessagingException e) {
             throw new IllegalStateException(
-                    String.format("Unable to load mime message from resource %s class path: %s", resourceName , e.getMessage()), e);
+                    String.format("Unable to load mime message from resource %s class path: %s", resourceName, e.getMessage()), e);
         } catch (IOException e) {
             throw new IllegalStateException(
                     String.format("Unable to write contents of mime message to byte array %s", e.getMessage()), e);

@@ -20,6 +20,7 @@ public class InstanceIdentifier implements Serializable {
         return new InstanceIdentifier(value);
     }
 
+    @Deprecated
     public InstanceIdentifier(String value) {
         this.value = value;
     }

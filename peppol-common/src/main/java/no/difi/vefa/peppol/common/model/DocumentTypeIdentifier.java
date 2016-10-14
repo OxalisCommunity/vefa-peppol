@@ -36,14 +36,17 @@ public class DocumentTypeIdentifier implements Serializable {
         return new DocumentTypeIdentifier(identifier, scheme);
     }
 
+    @Deprecated
     public DocumentTypeIdentifier(String documentIdentifier) {
         this(documentIdentifier, DEFAULT_SCHEME, null);
     }
 
+    @Deprecated
     public DocumentTypeIdentifier(String identifier, Scheme scheme) {
         this(identifier, scheme, null);
     }
 
+    @Deprecated
     public DocumentTypeIdentifier(String documentIdentifier, Scheme scheme, URI uri) {
         String[] parts = documentIdentifier.split("::|##");
 

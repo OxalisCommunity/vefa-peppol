@@ -15,7 +15,6 @@ import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.mode.ProductionMode;
 import no.difi.vefa.peppol.security.mode.TestMode;
 import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
-import org.bouncycastle.math.raw.Mod;
 
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
