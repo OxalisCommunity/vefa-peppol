@@ -15,15 +15,11 @@ import static org.testng.Assert.fail;
  */
 public class RemEvidenceTransformerTest {
 
-    public void setUp() {
-
-    }
-
     @Test
     public void buildStreamAndParseRemEvidence() throws Exception {
 
         // Obtains instance of the service which is the entry point to the Rem package
-        RemEvidenceService remEvidenceService = TestResources.getRemEvidenceService();
+        TestResources.getRemEvidenceService();
 
         // Creates the sample REMEvidenceType
         SignedRemEvidence signedRemEvidence = TestResources.createSampleRemEvidence();
@@ -56,12 +52,13 @@ public class RemEvidenceTransformerTest {
     /**
      * Creates sample REM Evidence, transforms it into XML representation and
      * parses it back into a Java object again.
+     *
      * @throws Exception
      */
     @Test
     public void verifyRoundTrip() throws Exception {
         // Obtains instance of the service which is the entry point to the Rem package
-        RemEvidenceService remEvidenceService = TestResources.getRemEvidenceService();
+        TestResources.getRemEvidenceService();
 
         // Creates the sample REMEvidenceType
         SignedRemEvidence signedRemEvidence = TestResources.createSampleRemEvidence();
@@ -70,14 +67,12 @@ public class RemEvidenceTransformerTest {
         RemEvidenceTransformer remEvidenceTransformer = new RemEvidenceTransformer();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         remEvidenceTransformer.setFormattedOutput(false);
-        remEvidenceTransformer.toUnformattedXml(signedRemEvidence,baos);
+        remEvidenceTransformer.toUnformattedXml(signedRemEvidence, baos);
 
         // Transforms back again....
         SignedRemEvidence remEvidence = remEvidenceTransformer.parse(new ByteArrayInputStream(baos.toByteArray()));
 
         // Signature should still verify
         RemEvidenceService.verifySignature(remEvidence);
-
-
     }
 }

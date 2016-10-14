@@ -42,7 +42,6 @@ public class TransportProtocol implements Serializable {
         TransportProtocol that = (TransportProtocol) o;
 
         return identifier.equals(that.identifier);
-
     }
 
     @Override

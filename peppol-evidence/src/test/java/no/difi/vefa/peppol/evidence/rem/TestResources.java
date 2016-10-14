@@ -27,18 +27,24 @@ import static org.testng.Assert.assertNotNull;
 public class TestResources {
 
     public static final DocumentTypeIdentifier DOC_TYPE_ID = DocumentTypeIdentifier.of(
-            "urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
+            "urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##" +
+                    "urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1");
+
     public static final String DOC_TYPE_INSTANCE_ID = "doc-type-instance-id";
+
     public static final InstanceIdentifier INSTANCE_IDENTIFIER = InstanceIdentifier.generateUUID();
+
     public static final ParticipantIdentifier SENDER_IDENTIFIER = ParticipantIdentifier.of("9908:810017902");
+
     public static final ParticipantIdentifier RECIPIENT_IDENTIFIER = ParticipantIdentifier.of("9908:123456789");
 
     public static final String EVIDENCE_ISSUER_POLICY_ID = "http://ev_policyid.issuer.test/clause15";
+
     public static final String EVIDENCE_ISSUER_NAME = "RemBuilderTest";
 
     private static KeyStore keyStore = null;
-    private static RemEvidenceService remEvidenceService;
 
+    private static RemEvidenceService remEvidenceService;
 
     /**
      * Convenient helper method to obtain named Mime message resource from the class path
@@ -69,9 +75,11 @@ public class TestResources {
             mimeMessage.writeTo(baos);
 
         } catch (MessagingException e) {
-            throw new IllegalStateException("Unable to load mime message from resource " + resourceName + " class path: " + e.getMessage(), e);
+            throw new IllegalStateException(
+                    String.format("Unable to load mime message from resource %s class path: %s", resourceName , e.getMessage()), e);
         } catch (IOException e) {
-            throw new IllegalStateException("Unable to write contents of mime message to byte array " + e.getMessage(), e);
+            throw new IllegalStateException(
+                    String.format("Unable to write contents of mime message to byte array %s", e.getMessage()), e);
         }
 
         return baos.toByteArray();

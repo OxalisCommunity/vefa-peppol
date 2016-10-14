@@ -44,9 +44,8 @@ public class TestResourcesTest {
         log.debug("Size of mime message:" + mimeMessage.getSize());
 
         InputStream rawInputStream = mimeMessage.getRawInputStream();
-        int c;
         int counter = 0;
-        while ((c = rawInputStream.read()) >= 0) {
+        while (rawInputStream.read() >= 0) {
             counter++;
         }
         log.debug("Size of raw input stream " + counter);
@@ -67,7 +66,4 @@ public class TestResourcesTest {
             log.debug(s);
         }
     }
-
-
-
 }

@@ -13,7 +13,6 @@ public class SchemeTest {
         Assert.assertEquals(schema.toString(), "SCHEME");
         Assert.assertNotNull(schema.hashCode());
 
-        Assert.assertFalse(schema.equals(null));
         Assert.assertTrue(schema.equals(schema));
     }
 

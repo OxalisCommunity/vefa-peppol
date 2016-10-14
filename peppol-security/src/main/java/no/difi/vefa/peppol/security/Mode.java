@@ -15,6 +15,7 @@ import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import no.difi.vefa.peppol.security.mode.ProductionMode;
 import no.difi.vefa.peppol.security.mode.TestMode;
 import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
+import org.bouncycastle.math.raw.Mod;
 
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
@@ -27,6 +28,14 @@ public class Mode {
     public static final String TEST = "TEST";
 
     private static Map<String, ModeDescription> modeDescriptions = new HashMap<>();
+
+    private CrlCache crlCache = new SimpleCrlCache();
+
+    private KeyStoreCertificateBucket keyStore;
+
+    private Map<Service, CertificateBucket> certificateBuckets = new HashMap<>();
+
+    private ModeDescription mode;
 
     static {
         add(new ProductionMode());
@@ -64,16 +73,9 @@ public class Mode {
             }
         }
 
-        throw new PeppolSecurityException(String.format("Unable to detect mode for certificate '%s'.", certificate.getSubjectDN().toString()));
+        throw new PeppolSecurityException(
+                String.format("Unable to detect mode for certificate '%s'.", certificate.getSubjectDN().toString()));
     }
-
-    private CrlCache crlCache = new SimpleCrlCache();
-
-    private KeyStoreCertificateBucket keyStore;
-
-    private Map<Service, CertificateBucket> certificateBuckets = new HashMap<>();
-
-    private ModeDescription mode;
 
     private Mode(ModeDescription mode) {
         this.mode = mode;
@@ -98,7 +100,8 @@ public class Mode {
         ValidatorBuilder validatorBuilder = ValidatorBuilder.newInstance();
         validatorBuilder.addRule(new ExpirationRule());
         validatorBuilder.addRule(SigningRule.PublicSignedOnly());
-        validatorBuilder.addRule(new PrincipalNameRule("CN", new SimplePrincipalNameProvider(mode.getIssuers(service)), PrincipalNameRule.Principal.ISSUER));
+        validatorBuilder.addRule(new PrincipalNameRule("CN",
+                new SimplePrincipalNameProvider(mode.getIssuers(service)), PrincipalNameRule.Principal.ISSUER));
         validatorBuilder.addRule(new ChainRule(certificateBuckets.get(null), certificateBuckets.get(service)));
         validatorBuilder.addRule(new CRLRule(crlCache));
         validatorBuilder.addRule(new OCSPRule(certificateBuckets.get(service)));

@@ -17,10 +17,12 @@ import java.util.List;
 public class MultiReader implements MetadataReader {
 
     private BusdoxReader busdoxReader = new BusdoxReader();
+
     private BdxrReader bdxrReader = new BdxrReader();
 
     @Override
-    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException {
+    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
+            throws LookupException {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 
@@ -33,7 +35,8 @@ public class MultiReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, PeppolSecurityException {
+    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+            throws LookupException, PeppolSecurityException {
         if (fetcherResponse.getNamespace() == null)
             fetcherResponse = detect(fetcherResponse);
 
@@ -54,7 +57,9 @@ public class MultiReader implements MetadataReader {
             String namespace = XmlUtils.extractRootNamespace(new String(fileContent));
             if (namespace != null) {
                 return new FetcherResponse(
-                        new SequenceInputStream(new ByteArrayInputStream(fileContent), fetcherResponse.getInputStream()),
+                        new SequenceInputStream(
+                                new ByteArrayInputStream(fileContent),
+                                fetcherResponse.getInputStream()),
                         namespace
                 );
             }

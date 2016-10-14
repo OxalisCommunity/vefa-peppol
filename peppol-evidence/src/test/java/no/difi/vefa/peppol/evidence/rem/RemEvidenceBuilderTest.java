@@ -102,9 +102,9 @@ public class RemEvidenceBuilderTest {
         // Verifies the signature using the W3C Document
         XmldsigVerifier.verify(signedRemEvidence.getDocument());
 
-        EventCode eventCode = signedRemEvidence.getEventCode();
-        EventReason eventReason = signedRemEvidence.getEventReason();
-        Date eventTime = signedRemEvidence.getEventTime();
+        assertNotNull(signedRemEvidence.getEventCode());
+        assertNotNull(signedRemEvidence.getEventReason());
+        assertNotNull(signedRemEvidence.getEventTime());
         
         // Check the policy id
         assertEquals(signedRemEvidence.getEvidenceIssuerPolicyID(), TestResources.EVIDENCE_ISSUER_POLICY_ID);
@@ -158,7 +158,6 @@ public class RemEvidenceBuilderTest {
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
                 .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, specificReceiptBytes);
-        ;
 
 
         // Signs and builds the REMEvidenceType instance
@@ -166,6 +165,7 @@ public class RemEvidenceBuilderTest {
 
         // Grabs the REMEvidenceType instance in order to make some assertions.
         REMEvidenceType remEvidenceInstance = signedRemEvidence.getRemEvidenceType();
+        assertNotNull(remEvidenceInstance);
 
 
         ExtensionType extensionType = signedRemEvidence.getRemEvidenceType().getExtensions().getExtension().get(0);
@@ -208,7 +208,7 @@ public class RemEvidenceBuilderTest {
 
         // Grabs the REMEvidenceType instance in order to make some assertions.
         REMEvidenceType remEvidenceInstance = signedRemEvidence.getRemEvidenceType();
-
+        assertNotNull(remEvidenceInstance);
 
         ExtensionsListType extensions = signedRemEvidence.getRemEvidenceType().getExtensions();
         
