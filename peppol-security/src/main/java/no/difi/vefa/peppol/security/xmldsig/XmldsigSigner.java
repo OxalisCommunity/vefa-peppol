@@ -12,7 +12,6 @@ import javax.xml.crypto.dsig.keyinfo.KeyInfoFactory;
 import javax.xml.crypto.dsig.keyinfo.X509Data;
 import javax.xml.crypto.dsig.spec.C14NMethodParameterSpec;
 import javax.xml.crypto.dsig.spec.TransformParameterSpec;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Transformer;
@@ -26,18 +25,16 @@ import java.util.List;
 
 public class XmldsigSigner {
 
-    @SuppressWarnings("all")
-    private static DocumentBuilderFactory documentBuilderFactory;
     private static TransformerFactory transformerFactory;
+
     private static XMLSignatureFactory xmlSignatureFactory;
+
+    private String digestMethod;
+
+    private String signatureMethod;
 
     static {
         try {
-            documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setCoalescing(true);
-            documentBuilderFactory.setIgnoringComments(true);
-            documentBuilderFactory.setNamespaceAware(true);
-
             transformerFactory = TransformerFactory.newInstance();
 
             xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
@@ -53,9 +50,6 @@ public class XmldsigSigner {
     public static XmldsigSigner SHA256() {
         return new XmldsigSigner(DigestMethod.SHA256, ExtraSignatureMethod.RSA_SHA256);
     }
-
-    private String digestMethod;
-    private String signatureMethod;
 
     XmldsigSigner(String digestMethod, String signatureMethod) {
         this.digestMethod = digestMethod;

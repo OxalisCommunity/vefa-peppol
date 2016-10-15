@@ -14,6 +14,18 @@ import no.difi.vefa.peppol.security.api.CertificateValidator;
 
 public class LookupClientBuilder {
 
+    private MetadataFetcher metadataFetcher;
+
+    private MetadataLocator metadataLocator;
+
+    private CertificateValidator providerCertificateValidator;
+
+    private MetadataProvider metadataProvider;
+
+    private MetadataReader metadataReader;
+
+    private CertificateValidator endpointertificateValidator;
+
     public static LookupClientBuilder newInstance() {
         return new LookupClientBuilder();
     }
@@ -46,18 +58,6 @@ public class LookupClientBuilder {
     public static LookupClientBuilder forTest() {
         return forMode("TEST");
     }
-
-    private MetadataFetcher metadataFetcher;
-
-    private MetadataLocator metadataLocator;
-
-    private CertificateValidator providerCertificateValidator;
-
-    private MetadataProvider metadataProvider;
-
-    private MetadataReader metadataReader;
-
-    private CertificateValidator endpointertificateValidator;
 
     LookupClientBuilder() {
         // No action

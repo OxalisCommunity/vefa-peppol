@@ -20,7 +20,8 @@ public class BusdoxReaderTest {
 
     @Test
     public void documentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -30,7 +31,8 @@ public class BusdoxReaderTest {
 
     @Test
     public void serviceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
+                getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
 
@@ -43,7 +45,10 @@ public class BusdoxReaderTest {
 
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
-        assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "O=EVRY AS, CN=APP_1000000025, C=NO");
+        assertEquals(
+                result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0)
+                        .getCertificate().getSubjectDN().toString(),
+                "O=EVRY AS, CN=APP_1000000025, C=NO"
+        );
     }
-
 }

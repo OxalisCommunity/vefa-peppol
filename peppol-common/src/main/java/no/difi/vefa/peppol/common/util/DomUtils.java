@@ -23,7 +23,8 @@ public class DomUtils {
         documentBuilderFactory.setNamespaceAware(true);
     }
 
-    public static Document parse(InputStream inputStream) throws SAXException, IOException, ParserConfigurationException {
+    public static Document parse(InputStream inputStream)
+            throws SAXException, IOException, ParserConfigurationException {
         return documentBuilderFactory.newDocumentBuilder().parse(inputStream);
     }
 
@@ -39,7 +40,5 @@ public class DomUtils {
         } catch (TransformerException e) {
             throw new IllegalStateException("Unable to transform DOM Document to XML representation");
         }
-
     }
-
 }

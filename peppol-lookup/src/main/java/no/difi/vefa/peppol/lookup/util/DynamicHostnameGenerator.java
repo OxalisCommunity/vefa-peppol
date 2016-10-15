@@ -59,6 +59,7 @@ public class DynamicHostnameGenerator {
             throw new LookupException(e.getMessage(), e);
         }
 
-        return String.format("%s%s.%s.%s", prefix, receiverHash, participantIdentifier.getScheme().getValue(), hostname);
+        return String.format("%s%s.%s.%s",
+                prefix, receiverHash, participantIdentifier.getScheme().getValue(), hostname);
     }
 }

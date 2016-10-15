@@ -26,22 +26,20 @@ public class ServiceMetadata implements Serializable {
     public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
                                      DocumentTypeIdentifier documentTypeIdentifier, List<Endpoint> endpoints,
                                      X509Certificate signer) {
-
-        ServiceMetadata serviceMetadata = new ServiceMetadata();
-        serviceMetadata.participantIdentifier = participantIdentifier;
-        serviceMetadata.documentTypeIdentifier = documentTypeIdentifier;
-        serviceMetadata.endpoints = endpoints;
-        serviceMetadata.signer = signer;
-
-        for (Endpoint endpoint : endpoints)
-            if (!serviceMetadata.processIdentifiers.contains(endpoint.getProcessIdentifier()))
-                serviceMetadata.processIdentifiers.add(endpoint.getProcessIdentifier());
-
-        return serviceMetadata;
+        return new ServiceMetadata(participantIdentifier, documentTypeIdentifier, endpoints, signer);
     }
 
     @Deprecated
-    public ServiceMetadata() {
+    public ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
+                           List<Endpoint> endpoints, X509Certificate signer) {
+        this.participantIdentifier = participantIdentifier;
+        this.documentTypeIdentifier = documentTypeIdentifier;
+        this.endpoints = endpoints;
+        this.signer = signer;
+
+        for (Endpoint endpoint : endpoints)
+            if (!this.processIdentifiers.contains(endpoint.getProcessIdentifier()))
+                this.processIdentifiers.add(endpoint.getProcessIdentifier());
     }
 
     public ParticipantIdentifier getParticipantIdentifier() {

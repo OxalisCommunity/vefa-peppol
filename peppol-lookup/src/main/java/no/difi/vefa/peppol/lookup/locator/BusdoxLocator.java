@@ -23,7 +23,8 @@ public class BusdoxLocator extends AbstractLocator {
 
         try {
             if (new Lookup(hostname).run() == null)
-                throw new LookupException(String.format("Identifier '%s' not registered in SML.", participantIdentifier.getIdentifier()));
+                throw new LookupException(
+                        String.format("Identifier '%s' not registered in SML.", participantIdentifier.getIdentifier()));
         } catch (TextParseException e) {
             throw new LookupException(e.getMessage(), e);
         }

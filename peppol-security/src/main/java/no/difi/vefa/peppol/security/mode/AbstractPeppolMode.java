@@ -11,16 +11,15 @@ abstract class AbstractPeppolMode implements ModeDescription {
 
     @Override
     public String[] getIssuers(Service service) {
-        switch (service) {
-            case ALL:
-                List<String> issuers = new ArrayList<>();
-                for (Service s : Service.values())
-                    if (s != Service.ALL)
-                        Collections.addAll(issuers, getIssuers(s));
-                return issuers.toArray(new String[issuers.size()]);
-            default:
-                return getIssuersInternal(service);
+        if (service == Service.ALL) {
+            List<String> issuers = new ArrayList<>();
+            for (Service s : Service.values())
+                if (s != Service.ALL)
+                    Collections.addAll(issuers, getIssuers(s));
+            return issuers.toArray(new String[issuers.size()]);
         }
+
+        return getIssuersInternal(service);
     }
 
     protected abstract String[] getIssuersInternal(Service service);

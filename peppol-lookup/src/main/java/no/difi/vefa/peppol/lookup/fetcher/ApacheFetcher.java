@@ -49,12 +49,14 @@ public class ApacheFetcher extends AbstractFetcher {
                 case 200:
                     return new FetcherResponse(
                             new BufferedInputStream(response.getEntity().getContent()),
-                            response.containsHeader("X-SMP-Namespace") ? response.getFirstHeader("X-SMP-Namespace").getValue() : null
+                            response.containsHeader("X-SMP-Namespace") ?
+                                    response.getFirstHeader("X-SMP-Namespace").getValue() : null
                     );
                 case 404:
                     throw new LookupException("Not supported.");
                 default:
-                    throw new LookupException(String.format("Received code %s for lookup.", response.getStatusLine().getStatusCode()));
+                    throw new LookupException(
+                            String.format("Received code %s for lookup.", response.getStatusLine().getStatusCode()));
             }
         } catch (SocketTimeoutException | SocketException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);

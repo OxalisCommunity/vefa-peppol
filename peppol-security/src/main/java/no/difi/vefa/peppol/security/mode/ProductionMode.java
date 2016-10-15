@@ -8,6 +8,7 @@ import java.io.InputStream;
 public class ProductionMode extends AbstractPeppolMode {
 
     private static String[] issuersAp = new String[]{"PEPPOL ACCESS POINT CA"};
+
     private static String[] issuersSmp = new String[]{"PEPPOL SERVICE METADATA PUBLISHER CA"};
 
     @Override

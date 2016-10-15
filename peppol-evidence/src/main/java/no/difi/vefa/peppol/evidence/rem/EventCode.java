@@ -16,8 +16,7 @@ public enum EventCode {
     ACCEPTANCE("http:uri.etsi.org/02640/Event#Acceptance"),
     REJECTION("http:uri.etsi.org/02640/Event#Rejection"),
     DELIVERY("http:uri.etsi.org/02640/Event#Delivery"),
-    DELIVERY_EXPIRATION("http:uri.etsi.org/02640/Event#DeliveryExpiration")
-    ;
+    DELIVERY_EXPIRATION("http:uri.etsi.org/02640/Event#DeliveryExpiration");
 
     URI value;
 
@@ -33,7 +32,7 @@ public enum EventCode {
         return value;
     }
 
-    public static EventCode valueFor(String valueToLookup){
+    public static EventCode valueFor(String valueToLookup) {
         if (valueToLookup == null) {
             throw new IllegalArgumentException("null is invalid argument!");
         }

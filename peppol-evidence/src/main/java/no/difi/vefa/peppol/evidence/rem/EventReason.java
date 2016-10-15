@@ -17,7 +17,8 @@ public enum EventReason {
             R_REMMD_MALFUNCTION("http:uri.etsi.org/REM/EventReason#R_REMMD_Malfunction",	"6"),
             R_REMMD_NOT_IDENTIFIED("http:uri.etsi.org/REM/EventReason#R_REMMD_NotIdenified",	"7"),
             R_REMMD_UNCREACHABLE("http:uri.etsi.org/REM/EventReason#R_REMMD_Unreachable",	"8"),
-            S_REMMD_RECEIVED_NO_DELIVERY_INFO_FROM_R_REMMD("http:uri.etsi.org/REM/EventReason#S_REMMD_ReceivedNoDeliveryInfoFromR_REMMD", "9"),
+            S_REMMD_RECEIVED_NO_DELIVERY_INFO_FROM_R_REMMD
+                    ("http:uri.etsi.org/REM/EventReason#S_REMMD_ReceivedNoDeliveryInfoFromR_REMMD", "9"),
             UNKNOWN_RECIPIENT("http:uri.etsi.org/REM/EventReason#UnknownRecipient", 	"10"),
             MAILBOX_FULL("http:uri.etsi.org/REM/EventReason#MailboxFull", "11"),
             TECHNICAL_MALFUNCTION("http:uri.etsi.org/REM/EventReason#TechnicalMalfunction", "12"),

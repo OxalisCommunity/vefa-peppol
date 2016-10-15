@@ -20,7 +20,8 @@ public class BdxrReaderTest {
 
     @Test
     public void documentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/bdxr-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -30,7 +31,8 @@ public class BdxrReaderTest {
 
     @Test
     public void serviceMetadata() throws Exception {
-        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-9908-810418052.xml"), null));
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
+                getClass().getResourceAsStream("/bdxr-servicemetadata-9908-810418052.xml"), null));
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
 
@@ -43,7 +45,9 @@ public class BdxrReaderTest {
 
         assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
-        assertEquals(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(), "CN=APP_1000000005, O=DIFI, C=NO");
+        assertEquals(result.getEndpoint(
+                processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(),
+                "CN=APP_1000000005, O=DIFI, C=NO"
+        );
     }
-
 }

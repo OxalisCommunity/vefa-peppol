@@ -70,7 +70,8 @@ public class BdxlLocator extends AbstractLocator {
             // Fetch all records of type NAPTR registered on hostname.
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
             if (records == null)
-                throw new LookupException(String.format("Identifier '%s' not registered in SML.", participantIdentifier.toString()));
+                throw new LookupException(
+                        String.format("Identifier '%s' not registered in SML.", participantIdentifier.toString()));
 
             // Loop records found.
             for (Record record : records) {

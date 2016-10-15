@@ -9,13 +9,12 @@ import java.net.URI;
 public class DefaultProvider implements MetadataProvider {
 
     @Override
-    public URI resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier) {
-        return location.resolve(String.format("/%s", participantIdentifier.urlencoded()));
+    public URI resolveDocumentIdentifiers(URI location, ParticipantIdentifier participant) {
+        return location.resolve(String.format("/%s", participant.urlencoded()));
     }
 
     @Override
-    public URI resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier) {
-        return location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded()));
+    public URI resolveServiceMetadata(URI location, ParticipantIdentifier participant, DocumentTypeIdentifier documentType) {
+        return location.resolve(String.format("/%s/services/%s", participant.urlencoded(), documentType.urlencoded()));
     }
-
 }

@@ -3,18 +3,15 @@ package no.difi.vefa.peppol.common.model;
 import java.io.Serializable;
 import java.util.UUID;
 
-/**
- * Immutable object.
- */
 public class InstanceIdentifier implements Serializable {
 
     private static final long serialVersionUID = 3616828001672136897L;
 
-    public static InstanceIdentifier generateUUID() {
-        return InstanceIdentifier.of(UUID.randomUUID().toString());
-    }
-
     private String value;
+
+    public static InstanceIdentifier generateUUID() {
+        return of(UUID.randomUUID().toString());
+    }
 
     public static InstanceIdentifier of(String value) {
         return new InstanceIdentifier(value);
