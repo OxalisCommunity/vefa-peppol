@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
@@ -23,6 +24,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
@@ -47,7 +49,7 @@ public class BusdoxReader implements MetadataReader {
                     ServiceMetadataType.class);
             certificateFactory = CertificateFactory.getInstance("X.509");
         } catch (JAXBException | CertificateException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PeppolRuntimeException(e.getMessage(), e);
         }
     }
 
@@ -72,8 +74,8 @@ public class BusdoxReader implements MetadataReader {
             }
 
             return documentTypeIdentifiers;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (JAXBException | UnsupportedEncodingException e) {
+            throw new LookupException(e.getMessage(), e);
         }
     }
 
@@ -108,8 +110,7 @@ public class BusdoxReader implements MetadataReader {
                             ),
                             TransportProfile.of(endpointType.getTransportProfile()),
                             endpointType.getEndpointReference().getAddress().getValue(),
-                            (X509Certificate) certificateFactory.generateCertificate(
-                                    new ByteArrayInputStream(Base64.decodeBase64(endpointType.getCertificate())))
+                            certificateInstance(Base64.decodeBase64(endpointType.getCertificate()))
                     ));
                 }
             }
@@ -129,5 +130,10 @@ public class BusdoxReader implements MetadataReader {
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new LookupException(e.getMessage(), e);
         }
+    }
+
+    private X509Certificate certificateInstance(byte[] content) throws CertificateException {
+        return (X509Certificate) certificateFactory.generateCertificate(
+                new ByteArrayInputStream(content));
     }
 }

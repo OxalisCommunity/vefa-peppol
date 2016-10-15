@@ -9,6 +9,7 @@ import no.difi.certvalidator.util.KeyStoreCertificateBucket;
 import no.difi.certvalidator.util.SimpleCrlCache;
 import no.difi.certvalidator.util.SimplePrincipalNameProvider;
 import no.difi.vefa.peppol.common.code.Service;
+import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.api.ModeDescription;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
@@ -63,10 +64,12 @@ public class Mode {
     }
 
     public static String detect(X509Certificate certificate) throws PeppolSecurityException {
-        for (ModeDescription modeDescription : modeDescriptions.values()) {
+        for (String identifier : modeDescriptions.keySet()) {
             try {
-                new Mode(modeDescription).validator(Service.ALL).validate(certificate);
-                return modeDescription.getIdentifier();
+                valueOf(identifier)
+                        .validator(Service.ALL)
+                        .validate(certificate);
+                return identifier;
             } catch (PeppolSecurityException e) {
                 // No action.
             }
@@ -87,7 +90,7 @@ public class Mode {
             certificateBuckets.put(Service.AP, keyStore.startsWith("ap-"));
             certificateBuckets.put(Service.SMP, keyStore.startsWith("smp-"));
         } catch (CertificateBucketException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PeppolRuntimeException(e.getMessage(), e);
         }
     }
 

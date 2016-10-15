@@ -23,29 +23,33 @@ public class MultiReader implements MetadataReader {
     @Override
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
             throws LookupException {
-        if (fetcherResponse.getNamespace() == null)
-            fetcherResponse = detect(fetcherResponse);
+        FetcherResponse response = fetcherResponse;
 
-        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
-            return busdoxReader.parseDocumentIdentifiers(fetcherResponse);
-        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
-            return bdxrReader.parseDocumentIdentifiers(fetcherResponse);
+        if (response.getNamespace() == null)
+            response = detect(response);
 
-        throw new LookupException(String.format("Unknown namespace: %s", fetcherResponse.getNamespace()));
+        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return busdoxReader.parseDocumentIdentifiers(response);
+        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxrReader.parseDocumentIdentifiers(response);
+
+        throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }
 
     @Override
     public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
-        if (fetcherResponse.getNamespace() == null)
-            fetcherResponse = detect(fetcherResponse);
+        FetcherResponse response = fetcherResponse;
 
-        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
-            return busdoxReader.parseServiceMetadata(fetcherResponse);
-        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(fetcherResponse.getNamespace()))
-            return bdxrReader.parseServiceMetadata(fetcherResponse);
+        if (response.getNamespace() == null)
+            response = detect(response);
 
-        throw new LookupException(String.format("Unknown namespace: %s", fetcherResponse.getNamespace()));
+        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return busdoxReader.parseServiceMetadata(response);
+        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxrReader.parseServiceMetadata(response);
+
+        throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }
 
     public FetcherResponse detect(FetcherResponse fetcherResponse) throws LookupException {

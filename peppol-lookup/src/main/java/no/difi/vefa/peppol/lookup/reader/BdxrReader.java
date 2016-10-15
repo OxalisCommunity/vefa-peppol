@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
@@ -22,6 +23,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.security.cert.CertificateException;
@@ -46,13 +48,14 @@ public class BdxrReader implements MetadataReader {
                     ServiceMetadataType.class);
             certificateFactory = CertificateFactory.getInstance("X.509");
         } catch (JAXBException | CertificateException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PeppolRuntimeException(e.getMessage(), e);
         }
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) {
+    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
+            throws LookupException {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             ServiceGroupType serviceGroup = unmarshaller.unmarshal(
@@ -74,8 +77,8 @@ public class BdxrReader implements MetadataReader {
             }
 
             return documentTypeIdentifiers;
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (JAXBException | UnsupportedEncodingException e) {
+            throw new LookupException(e.getMessage(), e);
         }
     }
 
@@ -110,8 +113,7 @@ public class BdxrReader implements MetadataReader {
                             ),
                             TransportProfile.of(endpointType.getTransportProfile()),
                             endpointType.getEndpointURI(),
-                            (X509Certificate) certificateFactory.generateCertificate(
-                                    new ByteArrayInputStream(endpointType.getCertificate()))
+                            certificateInstance(endpointType.getCertificate())
                     ));
                 }
             }
@@ -131,5 +133,10 @@ public class BdxrReader implements MetadataReader {
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    private X509Certificate certificateInstance(byte[] content) throws CertificateException {
+        return (X509Certificate) certificateFactory.generateCertificate(
+                new ByteArrayInputStream(content));
     }
 }

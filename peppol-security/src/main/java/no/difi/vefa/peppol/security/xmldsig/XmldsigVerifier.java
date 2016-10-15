@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import javax.xml.crypto.MarshalException;
 import javax.xml.crypto.dsig.XMLSignature;
+import javax.xml.crypto.dsig.XMLSignatureException;
 import javax.xml.crypto.dsig.XMLSignatureFactory;
 import javax.xml.crypto.dsig.dom.DOMValidateContext;
 import java.security.cert.X509Certificate;
@@ -32,9 +34,7 @@ public class XmldsigVerifier {
 
             logger.debug("Signature passed.");
             return keySelector.getCertificate();
-        } catch (PeppolSecurityException e) {
-            throw e;
-        } catch (Exception e) {
+        } catch (XMLSignatureException | MarshalException e) {
             logger.warn(e.getMessage(), e);
             throw new PeppolSecurityException("Unable to verify document signature.", e);
         }

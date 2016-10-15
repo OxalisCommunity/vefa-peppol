@@ -1,5 +1,6 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
+import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.security.api.PeppolSecurityException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -41,7 +42,7 @@ public class XmldsigSigner {
 
             xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PeppolRuntimeException(e.getMessage(), e);
         }
     }
 
@@ -61,11 +62,13 @@ public class XmldsigSigner {
         this.signatureMethod = signatureMethod;
     }
 
-    public void sign(Document document, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws PeppolSecurityException {
+    public void sign(Document document, KeyStore.PrivateKeyEntry privateKeyEntry, Result result)
+            throws PeppolSecurityException {
         sign(document.getDocumentElement(), privateKeyEntry, result);
     }
 
-    public void sign(Element element, KeyStore.PrivateKeyEntry privateKeyEntry, Result result) throws PeppolSecurityException {
+    public void sign(Element element, KeyStore.PrivateKeyEntry privateKeyEntry, Result result)
+            throws PeppolSecurityException {
         try {
             Reference reference = xmlSignatureFactory.newReference(
                     "",
