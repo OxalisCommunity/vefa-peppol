@@ -1,20 +1,46 @@
+/*
+ * Copyright 2016 Direktoratet for forvaltning og IKT
+ *
+ * Licensed under the EUPL, Version 1.1 or – as soon they
+ * will be approved by the European Commission - subsequent
+ * versions of the EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ *
+ * You may obtain a copy of the Licence at:
+ *
+ * https://joinup.ec.europa.eu/community/eupl/og_page/eupl
+ *
+ * Unless required by applicable law or agreed to in
+ * writing, software distributed under the Licence is
+ * distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied.
+ * See the Licence for the specific language governing
+ * permissions and limitations under the Licence.
+ */
+
 package no.difi.vefa.peppol.evidence.rem;
 
 import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
-import java.io.ByteArrayOutputStream;
-import java.security.KeyStore;
-import java.util.Date;
-import javax.xml.bind.JAXBElement;
-import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.TransportProtocol;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.etsi.uri._01903.v1_3.AnyType;
 import org.etsi.uri._02640.v2_.ExtensionType;
 import org.etsi.uri._02640.v2_.ExtensionsListType;
 import org.etsi.uri._02640.v2_.REMEvidenceType;
-import static org.testng.Assert.*;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import javax.xml.bind.JAXBElement;
+import java.io.ByteArrayOutputStream;
+import java.security.KeyStore;
+import java.util.Date;
+
+import static org.testng.Assert.*;
 
 /**
  * Ensures that the RemEvidenceBuilder works as expected.
@@ -28,9 +54,10 @@ import org.testng.annotations.Test;
 public class RemEvidenceBuilderTest {
 
     protected byte[] specificReceiptBytes;
-    protected KeyStore.PrivateKeyEntry privateKeyEntry;
-    protected RemEvidenceService remEvidenceService;
 
+    protected KeyStore.PrivateKeyEntry privateKeyEntry;
+
+    protected RemEvidenceService remEvidenceService;
 
     @BeforeClass
     public void setUp() {
@@ -105,13 +132,13 @@ public class RemEvidenceBuilderTest {
         assertNotNull(signedRemEvidence.getEventCode());
         assertNotNull(signedRemEvidence.getEventReason());
         assertNotNull(signedRemEvidence.getEventTime());
-        
+
         // Check the policy id
         assertEquals(signedRemEvidence.getEvidenceIssuerPolicyID(), TestResources.EVIDENCE_ISSUER_POLICY_ID);
-        
+
         // Check entity name of evidence issuer (issue #11)
         assertEquals(signedRemEvidence.getEvidenceIssuerDetails(), TestResources.EVIDENCE_ISSUER_NAME);
-        
+
         ParticipantIdentifier senderIdentifier = signedRemEvidence.getSenderIdentifier();
         assertNotNull(senderIdentifier);
 
@@ -179,7 +206,7 @@ public class RemEvidenceBuilderTest {
 
         assertEquals(evidenceBytes, specificReceiptBytes);
     }
-    
+
     /**
      * Verifies that the PeppolRemExtension is optional.
      *
@@ -211,7 +238,7 @@ public class RemEvidenceBuilderTest {
         assertNotNull(remEvidenceInstance);
 
         ExtensionsListType extensions = signedRemEvidence.getRemEvidenceType().getExtensions();
-        
+
         assertNull(extensions);
     }
 
@@ -235,8 +262,8 @@ public class RemEvidenceBuilderTest {
 
         // Signs and builds the REMEvidenceType instance
         SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKeyEntry);
-        
+
         assertNull(signedRemEvidence.getDocumentTypeInstanceIdentifier());
-        
-    }    
+
+    }
 }

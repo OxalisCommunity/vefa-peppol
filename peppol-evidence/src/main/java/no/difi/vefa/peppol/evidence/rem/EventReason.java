@@ -1,3 +1,25 @@
+/*
+ * Copyright 2016 Direktoratet for forvaltning og IKT
+ *
+ * Licensed under the EUPL, Version 1.1 or – as soon they
+ * will be approved by the European Commission - subsequent
+ * versions of the EUPL (the "Licence");
+ *
+ * You may not use this work except in compliance with the Licence.
+ *
+ * You may obtain a copy of the Licence at:
+ *
+ * https://joinup.ec.europa.eu/community/eupl/og_page/eupl
+ *
+ * Unless required by applicable law or agreed to in
+ * writing, software distributed under the Licence is
+ * distributed on an "AS IS" basis,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+ * express or implied.
+ * See the Licence for the specific language governing
+ * permissions and limitations under the Licence.
+ */
+
 package no.difi.vefa.peppol.evidence.rem;
 
 /**
@@ -9,29 +31,29 @@ package no.difi.vefa.peppol.evidence.rem;
  */
 public enum EventReason {
 
-            INVALID_MESSAGE_FORMAT("http:uri.etsi.org/REM/EventReason#InvalidMessageFormat",	"1"),
-            MALWARE_FOUND("http:uri.etsi.org/REM/EventReason#MalwareFound",			"2"),
-            INVALID_USER_SIGNATURE("http:uri.etsi.org/REM/EventReason#InvalidUserSignature",	"3"),
-            USER_CERT_EXPIRED_OR_REVOKED("http:uri.etsi.org/REM/EventReason#UserCertExpiredOrRevoked", "4"),
-            POLICY_VIOLATION("http:uri.etsi.org/REM/EventReason#PolicyViolation",		"5"),
-            R_REMMD_MALFUNCTION("http:uri.etsi.org/REM/EventReason#R_REMMD_Malfunction",	"6"),
-            R_REMMD_NOT_IDENTIFIED("http:uri.etsi.org/REM/EventReason#R_REMMD_NotIdenified",	"7"),
-            R_REMMD_UNCREACHABLE("http:uri.etsi.org/REM/EventReason#R_REMMD_Unreachable",	"8"),
-            S_REMMD_RECEIVED_NO_DELIVERY_INFO_FROM_R_REMMD
-                    ("http:uri.etsi.org/REM/EventReason#S_REMMD_ReceivedNoDeliveryInfoFromR_REMMD", "9"),
-            UNKNOWN_RECIPIENT("http:uri.etsi.org/REM/EventReason#UnknownRecipient", 	"10"),
-            MAILBOX_FULL("http:uri.etsi.org/REM/EventReason#MailboxFull", "11"),
-            TECHNICAL_MALFUNCTION("http:uri.etsi.org/REM/EventReason#TechnicalMalfunction", "12"),
-            ATTACHMENT_FORMAT_NOT_ACCEPTED("http:uri.etsi.org/REM/EventReason#AttachementFormatNotAccepted", "13"),
-            RECIPIENT_REJECTION("http:uri.etsi.org/REM/EventReason#RecipientRejection", "14"),
-            RETENTION_PERIOD_EXPIRED("http:uri.etsi.org/REM/EventReason#RetentionPeriodExpired", "15"),
-            REGULAR_EMAIL_UNCREACHABLE("http:uri.etXsi.org/REM/EventReason#RegularEmailUnreachable", "16"),
-            REGULAR_EMAIL_NON_OPERATIONAL("http:uri.etsi.org/REM/EventReason#RegularEmailNonOperational", "17"),
-            REGULAR_EMAIL_REJECTION("http:uri.etsi.org/REM/EventReason#RegularEmailRejection", "18"),
-            PRINTING_SYSTEM_UNREACHABLE("http:uri.etsi.org/REM/EventReason#PrintingSystemUnreachable", "19"),
-            PRINTING_SYSTEM_NON_OPERATIONAL("http:uri.etsi.org/REM/EventReason#PrintingSystemNonOperational", "20"),
-            PRINTING_BUFFER_FULL("http:uri.etsi.org/REM/EventReason#PrintingBufferFull", "21"),
-            OTHER("http:uri.etsi.org/REM/EventReason#Other", "22"),;
+    INVALID_MESSAGE_FORMAT("http:uri.etsi.org/REM/EventReason#InvalidMessageFormat", "1"),
+    MALWARE_FOUND("http:uri.etsi.org/REM/EventReason#MalwareFound", "2"),
+    INVALID_USER_SIGNATURE("http:uri.etsi.org/REM/EventReason#InvalidUserSignature", "3"),
+    USER_CERT_EXPIRED_OR_REVOKED("http:uri.etsi.org/REM/EventReason#UserCertExpiredOrRevoked", "4"),
+    POLICY_VIOLATION("http:uri.etsi.org/REM/EventReason#PolicyViolation", "5"),
+    R_REMMD_MALFUNCTION("http:uri.etsi.org/REM/EventReason#R_REMMD_Malfunction", "6"),
+    R_REMMD_NOT_IDENTIFIED("http:uri.etsi.org/REM/EventReason#R_REMMD_NotIdenified", "7"),
+    R_REMMD_UNCREACHABLE("http:uri.etsi.org/REM/EventReason#R_REMMD_Unreachable", "8"),
+    S_REMMD_RECEIVED_NO_DELIVERY_INFO_FROM_R_REMMD
+            ("http:uri.etsi.org/REM/EventReason#S_REMMD_ReceivedNoDeliveryInfoFromR_REMMD", "9"),
+    UNKNOWN_RECIPIENT("http:uri.etsi.org/REM/EventReason#UnknownRecipient", "10"),
+    MAILBOX_FULL("http:uri.etsi.org/REM/EventReason#MailboxFull", "11"),
+    TECHNICAL_MALFUNCTION("http:uri.etsi.org/REM/EventReason#TechnicalMalfunction", "12"),
+    ATTACHMENT_FORMAT_NOT_ACCEPTED("http:uri.etsi.org/REM/EventReason#AttachementFormatNotAccepted", "13"),
+    RECIPIENT_REJECTION("http:uri.etsi.org/REM/EventReason#RecipientRejection", "14"),
+    RETENTION_PERIOD_EXPIRED("http:uri.etsi.org/REM/EventReason#RetentionPeriodExpired", "15"),
+    REGULAR_EMAIL_UNCREACHABLE("http:uri.etXsi.org/REM/EventReason#RegularEmailUnreachable", "16"),
+    REGULAR_EMAIL_NON_OPERATIONAL("http:uri.etsi.org/REM/EventReason#RegularEmailNonOperational", "17"),
+    REGULAR_EMAIL_REJECTION("http:uri.etsi.org/REM/EventReason#RegularEmailRejection", "18"),
+    PRINTING_SYSTEM_UNREACHABLE("http:uri.etsi.org/REM/EventReason#PrintingSystemUnreachable", "19"),
+    PRINTING_SYSTEM_NON_OPERATIONAL("http:uri.etsi.org/REM/EventReason#PrintingSystemNonOperational", "20"),
+    PRINTING_BUFFER_FULL("http:uri.etsi.org/REM/EventReason#PrintingBufferFull", "21"),
+    OTHER("http:uri.etsi.org/REM/EventReason#Other", "22"),;
 
     private final String details;
     private final String code;
@@ -52,7 +74,7 @@ public enum EventReason {
     }
 
     public static EventReason valueForCode(String code) {
-        if (code == null){
+        if (code == null) {
             throw new IllegalArgumentException("argument 'code' is required!");
         }
 
