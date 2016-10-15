@@ -30,21 +30,19 @@ class X509KeySelector extends KeySelector {
                 this.certificate = (X509Certificate) o;
                 final PublicKey key = certificate.getPublicKey();
 
-                // Make sure the algorithm is compatible
-                // with the method.
-                if (algEquals(method.getAlgorithm(), key.getAlgorithm())) {
+                // Make sure the algorithm is compatible with the method.
+                if (algEquals(method.getAlgorithm(), key.getAlgorithm()))
                     return new KeySelectorResult() {
                         public Key getKey() {
                             return key;
                         }
                     };
-                }
             }
         }
         throw new KeySelectorException("No key found!");
     }
 
-    static boolean algEquals(String algURI, String algName) {
+    private boolean algEquals(String algURI, String algName) {
         return (
                 (algName.equalsIgnoreCase("DSA") && algURI.equalsIgnoreCase(SignatureMethod.DSA_SHA1)) ||
                         (algName.equalsIgnoreCase("RSA") && algURI.equalsIgnoreCase(SignatureMethod.RSA_SHA1)) ||

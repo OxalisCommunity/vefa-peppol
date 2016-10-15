@@ -8,8 +8,9 @@ import java.util.List;
 
 public interface MetadataReader {
 
-    List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse) throws LookupException;
+    List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
+            throws LookupException;
 
-    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse) throws LookupException, PeppolSecurityException;
-
+    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+            throws LookupException, PeppolSecurityException;
 }

@@ -59,15 +59,19 @@ public class BusdoxReader implements MetadataReader {
             throws LookupException {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            ServiceGroupType serviceGroup = unmarshaller.unmarshal(new StreamSource(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
+            ServiceGroupType serviceGroup = unmarshaller.unmarshal(
+                    new StreamSource(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
             List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
 
-            for (ServiceMetadataReferenceType reference : serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
-                String hrefDocumentTypeIdentifier = URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
+            for (ServiceMetadataReferenceType reference :
+                    serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
+                String hrefDocumentTypeIdentifier =
+                        URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
                 String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
 
                 try {
-                    documentTypeIdentifiers.add(new DocumentTypeIdentifier(parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
+                    documentTypeIdentifiers.add(
+                            new DocumentTypeIdentifier(parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }

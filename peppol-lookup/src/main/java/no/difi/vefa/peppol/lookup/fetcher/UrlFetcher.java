@@ -20,7 +20,9 @@ public class UrlFetcher extends AbstractFetcher {
             urlConnection.setConnectTimeout(TIMEOUT);
             urlConnection.setReadTimeout(TIMEOUT);
 
-            return new FetcherResponse(new BufferedInputStream(urlConnection.getInputStream()), urlConnection.getHeaderField("X-SMP-Namespace"));
+            return new FetcherResponse(
+                    new BufferedInputStream(urlConnection.getInputStream()),
+                    urlConnection.getHeaderField("X-SMP-Namespace"));
         } catch (FileNotFoundException e) {
             throw new LookupException("Invalid response from SMP.", e);
         } catch (SocketTimeoutException | SocketException e) {
