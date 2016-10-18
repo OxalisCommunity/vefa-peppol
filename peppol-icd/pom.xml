@@ -12,6 +12,43 @@
     <artifactId>peppol-icd</artifactId>
 
     <name>VEFA PEPPOL :: ICD</name>
+    <url>https://github.com/difi/vefa-peppol</url>
+
+    <scm>
+        <tag>HEAD</tag>
+        <url>https://github.com/difi/vefa-peppol-lookup</url>
+        <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
+        <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/difi/vefa-peppol/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <organization>
+        <name>Norwegian Agency for Public Management and eGovernment</name>
+        <url>http://www.difi.no</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Erlend Klakegg Bergheim</name>
+            <email>erlend.klakegg.bergheim@difi.no</email>
+            <organization>Difi</organization>
+            <roles>
+                <role>Principal author</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>European Union Public Licence (EUPL v.1.1)</name>
+            <url>https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <dependencies>
         <dependency>

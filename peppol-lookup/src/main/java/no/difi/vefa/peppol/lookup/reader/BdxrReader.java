@@ -75,7 +75,6 @@ public class BdxrReader implements MetadataReader {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
             throws LookupException {
         try {
