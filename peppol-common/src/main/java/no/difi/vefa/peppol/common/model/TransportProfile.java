@@ -34,20 +34,20 @@ public class TransportProfile implements Serializable {
 
     private static final long serialVersionUID = -8215053834194901976L;
 
-    private String identifier;
+    private String value;
 
-    public static TransportProfile of(String identifier) {
-        return new TransportProfile(identifier);
+    public static TransportProfile of(String value) {
+        return new TransportProfile(value);
     }
 
     @Deprecated
-    public TransportProfile(String identifier) {
-        this.identifier = identifier;
+    public TransportProfile(String value) {
+        this.value = value;
     }
 
     @Override
     public String toString() {
-        return "TransportProfile{" + identifier + '}';
+        return "TransportProfile{" + value + '}';
     }
 
     @Override
@@ -57,12 +57,12 @@ public class TransportProfile implements Serializable {
 
         TransportProfile that = (TransportProfile) o;
 
-        return !(identifier != null ? !identifier.equals(that.identifier) : that.identifier != null);
+        return value.equals(that.value);
 
     }
 
     @Override
     public int hashCode() {
-        return identifier != null ? identifier.hashCode() : 0;
+        return value.hashCode();
     }
 }

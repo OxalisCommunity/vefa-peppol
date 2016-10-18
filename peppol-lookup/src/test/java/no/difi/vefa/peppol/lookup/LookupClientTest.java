@@ -71,6 +71,23 @@ public class LookupClientTest {
         assertNotNull(endpoint);
     }
 
+    @Test
+    public void simpleEndpointWithHeader() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forProduction().build();
+
+        Header header = Header.newInstance()
+                .sender(ParticipantIdentifier.of("9908:invalid"))
+                .receiver(ParticipantIdentifier.of("9908:991825827"))
+                .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"))
+                .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
+                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
+
+        Endpoint endpoint = client.getEndpoint(header, TransportProfile.AS2_1_0);
+
+        assertNotNull(endpoint);
+    }
+
     @Test(enabled = false)
     public void simple9915() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest().fetcher(new UrlFetcher()).build();

@@ -39,21 +39,21 @@ public class TransportProtocol implements Serializable {
 
     public static final TransportProtocol INTERNAL = new TransportProtocol("INTERNAL");
 
-    private String identifier;
+    private String value;
 
-    public static TransportProtocol of(String identifier) throws PeppolException {
-        if (!pattern.matcher(identifier).matches())
+    public static TransportProtocol of(String value) throws PeppolException {
+        if (!pattern.matcher(value).matches())
             throw new PeppolException("Identifier not according to pattern.");
 
-        return new TransportProtocol(identifier);
+        return new TransportProtocol(value);
     }
 
     private TransportProtocol(String identifier) {
-        this.identifier = identifier;
+        this.value = identifier;
     }
 
     public String getIdentifier() {
-        return identifier;
+        return value;
     }
 
     @Override
@@ -63,16 +63,16 @@ public class TransportProtocol implements Serializable {
 
         TransportProtocol that = (TransportProtocol) o;
 
-        return identifier.equals(that.identifier);
+        return value.equals(that.value);
     }
 
     @Override
     public int hashCode() {
-        return identifier.hashCode();
+        return value.hashCode();
     }
 
     @Override
     public String toString() {
-        return "TransportProtocol{" + identifier + '}';
+        return "TransportProtocol{" + value + '}';
     }
 }

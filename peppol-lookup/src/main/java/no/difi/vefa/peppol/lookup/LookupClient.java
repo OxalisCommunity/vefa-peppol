@@ -96,4 +96,10 @@ public class LookupClient {
         ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentTypeIdentifier);
         return getEndpoint(serviceMetadata, processIdentifier, transportProfiles);
     }
+
+    public Endpoint getEndpoint(Header header, TransportProfile... transportProfiles)
+            throws LookupException, PeppolSecurityException, EndpointNotFoundException {
+        return getEndpoint(header.getReceiver(), header.getDocumentType(),
+                header.getProcess(), transportProfiles);
+    }
 }

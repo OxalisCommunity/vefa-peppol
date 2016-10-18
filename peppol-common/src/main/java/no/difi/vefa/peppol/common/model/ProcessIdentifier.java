@@ -33,7 +33,7 @@ public class ProcessIdentifier implements Serializable {
 
     public static final Scheme DEFAULT_SCHEME = Scheme.of("cenbii-procid-ubl");
 
-    private String identifier;
+    private String value;
 
     private Scheme scheme;
 
@@ -46,18 +46,18 @@ public class ProcessIdentifier implements Serializable {
     }
 
     @Deprecated
-    public ProcessIdentifier(String identifier) {
-        this(identifier, DEFAULT_SCHEME);
+    public ProcessIdentifier(String value) {
+        this(value, DEFAULT_SCHEME);
     }
 
     @Deprecated
-    public ProcessIdentifier(String identifier, Scheme scheme) {
-        this.identifier = identifier;
+    public ProcessIdentifier(String value, Scheme scheme) {
+        this.value = value;
         this.scheme = scheme;
     }
 
     public String getIdentifier() {
-        return identifier;
+        return value;
     }
 
     public Scheme getScheme() {
@@ -71,20 +71,20 @@ public class ProcessIdentifier implements Serializable {
 
         ProcessIdentifier that = (ProcessIdentifier) o;
 
-        if (!identifier.equals(that.identifier)) return false;
+        if (!value.equals(that.value)) return false;
         return scheme.equals(that.scheme);
 
     }
 
     @Override
     public int hashCode() {
-        int result = identifier.hashCode();
+        int result = value.hashCode();
         result = 31 * result + scheme.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("%s::%s", scheme, identifier);
+        return String.format("%s::%s", scheme, value);
     }
 }

@@ -22,9 +22,9 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.util.ModelUtils;
+
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Locale;
 
 /**
@@ -41,24 +41,24 @@ public class ParticipantIdentifier implements Serializable {
 
     private Scheme scheme;
 
-    private String identifier;
+    private String value;
 
-    public static ParticipantIdentifier of(String identifier) {
-        return of(identifier, DEFAULT_SCHEME);
+    public static ParticipantIdentifier of(String value) {
+        return of(value, DEFAULT_SCHEME);
     }
 
-    public static ParticipantIdentifier of(String identifier, Scheme scheme) {
-        return new ParticipantIdentifier(identifier, scheme);
+    public static ParticipantIdentifier of(String value, Scheme scheme) {
+        return new ParticipantIdentifier(value, scheme);
     }
 
     /**
      * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
      *
-     * @param identifier Normal identifier like '9908:987654321'.
+     * @param value Normal identifier like '9908:987654321'.
      */
     @Deprecated
-    public ParticipantIdentifier(String identifier) {
-        this(identifier, DEFAULT_SCHEME);
+    public ParticipantIdentifier(String value) {
+        this(value, DEFAULT_SCHEME);
     }
 
     /**
@@ -69,7 +69,7 @@ public class ParticipantIdentifier implements Serializable {
      */
     @Deprecated
     public ParticipantIdentifier(String identifier, Scheme scheme) {
-        this.identifier = identifier.trim().toLowerCase(Locale.US);
+        this.value = identifier.trim().toLowerCase(Locale.US);
         this.scheme = scheme;
     }
 
@@ -79,7 +79,7 @@ public class ParticipantIdentifier implements Serializable {
      * @return Identifier.
      */
     public String getIdentifier() {
-        return identifier;
+        return value;
     }
 
     /**
@@ -97,12 +97,7 @@ public class ParticipantIdentifier implements Serializable {
      * @return URL-encoded full identifier.
      */
     public String urlencoded() {
-        try {
-            return URLEncoder.encode(
-                    String.format("%s::%s", scheme.getValue(), identifier), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException("UTF-8 not supported.");
-        }
+        return ModelUtils.urlencode("%s::%s", scheme.getValue(), value);
     }
 
     @Override
@@ -113,14 +108,14 @@ public class ParticipantIdentifier implements Serializable {
         ParticipantIdentifier that = (ParticipantIdentifier) o;
 
         if (!scheme.equals(that.scheme)) return false;
-        return identifier.equals(that.identifier);
+        return value.equals(that.value);
 
     }
 
     @Override
     public int hashCode() {
         int result = scheme.hashCode();
-        result = 31 * result + identifier.hashCode();
+        result = 31 * result + value.hashCode();
         return result;
     }
 
@@ -129,6 +124,6 @@ public class ParticipantIdentifier implements Serializable {
      */
     @Override
     public String toString() {
-        return String.format("%s::%s", scheme, identifier);
+        return String.format("%s::%s", scheme, value);
     }
 }
