@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.security.xmldsig;
 
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

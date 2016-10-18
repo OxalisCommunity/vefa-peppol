@@ -38,7 +38,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMResult;
 import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
 import org.etsi.uri._01903.v1_3.AnyType;
 import org.etsi.uri._02640.v2_.*;

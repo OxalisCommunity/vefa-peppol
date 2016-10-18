@@ -34,7 +34,7 @@ import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.api.ModeDescription;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.mode.ProductionMode;
 import no.difi.vefa.peppol.security.mode.TestMode;
 import no.difi.vefa.peppol.security.util.DifiCertificateValidator;

@@ -28,7 +28,7 @@ import no.difi.vefa.peppol.common.util.XmlUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

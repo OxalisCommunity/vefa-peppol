@@ -33,5 +33,13 @@ public class Iso6523IcdTest {
         Assert.assertEquals(Iso6523Icd.NO_ORGNR.getCode(), "9908");
 
         Assert.assertNotNull(Iso6523Icd.valueOf("NO_ORGNR"));
+        Assert.assertNotNull(Iso6523Icd.valueOf("NO_ORGNR").getScheme());
+
+        Assert.assertEquals(Iso6523Icd.valueOfIcd("9908"), Iso6523Icd.NO_ORGNR);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void exceptionOnUnknownCode() {
+        Iso6523Icd.valueOfIcd("invalid");
     }
 }

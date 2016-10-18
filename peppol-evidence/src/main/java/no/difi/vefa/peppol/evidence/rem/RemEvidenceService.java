@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 
 /**

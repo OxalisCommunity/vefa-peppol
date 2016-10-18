@@ -23,7 +23,7 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 

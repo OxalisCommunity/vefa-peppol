@@ -20,19 +20,19 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.lookup.api;
+package no.difi.vefa.peppol.security.lang;
 
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.ServiceMetadata;
-import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
+import no.difi.vefa.peppol.common.lang.PeppolException;
 
-import java.util.List;
+public class PeppolSecurityException extends PeppolException {
 
-public interface MetadataReader {
+    private static final long serialVersionUID = 6928682319726226728L;
 
-    List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
-            throws LookupException;
+    public PeppolSecurityException(String message) {
+        super(message);
+    }
 
-    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
-            throws LookupException, PeppolSecurityException;
+    public PeppolSecurityException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

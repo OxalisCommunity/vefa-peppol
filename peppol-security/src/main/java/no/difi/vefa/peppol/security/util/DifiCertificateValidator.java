@@ -25,7 +25,7 @@ package no.difi.vefa.peppol.security.util;
 import no.difi.certvalidator.Validator;
 import no.difi.certvalidator.api.CertificateValidationException;
 import no.difi.vefa.peppol.security.api.*;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

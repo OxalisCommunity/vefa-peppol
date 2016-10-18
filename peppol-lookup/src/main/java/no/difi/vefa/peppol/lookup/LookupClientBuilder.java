@@ -33,6 +33,7 @@ import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
 import no.difi.vefa.peppol.security.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
 
 public class LookupClientBuilder {
 
@@ -40,13 +41,13 @@ public class LookupClientBuilder {
 
     private MetadataLocator metadataLocator;
 
-    private CertificateValidator providerCertificateValidator;
+    private CertificateValidator providerCertificateValidator = EmptyCertificateValidator.INSTANCE;
 
     private MetadataProvider metadataProvider;
 
     private MetadataReader metadataReader;
 
-    private CertificateValidator endpointertificateValidator;
+    private CertificateValidator endpointertificateValidator = EmptyCertificateValidator.INSTANCE;
 
     public static LookupClientBuilder newInstance() {
         return new LookupClientBuilder();

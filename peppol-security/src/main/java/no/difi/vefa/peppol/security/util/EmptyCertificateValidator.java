@@ -20,19 +20,19 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.security.api;
+package no.difi.vefa.peppol.security.util;
 
-import no.difi.vefa.peppol.common.lang.PeppolException;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
-public class PeppolSecurityException extends PeppolException {
+import java.security.cert.X509Certificate;
 
-    private static final long serialVersionUID = 6928682319726226728L;
+public class EmptyCertificateValidator implements CertificateValidator {
 
-    public PeppolSecurityException(String message) {
-        super(message);
-    }
+    public static final CertificateValidator INSTANCE = new EmptyCertificateValidator();
 
-    public PeppolSecurityException(String message, Throwable cause) {
-        super(message, cause);
+    @Override
+    public void validate(X509Certificate certificate) throws PeppolSecurityException {
+        // No action
     }
 }

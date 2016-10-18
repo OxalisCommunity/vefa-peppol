@@ -26,7 +26,7 @@ import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.api.*;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.net.URI;
 import java.util.List;
@@ -72,8 +72,7 @@ public class LookupClient {
 
         ServiceMetadata serviceMetadata = metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
 
-        if (providerCertificateValidator != null)
-            providerCertificateValidator.validate(serviceMetadata.getSigner());
+        providerCertificateValidator.validate(serviceMetadata.getSigner());
 
         return serviceMetadata;
     }
@@ -83,8 +82,7 @@ public class LookupClient {
             throws PeppolSecurityException, EndpointNotFoundException {
         Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
 
-        if (endpointCertificateValidator != null)
-            endpointCertificateValidator.validate(endpoint.getCertificate());
+        endpointCertificateValidator.validate(endpoint.getCertificate());
 
         return endpoint;
     }

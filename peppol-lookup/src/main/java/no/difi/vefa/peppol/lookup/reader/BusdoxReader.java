@@ -28,7 +28,7 @@ import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.security.api.PeppolSecurityException;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.apache.commons.codec.binary.Base64;
 import org.busdox.servicemetadata.publishing._1.*;

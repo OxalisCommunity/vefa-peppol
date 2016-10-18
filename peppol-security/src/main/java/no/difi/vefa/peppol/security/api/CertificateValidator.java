@@ -22,6 +22,8 @@
 
 package no.difi.vefa.peppol.security.api;
 
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
+
 import java.security.cert.X509Certificate;
 
 public interface CertificateValidator {
