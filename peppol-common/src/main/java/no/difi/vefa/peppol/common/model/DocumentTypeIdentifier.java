@@ -24,7 +24,6 @@ package no.difi.vefa.peppol.common.model;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URLEncoder;
 
 /**
@@ -38,9 +37,7 @@ public class DocumentTypeIdentifier implements Serializable {
 
     private Scheme scheme;
 
-    private String identifier;
-
-    private URI uri;
+    private String value;
 
     public static DocumentTypeIdentifier of(String identifier) {
         return new DocumentTypeIdentifier(identifier);
@@ -51,20 +48,14 @@ public class DocumentTypeIdentifier implements Serializable {
     }
 
     @Deprecated
-    public DocumentTypeIdentifier(String identifier) {
-        this(identifier, DEFAULT_SCHEME, null);
+    public DocumentTypeIdentifier(String value) {
+        this(value, DEFAULT_SCHEME);
     }
 
     @Deprecated
-    public DocumentTypeIdentifier(String identifier, Scheme scheme) {
-        this(identifier, scheme, null);
-    }
-
-    @Deprecated
-    public DocumentTypeIdentifier(String identifier, Scheme scheme, URI uri) {
+    public DocumentTypeIdentifier(String value, Scheme scheme) {
         this.scheme = scheme;
-        this.identifier = identifier;
-        this.uri = uri;
+        this.value = value;
     }
 
     public Scheme getScheme() {
@@ -72,16 +63,12 @@ public class DocumentTypeIdentifier implements Serializable {
     }
 
     public String getIdentifier() {
-        return identifier;
-    }
-
-    public URI getUri() {
-        return uri;
+        return value;
     }
 
     public String urlencoded() {
         try {
-            return URLEncoder.encode(String.format("%s::%s", scheme, identifier), "UTF-8");
+            return URLEncoder.encode(String.format("%s::%s", scheme, value), "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
@@ -104,6 +91,6 @@ public class DocumentTypeIdentifier implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s::%s", scheme, identifier);
+        return String.format("%s::%s", scheme, value);
     }
 }

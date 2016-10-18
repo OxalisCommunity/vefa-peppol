@@ -28,6 +28,7 @@ import no.difi.vefa.peppol.common.util.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
+import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
@@ -90,8 +91,8 @@ public class BdxrReader implements MetadataReader {
                 String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
 
                 try {
-                    documentTypeIdentifiers.add(
-                            new DocumentTypeIdentifier(parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
+                    documentTypeIdentifiers.add(DocumentTypeIdentifierWithUri.of(
+                            parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
                 } catch (ArrayIndexOutOfBoundsException e) {
                     logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }

@@ -22,21 +22,21 @@
 
 package no.difi.vefa.peppol.common.model;
 
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class SchemeTest {
+public class TransportProfileTest {
 
     @Test
     public void simple() {
-        Scheme schema = Scheme.of("SCHEME");
-        Assert.assertEquals(schema.getValue(), "SCHEME");
-        Assert.assertEquals(schema.toString(), "SCHEME");
-        Assert.assertNotNull(schema.hashCode());
+        Assert.assertTrue(TransportProfile.AS2_1_0.toString().contains("as2"));
+        Assert.assertTrue(TransportProfile.AS2_1_0.toString().contains(TransportProfile.AS2_1_0.getValue()));
 
-        Assert.assertTrue(schema.equals(schema));
-        Assert.assertFalse(schema.equals("SCHEME"));
-        Assert.assertFalse(schema.equals(null));
+        Assert.assertTrue(TransportProfile.AS2_1_0.equals(TransportProfile.AS2_1_0));
+        Assert.assertFalse(TransportProfile.AS2_1_0.equals(TransportProfile.AS4));
+        Assert.assertFalse(TransportProfile.AS2_1_0.equals(TransportProtocol.AS2));
+        Assert.assertFalse(TransportProfile.AS2_1_0.equals(null));
+
+        Assert.assertNotNull(TransportProfile.AS2_1_0.hashCode());
     }
 }

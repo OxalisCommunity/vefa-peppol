@@ -20,23 +20,27 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.model;
+package no.difi.vefa.peppol.lookup.model;
 
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.Scheme;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.net.URI;
 
-public class SchemeTest {
+public class DocumentTypeIdentifierWithUri extends DocumentTypeIdentifier {
 
-    @Test
-    public void simple() {
-        Scheme schema = Scheme.of("SCHEME");
-        Assert.assertEquals(schema.getValue(), "SCHEME");
-        Assert.assertEquals(schema.toString(), "SCHEME");
-        Assert.assertNotNull(schema.hashCode());
+    private URI uri;
 
-        Assert.assertTrue(schema.equals(schema));
-        Assert.assertFalse(schema.equals("SCHEME"));
-        Assert.assertFalse(schema.equals(null));
+    public static DocumentTypeIdentifierWithUri of(String identifier, Scheme scheme, URI uri) {
+        return new DocumentTypeIdentifierWithUri(identifier, scheme, uri);
+    }
+
+    private DocumentTypeIdentifierWithUri(String identifier, Scheme scheme, URI uri) {
+        super(identifier, scheme);
+        this.uri = uri;
+    }
+
+    public URI getUri() {
+        return uri;
     }
 }

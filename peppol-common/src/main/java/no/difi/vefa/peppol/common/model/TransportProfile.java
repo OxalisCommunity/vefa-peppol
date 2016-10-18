@@ -45,6 +45,10 @@ public class TransportProfile implements Serializable {
         this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "TransportProfile{" + value + '}';

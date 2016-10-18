@@ -48,6 +48,8 @@ public class TransportProtocolTest {
         Assert.assertNotNull(TransportProtocol.AS2.hashCode());
 
         Assert.assertTrue(TransportProtocol.AS2.equals(TransportProtocol.AS2));
+        Assert.assertFalse(TransportProtocol.AS2.equals(TransportProfile.AS2_1_0));
+        Assert.assertFalse(TransportProtocol.AS2.equals(null));
     }
 
     private boolean throwsException(String identifier) {
