@@ -46,8 +46,8 @@ public class Header implements Serializable {
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                            DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
-                            Date creationTimestamp) {
+                            DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
+                            InstanceType instanceType, Date creationTimestamp) {
         return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
@@ -142,8 +142,8 @@ public class Header implements Serializable {
         if (identifier != null ? !identifier.equals(header.identifier) : header.identifier != null) return false;
         if (instanceType != null ? !instanceType.equals(header.instanceType) : header.instanceType != null)
             return false;
-        return !(creationTimestamp != null ? !creationTimestamp.equals(header.creationTimestamp) : header.creationTimestamp != null);
-
+        return !(creationTimestamp != null ?
+                !creationTimestamp.equals(header.creationTimestamp) : header.creationTimestamp != null);
     }
 
     @Override

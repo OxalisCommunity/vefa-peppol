@@ -59,7 +59,7 @@ class RemHelper {
         return eventReasonsType;
     }
 
-    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws RemEvidenceException{
+    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws RemEvidenceException {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
         try {

@@ -34,6 +34,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -46,11 +47,16 @@ class SbdhHelper {
 
     public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
+    public static final XMLInputFactory XML_INPUT_FACTORY;
+
     public static final XMLOutputFactory XML_OUTPUT_FACTORY;
 
     static {
         try {
-            JAXB_CONTEXT = JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
+            JAXB_CONTEXT =
+                    JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
+
+            XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 
             XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
         } catch (JAXBException e) {

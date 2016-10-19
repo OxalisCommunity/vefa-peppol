@@ -24,6 +24,8 @@ package no.difi.vefa.peppol.sbdh;
 
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
+import no.difi.vefa.peppol.sbdh.util.XMLBinaryOutputStream;
+import no.difi.vefa.peppol.sbdh.util.XMLStreamWriterWrapper;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -57,6 +59,14 @@ public class SbdWriter implements Closeable {
         } catch (XMLStreamException e) {
             throw new SbdhException(e.getMessage(), e);
         }
+    }
+
+    public XMLStreamWriter xmlWriter() {
+        return new XMLStreamWriterWrapper(xmlStreamWriter);
+    }
+
+    public OutputStream binaryWriter(String mimeType) throws XMLStreamException {
+        return new XMLBinaryOutputStream(xmlWriter(), mimeType);
     }
 
     private void finalizeDocument() throws SbdhException {

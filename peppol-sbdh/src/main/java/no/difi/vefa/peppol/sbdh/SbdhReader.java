@@ -43,7 +43,8 @@ public class SbdhReader {
     public static Header read(InputStream inputStream) throws SbdhException {
         try {
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
-            return read(unmarshaller.unmarshal(new StreamSource(inputStream), StandardBusinessDocumentHeader.class).getValue());
+            return read(unmarshaller
+                    .unmarshal(new StreamSource(inputStream), StandardBusinessDocumentHeader.class).getValue());
         } catch (JAXBException e) {
             throw new SbdhException(e.getMessage(), e);
         }
@@ -52,7 +53,8 @@ public class SbdhReader {
     public static Header read(XMLStreamReader xmlStreamReader) throws SbdhException {
         try {
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
-            return read(unmarshaller.unmarshal(xmlStreamReader, StandardBusinessDocumentHeader.class).getValue());
+            return read(unmarshaller
+                    .unmarshal(xmlStreamReader, StandardBusinessDocumentHeader.class).getValue());
         } catch (JAXBException e) {
             throw new SbdhException(e.getMessage(), e);
         }
@@ -63,11 +65,13 @@ public class SbdhReader {
 
         // Sender
         PartnerIdentification senderIdentifier = sbdh.getSender().get(0).getIdentifier();
-        header = header.sender(ParticipantIdentifier.of(senderIdentifier.getValue(), Scheme.of(senderIdentifier.getAuthority())));
+        header = header.sender(
+                ParticipantIdentifier.of(senderIdentifier.getValue(), Scheme.of(senderIdentifier.getAuthority())));
 
         // Receiver
         PartnerIdentification receiverIdentifier = sbdh.getReceiver().get(0).getIdentifier();
-        header = header.receiver(ParticipantIdentifier.of(receiverIdentifier.getValue(), Scheme.of(receiverIdentifier.getAuthority())));
+        header = header.receiver(
+                ParticipantIdentifier.of(receiverIdentifier.getValue(), Scheme.of(receiverIdentifier.getAuthority())));
 
         // Identifier
         header = header.identifier(InstanceIdentifier.of(sbdh.getDocumentIdentification().getInstanceIdentifier()));
@@ -80,7 +84,8 @@ public class SbdhReader {
         ));
 
         // CreationTimestamp
-        header = header.creationTimestamp(SbdhHelper.fromXMLGregorianCalendar(sbdh.getDocumentIdentification().getCreationDateAndTime()));
+        header = header.creationTimestamp(
+                SbdhHelper.fromXMLGregorianCalendar(sbdh.getDocumentIdentification().getCreationDateAndTime()));
 
         // Scope
         for (Scope scope : sbdh.getBusinessScope().getScope()) {

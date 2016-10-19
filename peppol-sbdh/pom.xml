@@ -56,10 +56,16 @@
             <artifactId>peppol-common</artifactId>
         </dependency>
 
-        <!-- Difi Commons -->
+        <!-- Difi commons -->
         <dependency>
             <groupId>no.difi.commons</groupId>
             <artifactId>commons-sbdh</artifactId>
+        </dependency>
+
+        <!-- Google Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
         </dependency>
     </dependencies>
 
