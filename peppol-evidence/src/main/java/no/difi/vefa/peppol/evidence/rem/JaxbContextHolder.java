@@ -36,7 +36,7 @@ enum JaxbContextHolder {
 
     private JAXBContext jaxbContext;
 
-    private JaxbContextHolder() {
+    JaxbContextHolder() {
         try {
             jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
         } catch (JAXBException e) {

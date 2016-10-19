@@ -20,25 +20,14 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.evidence.rem;
+package no.difi.vefa.peppol.sbdh;
 
 import org.testng.annotations.Test;
 
-import java.net.URI;
-
-import static org.testng.Assert.*;
-
-/**
- * Created by soc on 30.11.2015.
- */
-public class EventCodeTest {
+public class SbdhHelperTest {
 
     @Test
-    public void testValueFor() throws Exception {
-
-        String value = EventCode.DELIVERY_EXPIRATION.getValue();
-
-        EventCode eventCode = EventCode.valueFor(value);
-        assertEquals(eventCode, EventCode.DELIVERY_EXPIRATION);
+    public void simpleConstructor() {
+        new SbdhHelper();
     }
 }

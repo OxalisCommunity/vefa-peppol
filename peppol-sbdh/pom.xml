@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>peppol-parent</artifactId>
+        <groupId>no.difi.vefa</groupId>
+        <version>0.9.7-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>peppol-sbdh</artifactId>
+    <name>VEFA PEPPOL :: SBDH</name>
+    <url>https://github.com/difi/vefa-peppol</url>
+
+    <scm>
+        <tag>HEAD</tag>
+        <url>https://github.com/difi/vefa-peppol-lookup</url>
+        <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
+        <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/difi/vefa-peppol/issues</url>
+        <system>GitHub Issues</system>
+    </issueManagement>
+
+    <organization>
+        <name>Norwegian Agency for Public Management and eGovernment</name>
+        <url>http://www.difi.no</url>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Erlend Klakegg Bergheim</name>
+            <email>erlend.klakegg.bergheim@difi.no</email>
+            <organization>Difi</organization>
+            <roles>
+                <role>Principal author</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>European Union Public Licence (EUPL v.1.1)</name>
+            <url>https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <dependencies>
+        <!-- VEFA PEPPOL -->
+        <dependency>
+            <groupId>no.difi.vefa</groupId>
+            <artifactId>peppol-common</artifactId>
+        </dependency>
+
+        <!-- Difi Commons -->
+        <dependency>
+            <groupId>no.difi.commons</groupId>
+            <artifactId>commons-sbdh</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>

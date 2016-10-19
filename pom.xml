@@ -14,9 +14,10 @@
     <modules>
         <module>peppol-common</module>
         <module>peppol-evidence</module>
-        <module>peppol-lookup</module>
-        <module>peppol-security</module>
         <module>peppol-icd</module>
+        <module>peppol-lookup</module>
+        <module>peppol-sbdh</module>
+        <module>peppol-security</module>
     </modules>
 
     <scm>
@@ -121,6 +122,11 @@
                 <groupId>no.difi.commons</groupId>
                 <artifactId>commons-certvalidator</artifactId>
                 <version>2.0.4</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.commons</groupId>
+                <artifactId>commons-sbdh</artifactId>
+                <version>0.9.1</version>
             </dependency>
 
             <!-- Apache Http Components -->

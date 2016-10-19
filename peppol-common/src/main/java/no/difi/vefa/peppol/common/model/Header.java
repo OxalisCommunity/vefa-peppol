@@ -28,10 +28,17 @@ import java.util.Date;
 public class Header implements Serializable {
 
     private ParticipantIdentifier sender;
+
     private ParticipantIdentifier receiver;
+
     private ProcessIdentifier process;
+
     private DocumentTypeIdentifier documentType;
+
     private InstanceIdentifier identifier;
+
+    private InstanceType instanceType;
+
     private Date creationTimestamp;
 
     public static Header newInstance() {
@@ -39,13 +46,14 @@ public class Header implements Serializable {
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                            DocumentTypeIdentifier documentType, InstanceIdentifier identifier, Date creationTimestamp) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+                            DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
+                            Date creationTimestamp) {
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
-    public static Header of(ParticipantIdentifier senderIdentifier, ParticipantIdentifier receiverIdentifier,
-                            ProcessIdentifier processIdentifier, DocumentTypeIdentifier documentTypeIdentifier) {
-        return new Header(senderIdentifier, receiverIdentifier, processIdentifier, documentTypeIdentifier, null, null);
+    public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
+                            DocumentTypeIdentifier documentType) {
+        return new Header(sender, receiver, process, documentType, null, null, null);
     }
 
     private Header() {
@@ -53,12 +61,14 @@ public class Header implements Serializable {
     }
 
     private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                   DocumentTypeIdentifier documentType, InstanceIdentifier identifier, Date creationTimestamp) {
+                   DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
+                   Date creationTimestamp) {
         this.sender = sender;
         this.receiver = receiver;
         this.process = process;
         this.documentType = documentType;
         this.identifier = identifier;
+        this.instanceType = instanceType;
         this.creationTimestamp = creationTimestamp;
     }
 
@@ -67,7 +77,7 @@ public class Header implements Serializable {
     }
 
     public Header sender(ParticipantIdentifier sender) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
     public ParticipantIdentifier getReceiver() {
@@ -75,7 +85,7 @@ public class Header implements Serializable {
     }
 
     public Header receiver(ParticipantIdentifier receiver) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
     public ProcessIdentifier getProcess() {
@@ -83,7 +93,7 @@ public class Header implements Serializable {
     }
 
     public Header process(ProcessIdentifier process) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
     public DocumentTypeIdentifier getDocumentType() {
@@ -91,23 +101,31 @@ public class Header implements Serializable {
     }
 
     public Header documentType(DocumentTypeIdentifier documentType) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
     public InstanceIdentifier getIdentifier() {
         return identifier;
     }
 
-    public Header setIdentifier(InstanceIdentifier identifier) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+    public Header identifier(InstanceIdentifier identifier) {
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
-    public Date creationTimestamp() {
+    public InstanceType getInstanceType() {
+        return instanceType;
+    }
+
+    public Header instanceType(InstanceType instanceType) {
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
+    }
+
+    public Date getCreationTimestamp() {
         return creationTimestamp;
     }
 
-    public Header setCreationTimestamp(Date creationTimestamp) {
-        return new Header(sender, receiver, process, documentType, identifier, creationTimestamp);
+    public Header creationTimestamp(Date creationTimestamp) {
+        return new Header(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp);
     }
 
     @Override
@@ -121,9 +139,11 @@ public class Header implements Serializable {
         if (!receiver.equals(header.receiver)) return false;
         if (!process.equals(header.process)) return false;
         if (!documentType.equals(header.documentType)) return false;
-        if (identifier != null ? !identifier.equals(header.identifier) : header.identifier != null)
+        if (identifier != null ? !identifier.equals(header.identifier) : header.identifier != null) return false;
+        if (instanceType != null ? !instanceType.equals(header.instanceType) : header.instanceType != null)
             return false;
         return !(creationTimestamp != null ? !creationTimestamp.equals(header.creationTimestamp) : header.creationTimestamp != null);
+
     }
 
     @Override
@@ -133,6 +153,7 @@ public class Header implements Serializable {
         result = 31 * result + process.hashCode();
         result = 31 * result + documentType.hashCode();
         result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
+        result = 31 * result + (instanceType != null ? instanceType.hashCode() : 0);
         result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
         return result;
     }
@@ -145,6 +166,7 @@ public class Header implements Serializable {
                 ", process=" + process +
                 ", documentType=" + documentType +
                 ", identifier=" + identifier +
+                ", instanceType=" + instanceType +
                 ", creationTimestamp=" + creationTimestamp +
                 '}';
     }
