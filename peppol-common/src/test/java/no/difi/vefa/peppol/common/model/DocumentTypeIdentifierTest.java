@@ -25,6 +25,8 @@ package no.difi.vefa.peppol.common.model;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class DocumentTypeIdentifierTest {
 
@@ -34,5 +36,15 @@ public class DocumentTypeIdentifierTest {
                 "urn:www.cenbii.eu:transaction:biitrns014:ver2.0" +
                 ":extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1";
         assertEquals(DocumentTypeIdentifier.of(documentIdentifier).getIdentifier(), documentIdentifier);
+
+        assertEquals(DocumentTypeIdentifier.of(documentIdentifier, Scheme.of("bdx-ubl")).getScheme(), Scheme.of("bdx-ubl"));
+
+        assertTrue(DocumentTypeIdentifier.of(documentIdentifier).urlencoded().contains("CreditNote"));
+
+        DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier.of(documentIdentifier);
+
+        assertTrue(documentTypeIdentifier.equals(documentTypeIdentifier));
+        assertFalse(documentTypeIdentifier.equals(documentIdentifier));
+        assertFalse(documentTypeIdentifier.equals(null));
     }
 }

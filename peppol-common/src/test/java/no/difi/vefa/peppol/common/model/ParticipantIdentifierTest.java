@@ -22,9 +22,12 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
 
 public class ParticipantIdentifierTest {
 
@@ -38,5 +41,16 @@ public class ParticipantIdentifierTest {
         assertEquals(ParticipantIdentifier.of("9908:991825827").getScheme(), Scheme.of("iso6523-actorid-upis"));
 
         assertEquals(ParticipantIdentifier.of("else", Scheme.of("something")).toString(), "something::else");
+
+        assertEquals(new ParticipantIdentifier("9908:991825827").getIdentifier(), "9908:991825827");
+        assertTrue(ParticipantIdentifier.of("9908:991825827").urlencoded().contains("991825827"));
+
+        ParticipantIdentifier participantIdentifier = ParticipantIdentifier.of("9908:991825827");
+
+        assertTrue(participantIdentifier.equals(participantIdentifier));
+        assertFalse(participantIdentifier.equals("9908:991825827"));
+        assertFalse(participantIdentifier.equals(null));
+
+        assertFalse(participantIdentifier.equals(ParticipantIdentifier.of("9908:991825827", Scheme.of("Other"))));
     }
 }

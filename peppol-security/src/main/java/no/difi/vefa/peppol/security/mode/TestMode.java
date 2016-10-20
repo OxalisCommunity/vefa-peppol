@@ -40,14 +40,12 @@ public class TestMode extends AbstractPeppolMode {
 
     @Override
     protected String[] getIssuersInternal(Service service) {
-        switch (service) {
-            case AP:
-                return issuersAp;
-            case SMP:
-                return issuersSmp;
-            default:
-                return new String[0];
-        }
+        if (Service.AP.equals(service))
+            return issuersAp;
+        else if (Service.SMP.equals(service))
+            return issuersSmp;
+        else
+            return new String[0];
     }
 
     @Override

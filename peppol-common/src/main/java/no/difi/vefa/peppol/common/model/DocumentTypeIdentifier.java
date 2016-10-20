@@ -22,9 +22,9 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.util.ModelUtils;
+
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * DocumentTypeIdentifier is a combination of XML type and customizationId.
@@ -67,11 +67,7 @@ public class DocumentTypeIdentifier implements Serializable {
     }
 
     public String urlencoded() {
-        try {
-            return URLEncoder.encode(String.format("%s::%s", scheme, value), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new IllegalStateException("UTF-8 not supported.");
-        }
+        return ModelUtils.urlencode("%s::%s", scheme.getValue(), value);
     }
 
     @Override
