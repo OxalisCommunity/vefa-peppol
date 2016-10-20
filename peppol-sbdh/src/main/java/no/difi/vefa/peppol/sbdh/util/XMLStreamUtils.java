@@ -29,13 +29,13 @@ import java.io.OutputStream;
 public class XMLStreamUtils {
 
     public static void copy(InputStream inputStream, XMLStreamWriter writer) throws XMLStreamException {
-        XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(inputStream);
+        XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(inputStream, "UTF-8");
         copy(reader, writer);
         reader.close();
     }
 
     public static void copy(XMLStreamReader reader, OutputStream outputStream) throws XMLStreamException {
-        XMLStreamWriter writer = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream);
+        XMLStreamWriter writer = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream, "UTF-8");
         copy(reader, writer);
         writer.close();
     }

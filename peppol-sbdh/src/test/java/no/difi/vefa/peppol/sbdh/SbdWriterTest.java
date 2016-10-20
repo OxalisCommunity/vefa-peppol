@@ -33,7 +33,7 @@ import java.util.Date;
 
 public class SbdWriterTest {
 
-    private Header header = Header.newInstance()
+    public static final Header header = Header.newInstance()
             .sender(ParticipantIdentifier.of("9908:987654325"))
             .receiver(ParticipantIdentifier.of("9908:123456785"))
             .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"))

@@ -26,6 +26,10 @@ import no.difi.vefa.peppol.common.lang.PeppolException;
 
 public class SbdhException extends PeppolException {
 
+    public SbdhException(String message) {
+        super(message);
+    }
+
     public SbdhException(String message, Throwable cause) {
         super(message, cause);
     }

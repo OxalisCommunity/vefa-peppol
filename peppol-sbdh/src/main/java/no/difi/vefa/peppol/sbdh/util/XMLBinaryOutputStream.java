@@ -36,15 +36,19 @@ public class XMLBinaryOutputStream extends OutputStream {
 
     private BaseEncoding baseEncoding = BaseEncoding.base64().withSeparator("\n", 76);
 
-    byte[] bytes = new byte[3 * 20];
-    int counter = 0;
+    private byte[] bytes = new byte[3 * 20];
 
-    public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType) throws XMLStreamException {
+    private int counter = 0;
+
+    public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType, String encoding) throws XMLStreamException {
         this.xmlStreamWriter = xmlStreamWriter;
 
         xmlStreamWriter.writeStartElement("", "BinaryContent", "http://peppol.eu/xsd/ticc/envelope/1.0");
         xmlStreamWriter.writeDefaultNamespace("http://peppol.eu/xsd/ticc/envelope/1.0");
         xmlStreamWriter.writeAttribute("mimeType", mimeType);
+
+        if (encoding != null)
+            xmlStreamWriter.writeAttribute("encoding", encoding);
     }
 
     @Override

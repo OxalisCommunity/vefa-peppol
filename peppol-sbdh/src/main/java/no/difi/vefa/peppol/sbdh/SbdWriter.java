@@ -35,7 +35,7 @@ import java.io.OutputStream;
 
 public class SbdWriter implements Closeable {
 
-    private XMLStreamWriter xmlStreamWriter;
+    private XMLStreamWriter writer;
 
     public static SbdWriter newInstance(OutputStream outputStream, Header header) throws SbdhException {
         return new SbdWriter(outputStream, header);
@@ -43,7 +43,7 @@ public class SbdWriter implements Closeable {
 
     private SbdWriter(OutputStream outputStream, Header header) throws SbdhException {
         try {
-            xmlStreamWriter = SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
+            writer = SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
             initiateDocument(header);
         } catch (XMLStreamException e) {
             throw new SbdhException("Unable to initiate SBD.", e);
@@ -52,27 +52,31 @@ public class SbdWriter implements Closeable {
 
     private void initiateDocument(Header header) throws SbdhException {
         try {
-            xmlStreamWriter.writeStartDocument("UTF-8", "1.0");
-            xmlStreamWriter.writeStartElement("", "StandardBusinessDocument", SbdhHelper.NS);
-            xmlStreamWriter.writeDefaultNamespace(SbdhHelper.NS);
-            SbdhWriter.write(xmlStreamWriter, header);
+            writer.writeStartDocument("UTF-8", "1.0");
+            writer.writeStartElement("", "StandardBusinessDocument", SbdhHelper.NS);
+            writer.writeDefaultNamespace(SbdhHelper.NS);
+            SbdhWriter.write(writer, header);
         } catch (XMLStreamException e) {
             throw new SbdhException(e.getMessage(), e);
         }
     }
 
     public XMLStreamWriter xmlWriter() {
-        return new XMLStreamWriterWrapper(xmlStreamWriter);
+        return new XMLStreamWriterWrapper(writer);
     }
 
     public OutputStream binaryWriter(String mimeType) throws XMLStreamException {
-        return new XMLBinaryOutputStream(xmlWriter(), mimeType);
+        return binaryWriter(mimeType, null);
+    }
+
+    public OutputStream binaryWriter(String mimeType, String encoding) throws XMLStreamException {
+        return new XMLBinaryOutputStream(xmlWriter(), mimeType, encoding);
     }
 
     private void finalizeDocument() throws SbdhException {
         try {
-            xmlStreamWriter.writeEndElement();
-            xmlStreamWriter.writeEndDocument();
+            writer.writeEndElement();
+            writer.writeEndDocument();
         } catch (XMLStreamException e) {
             throw new SbdhException(e.getMessage(), e);
         }
@@ -82,7 +86,7 @@ public class SbdWriter implements Closeable {
     public void close() throws IOException {
         try {
             finalizeDocument();
-            xmlStreamWriter.close();
+            writer.close();
         } catch (XMLStreamException | SbdhException e) {
             throw new IOException(e.getMessage(), e);
         }

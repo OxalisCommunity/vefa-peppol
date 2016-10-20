@@ -30,40 +30,40 @@ import javax.xml.stream.XMLStreamReader;
 
 public class XMLStreamReaderWrapper implements XMLStreamReader {
 
-    private XMLStreamReader xmlStreamReader;
+    protected XMLStreamReader reader;
 
-    public XMLStreamReaderWrapper(XMLStreamReader xmlStreamReader) {
-        this.xmlStreamReader = xmlStreamReader;
+    public XMLStreamReaderWrapper(XMLStreamReader reader) {
+        this.reader = reader;
     }
 
     @Override
     public Object getProperty(String name) throws IllegalArgumentException {
-        return xmlStreamReader.getProperty(name);
+        return reader.getProperty(name);
     }
 
     @Override
     public int next() throws XMLStreamException {
-        return xmlStreamReader.next();
+        return reader.next();
     }
 
     @Override
     public void require(int type, String namespaceURI, String localName) throws XMLStreamException {
-        xmlStreamReader.require(type, namespaceURI, localName);
+        reader.require(type, namespaceURI, localName);
     }
 
     @Override
     public String getElementText() throws XMLStreamException {
-        return xmlStreamReader.getElementText();
+        return reader.getElementText();
     }
 
     @Override
     public int nextTag() throws XMLStreamException {
-        return xmlStreamReader.nextTag();
+        return reader.nextTag();
     }
 
     @Override
     public boolean hasNext() throws XMLStreamException {
-        return xmlStreamReader.hasNext();
+        return reader.hasNext();
     }
 
     @Override
@@ -73,191 +73,191 @@ public class XMLStreamReaderWrapper implements XMLStreamReader {
 
     @Override
     public String getNamespaceURI(String prefix) {
-        return xmlStreamReader.getNamespaceURI(prefix);
+        return reader.getNamespaceURI(prefix);
     }
 
     @Override
     public boolean isStartElement() {
-        return xmlStreamReader.isStartElement();
+        return reader.isStartElement();
     }
 
     @Override
     public boolean isEndElement() {
-        return xmlStreamReader.isEndElement();
+        return reader.isEndElement();
     }
 
     @Override
     public boolean isCharacters() {
-        return xmlStreamReader.isCharacters();
+        return reader.isCharacters();
     }
 
     @Override
     public boolean isWhiteSpace() {
-        return xmlStreamReader.isWhiteSpace();
+        return reader.isWhiteSpace();
     }
 
     @Override
     public String getAttributeValue(String namespaceURI, String localName) {
-        return xmlStreamReader.getAttributeValue(namespaceURI, localName);
+        return reader.getAttributeValue(namespaceURI, localName);
     }
 
     @Override
     public int getAttributeCount() {
-        return xmlStreamReader.getAttributeCount();
+        return reader.getAttributeCount();
     }
 
     @Override
     public QName getAttributeName(int index) {
-        return xmlStreamReader.getAttributeName(index);
+        return reader.getAttributeName(index);
     }
 
     @Override
     public String getAttributeNamespace(int index) {
-        return xmlStreamReader.getAttributeNamespace(index);
+        return reader.getAttributeNamespace(index);
     }
 
     @Override
     public String getAttributeLocalName(int index) {
-        return xmlStreamReader.getAttributeLocalName(index);
+        return reader.getAttributeLocalName(index);
     }
 
     @Override
     public String getAttributePrefix(int index) {
-        return xmlStreamReader.getAttributePrefix(index);
+        return reader.getAttributePrefix(index);
     }
 
     @Override
     public String getAttributeType(int index) {
-        return xmlStreamReader.getAttributeType(index);
+        return reader.getAttributeType(index);
     }
 
     @Override
     public String getAttributeValue(int index) {
-        return xmlStreamReader.getAttributeValue(index);
+        return reader.getAttributeValue(index);
     }
 
     @Override
     public boolean isAttributeSpecified(int index) {
-        return xmlStreamReader.isAttributeSpecified(index);
+        return reader.isAttributeSpecified(index);
     }
 
     @Override
     public int getNamespaceCount() {
-        return xmlStreamReader.getNamespaceCount();
+        return reader.getNamespaceCount();
     }
 
     @Override
     public String getNamespacePrefix(int index) {
-        return xmlStreamReader.getNamespacePrefix(index);
+        return reader.getNamespacePrefix(index);
     }
 
     @Override
     public String getNamespaceURI(int index) {
-        return xmlStreamReader.getNamespaceURI(index);
+        return reader.getNamespaceURI(index);
     }
 
     @Override
     public NamespaceContext getNamespaceContext() {
-        return xmlStreamReader.getNamespaceContext();
+        return reader.getNamespaceContext();
     }
 
     @Override
     public int getEventType() {
-        return xmlStreamReader.getEventType();
+        return reader.getEventType();
     }
 
     @Override
     public String getText() {
-        return xmlStreamReader.getText();
+        return reader.getText();
     }
 
     @Override
     public char[] getTextCharacters() {
-        return xmlStreamReader.getTextCharacters();
+        return reader.getTextCharacters();
     }
 
     @Override
     public int getTextCharacters(int sourceStart, char[] target, int targetStart, int length) throws XMLStreamException {
-        return xmlStreamReader.getTextCharacters(sourceStart, target, targetStart, length);
+        return reader.getTextCharacters(sourceStart, target, targetStart, length);
     }
 
     @Override
     public int getTextStart() {
-        return xmlStreamReader.getTextStart();
+        return reader.getTextStart();
     }
 
     @Override
     public int getTextLength() {
-        return xmlStreamReader.getTextLength();
+        return reader.getTextLength();
     }
 
     @Override
     public String getEncoding() {
-        return xmlStreamReader.getEncoding();
+        return reader.getEncoding();
     }
 
     @Override
     public boolean hasText() {
-        return xmlStreamReader.hasText();
+        return reader.hasText();
     }
 
     @Override
     public Location getLocation() {
-        return xmlStreamReader.getLocation();
+        return reader.getLocation();
     }
 
     @Override
     public QName getName() {
-        return xmlStreamReader.getName();
+        return reader.getName();
     }
 
     @Override
     public String getLocalName() {
-        return xmlStreamReader.getLocalName();
+        return reader.getLocalName();
     }
 
     @Override
     public boolean hasName() {
-        return xmlStreamReader.hasName();
+        return reader.hasName();
     }
 
     @Override
     public String getNamespaceURI() {
-        return xmlStreamReader.getNamespaceURI();
+        return reader.getNamespaceURI();
     }
 
     @Override
     public String getPrefix() {
-        return xmlStreamReader.getPrefix();
+        return reader.getPrefix();
     }
 
     @Override
     public String getVersion() {
-        return xmlStreamReader.getVersion();
+        return reader.getVersion();
     }
 
     @Override
     public boolean isStandalone() {
-        return xmlStreamReader.isStandalone();
+        return reader.isStandalone();
     }
 
     @Override
     public boolean standaloneSet() {
-        return xmlStreamReader.standaloneSet();
+        return reader.standaloneSet();
     }
 
     @Override
     public String getCharacterEncodingScheme() {
-        return xmlStreamReader.getCharacterEncodingScheme();
+        return reader.getCharacterEncodingScheme();
     }
 
     @Override
     public String getPITarget() {
-        return xmlStreamReader.getPITarget();
+        return reader.getPITarget();
     }
 
     @Override
     public String getPIData() {
-        return xmlStreamReader.getPIData();
+        return reader.getPIData();
     }
 }
