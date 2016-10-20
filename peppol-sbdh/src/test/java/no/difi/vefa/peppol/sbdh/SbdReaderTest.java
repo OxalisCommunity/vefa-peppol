@@ -1,7 +1,6 @@
 package no.difi.vefa.peppol.sbdh;
 
 import com.google.common.io.ByteStreams;
-import no.difi.vefa.peppol.sbdh.util.XMLStreamUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,10 +13,12 @@ public class SbdReaderTest {
 
     @Test
     public void simpleBinary() throws Exception {
+        byte[] document = ByteStreams.toByteArray(getClass().getResourceAsStream("/valid-t10.xml"));
+
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 
         SbdWriter sbdWriter = SbdWriter.newInstance(byteArrayOutputStream, SbdWriterTest.header);
-        try (InputStream inputStream = getClass().getResourceAsStream("/valid-t10.xml");
+        try (InputStream inputStream = new ByteArrayInputStream(document);
              OutputStream outputStream = sbdWriter.binaryWriter("application/xml")) {
             ByteStreams.copy(inputStream, outputStream);
         }
@@ -28,6 +29,9 @@ public class SbdReaderTest {
         Assert.assertEquals(sbdReader.getHeader(), SbdWriterTest.header);
         Assert.assertEquals(sbdReader.getType(), SbdReader.Type.BINARY);
 
-        XMLStreamUtils.copy(sbdReader.xmlReader(), System.out);
+        ByteArrayOutputStream resultOutputStream = new ByteArrayOutputStream();
+        ByteStreams.copy(sbdReader.binaryReader(), resultOutputStream);
+
+        Assert.assertEquals(resultOutputStream.toByteArray(), document);
     }
 }

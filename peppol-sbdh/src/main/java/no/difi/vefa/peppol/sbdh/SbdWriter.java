@@ -53,7 +53,7 @@ public class SbdWriter implements Closeable {
     private void initiateDocument(Header header) throws SbdhException {
         try {
             writer.writeStartDocument("UTF-8", "1.0");
-            writer.writeStartElement("", "StandardBusinessDocument", SbdhHelper.NS);
+            writer.writeStartElement("", SbdhHelper.QNAME_SBD.getLocalPart(), SbdhHelper.NS);
             writer.writeDefaultNamespace(SbdhHelper.NS);
             SbdhWriter.write(writer, header);
         } catch (XMLStreamException e) {

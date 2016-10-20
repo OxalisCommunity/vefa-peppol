@@ -32,9 +32,9 @@ import java.util.Arrays;
 
 public class XMLBinaryOutputStream extends OutputStream {
 
-    private XMLStreamWriter xmlStreamWriter;
+    private final BaseEncoding baseEncoding = BaseEncoding.base64().withSeparator("\n", 76);
 
-    private BaseEncoding baseEncoding = BaseEncoding.base64().withSeparator("\n", 76);
+    private final XMLStreamWriter xmlStreamWriter;
 
     private byte[] bytes = new byte[3 * 20];
 
