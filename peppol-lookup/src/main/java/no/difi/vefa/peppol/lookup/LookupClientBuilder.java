@@ -33,6 +33,7 @@ import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
 import no.difi.vefa.peppol.security.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.util.CachedCertificateValidator;
 import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
 
 public class LookupClientBuilder {
@@ -101,18 +102,28 @@ public class LookupClientBuilder {
         return this;
     }
 
-    public LookupClientBuilder providerCertificateValidator(CertificateValidator certificateValidator) {
-        this.providerCertificateValidator = certificateValidator;
-        return this;
-    }
-
     public LookupClientBuilder reader(MetadataReader metadataReader) {
         this.metadataReader = metadataReader;
         return this;
     }
 
+    public LookupClientBuilder providerCertificateValidator(CertificateValidator certificateValidator) {
+        this.providerCertificateValidator = certificateValidator;
+        return this;
+    }
+
+    public LookupClientBuilder providerCertificateValidator(CertificateValidator certificateValidator, long timeout) {
+        this.providerCertificateValidator = new CachedCertificateValidator(certificateValidator, timeout);
+        return this;
+    }
+
     public LookupClientBuilder endpointCertificateValidator(CertificateValidator certificateValidator) {
         this.endpointertificateValidator = certificateValidator;
+        return this;
+    }
+
+    public LookupClientBuilder endpointCertificateValidator(CertificateValidator certificateValidator, long timeout) {
+        this.endpointertificateValidator = new CachedCertificateValidator(certificateValidator, timeout);
         return this;
     }
 
