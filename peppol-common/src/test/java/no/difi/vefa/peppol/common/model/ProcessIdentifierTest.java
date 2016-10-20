@@ -25,19 +25,20 @@ package no.difi.vefa.peppol.common.model;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class InstanceIdentifierTest {
+public class ProcessIdentifierTest {
 
     @Test
     public void simple() {
-        Assert.assertNotNull(InstanceIdentifier.generateUUID().getValue());
+        ProcessIdentifier process04 = ProcessIdentifier.of(
+                "urn:www.cenbii.eu:profile:bii04:ver1.0", ProcessIdentifier.DEFAULT_SCHEME);
+        ProcessIdentifier process05 = ProcessIdentifier.of(
+                "urn:www.cenbii.eu:profile:bii05:ver1.0");
 
-        InstanceIdentifier identifier = InstanceIdentifier.of("TEST");
+        Assert.assertTrue(process04.equals(process04));
+        Assert.assertFalse(process04.equals(process04.getIdentifier()));
+        Assert.assertFalse(process04.equals(null));
 
-        Assert.assertEquals(identifier.getValue(), "TEST");
-        Assert.assertEquals(identifier.toString(), "TEST");
-
-        Assert.assertTrue(identifier.equals(identifier));
-        Assert.assertFalse(identifier.equals("TEST"));
-        Assert.assertFalse(identifier.equals(null));
+        Assert.assertFalse(process04.equals(process05));
+        Assert.assertEquals(process04.getScheme(), process05.getScheme());
     }
 }

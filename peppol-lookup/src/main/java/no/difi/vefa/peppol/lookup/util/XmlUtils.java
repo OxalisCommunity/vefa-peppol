@@ -20,7 +20,7 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.util;
+package no.difi.vefa.peppol.lookup.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
