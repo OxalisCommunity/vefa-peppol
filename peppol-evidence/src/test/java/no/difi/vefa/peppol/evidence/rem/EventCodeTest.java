@@ -24,9 +24,7 @@ package no.difi.vefa.peppol.evidence.rem;
 
 import org.testng.annotations.Test;
 
-import java.net.URI;
-
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by soc on 30.11.2015.

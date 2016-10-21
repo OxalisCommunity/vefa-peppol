@@ -24,7 +24,7 @@ package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.common.util.DomUtils;
+import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;

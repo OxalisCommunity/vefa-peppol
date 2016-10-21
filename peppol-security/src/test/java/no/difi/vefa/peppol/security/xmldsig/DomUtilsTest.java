@@ -20,7 +20,7 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.util;
+package no.difi.vefa.peppol.security.xmldsig;
 
 import org.testng.annotations.Test;
 

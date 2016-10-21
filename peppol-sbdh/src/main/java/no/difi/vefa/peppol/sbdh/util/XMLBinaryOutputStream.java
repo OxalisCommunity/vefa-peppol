@@ -38,7 +38,7 @@ public class XMLBinaryOutputStream extends OutputStream {
 
     private byte[] bytes = new byte[3 * 20];
 
-    private int counter = 0;
+    private int counter;
 
     public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType, String encoding) throws XMLStreamException {
         this.xmlStreamWriter = xmlStreamWriter;

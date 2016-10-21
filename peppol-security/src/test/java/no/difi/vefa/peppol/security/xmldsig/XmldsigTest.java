@@ -23,7 +23,6 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
 import com.google.common.io.ByteStreams;
-import no.difi.vefa.peppol.common.util.DomUtils;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

@@ -17,7 +17,7 @@ public class XMLBinaryInputStream extends InputStream {
 
     private byte[] bytes = rest.getBytes();
 
-    private int counter = 0;
+    private int counter;
 
     public XMLBinaryInputStream(XMLStreamReader reader) throws XMLStreamException {
         this.reader = reader;
