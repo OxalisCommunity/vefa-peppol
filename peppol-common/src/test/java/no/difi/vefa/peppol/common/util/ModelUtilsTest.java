@@ -30,4 +30,9 @@ public class ModelUtilsTest {
     public void simpleConstructor() {
         new ModelUtils();
     }
+
+    @Test(expectedExceptions = IllegalStateException.class)
+    public void simpleNullPointer() {
+        ModelUtils.urlencode(null, "Some", "values");
+    }
 }

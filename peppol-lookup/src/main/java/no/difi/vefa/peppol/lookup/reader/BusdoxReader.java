@@ -22,14 +22,15 @@
 
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
+import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.apache.commons.codec.binary.Base64;
 import org.busdox.servicemetadata.publishing._1.*;
@@ -67,13 +68,14 @@ public class BusdoxReader implements MetadataReader {
     private static CertificateFactory certificateFactory;
 
     static {
-        try {
-            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
-                    ServiceMetadataType.class);
-            certificateFactory = CertificateFactory.getInstance("X.509");
-        } catch (JAXBException | CertificateException e) {
-            throw new PeppolRuntimeException(e.getMessage(), e);
-        }
+        PeppolRuntimeException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
+                        ServiceMetadataType.class);
+                certificateFactory = CertificateFactory.getInstance("X.509");
+            }
+        });
     }
 
     @Override
@@ -159,7 +161,6 @@ public class BusdoxReader implements MetadataReader {
     }
 
     private X509Certificate certificateInstance(byte[] content) throws CertificateException {
-        return (X509Certificate) certificateFactory.generateCertificate(
-                new ByteArrayInputStream(content));
+        return (X509Certificate) certificateFactory.generateCertificate(new ByteArrayInputStream(content));
     }
 }

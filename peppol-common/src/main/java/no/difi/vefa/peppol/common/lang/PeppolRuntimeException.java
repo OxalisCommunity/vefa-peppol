@@ -22,7 +22,17 @@
 
 package no.difi.vefa.peppol.common.lang;
 
+import no.difi.vefa.peppol.common.api.Perform;
+
 public class PeppolRuntimeException extends RuntimeException {
+
+    public static void verify(Perform perform) {
+        try {
+            perform.action();
+        } catch (Exception e) {
+            throw new PeppolRuntimeException(e.getMessage(), e);
+        }
+    }
 
     public PeppolRuntimeException(String message, Throwable cause) {
         super(message, cause);

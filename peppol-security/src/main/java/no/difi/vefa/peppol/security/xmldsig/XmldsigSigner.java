@@ -1,7 +1,7 @@
 /*
  * Copyright 2016 Direktoratet for forvaltning og IKT
  *
- * Licensed under the EUPL, Version 1.1 or – as soon they
+ * Licensed under the EUPL, Version 1.1 or ï¿½ as soon they
  * will be approved by the European Commission - subsequent
  * versions of the EUPL (the "Licence");
  *
@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.security.xmldsig;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.w3c.dom.Document;
@@ -56,13 +57,14 @@ public class XmldsigSigner {
     private String signatureMethod;
 
     static {
-        try {
-            transformerFactory = TransformerFactory.newInstance();
+        PeppolRuntimeException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                transformerFactory = TransformerFactory.newInstance();
 
-            xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
-        } catch (Exception e) {
-            throw new PeppolRuntimeException(e.getMessage(), e);
-        }
+                xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
+            }
+        });
     }
 
     public static XmldsigSigner SHA1() {

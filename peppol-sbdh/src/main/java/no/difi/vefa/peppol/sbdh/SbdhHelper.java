@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -30,7 +31,6 @@ import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.unece.cefact.namespaces.standardbusinessdocumentheader.*;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -50,25 +50,26 @@ class SbdhHelper {
 
     public static final QName QNAME_SBDH = new QName(NS, "StandardBusinessDocumentHeader");
 
-    public static final JAXBContext JAXB_CONTEXT;
+    public static JAXBContext JAXB_CONTEXT;
 
     public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
-    public static final XMLInputFactory XML_INPUT_FACTORY;
+    public static XMLInputFactory XML_INPUT_FACTORY;
 
-    public static final XMLOutputFactory XML_OUTPUT_FACTORY;
+    public static XMLOutputFactory XML_OUTPUT_FACTORY;
 
     static {
-        try {
-            JAXB_CONTEXT =
-                    JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
+        PeppolRuntimeException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                JAXB_CONTEXT =
+                        JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
 
-            XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+                XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 
-            XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
-        } catch (JAXBException e) {
-            throw new PeppolRuntimeException(e.getMessage(), e);
-        }
+                XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
+            }
+        });
     }
 
     SbdhHelper() {

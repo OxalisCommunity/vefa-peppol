@@ -28,10 +28,9 @@ import java.net.URLEncoder;
 public class ModelUtils {
 
     public static String urlencode(String format, String... args) {
-        String.format(format, args);
         try {
             return URLEncoder.encode(String.format(format, args), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | NullPointerException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
     }

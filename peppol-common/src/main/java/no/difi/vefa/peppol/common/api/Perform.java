@@ -20,27 +20,10 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.lang;
+package no.difi.vefa.peppol.common.api;
 
-import no.difi.vefa.peppol.common.api.Perform;
-import org.mockito.Mockito;
-import org.testng.annotations.Test;
+public interface Perform {
 
-public class PeppolRuntimeExceptionTest {
+    void action() throws Exception;
 
-    @Test
-    @SuppressWarnings("all")
-    public void simpleConstructors() {
-        new PeppolRuntimeException("Message", Mockito.mock(Throwable.class));
-    }
-
-    @Test(expectedExceptions = PeppolRuntimeException.class)
-    public void simpleVerify() {
-        PeppolRuntimeException.verify(new Perform() {
-            @Override
-            public void action() throws Exception {
-                throw new Exception();
-            }
-        });
-    }
 }
