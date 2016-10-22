@@ -67,4 +67,89 @@ public class HeaderTest {
         Assert.assertEquals(header.getCreationTimestamp(), header2.getCreationTimestamp());
         Assert.assertEquals(header.getIdentifier(), header2.getIdentifier());
     }
+
+    @Test
+    public void shortOfMethod() {
+        Header header = Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        );
+
+        Assert.assertTrue(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertTrue(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document"),
+                null, null, null
+        )));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764321"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456789"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Other:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Other:Document")
+        )));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        ).instanceType(InstanceType.of("Some", "Type", "1.0"))));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        ).identifier(InstanceIdentifier.generateUUID())));
+        Assert.assertFalse(header.equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        ).creationTimestamp(new Date())));
+        Assert.assertFalse(header.instanceType(InstanceType.of("Some", "Type", "1.0")).equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertFalse(header.identifier(InstanceIdentifier.generateUUID()).equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertFalse(header.creationTimestamp(new Date()).equals(Header.of(
+                ParticipantIdentifier.of("9908:98764325"),
+                ParticipantIdentifier.of("9908123456785"),
+                ProcessIdentifier.of("Some:Process"),
+                DocumentTypeIdentifier.of("Some:Document")
+        )));
+        Assert.assertNotNull(header.hashCode());
+    }
 }

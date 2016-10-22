@@ -59,9 +59,12 @@ public class ServiceMetadata implements Serializable {
         this.endpoints = endpoints;
         this.signer = signer;
 
-        for (Endpoint endpoint : endpoints)
+        for (Endpoint endpoint : endpoints) {
             if (!this.processIdentifiers.contains(endpoint.getProcessIdentifier()))
                 this.processIdentifiers.add(endpoint.getProcessIdentifier());
+            if (!this.transportProfiles.contains(endpoint.getTransportProfile()))
+                this.transportProfiles.add(endpoint.getTransportProfile());
+        }
     }
 
     public ParticipantIdentifier getParticipantIdentifier() {
