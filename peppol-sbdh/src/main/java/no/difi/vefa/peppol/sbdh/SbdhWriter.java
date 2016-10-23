@@ -28,7 +28,6 @@ import org.unece.cefact.namespaces.standardbusinessdocumentheader.DocumentIdenti
 import org.unece.cefact.namespaces.standardbusinessdocumentheader.StandardBusinessDocumentHeader;
 
 import javax.xml.bind.Marshaller;
-import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.OutputStream;
 
@@ -45,7 +44,7 @@ public class SbdhWriter {
             write(streamWriter, header);
             streamWriter.writeEndDocument();
             streamWriter.close();
-        } catch (XMLStreamException e) {
+        } catch (Exception e) {
             throw new SbdhException("Unable to write SBDH.", e);
         }
     }

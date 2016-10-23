@@ -23,11 +23,15 @@
 package no.difi.vefa.peppol.sbdh;
 
 import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.sbdh.lang.SbdhException;
+import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.Date;
 
 public class SbdhReaderTest {
@@ -50,6 +54,16 @@ public class SbdhReaderTest {
         Header parsedHeader = SbdhReader.read(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
 
         Assert.assertEquals(parsedHeader, header);
+    }
+
+    @Test(expectedExceptions = SbdhException.class)
+    public void triggerExceptionUsingInputStream() throws Exception {
+        SbdhReader.read(Mockito.mock(InputStream.class));
+    }
+
+    @Test(expectedExceptions = SbdhException.class)
+    public void triggerExceptionUsingXMLStreamReader() throws Exception {
+        SbdhReader.read(Mockito.mock(XMLStreamReader.class));
     }
 
     @Test

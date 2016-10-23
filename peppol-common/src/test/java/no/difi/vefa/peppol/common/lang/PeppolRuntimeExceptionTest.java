@@ -35,11 +35,21 @@ public class PeppolRuntimeExceptionTest {
     }
 
     @Test(expectedExceptions = PeppolRuntimeException.class)
-    public void simpleVerify() {
+    public void simpleVerifyThrowException() {
         PeppolRuntimeException.verify(new Perform() {
             @Override
             public void action() throws Exception {
                 throw new Exception();
+            }
+        });
+    }
+
+    @Test
+    public void simpleVerifyNoException() {
+        PeppolRuntimeException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                // No action.
             }
         });
     }

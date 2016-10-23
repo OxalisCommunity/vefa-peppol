@@ -1,6 +1,7 @@
 package no.difi.vefa.peppol.sbdh;
 
 import com.google.common.io.ByteStreams;
+import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -24,14 +25,31 @@ public class SbdReaderTest {
         }
         sbdWriter.close();
 
-        SbdReader sbdReader = SbdReader.newInstance(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        try (SbdReader sbdReader = SbdReader.newInstance(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))) {
 
-        Assert.assertEquals(sbdReader.getHeader(), SbdWriterTest.header);
-        Assert.assertEquals(sbdReader.getType(), SbdReader.Type.BINARY);
+            Assert.assertEquals(sbdReader.getHeader(), SbdWriterTest.header);
+            Assert.assertEquals(sbdReader.getType(), SbdReader.Type.BINARY);
 
-        ByteArrayOutputStream resultOutputStream = new ByteArrayOutputStream();
-        ByteStreams.copy(sbdReader.binaryReader(), resultOutputStream);
+            ByteArrayOutputStream resultOutputStream = new ByteArrayOutputStream();
+            ByteStreams.copy(sbdReader.binaryReader(), resultOutputStream);
 
-        Assert.assertEquals(resultOutputStream.toByteArray(), document);
+            Assert.assertEquals(resultOutputStream.toByteArray(), document);
+        }
+    }
+
+    @Test(expectedExceptions = SbdhException.class)
+    public void exceptionOnNonXML() throws Exception {
+        SbdReader.newInstance(new ByteArrayInputStream("{json: true}".getBytes()));
+    }
+
+    @Test(expectedExceptions = SbdhException.class)
+    public void exceptionOnNotSBD() throws Exception {
+        SbdReader.newInstance(new ByteArrayInputStream("<StandardBusinessDocument/>".getBytes()));
+    }
+
+    @Test(expectedExceptions = SbdhException.class)
+    public void exceptionOnNotSBDH() throws Exception {
+        SbdReader.newInstance(new ByteArrayInputStream(String.format(
+                "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>", SbdhHelper.NS).getBytes()));
     }
 }

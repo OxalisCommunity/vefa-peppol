@@ -30,4 +30,5 @@ public class SbdhHelperTest {
     public void simpleConstructor() {
         new SbdhHelper();
     }
+
 }

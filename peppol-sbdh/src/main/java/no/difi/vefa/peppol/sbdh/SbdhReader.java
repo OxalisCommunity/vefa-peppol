@@ -28,7 +28,6 @@ import org.unece.cefact.namespaces.standardbusinessdocumentheader.PartnerIdentif
 import org.unece.cefact.namespaces.standardbusinessdocumentheader.Scope;
 import org.unece.cefact.namespaces.standardbusinessdocumentheader.StandardBusinessDocumentHeader;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
@@ -45,7 +44,7 @@ public class SbdhReader {
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
             return read(unmarshaller
                     .unmarshal(new StreamSource(inputStream), StandardBusinessDocumentHeader.class).getValue());
-        } catch (JAXBException e) {
+        } catch (Exception e) {
             throw new SbdhException(e.getMessage(), e);
         }
     }
@@ -55,7 +54,7 @@ public class SbdhReader {
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
             return read(unmarshaller
                     .unmarshal(xmlStreamReader, StandardBusinessDocumentHeader.class).getValue());
-        } catch (JAXBException e) {
+        } catch (Exception e) {
             throw new SbdhException(e.getMessage(), e);
         }
     }
