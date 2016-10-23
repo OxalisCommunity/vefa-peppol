@@ -29,6 +29,7 @@ import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
+import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -57,7 +58,10 @@ public class LookupClientTest {
 
     @Test
     public void simpleEndpoint() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forProduction().build();
+        LookupClient client = LookupClientBuilder.forProduction()
+                .endpointCertificateValidator(EmptyCertificateValidator.INSTANCE)
+                .providerCertificateValidator(EmptyCertificateValidator.INSTANCE)
+                .build();
 
         Endpoint endpoint = client.getEndpoint(
                 ParticipantIdentifier.of("9908:991825827"),
@@ -73,7 +77,10 @@ public class LookupClientTest {
 
     @Test
     public void simpleEndpointWithHeader() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forProduction().build();
+        LookupClient client = LookupClientBuilder.forProduction()
+                .endpointCertificateValidator(EmptyCertificateValidator.INSTANCE)
+                .providerCertificateValidator(EmptyCertificateValidator.INSTANCE)
+                .build();
 
         Header header = Header.newInstance()
                 .sender(ParticipantIdentifier.of("9908:invalid"))
@@ -100,7 +107,9 @@ public class LookupClientTest {
 
     @Test(enabled = false)
     public void simple9933() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forProduction().fetcher(new UrlFetcher()).build();
+        LookupClient client = LookupClientBuilder.forProduction()
+                .fetcher(new UrlFetcher())
+                .build();
         List<DocumentTypeIdentifier> documentTypeIdentifiers =
                 client.getDocumentIdentifiers(ParticipantIdentifier.of("9933:061828591"));
 
@@ -119,6 +128,17 @@ public class LookupClientTest {
     public void noSmp() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forTest().locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST)).build();
+
+        client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
+    }
+
+    @Test(expectedExceptions = LookupException.class)
+    public void noSmpApache() throws PeppolException {
+        LookupClient client =
+                LookupClientBuilder.forTest()
+                        .fetcher(new ApacheFetcher())
+                        .locator(new BusdoxLocator(DynamicLocator.OPENPEPPOL_TEST))
+                        .build();
 
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
     }

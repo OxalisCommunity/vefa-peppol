@@ -29,17 +29,14 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClients;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.BufferedInputStream;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
+import java.net.UnknownHostException;
 
 public class ApacheFetcher extends AbstractFetcher {
-
-    private static Logger logger = LoggerFactory.getLogger(ApacheFetcher.class);
 
     private HttpClient httpClient;
 
@@ -60,8 +57,6 @@ public class ApacheFetcher extends AbstractFetcher {
     @Override
     public FetcherResponse fetch(URI uri) throws LookupException {
         try {
-            logger.debug("{}", uri);
-
             HttpGet httpGet = new HttpGet(uri);
             httpGet.setConfig(requestConfig);
 
@@ -80,8 +75,10 @@ public class ApacheFetcher extends AbstractFetcher {
                     throw new LookupException(
                             String.format("Received code %s for lookup.", response.getStatusLine().getStatusCode()));
             }
-        } catch (SocketTimeoutException | SocketException e) {
+        } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
+        } catch (LookupException e) {
+            throw e;
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);
         }

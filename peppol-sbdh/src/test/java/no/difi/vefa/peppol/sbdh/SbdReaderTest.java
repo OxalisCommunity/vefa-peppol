@@ -50,6 +50,6 @@ public class SbdReaderTest {
     @Test(expectedExceptions = SbdhException.class)
     public void exceptionOnNotSBDH() throws Exception {
         SbdReader.newInstance(new ByteArrayInputStream(String.format(
-                "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>", SbdhHelper.NS).getBytes()));
+                "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>", Ns.SBDH).getBytes()));
     }
 }

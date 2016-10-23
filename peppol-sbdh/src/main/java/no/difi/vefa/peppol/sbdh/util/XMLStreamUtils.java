@@ -58,29 +58,15 @@ public class XMLStreamUtils {
                     for (int i = 0; i < reader.getNamespaceCount(); i++)
                         writer.writeNamespace(reader.getNamespacePrefix(i), reader.getNamespaceURI(i));
                     for (int i = 0; i < reader.getAttributeCount(); i++)
-                        if (reader.getAttributeNamespace(i) == null)
-                            writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
-                        else
-                            writer.writeAttribute(reader.getAttributePrefix(i), reader.getAttributeNamespace(i),
-                                    reader.getAttributeLocalName(i), reader.getAttributeValue(i));
+                        writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     writer.writeEndElement();
                     break;
 
-                case XMLStreamConstants.NAMESPACE:
-                    writer.writeNamespace(reader.getPrefix(), reader.getNamespaceURI());
-                    break;
-                case XMLStreamConstants.ATTRIBUTE:
-                    writer.writeAttribute(reader.getPrefix(), reader.getNamespaceURI(), reader.getLocalName(), reader.getText());
-                    break;
-
                 case XMLStreamConstants.CHARACTERS:
                     writer.writeCharacters(reader.getText());
                     break;
-                // case XMLStreamConstants.COMMENT:
-                //    writer.writeComment(reader.getText());
-                //    break;
                 case XMLStreamConstants.CDATA:
                     writer.writeCData(reader.getText());
                     break;

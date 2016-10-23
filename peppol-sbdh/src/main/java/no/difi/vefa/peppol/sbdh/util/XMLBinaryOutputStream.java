@@ -23,6 +23,7 @@
 package no.difi.vefa.peppol.sbdh.util;
 
 import com.google.common.io.BaseEncoding;
+import no.difi.vefa.peppol.sbdh.Ns;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -43,8 +44,8 @@ public class XMLBinaryOutputStream extends OutputStream {
     public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType, String encoding) throws XMLStreamException {
         this.xmlStreamWriter = xmlStreamWriter;
 
-        xmlStreamWriter.writeStartElement("", "BinaryContent", "http://peppol.eu/xsd/ticc/envelope/1.0");
-        xmlStreamWriter.writeDefaultNamespace("http://peppol.eu/xsd/ticc/envelope/1.0");
+        xmlStreamWriter.writeStartElement("", Ns.QNAME_BINARY_CONTENT.getLocalPart(), Ns.EXTENSION);
+        xmlStreamWriter.writeDefaultNamespace(Ns.EXTENSION);
         xmlStreamWriter.writeAttribute("mimeType", mimeType);
 
         if (encoding != null)

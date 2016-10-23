@@ -34,21 +34,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
-import javax.xml.namespace.QName;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 class SbdhHelper {
-
-    public static final String NS = "http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader";
-
-    public static final QName QNAME_BINARY_CONTENT = new QName("http://peppol.eu/xsd/ticc/envelope/1.0", "BinaryContent");
-
-    public static final QName QNAME_SBD = new QName(NS, "StandardBusinessDocument");
-
-    public static final QName QNAME_SBDH = new QName(NS, "StandardBusinessDocumentHeader");
 
     public static JAXBContext JAXB_CONTEXT;
 

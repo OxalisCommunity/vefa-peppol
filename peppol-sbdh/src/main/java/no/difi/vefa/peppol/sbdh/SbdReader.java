@@ -38,12 +38,12 @@ public class SbdReader implements Closeable {
             if (reader.getEventType() != XMLStreamConstants.START_ELEMENT)
                 reader.nextTag();
 
-            if (!reader.getName().equals(SbdhHelper.QNAME_SBD))
+            if (!reader.getName().equals(Ns.QNAME_SBD))
                 throw new SbdhException("Element 'StandardBusinessDocument' not found as first element.");
 
             // Read header
             reader.nextTag();
-            if (!reader.getName().equals(SbdhHelper.QNAME_SBDH))
+            if (!reader.getName().equals(Ns.QNAME_SBDH))
                 throw new SbdhException("Element 'StandardBusinessDocumentHeader' not found as first element in 'StandardBusinessDocument'.");
 
             this.header = SbdhReader.read(reader);
@@ -63,7 +63,7 @@ public class SbdReader implements Closeable {
     }
 
     public Type getType() {
-        return reader.getName().equals(SbdhHelper.QNAME_BINARY_CONTENT) ? Type.BINARY : Type.XML;
+        return reader.getName().equals(Ns.QNAME_BINARY_CONTENT) ? Type.BINARY : Type.XML;
     }
 
     public XMLStreamReader xmlReader() {
