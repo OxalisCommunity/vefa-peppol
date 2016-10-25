@@ -25,19 +25,33 @@ package no.difi.vefa.peppol.sbdh.util;
 import javax.xml.stream.*;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Reader;
+import java.io.Writer;
 
 public class XMLStreamUtils {
 
-    public static void copy(InputStream inputStream, XMLStreamWriter writer) throws XMLStreamException {
-        XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(inputStream, "UTF-8");
-        copy(reader, writer);
-        reader.close();
+    public static void copy(Reader reader, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
+        XMLStreamReader xmlStreamReader = XMLInputFactory.newFactory().createXMLStreamReader(reader);
+        copy(xmlStreamReader, xmlStreamWriter);
+        xmlStreamReader.close();
     }
 
-    public static void copy(XMLStreamReader reader, OutputStream outputStream) throws XMLStreamException {
-        XMLStreamWriter writer = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream, "UTF-8");
-        copy(reader, writer);
-        writer.close();
+    public static void copy(XMLStreamReader xmlStreamReader, Writer writer) throws XMLStreamException {
+        XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(writer);
+        copy(xmlStreamReader, xmlStreamWriter);
+        xmlStreamWriter.close();
+    }
+
+    public static void copy(InputStream inputStream, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
+        XMLStreamReader xmlStreamReader = XMLInputFactory.newFactory().createXMLStreamReader(inputStream, "UTF-8");
+        copy(xmlStreamReader, xmlStreamWriter);
+        xmlStreamReader.close();
+    }
+
+    public static void copy(XMLStreamReader xmlStreamReader, OutputStream outputStream) throws XMLStreamException {
+        XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream, "UTF-8");
+        copy(xmlStreamReader, xmlStreamWriter);
+        xmlStreamWriter.close();
     }
 
     public static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
