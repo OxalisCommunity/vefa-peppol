@@ -58,7 +58,7 @@ public class MultiReaderTest {
     @Test
     public void bdxrDocumentIdentifers() throws Exception {
         List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
-                new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicegroup-9908-991825827.xml"), null));
+                new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -128,7 +128,7 @@ public class MultiReaderTest {
     @Test
     public void bdxrServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(
-                new FetcherResponse(getClass().getResourceAsStream("/bdxr-servicemetadata-9908-810418052.xml"), null));
+                new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml"), null));
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
 

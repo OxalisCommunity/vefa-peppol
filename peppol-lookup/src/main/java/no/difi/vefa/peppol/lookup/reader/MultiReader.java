@@ -40,7 +40,9 @@ public class MultiReader implements MetadataReader {
 
     private BusdoxReader busdoxReader = new BusdoxReader();
 
-    private BdxrReader bdxrReader = new BdxrReader();
+    private Bdxr201407Reader bdxr201407Reader = new Bdxr201407Reader();
+
+    private Bdxr201605Reader bdxr201605Reader = new Bdxr201605Reader();
 
     @Override
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
@@ -52,9 +54,10 @@ public class MultiReader implements MetadataReader {
 
         if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
             return busdoxReader.parseDocumentIdentifiers(response);
-        else if (BdxrReader.NAMESPACE_201407.equalsIgnoreCase(response.getNamespace())
-                || BdxrReader.NAMESPACE_201605.equalsIgnoreCase(response.getNamespace()))
-            return bdxrReader.parseDocumentIdentifiers(response);
+        else if (Bdxr201407Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxr201407Reader.parseDocumentIdentifiers(response);
+        else if (Bdxr201605Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxr201605Reader.parseDocumentIdentifiers(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }
@@ -69,9 +72,10 @@ public class MultiReader implements MetadataReader {
 
         if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
             return busdoxReader.parseServiceMetadata(response);
-        else if (BdxrReader.NAMESPACE_201407.equalsIgnoreCase(response.getNamespace())
-                || BdxrReader.NAMESPACE_201605.equalsIgnoreCase(response.getNamespace()))
-            return bdxrReader.parseServiceMetadata(response);
+        else if (Bdxr201407Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxr201407Reader.parseServiceMetadata(response);
+        else if (Bdxr201605Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+            return bdxr201605Reader.parseServiceMetadata(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }

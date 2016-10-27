@@ -32,13 +32,14 @@ import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.oasis_open.docs.bdxr.ns.smp._2016._05.*;
+import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
@@ -55,12 +56,11 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BdxrReader implements MetadataReader {
+public class Bdxr201407Reader implements MetadataReader {
 
-    private static Logger logger = LoggerFactory.getLogger(BdxrReader.class);
+    private static Logger logger = LoggerFactory.getLogger(Bdxr201407Reader.class);
 
-    public static final String NAMESPACE_201407 = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
-    public static final String NAMESPACE_201605 = "http://docs.oasis-open.org/bdxr/ns/SMP/2016/05";
+    public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
 
     private static JAXBContext jaxbContext;
 
@@ -114,12 +114,7 @@ public class BdxrReader implements MetadataReader {
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-            Object o;
-            if (doc.getDocumentElement().getTagName().equals("SignedServiceMetadata")) {
-                o = unmarshaller.unmarshal(new DOMSource(doc), SignedServiceMetadataType.class).getValue();
-            } else {
-                o = unmarshaller.unmarshal(new DOMSource(doc), ServiceMetadataType.class).getValue();
-            }
+            Object o = ((JAXBElement<?>) unmarshaller.unmarshal(new DOMSource(doc))).getValue();
 
             X509Certificate signer = null;
             if (o instanceof SignedServiceMetadataType) {
