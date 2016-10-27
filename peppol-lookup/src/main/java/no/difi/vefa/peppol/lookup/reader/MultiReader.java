@@ -52,7 +52,8 @@ public class MultiReader implements MetadataReader {
 
         if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
             return busdoxReader.parseDocumentIdentifiers(response);
-        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+        else if (BdxrReader.NAMESPACE_201407.equalsIgnoreCase(response.getNamespace())
+                || BdxrReader.NAMESPACE_201605.equalsIgnoreCase(response.getNamespace()))
             return bdxrReader.parseDocumentIdentifiers(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
@@ -68,7 +69,8 @@ public class MultiReader implements MetadataReader {
 
         if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
             return busdoxReader.parseServiceMetadata(response);
-        else if (BdxrReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
+        else if (BdxrReader.NAMESPACE_201407.equalsIgnoreCase(response.getNamespace())
+                || BdxrReader.NAMESPACE_201605.equalsIgnoreCase(response.getNamespace()))
             return bdxrReader.parseServiceMetadata(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));

@@ -32,14 +32,13 @@ import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
+import org.oasis_open.docs.bdxr.ns.smp._2016._05.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
@@ -60,7 +59,8 @@ public class BdxrReader implements MetadataReader {
 
     private static Logger logger = LoggerFactory.getLogger(BdxrReader.class);
 
-    public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
+    public static final String NAMESPACE_201407 = "http://docs.oasis-open.org/bdxr/ns/SMP/2014/07";
+    public static final String NAMESPACE_201605 = "http://docs.oasis-open.org/bdxr/ns/SMP/2016/05";
 
     private static JAXBContext jaxbContext;
 
@@ -113,17 +113,19 @@ public class BdxrReader implements MetadataReader {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-            JAXBElement<?> result = (JAXBElement) unmarshaller.unmarshal(new DOMSource(doc));
-            Object o = result.getValue();
+
+            Object o;
+            if (doc.getDocumentElement().getTagName().equals("SignedServiceMetadata")) {
+                o = unmarshaller.unmarshal(new DOMSource(doc), SignedServiceMetadataType.class).getValue();
+            } else {
+                o = unmarshaller.unmarshal(new DOMSource(doc), ServiceMetadataType.class).getValue();
+            }
 
             X509Certificate signer = null;
             if (o instanceof SignedServiceMetadataType) {
                 signer = XmldsigVerifier.verify(doc);
                 o = ((SignedServiceMetadataType) o).getServiceMetadata();
             }
-
-            if (!(o instanceof ServiceMetadataType))
-                throw new LookupException("ServiceMetadata element not found.");
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
 
