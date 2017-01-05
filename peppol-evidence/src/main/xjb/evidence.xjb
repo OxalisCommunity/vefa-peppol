@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               jaxb:version="2.0">
+    <jaxb:bindings schemaLocation="../xsd/peppol-transport-receipt-1.0.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.receipt"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/saml-schema-assertion-2.0.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.saml"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/TS02640_v2.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.rem"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/ts_102231v030102_xsd.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.tsl"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/XAdES.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.xades"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/xenc-schema.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.xmlenc"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+    <jaxb:bindings schemaLocation="../xsd/xmldsig-core-schema.xsd">
+        <jaxb:schemaBindings>
+            <jaxb:package name="no.difi.vefa.peppol.evidence.jaxb.xmldsig"/>
+        </jaxb:schemaBindings>
+    </jaxb:bindings>
+</jaxb:bindings>

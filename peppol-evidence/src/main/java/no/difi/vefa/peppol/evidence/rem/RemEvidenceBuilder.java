@@ -22,18 +22,18 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.OriginalReceiptType;
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
-import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
+import no.difi.vefa.peppol.evidence.jaxb.rem.*;
+import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
+import no.difi.vefa.peppol.evidence.jaxb.xmldsig.DigestMethodType;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
-import org.etsi.uri._01903.v1_3.AnyType;
-import org.etsi.uri._02640.v2_.*;
-import org.w3._2000._09.xmldsig_.DigestMethodType;
 import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBElement;
@@ -124,7 +124,7 @@ public class RemEvidenceBuilder {
      */
     static void injectPeppolExtensions(REMEvidenceType remEvidenceType, TransmissionRole transmissionRole, TransportProtocol transportProtocol, byte[] specificReceiptBytes) {
         // Include the original transport receipt
-        org.etsi.uri._01903.v1_3.ObjectFactory objectFactory = new org.etsi.uri._01903.v1_3.ObjectFactory();
+        no.difi.vefa.peppol.evidence.jaxb.xades.ObjectFactory objectFactory = new no.difi.vefa.peppol.evidence.jaxb.xades.ObjectFactory();
 
         // Extensions/Extension/Any
         ExtensionType extensionType = new ExtensionType();
@@ -137,7 +137,7 @@ public class RemEvidenceBuilder {
         peppolRemExtension.setTransmissionRole(transmissionRole);
         OriginalReceiptType originalReceiptType = new OriginalReceiptType();
         originalReceiptType.setValue(specificReceiptBytes);
-        peppolRemExtension.setOriginalReceipt(originalReceiptType);
+        peppolRemExtension.getOriginalReceipt().add(originalReceiptType);
 
         // xpath: //Any/PeppolRemExtension
         anyType.getContent().add(peppolRemExtension);

@@ -22,10 +22,10 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
 import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
-import org.etsi.uri._02640.v2_.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;

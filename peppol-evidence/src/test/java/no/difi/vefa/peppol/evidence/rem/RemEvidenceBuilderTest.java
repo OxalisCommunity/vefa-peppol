@@ -22,16 +22,16 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
-import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
+import no.difi.vefa.peppol.evidence.jaxb.rem.ExtensionType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.ExtensionsListType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.etsi.uri._01903.v1_3.AnyType;
-import org.etsi.uri._02640.v2_.ExtensionType;
-import org.etsi.uri._02640.v2_.ExtensionsListType;
-import org.etsi.uri._02640.v2_.REMEvidenceType;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -202,7 +202,7 @@ public class RemEvidenceBuilderTest {
         assertTrue(value.getContent().get(0) instanceof PeppolRemExtension);
 
         PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value.getContent().get(0);
-        byte[] evidenceBytes = peppolRemExtension.getOriginalReceipt().getValue();
+        byte[] evidenceBytes = peppolRemExtension.getOriginalReceipt().get(0).getValue();
 
         assertEquals(evidenceBytes, specificReceiptBytes);
     }

@@ -67,10 +67,10 @@
             <artifactId>peppol-security</artifactId>
         </dependency>
 
+        <!-- Java Mail -->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.7</version>
             <scope>test</scope>
         </dependency>
 
@@ -79,20 +79,22 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.jvnet.jaxb2.maven2</groupId>
-                <artifactId>maven-jaxb2-plugin</artifactId>
-                <version>0.12.3</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.6</version>
                 <executions>
                     <execution>
-                        <id>xsd</id>
+                        <id>xjc</id>
                         <goals>
-                            <goal>generate</goal>
+                            <goal>xjc</goal>
                         </goals>
-                        <configuration>
-                            <schemaDirectory>src/main/xsd</schemaDirectory>
-                        </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <target>2.1</target>
+                    <bindingDirectory>src/main/xjb</bindingDirectory>
+                </configuration>
             </plugin>
         </plugins>
         <pluginManagement>

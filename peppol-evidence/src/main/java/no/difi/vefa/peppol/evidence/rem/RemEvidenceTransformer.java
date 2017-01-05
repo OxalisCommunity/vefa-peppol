@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import org.etsi.uri._02640.v2_.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -42,11 +42,11 @@ import java.io.OutputStream;
 /**
  * Transforms SignedRemEvidence back and forth between various representations like for instance
  * W3C Document and XML.
- *
- * <p>
+ * <p/>
+ * <p/>
  * The constructor is package protected as you are expected to use the {@link RemEvidenceService}  to
  * create instances of this class.
- * <p>
+ * <p/>
  * Created by steinar on 08.11.2015.
  */
 public class RemEvidenceTransformer {
@@ -67,8 +67,9 @@ public class RemEvidenceTransformer {
 
     /**
      * Transforms the supplied signed REM Evidence into it's formatted XML representation.
-     * <p>
+     * <p/>
      * NOTE! Do not use this XML representation for signature validation as this will fail.
+     *
      * @param signedRemEvidence
      * @param outputStream
      * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
@@ -79,9 +80,10 @@ public class RemEvidenceTransformer {
 
     /**
      * Internal convenience method
+     *
      * @param signedRemEvidence rem evidence to transform
-     * @param outputStream into which the formatted output should be emitted.
-     * @param formatted indicates whether the output should be formatted (true) or not (false)
+     * @param outputStream      into which the formatted output should be emitted.
+     * @param formatted         indicates whether the output should be formatted (true) or not (false)
      * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
     protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) throws RemEvidenceException {
@@ -108,9 +110,10 @@ public class RemEvidenceTransformer {
     /**
      * Parses a REM evidence instance represented as a W3C Document and creates the equivalent JAXB representation.
      * It is package protected as this is not something that should not be done outside of this package.
+     *
      * @param signedRemDocument
-     * @return 
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException 
+     * @return
+     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
      */
     protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) throws RemEvidenceException {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
@@ -127,7 +130,7 @@ public class RemEvidenceTransformer {
     /**
      * Parses the contents of an InputStream, which is expected to supply
      * a signed REMEvidenceType in XML representation.
-     *
+     * <p/>
      * Step 1: parses xml into W3C Document
      * Step 2: converts W3C Document into JAXBElement
      *

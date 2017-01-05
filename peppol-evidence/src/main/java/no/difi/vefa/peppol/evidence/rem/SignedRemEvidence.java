@@ -22,22 +22,23 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.PeppolRemExtension;
-import java.util.Date;
-import java.util.List;
-import javax.xml.bind.JAXBElement;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
-import org.etsi.uri._01903.v1_3.AnyType;
-import org.etsi.uri._02640.v2_.*;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
+import no.difi.vefa.peppol.evidence.jaxb.rem.*;
+import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
 import org.w3c.dom.Document;
+
+import javax.xml.bind.JAXBElement;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Holds a signed REMEvidence. Internally it is held in two representations; REMEvidenceType and
  * W3C Document.
- *
+ * <p/>
  * Please use {@link RemEvidenceTransformer} to transform instances of SignedRemEvidence into other
  * representations like for instance XML and JAXB
  *
@@ -48,8 +49,8 @@ import org.w3c.dom.Document;
 public class SignedRemEvidence {
 
     private final JAXBElement<REMEvidenceType> jaxbElement;
-    private final Document signedRemEvidenceXml;   
-    
+    private final Document signedRemEvidenceXml;
+
     public SignedRemEvidence(JAXBElement<REMEvidenceType> jaxbElement, Document signedRemEvidenceXml) {
         this.jaxbElement = jaxbElement;
         this.signedRemEvidenceXml = signedRemEvidenceXml;
@@ -73,22 +74,22 @@ public class SignedRemEvidence {
         try {
             String evElementName = signedRemEvidenceXml.getDocumentElement().getLocalName();
             switch (evElementName) {
-                case "DeliveryNonDeliveryToRecipient" : 
+                case "DeliveryNonDeliveryToRecipient":
                     return EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT;
-                case "RelayREMMDAcceptanceRejection" :
+                case "RelayREMMDAcceptanceRejection":
                     return EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION;
                 default:
                     return null;
-             }
+            }
         } catch (NullPointerException npe) {
             return null;
         }
     }
-    
+
     public String getEvidenceIdentifier() {
         return e().getEvidenceIdentifier();
     }
-    
+
     public EventCode getEventCode() {
         return EventCode.valueFor(e().getEventCode());
     }
@@ -106,23 +107,23 @@ public class SignedRemEvidence {
     public Date getEventTime() {
         return e().getEventTime().toGregorianCalendar().getTime();
     }
-   
+
     public String getEvidenceIssuerPolicyID() throws RemEvidenceException {
-        if (e().getEvidenceIssuerPolicyID() == null) 
+        if (e().getEvidenceIssuerPolicyID() == null)
             throw new RemEvidenceException("Evidence issuer policy ID is not set");
         else
             return e().getEvidenceIssuerPolicyID().getPolicyID().get(0);
     }
-    
+
     public String getEvidenceIssuerDetails() throws RemEvidenceException {
         try {
             return e().getEvidenceIssuerDetails()
-                            .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
+                    .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
         } catch (NullPointerException npe) {
             throw new RemEvidenceException("There are no Event Issuer Details");
-        }            
+        }
     }
-    
+
     public ParticipantIdentifier getSenderIdentifier() {
 
         EntityDetailsType senderDetails = e().getSenderDetails();
@@ -136,7 +137,9 @@ public class SignedRemEvidence {
     }
 
 
-    /** Internal convenience method */
+    /**
+     * Internal convenience method
+     */
     private REMEvidenceType e() {
         return jaxbElement.getValue();
     }
@@ -162,7 +165,7 @@ public class SignedRemEvidence {
 
         return documentTypeIdentifier;
     }
-    
+
     public String getDocumentTypeInstanceIdentifier() {
         return e().getSenderMessageDetails().getUAMessageIdentifier();
     }

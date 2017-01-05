@@ -22,11 +22,11 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;

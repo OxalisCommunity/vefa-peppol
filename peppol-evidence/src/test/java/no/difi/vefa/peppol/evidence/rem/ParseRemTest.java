@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import org.etsi.uri._02640.v2_.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import org.testng.annotations.Test;
 
 import javax.xml.bind.JAXBContext;
@@ -60,6 +60,6 @@ public class ParseRemTest {
 
         REMEvidenceType value = (REMEvidenceType) unmarshalled.getValue();
 
-        assertEquals(value.getEventCode(), EventCode.DELIVERY.value.toString());
+        assertEquals(value.getEventCode(), EventCode.DELIVERY.getValue());
     }
 }

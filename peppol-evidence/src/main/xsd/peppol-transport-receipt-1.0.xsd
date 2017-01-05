@@ -34,7 +34,7 @@
                 <xs:element name="TransmissionProtocol" type="xs:string" minOccurs="1"/>
                 <xs:element name="TransmissionRole" type="TransmissionRole" minOccurs="1"/>
                 <!-- Original protocol specific receipt -->
-                <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0"/>
+                <xs:element name="OriginalReceipt" type="OriginalReceiptType" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

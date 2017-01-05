@@ -22,25 +22,50 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.api.Perform;
+import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import org.etsi.uri._02640.v2_.AttributedElectronicAddressType;
-import org.etsi.uri._02640.v2_.EventReasonType;
-import org.etsi.uri._02640.v2_.EventReasonsType;
+import no.difi.vefa.peppol.common.model.Scheme;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
+import no.difi.vefa.peppol.evidence.jaxb.rem.*;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 class RemHelper {
 
+    public static JAXBContext jaxbContext;
+
+    public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
+
+    public static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
+
+    static {
+        PeppolRuntimeException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
+            }
+        });
+
+        DOCUMENT_BUILDER_FACTORY.setNamespaceAware(true);
+    }
+
     public static AttributedElectronicAddressType createElectronicAddressType(ParticipantIdentifier participant) {
         AttributedElectronicAddressType o = new AttributedElectronicAddressType();
-        o.setValue(participant.toString());
+        o.setValue(participant.getIdentifier());
         o.setScheme(participant.getScheme().getValue());
 
         return o;
+    }
+
+    public static ParticipantIdentifier readElectronicAddressType(AttributedElectronicAddressType o) {
+        return ParticipantIdentifier.of(o.getValue(), Scheme.of(o.getScheme()));
     }
 
     public static EventReasonType createEventReasonType(EventReason eventReason) {
@@ -68,5 +93,9 @@ class RemHelper {
             throw new RemEvidenceException(
                     String.format("Unable to create XMLGregorianCalendar instance from '%s'", date), e);
         }
+    }
+
+    public static Date fromXmlGregorianCalendar(XMLGregorianCalendar calendar) {
+        return calendar.toGregorianCalendar().getTime();
     }
 }

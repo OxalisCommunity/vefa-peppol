@@ -22,8 +22,8 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import eu.peppol.xsd.ticc.receipt._1.TransmissionRole;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

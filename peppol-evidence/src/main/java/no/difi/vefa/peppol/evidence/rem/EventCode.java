@@ -37,10 +37,10 @@ public enum EventCode {
     DELIVERY("http:uri.etsi.org/02640/Event#Delivery"),
     DELIVERY_EXPIRATION("http:uri.etsi.org/02640/Event#DeliveryExpiration");
 
-    String value;
+    private String value;
 
-    EventCode(String uri) {
-        value = uri;
+    EventCode(String value) {
+        this.value = value;
     }
 
     public String getValue() {
