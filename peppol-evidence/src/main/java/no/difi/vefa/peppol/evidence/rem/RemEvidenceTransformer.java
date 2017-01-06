@@ -23,6 +23,7 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -59,7 +60,7 @@ public class RemEvidenceTransformer {
      *
      * @param signedRemEvidence instance to be formatted.
      * @param outputStream
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     public void toUnformattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
         format(signedRemEvidence, outputStream, false);
@@ -72,7 +73,7 @@ public class RemEvidenceTransformer {
      *
      * @param signedRemEvidence
      * @param outputStream
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
         format(signedRemEvidence, outputStream, true);
@@ -84,7 +85,7 @@ public class RemEvidenceTransformer {
      * @param signedRemEvidence rem evidence to transform
      * @param outputStream      into which the formatted output should be emitted.
      * @param formatted         indicates whether the output should be formatted (true) or not (false)
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) throws RemEvidenceException {
         Transformer transformer;
@@ -113,12 +114,12 @@ public class RemEvidenceTransformer {
      *
      * @param signedRemDocument
      * @return
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) throws RemEvidenceException {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
         try {
-            Unmarshaller unmarshaller = JaxbContextHolder.INSTANCE.getUnmarshaller();
+            Unmarshaller unmarshaller = RemHelper.jaxbContext.createUnmarshaller();
             remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
         } catch (JAXBException e) {
             throw new RemEvidenceException("Unable to create unmarshaller");
@@ -136,7 +137,7 @@ public class RemEvidenceTransformer {
      *
      * @param inputStream holding the xml representation of a signed REM evidence.
      * @return SignedRemEvidence
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     public SignedRemEvidence parse(InputStream inputStream) throws RemEvidenceException {
 

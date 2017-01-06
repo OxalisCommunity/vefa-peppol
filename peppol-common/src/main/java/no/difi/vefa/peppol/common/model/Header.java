@@ -27,6 +27,8 @@ import java.util.Date;
 
 public class Header implements Serializable {
 
+    private static final long serialVersionUID = -7517561747468194479L;
+
     private ParticipantIdentifier sender;
 
     private ParticipantIdentifier receiver;

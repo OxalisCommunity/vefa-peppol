@@ -32,6 +32,7 @@ import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 import no.difi.vefa.peppol.evidence.jaxb.rem.*;
 import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
 import no.difi.vefa.peppol.evidence.jaxb.xmldsig.DigestMethodType;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
 import org.w3c.dom.Document;
@@ -49,9 +50,9 @@ import java.util.UUID;
 
 /**
  * Builds instances of SignedRemEvidence based upon the properties supplied.
- * <p>
+ * <p/>
  * See unit tests for details on how to use it.
- * <p>
+ * <p/>
  * Created by steinar on 08.11.2015.
  * Edited by sanderf to fix issues #4, #5, #11
  */
@@ -362,7 +363,7 @@ public class RemEvidenceBuilder {
         // Marshals the JAXBElement into DOM object for signing
         Marshaller marshaller;
         try {
-            marshaller = JaxbContextHolder.INSTANCE.getMarshaller();
+            marshaller = RemHelper.jaxbContext.createMarshaller();
         } catch (JAXBException e) {
             throw new RemEvidenceException("Unable to create marshaller for transformation into a DOM object for creating the signature", e);
         }

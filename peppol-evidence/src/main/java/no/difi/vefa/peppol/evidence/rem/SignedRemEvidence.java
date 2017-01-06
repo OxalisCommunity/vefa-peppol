@@ -29,6 +29,7 @@ import no.difi.vefa.peppol.common.model.Scheme;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.rem.*;
 import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Document;
 
 import javax.xml.bind.JAXBElement;

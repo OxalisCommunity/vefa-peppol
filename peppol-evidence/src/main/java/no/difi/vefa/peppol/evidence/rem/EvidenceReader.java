@@ -24,15 +24,13 @@ package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.common.code.DigestMethod;
 import no.difi.vefa.peppol.common.lang.PeppolException;
-import no.difi.vefa.peppol.common.model.Digest;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.InstanceIdentifier;
-import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.rem.AttributedElectronicAddressType;
 import no.difi.vefa.peppol.evidence.jaxb.rem.ExtensionType;
 import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBElement;
@@ -90,7 +88,7 @@ public class EvidenceReader {
             // Sender Message Details
             evidence = evidence.digest(Digest.of(DigestMethod.fromUri(remEvidence.getSenderMessageDetails().getDigestMethod().getAlgorithm()), remEvidence.getSenderMessageDetails().getDigestValue()));
             evidence = evidence.messageIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getUAMessageIdentifier()));
-            evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(remEvidence.getSenderMessageDetails().getMessageSubject()));
+            evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(remEvidence.getSenderMessageDetails().getMessageSubject(), Scheme.NONE));
 
             // Extensions
 

@@ -22,7 +22,11 @@
 
 package no.difi.vefa.peppol.common.model;
 
-public class InstanceType {
+import java.io.Serializable;
+
+public class InstanceType implements Serializable {
+
+    private static final long serialVersionUID = -8577145245367335582L;
 
     private String standard;
 

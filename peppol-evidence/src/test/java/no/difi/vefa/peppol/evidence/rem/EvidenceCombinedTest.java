@@ -42,7 +42,7 @@ public class EvidenceCombinedTest {
             .timestamp(new Date())
             .sender(ParticipantIdentifier.of("9908:123456785"))
             .receiver(ParticipantIdentifier.of("9908:987654325"))
-            .documentTypeIdentifier(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1"))
+            .documentTypeIdentifier(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1", Scheme.NONE))
             .messageIdentifier(InstanceIdentifier.generateUUID())
             .digest(Digest.of(DigestMethod.SHA256, "VGhpc0lzQVNIQTI1NkRpZ2VzdA==".getBytes()))
             .transportProtocol(TransportProtocol.AS2)

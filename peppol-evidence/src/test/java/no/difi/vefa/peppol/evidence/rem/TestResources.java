@@ -27,6 +27,7 @@ import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.TransportProtocol;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -151,7 +152,7 @@ public class TestResources {
      * Creates sample rem evidence.
      *
      * @return sample REMEvidence based upon the resources in test/resources of this project.
-     * @throws no.difi.vefa.peppol.evidence.rem.RemEvidenceException
+     * @throws RemEvidenceException
      */
     public static SignedRemEvidence createSampleRemEvidence() throws RemEvidenceException {
         RemEvidenceBuilder builder = remEvidenceService.createDeliveryNonDeliveryToRecipientBuilder();

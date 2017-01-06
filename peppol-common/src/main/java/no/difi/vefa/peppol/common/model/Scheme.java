@@ -28,6 +28,8 @@ public class Scheme implements Serializable {
 
     private static final long serialVersionUID = -6022267082161778285L;
 
+    public static final Scheme NONE = new Scheme("NONE");
+
     private String value;
 
     public static Scheme of(String value) {

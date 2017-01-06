@@ -27,6 +27,7 @@ import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.rem.*;
 import no.difi.vefa.peppol.evidence.jaxb.xmldsig.DigestMethodType;
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBException;
