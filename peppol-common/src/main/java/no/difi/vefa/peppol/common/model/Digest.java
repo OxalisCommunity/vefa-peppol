@@ -26,7 +26,6 @@ import no.difi.vefa.peppol.common.code.DigestMethod;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Base64;
 
 public class Digest implements Serializable {
 
