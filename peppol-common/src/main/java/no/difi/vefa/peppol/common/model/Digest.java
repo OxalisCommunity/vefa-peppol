@@ -48,6 +48,10 @@ public class Digest implements Serializable {
         return method;
     }
 
+    public byte[] getValue() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -65,10 +69,6 @@ public class Digest implements Serializable {
         int result = method.hashCode();
         result = 31 * result + Arrays.hashCode(value);
         return result;
-    }
-
-    public byte[] getValue() {
-        return value;
     }
 
     @Override
