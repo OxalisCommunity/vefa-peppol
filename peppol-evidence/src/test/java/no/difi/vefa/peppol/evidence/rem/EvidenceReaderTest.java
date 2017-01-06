@@ -22,24 +22,12 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.model.Signed;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-public class SignedEvidenceWriterReaderTest {
+public class EvidenceReaderTest {
 
     @Test
-    public void simple() throws Exception {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        SignedEvidenceWriter.write(outputStream, TestResources.getPrivateKey(), EvidenceWriterReaderTest.EVIDENCE);
-
-        Signed<Evidence> evidenceSigned = SignedEvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
-
-        Assert.assertEquals(evidenceSigned.getCertificate(), TestResources.getPrivateKey().getCertificate());
-        Assert.assertEquals(evidenceSigned.getContent(), EvidenceWriterReaderTest.EVIDENCE);
+    public void simpleConstructor() {
+        new EvidenceReader();
     }
 }

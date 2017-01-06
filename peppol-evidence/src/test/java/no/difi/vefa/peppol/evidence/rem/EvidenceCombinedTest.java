@@ -32,7 +32,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
-public class EvidenceWriterReaderTest {
+public class EvidenceCombinedTest {
 
     public static final Evidence EVIDENCE = Evidence.newInstance()
             .type(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT)

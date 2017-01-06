@@ -97,24 +97,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>cobertura-maven-plugin</artifactId>
-                    <configuration>
-                        <instrumentation>
-                            <excludes>
-                                <exclude>eu/peppol/xsd/**/*.class</exclude>
-                                <exclude>oasis/names/**/*.class</exclude>
-                                <exclude>org/etsi/**/*.class</exclude>
-                                <exclude>org/w3/**/*.class</exclude>
-                            </excludes>
-                        </instrumentation>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
 </project>
