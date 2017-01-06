@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Direktoratet for forvaltning og IKT
+ * Copyright 2016-2017 Direktoratet for forvaltning og IKT
  *
  * Licensed under the EUPL, Version 1.1 or – as soon they
  * will be approved by the European Commission - subsequent
@@ -40,14 +40,16 @@ public class ApacheFetcher extends AbstractFetcher {
 
     private HttpClient httpClient;
 
-    private RequestConfig requestConfig = RequestConfig.custom()
-            .setConnectionRequestTimeout(TIMEOUT)
-            .setConnectTimeout(TIMEOUT)
-            .setSocketTimeout(TIMEOUT)
-            .build();
+    private RequestConfig requestConfig;
 
     public ApacheFetcher(HttpClient httpClient) {
         this.httpClient = httpClient;
+
+        this.requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(TIMEOUT)
+                .setConnectTimeout(TIMEOUT)
+                .setSocketTimeout(TIMEOUT)
+                .build();
     }
 
     public ApacheFetcher() {

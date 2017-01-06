@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Direktoratet for forvaltning og IKT
+ * Copyright 2016-2017 Direktoratet for forvaltning og IKT
  *
  * Licensed under the EUPL, Version 1.1 or – as soon they
  * will be approved by the European Commission - subsequent
@@ -27,16 +27,14 @@ import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.net.URI;
-
 public class StaticLocatorTest {
 
     @Test
     public void simple() throws Exception {
-        URI uri = URI.create("http://smp.example.com/");
+        String uri = "http://smp.example.com/";
 
         MetadataLocator locator = new StaticLocator(uri);
 
-        Assert.assertEquals(locator.lookup(ParticipantIdentifier.of("9908:991825827")), uri);
+        Assert.assertEquals(locator.lookup(ParticipantIdentifier.of("9908:991825827")).toString(), uri);
     }
 }

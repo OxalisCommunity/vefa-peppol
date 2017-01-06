@@ -40,6 +40,7 @@
         <module>peppol-lookup</module>
         <module>peppol-sbdh</module>
         <module>peppol-security</module>
+        <module>peppol-mode</module>
     </modules>
 
     <scm>
@@ -170,6 +171,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>20.0</version>
+            </dependency>
+
+            <!-- Typesafe Config -->
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>1.2.1</version>
             </dependency>
 
             <!-- Java Mail -->
