@@ -20,22 +20,17 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.sbdh;
+package no.difi.vefa.peppol.security.lang;
 
-import javax.xml.namespace.QName;
+import org.mockito.Mockito;
+import org.testng.annotations.Test;
 
-public class Ns {
+public class PeppolSecurityExceptionTest {
 
-    public static final String SBDH = "http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader";
-
-    public static final String EXTENSION = "http://peppol.eu/xsd/ticc/envelope/1.0";
-
-    public static final QName QNAME_BINARY_CONTENT = new QName(EXTENSION, "BinaryContent");
-
-    public static final QName QNAME_TEXT_CONTENT = new QName(EXTENSION, "TextContent");
-
-    public static final QName QNAME_SBD = new QName(SBDH, "StandardBusinessDocument");
-
-    public static final QName QNAME_SBDH = new QName(SBDH, "StandardBusinessDocumentHeader");
-
+    @Test
+    @SuppressWarnings("all")
+    public void simple() {
+        new PeppolSecurityException("Test");
+        new PeppolSecurityException("Test", Mockito.mock(Exception.class));
+    }
 }

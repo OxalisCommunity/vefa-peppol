@@ -37,6 +37,7 @@ public enum Iso6523Icd implements Icd {
     NL_KVK("NL:KVK", "0106"),
     IT_SIA("IT:SIA", "0135"),
     IT_SECETI("IT:SECETI", "0142"),
+    DIGST("DIGST", "0184"),
     DK_CPR("DK:CPR", "9901"),
     DK_CVR("DK:CVR", "9902"),
     DK_SE("DK:SE", "9904"),

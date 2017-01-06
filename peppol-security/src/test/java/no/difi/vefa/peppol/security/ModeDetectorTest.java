@@ -24,7 +24,6 @@ package no.difi.vefa.peppol.security;
 
 import no.difi.certvalidator.Validator;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
-import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 

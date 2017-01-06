@@ -23,8 +23,6 @@
 package no.difi.vefa.peppol.security.xmldsig;
 
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
@@ -36,8 +34,6 @@ import javax.xml.crypto.dsig.dom.DOMValidateContext;
 import java.security.cert.X509Certificate;
 
 public class XmldsigVerifier {
-
-    private static final Logger logger = LoggerFactory.getLogger(XmldsigVerifier.class);
 
     public static X509Certificate verify(Document document) throws PeppolSecurityException {
         try {
@@ -54,10 +50,8 @@ public class XmldsigVerifier {
             if (!signature.validate(valContext))
                 throw new PeppolSecurityException("Signature failed.");
 
-            logger.debug("Signature passed.");
             return keySelector.getCertificate();
         } catch (XMLSignatureException | MarshalException e) {
-            logger.warn(e.getMessage(), e);
             throw new PeppolSecurityException("Unable to verify document signature.", e);
         }
     }
