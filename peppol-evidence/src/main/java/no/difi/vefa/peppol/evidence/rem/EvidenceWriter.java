@@ -36,6 +36,7 @@ import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
 import java.io.OutputStream;
+import java.math.BigInteger;
 
 public class EvidenceWriter {
 
@@ -70,6 +71,15 @@ public class EvidenceWriter {
         remEvidence.setEventReasons(new EventReasonsType());
         remEvidence.getEventReasons().getEventReason().add(RemHelper.createEventReasonType(evidence.getEventReason()));
 
+        // Issuer
+        NamePostalAddressType namePostalAddressType = new NamePostalAddressType();
+        namePostalAddressType.setEntityName(new EntityNameType());
+        namePostalAddressType.getEntityName().getName().add(evidence.getIssuer());
+
+        remEvidence.setEvidenceIssuerDetails(new EntityDetailsType());
+        remEvidence.getEvidenceIssuerDetails().setNamesPostalAddresses(new NamesPostalAddressListType());
+        remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().add(namePostalAddressType);
+
         // Evidence Identifier
         remEvidence.setEvidenceIdentifier(evidence.getEvidenceIdentifier().getValue());
 
@@ -84,6 +94,7 @@ public class EvidenceWriter {
         remEvidence.setRecipientsDetails(new EntityDetailsListType());
         remEvidence.getRecipientsDetails().getEntityDetails().add(new EntityDetailsType());
         remEvidence.getRecipientsDetails().getEntityDetails().get(0).getAttributedElectronicAddressOrElectronicAddress().add(RemHelper.createElectronicAddressType(evidence.getReceiver()));
+        remEvidence.setEvidenceRefersToRecipient(BigInteger.valueOf(1));
 
         // Sender Message Details
         MessageDetailsType messageDetailsType = new MessageDetailsType();
@@ -93,6 +104,7 @@ public class EvidenceWriter {
         digestMethodType.setAlgorithm(evidence.getDigest().getMethod().getUri());
         messageDetailsType.setDigestMethod(digestMethodType);
         messageDetailsType.setDigestValue(evidence.getDigest().getValue());
+        messageDetailsType.setIsNotification(false);
         remEvidence.setSenderMessageDetails(messageDetailsType);
 
         // Extensions

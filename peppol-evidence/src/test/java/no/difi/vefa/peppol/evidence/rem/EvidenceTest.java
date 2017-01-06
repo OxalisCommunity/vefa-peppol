@@ -36,6 +36,7 @@ public class EvidenceTest {
             .type(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT)
             .eventCode(EventCode.ACCEPTANCE)
             .eventReason(EventReason.OTHER)
+            .issuer("Java Testing")
             .evidenceIdentifier(InstanceIdentifier.generateUUID())
             .timestamp(new Date())
             .sender(ParticipantIdentifier.of("9908:123456785"))
@@ -58,6 +59,7 @@ public class EvidenceTest {
         Assert.assertNotNull(EVIDENCE.type(null).hashCode());
         Assert.assertNotNull(EVIDENCE.eventCode(null).hashCode());
         Assert.assertNotNull(EVIDENCE.eventReason(null).hashCode());
+        Assert.assertNotNull(EVIDENCE.issuer(null).hashCode());
         Assert.assertNotNull(EVIDENCE.evidenceIdentifier(null).hashCode());
         Assert.assertNotNull(EVIDENCE.timestamp(null).hashCode());
         Assert.assertNotNull(EVIDENCE.sender(null).hashCode());
@@ -78,6 +80,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.type(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.eventCode(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.eventReason(null)));
+        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.issuer(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.evidenceIdentifier(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.timestamp(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.sender(null)));
@@ -91,6 +94,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.type(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.eventCode(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.eventReason(null).equals(EVIDENCE));
+        Assert.assertFalse(EVIDENCE.issuer(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.evidenceIdentifier(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.timestamp(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.sender(null).equals(EVIDENCE));
@@ -104,6 +108,7 @@ public class EvidenceTest {
         Assert.assertTrue(EVIDENCE.type(null).equals(EVIDENCE.type(null)));
         Assert.assertTrue(EVIDENCE.eventCode(null).equals(EVIDENCE.eventCode(null)));
         Assert.assertTrue(EVIDENCE.eventReason(null).equals(EVIDENCE.eventReason(null)));
+        Assert.assertTrue(EVIDENCE.issuer(null).equals(EVIDENCE.issuer(null)));
         Assert.assertTrue(EVIDENCE.evidenceIdentifier(null).equals(EVIDENCE.evidenceIdentifier(null)));
         Assert.assertTrue(EVIDENCE.timestamp(null).equals(EVIDENCE.timestamp(null)));
         Assert.assertTrue(EVIDENCE.sender(null).equals(EVIDENCE.sender(null)));
@@ -117,6 +122,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.type(EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.eventCode(EventCode.REJECTION)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.eventReason(EventReason.MAILBOX_FULL)));
+        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.issuer("Somebody")));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.evidenceIdentifier(InstanceIdentifier.generateUUID())));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.timestamp(new Date())));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.sender(ParticipantIdentifier.of("9908:999999999"))));

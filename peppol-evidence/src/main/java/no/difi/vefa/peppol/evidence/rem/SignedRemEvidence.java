@@ -60,8 +60,6 @@ public class SignedRemEvidence {
     /**
      * Provides access to the REM evidence in accordance with the XML schema. Thus allowing simple access to various
      * fields without reverting to XPath expressions in the W3C Document.
-     *
-     * @return
      */
     public REMEvidenceType getRemEvidenceType() {
         return e();
@@ -134,7 +132,7 @@ public class SignedRemEvidence {
         String scheme = attributedElectronicAddressType.getScheme();
         String value = attributedElectronicAddressType.getValue();
 
-        return new ParticipantIdentifier(value, new Scheme(scheme));
+        return ParticipantIdentifier.of(value, Scheme.of(scheme));
     }
 
 
@@ -155,16 +153,14 @@ public class SignedRemEvidence {
         String value = attributedElectronicAddressType.getValue();
 
 
-        return new ParticipantIdentifier(value, new Scheme(scheme));
+        return ParticipantIdentifier.of(value, Scheme.of(scheme));
     }
 
     public DocumentTypeIdentifier getDocumentTypeIdentifier() {
         MessageDetailsType senderMessageDetails = e().getSenderMessageDetails();
         String messageSubject = senderMessageDetails.getMessageSubject();
 
-        DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier.of(messageSubject);
-
-        return documentTypeIdentifier;
+        return DocumentTypeIdentifier.of(messageSubject);
     }
 
     public String getDocumentTypeInstanceIdentifier() {

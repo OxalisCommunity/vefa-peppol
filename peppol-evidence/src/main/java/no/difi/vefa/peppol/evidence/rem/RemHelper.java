@@ -35,6 +35,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -47,6 +48,8 @@ class RemHelper {
 
     public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
+    private static DatatypeFactory datatypeFactory;
+
     public static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
 
     static {
@@ -54,6 +57,7 @@ class RemHelper {
             @Override
             public void action() throws Exception {
                 jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
+                datatypeFactory = DatatypeFactory.newInstance();
             }
         });
 
@@ -91,12 +95,10 @@ class RemHelper {
     public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws RemEvidenceException {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
-        try {
-            return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-        } catch (DatatypeConfigurationException e) {
-            throw new RemEvidenceException(
-                    String.format("Unable to create XMLGregorianCalendar instance from '%s'", date), e);
-        }
+
+        XMLGregorianCalendar xmlGregorianCalendar = datatypeFactory.newXMLGregorianCalendar(c);
+        xmlGregorianCalendar.setMillisecond(DatatypeConstants.FIELD_UNDEFINED);
+        return xmlGregorianCalendar;
     }
 
     public static Date fromXmlGregorianCalendar(XMLGregorianCalendar calendar) {
