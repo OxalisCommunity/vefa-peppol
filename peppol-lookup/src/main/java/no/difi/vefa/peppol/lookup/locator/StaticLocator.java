@@ -24,12 +24,17 @@ package no.difi.vefa.peppol.lookup.locator;
 
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.mode.Mode;
 
 import java.net.URI;
 
 public class StaticLocator extends AbstractLocator {
 
     private URI defaultUri;
+
+    public StaticLocator(Mode mode) {
+        this(mode.getString("locator.hostname"));
+    }
 
     public StaticLocator(String defaultUri) {
         this.defaultUri = URI.create(defaultUri);

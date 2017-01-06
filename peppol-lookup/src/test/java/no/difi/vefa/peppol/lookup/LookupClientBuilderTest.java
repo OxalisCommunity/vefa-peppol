@@ -30,29 +30,28 @@ import static org.testng.Assert.fail;
 public class LookupClientBuilderTest {
 
     @Test
-    public void success() {
+    public void success() throws Exception {
         assertNotNull(LookupClientBuilder.forProduction());
         assertNotNull(LookupClientBuilder.forTest());
     }
 
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void testMissingLocator() {
-        LookupClientBuilder.forProduction().locator(null).build();
-        fail("Exception expected");
+    @Test
+    public void testMissingLocator() throws Exception {
+        assertNotNull(LookupClientBuilder.forProduction().locator(null).build());
     }
 
     @Test
-    public void testMissingProvider() {
+    public void testMissingProvider() throws Exception {
         assertNotNull(LookupClientBuilder.forProduction().provider(null).build());
     }
 
     @Test
-    public void testMissingFetcher() {
+    public void testMissingFetcher() throws Exception {
         assertNotNull(LookupClientBuilder.forProduction().fetcher(null).build());
     }
 
     @Test
-    public void testMissingReader() {
+    public void testMissingReader() throws Exception {
         assertNotNull(LookupClientBuilder.forProduction().reader(null).build());
     }
 }

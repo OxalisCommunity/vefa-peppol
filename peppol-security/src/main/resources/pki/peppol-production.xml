@@ -1,0 +1,133 @@
+<!--
+  ~ Copyright 2016-2017 Direktoratet for forvaltning og IKT
+  ~
+  ~ Licensed under the EUPL, Version 1.1 or – as soon they
+  ~ will be approved by the European Commission - subsequent
+  ~ versions of the EUPL (the "Licence");
+  ~
+  ~ You may not use this work except in compliance with the Licence.
+  ~
+  ~ You may obtain a copy of the Licence at:
+  ~
+  ~ https://joinup.ec.europa.eu/community/eupl/og_page/eupl
+  ~
+  ~ Unless required by applicable law or agreed to in
+  ~ writing, software distributed under the Licence is
+  ~ distributed on an "AS IS" basis,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
+  ~ express or implied.
+  ~ See the Licence for the specific language governing
+  ~ permissions and limitations under the Licence.
+  -->
+<ValidatorRecipe xmlns="http://difi.no/xsd/certvalidator/1.0" name="peppol-test" version="2016-10-16">
+    <Validator>
+        <Expiration/>
+        <Signing type="PUBLIC_SIGNED"/>
+        <PrincipleName field="CN" principal="ISSUER">
+            <Value>PEPPOL ACCESS POINT CA</Value>
+            <Value>PEPPOL SERVICE METADATA PUBLISHER CA</Value>
+        </PrincipleName>
+        <Chain>
+            <RootBucketReference>root</RootBucketReference>
+            <IntermediateBucketReference>intermediate</IntermediateBucketReference>
+        </Chain>
+        <Cached timeout="60">
+            <CRL/>
+            <OCSP>
+                <IntermediateBucketReference>intermediate</IntermediateBucketReference>
+            </OCSP>
+        </Cached>
+    </Validator>
+    <Validator name="AP" timeout="10">
+        <PrincipleName field="CN" principal="ISSUER">
+            <Value>PEPPOL ACCESS TEST CA</Value>
+        </PrincipleName>
+        <ValidatorReference>default</ValidatorReference>
+    </Validator>
+    <Validator name="SMP" timeout="10">
+        <PrincipleName field="CN" principal="ISSUER">
+            <Value>PEPPOL SERVICE METADATA PUBLISHER CA</Value>
+        </PrincipleName>
+        <ValidatorReference>default</ValidatorReference>
+    </Validator>
+
+    <CertificateBucket name="root">
+        <!-- CN=PEPPOL Root CA,O=NATIONAL IT AND TELECOM AGENCY,C=DK -->
+        <Certificate>
+            MIIDlTCCAn2gAwIBAgIQdpMQflyySdejvdtfNmYEFDANBgkqhkiG9w0BAQUFADBP
+            MQswCQYDVQQGEwJESzEnMCUGA1UEChMeTkFUSU9OQUwgSVQgQU5EIFRFTEVDT00g
+            QUdFTkNZMRcwFQYDVQQDEw5QRVBQT0wgUm9vdCBDQTAeFw0xMDAxMjcwMDAwMDBa
+            Fw0yMDAxMjYyMzU5NTlaME8xCzAJBgNVBAYTAkRLMScwJQYDVQQKEx5OQVRJT05B
+            TCBJVCBBTkQgVEVMRUNPTSBBR0VOQ1kxFzAVBgNVBAMTDlBFUFBPTCBSb290IENB
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5yOviGUBEULtwFe7MwVM
+            hINaCC9YG4e8I9Z6c5aM6T9TYlZIi0Zj+Jynw3C3xXS4tpKV1Ihh6+dzqe9+eADm
+            4xVDmHElDfnkjsgCFbW95h7xyyuzxap3g1zR1Hr5SRVGeh6UWvGgDL0ejfMHhbR9
+            +eCcRI5kUSNO23Ftkpd7H8o97HAzWrGbyuz9ZJpGr0bApoZeLF9OQ4rM9x/TX0xd
+            JdvEa6fGCtljAsBvAXy02WnH0Dfq9n+U4NidcWL7SVok/Rfs0SiWy2vQxa2WghMt
+            oXg9MAq8CTafMCaUZoZkHU9FNUGPZ9V74sbNIoZJuJZNLkFzPi42PboVAt8VWQph
+            PQIDAQABo20wazASBgNVHRMBAf8ECDAGAQH/AgEBMA4GA1UdDwEB/wQEAwIBBjAm
+            BgNVHREEHzAdpBswGTEXMBUGA1UEAxMOTVBLSS0yMDQ4LTEtNjgwHQYDVR0OBBYE
+            FIUD4QOpAhlmGEB3suAHa7gjjbZXMA0GCSqGSIb3DQEBBQUAA4IBAQB5WJ3cPSDB
+            uhLHqmBfzAgc/UvU5dXtnN1ia9VGswA8uDIFbqPEfPGEVZn5NrNJLbolC7B6bc7c
+            xuYpESWkchQac+SyTLML9fEzi/yPzZpsn+jsNPZ2vj/0HIVnjJUfzBvJSiCVuEPP
+            WKqy49+yDzq9qasZvuP48131Wq4EOdXoru9ZkGS02ni4Lor3t8bL5g6hS5ttjeyv
+            9K2GpAFY6qWAV3nx/bcwEjh0VMqmJOwVOpzaPihxpwKMBkEtZyZh+YEICtsRjW7r
+            SVXd8vd8f9OwWy/kcPzRhfK9dGnAnGqvpO2cLH1CgNAqPZw8Yui14bTjQVek0zR6
+            7WBs4vwiwnrR
+        </Certificate>
+    </CertificateBucket>
+    <CertificateBucket name="intermediate">
+        <!-- CN=PEPPOL ACCESS POINT CA,O=NATIONAL IT AND TELECOM AGENCY,C=DK -->
+        <Certificate>
+            MIIELTCCAxWgAwIBAgIQCKveXG0TZVjptxsLg+XyxTANBgkqhkiG9w0BAQUFADBP
+            MQswCQYDVQQGEwJESzEnMCUGA1UEChMeTkFUSU9OQUwgSVQgQU5EIFRFTEVDT00g
+            QUdFTkNZMRcwFQYDVQQDEw5QRVBQT0wgUm9vdCBDQTAeFw0xMDAxMjcwMDAwMDBa
+            Fw0yMDAxMjUyMzU5NTlaMFcxCzAJBgNVBAYTAkRLMScwJQYDVQQKEx5OQVRJT05B
+            TCBJVCBBTkQgVEVMRUNPTSBBR0VOQ1kxHzAdBgNVBAMTFlBFUFBPTCBBQ0NFU1Mg
+            UE9JTlQgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDN/YPfNI3l
+            YFFhoYeLlPKxfBKWmfLZhCbqR6ZCi6yfceA8kY/G7QMvHS+R2VQF3oKqd+JnYXQB
+            6FQ7eWV2W/JkcQpaAPoK6e85EoiVHtUDzVgkCmXJ/Q91XbCxJFJyzVoiLVNQhVLs
+            hxzJP97l0VdUFlXTmuY4TDhonLlREGkr/aqOU1JlxHqv8W3LKpbehgVpye9rtEWP
+            uYDO+fBK7ZvnDBUqe8VyO2ZONOrf/eJ21x0AEQR41xrfzOjfEn7oNuqhM7OUzk3n
+            KbUOXybC5bXl7NHA/FdObU2h5ft/aC3qWfmbn8EtjZMHRyoSefyw2p2yHtVY1KRQ
+            YW/p48pae2xBAgMBAAGjgfwwgfkwEgYDVR0TAQH/BAgwBgEB/wIBADAOBgNVHQ8B
+            Af8EBAMCAQYwYwYDVR0fBFwwWjBYoFagVIZSaHR0cDovL29uc2l0ZWNybC52ZXJp
+            c2lnbi5jb20vb2ZmbGluZWNhL05BVElPTkFMSVRBTkRURUxFQ09NQUdFTkNZUEVQ
+            UE9MUm9vdENBLmNybDAuBgNVHREEJzAlpCMwITEfMB0GA1UEAxMWUHJpdmF0ZUxh
+            YmVsNC0yMDQ4LTE2MTAdBgNVHQ4EFgQUTfY+AFAohm01oPzvZqr6IqEk240wHwYD
+            VR0jBBgwFoAUhQPhA6kCGWYYQHey4AdruCONtlcwDQYJKoZIhvcNAQEFBQADggEB
+            AFWq41z5TZPhtp8nHXXWiMzexWrKB210Cmgm6okqkL7uqipz1oODKXY7g9haYzOd
+            RE9lIly91rY2ho84ognD4boNGI9/lOwbqh0jG5a/zqULrdMvk1f28OaTF766Iwvb
+            1UkR7spFhxwwO7O7lATORTg1M1BwvhT66r/bjyMB8pM2zlMMzoUzarJkfpv7U/To
+            4/pbbiRFgN0k7C+uL9H6xAcYr6gy3i9/3miFq3szXKV7LodhEnFFDFprtlXBr6XZ
+            96eUA2AuZOGEg3OUAg6vse2k1YFU/2ajNZ3xmeQqb8G6pkOaoYuv2ZQTmnLbAY9C
+            zpNaIeOM3oTGItb4kUn5GPs=
+        </Certificate>
+        <!-- CN=PEPPOL SERVICE METADATA PUBLISHER CA,O=NATIONAL IT AND TELECOM AGENCY,C=DK -->
+        <Certificate>
+            MIIEOzCCAyOgAwIBAgIQZM5vVFl6qAiPSIPEWfqK2jANBgkqhkiG9w0BAQUFADBP
+            MQswCQYDVQQGEwJESzEnMCUGA1UEChMeTkFUSU9OQUwgSVQgQU5EIFRFTEVDT00g
+            QUdFTkNZMRcwFQYDVQQDEw5QRVBQT0wgUm9vdCBDQTAeFw0xMDAxMjcwMDAwMDBa
+            Fw0yMDAxMjUyMzU5NTlaMGUxCzAJBgNVBAYTAkRLMScwJQYDVQQKEx5OQVRJT05B
+            TCBJVCBBTkQgVEVMRUNPTSBBR0VOQ1kxLTArBgNVBAMTJFBFUFBPTCBTRVJWSUNF
+            IE1FVEFEQVRBIFBVQkxJU0hFUiBDQTCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+            AQoCggEBANjcKJPKgYvp/oWfJM8jd7Fry0mXQlFoXGIn5xyNUiXd/wRtyGRseC2T
+            Qb2tES6Wi4VHVKVy3mhuqqnfvt8I/69+RuwMjR8aMhN9iV0pMMSwRfptufQ9pLh/
+            Vu2FJQId1SmRVoc13mDD3HpDdZELM5rGxCiEoGgM2+DO2kgG44moN/SfI6nXqeGK
+            JVhmTFTaibNi1iB0HL3YpfCM5AbBbaE0FezGK6Pxm6HWis3MIhG96e4XqCYo/vHA
+            gHqBcsPh9iDHdX2Oxd4ZvGYIz+hVwoGt1PgYMpnxtXO9vT7jIeBzdsAz9Z9EnsFV
+            YsurRhRzFgIwaVtnxpJJ5NOxf5+pv5MCAwEAAaOB/DCB+TASBgNVHRMBAf8ECDAG
+            AQH/AgEAMA4GA1UdDwEB/wQEAwIBBjBjBgNVHR8EXDBaMFigVqBUhlJodHRwOi8v
+            b25zaXRlY3JsLnZlcmlzaWduLmNvbS9vZmZsaW5lY2EvTkFUSU9OQUxJVEFORFRF
+            TEVDT01BR0VOQ1lQRVBQT0xSb290Q0EuY3JsMC4GA1UdEQQnMCWkIzAhMR8wHQYD
+            VQQDExZQcml2YXRlTGFiZWw0LTIwNDgtMTYzMB0GA1UdDgQWBBR5y7W0EOuUtfV6
+            wKwuVaHbijffFDAfBgNVHSMEGDAWgBSFA+EDqQIZZhhAd7LgB2u4I422VzANBgkq
+            hkiG9w0BAQUFAAOCAQEAl+geZsxUfClGuUJepdzruJ4DOCXMwbySETiAW4IDXh0e
+            ITIccC2to0K4SkZqRTLMJLwhCdPBPUH+fcFvLSIo0LamYrXzVeEFXhULTHftsc/1
+            OS8O1WJqZTz3q95V7n0ndvC/UuPegt+UX1OmW/2l2XcUT6Yy0OBcBveIIg/9xxYO
+            041DDeNsGTxYAfCYRvhRODC22tikLW+WwXrp5ilaiX5Ln/oOE5lb0I7JYDyaLQgz
+            v15V/HXoaCNEvsiRGudb+4w5yryTYUUHxR+GrWNwrLLEcyNvJvZ7wmYiaumEPFie
+            RDv82sasc+vgg2zHhveFsKjcDEbGuSaetq5bCXp5zA==
+        </Certificate>
+    </CertificateBucket>
+</ValidatorRecipe>

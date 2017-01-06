@@ -22,68 +22,52 @@
 
 package no.difi.vefa.peppol.lookup;
 
-import no.difi.vefa.peppol.common.code.Service;
+import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
 import no.difi.vefa.peppol.lookup.api.MetadataProvider;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
-import no.difi.vefa.peppol.lookup.locator.DynamicLocator;
-import no.difi.vefa.peppol.lookup.provider.DefaultProvider;
-import no.difi.vefa.peppol.lookup.reader.MultiReader;
-import no.difi.vefa.peppol.security.Mode;
+import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
 
 public class LookupClientBuilder {
 
+    private Mode mode;
+
     private MetadataFetcher metadataFetcher;
 
     private MetadataLocator metadataLocator;
 
-    private CertificateValidator providerCertificateValidator = EmptyCertificateValidator.INSTANCE;
+    private CertificateValidator certificateValidator = EmptyCertificateValidator.INSTANCE;
 
     private MetadataProvider metadataProvider;
 
     private MetadataReader metadataReader;
 
-    private CertificateValidator endpointertificateValidator = EmptyCertificateValidator.INSTANCE;
-
-    public static LookupClientBuilder newInstance() {
-        return new LookupClientBuilder();
+    public static LookupClientBuilder newInstance(Mode mode) {
+        return new LookupClientBuilder(mode);
     }
 
-    public static LookupClientBuilder forMode(String modeIdentifier) {
-        Mode mode = Mode.valueOf(modeIdentifier);
-        String locator;
-
-        switch (modeIdentifier) {
-            case "PRODUCTION":
-                locator = DynamicLocator.OPENPEPPOL_PRODUCTION;
-                break;
-            case "TEST":
-                locator = DynamicLocator.OPENPEPPOL_TEST;
-                break;
-            default:
-                return newInstance();
-        }
-
-        return newInstance()
-                .locator(new DynamicLocator(locator))
-                .endpointCertificateValidator(mode.validator(Service.AP))
-                .providerCertificateValidator(mode.validator(Service.SMP));
+    public static LookupClientBuilder forMode(Mode mode) throws PeppolLoadingException {
+        return newInstance(mode)
+                .certificateValidator(mode.initiate("security.validator.class", CertificateValidator.class));
     }
 
-    public static LookupClientBuilder forProduction() {
+    public static LookupClientBuilder forMode(String modeIdentifier) throws PeppolLoadingException {
+        return forMode(Mode.of(modeIdentifier));
+    }
+
+    public static LookupClientBuilder forProduction() throws PeppolLoadingException {
         return forMode("PRODUCTION");
     }
 
-    public static LookupClientBuilder forTest() {
+    public static LookupClientBuilder forTest() throws PeppolLoadingException {
         return forMode("TEST");
     }
 
-    LookupClientBuilder() {
-        // No action
+    LookupClientBuilder(Mode mode) {
+        this.mode = mode;
     }
 
     public LookupClientBuilder fetcher(MetadataFetcher metadataFetcher) {
@@ -106,29 +90,21 @@ public class LookupClientBuilder {
         return this;
     }
 
-    public LookupClientBuilder providerCertificateValidator(CertificateValidator certificateValidator) {
-        this.providerCertificateValidator = certificateValidator;
+    public LookupClientBuilder certificateValidator(CertificateValidator certificateValidator) {
+        this.certificateValidator = certificateValidator;
         return this;
     }
 
-    public LookupClientBuilder endpointCertificateValidator(CertificateValidator certificateValidator) {
-        this.endpointertificateValidator = certificateValidator;
-        return this;
-    }
-
-    public LookupClient build() {
+    public LookupClient build() throws PeppolLoadingException {
         if (metadataLocator == null)
-            throw new IllegalStateException("Locator not defined.");
-
-        // Defaults
+            locator(mode.initiate("locator.class", MetadataLocator.class));
         if (metadataProvider == null)
-            provider(new DefaultProvider());
+            provider(mode.initiate("provider.class", MetadataProvider.class));
         if (metadataFetcher == null)
-            fetcher(new UrlFetcher());
+            fetcher(mode.initiate("fetcher.class", MetadataFetcher.class));
         if (metadataReader == null)
-            reader(new MultiReader());
+            reader(mode.initiate("reader.class", MetadataReader.class));
 
-        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader,
-                providerCertificateValidator, endpointertificateValidator);
+        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, certificateValidator);
     }
 }

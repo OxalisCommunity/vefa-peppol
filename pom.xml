@@ -117,6 +117,11 @@
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
+                <artifactId>peppol-mode</artifactId>
+                <version>0.9.7-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
                 <version>0.9.7-SNAPSHOT</version>
             </dependency>
@@ -134,10 +139,15 @@
             </dependency>
 
             <!-- Difi Commons -->
-            <dependency>
+            <!-- <dependency>
                 <groupId>no.difi.commons</groupId>
                 <artifactId>commons-certvalidator</artifactId>
                 <version>2.0.4</version>
+            </dependency> -->
+            <dependency>
+                <groupId>com.github.difi</groupId>
+                <artifactId>certvalidator</artifactId>
+                <version>20b0579b02</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.commons</groupId>
@@ -311,6 +321,13 @@
             </build>
         </profile>
     </profiles>
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <snapshotRepository>

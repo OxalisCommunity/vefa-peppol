@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.api.*;
@@ -41,19 +42,15 @@ public class LookupClient {
 
     private MetadataReader metadataReader;
 
-    private CertificateValidator providerCertificateValidator;
-
-    private CertificateValidator endpointCertificateValidator;
+    private CertificateValidator certificateValidator;
 
     LookupClient(MetadataLocator metadataLocator, MetadataProvider metadataProvider, MetadataFetcher metadataFetcher,
-                 MetadataReader metadataReader, CertificateValidator providerCertificateValidator,
-                 CertificateValidator endpointCertificateValidator) {
+                 MetadataReader metadataReader, CertificateValidator certificateValidator) {
         this.metadataLocator = metadataLocator;
         this.metadataProvider = metadataProvider;
         this.metadataFetcher = metadataFetcher;
         this.metadataReader = metadataReader;
-        this.providerCertificateValidator = providerCertificateValidator;
-        this.endpointCertificateValidator = endpointCertificateValidator;
+        this.certificateValidator = certificateValidator;
     }
 
     public List<DocumentTypeIdentifier> getDocumentIdentifiers(ParticipantIdentifier participantIdentifier)
@@ -72,7 +69,7 @@ public class LookupClient {
 
         ServiceMetadata serviceMetadata = metadataReader.parseServiceMetadata(metadataFetcher.fetch(provider));
 
-        providerCertificateValidator.validate(serviceMetadata.getSigner());
+        certificateValidator.validate(Service.SMP, serviceMetadata.getSigner());
 
         return serviceMetadata;
     }
@@ -82,7 +79,7 @@ public class LookupClient {
             throws PeppolSecurityException, EndpointNotFoundException {
         Endpoint endpoint = serviceMetadata.getEndpoint(processIdentifier, transportProfiles);
 
-        endpointCertificateValidator.validate(endpoint.getCertificate());
+        certificateValidator.validate(Service.AP, endpoint.getCertificate());
 
         return endpoint;
     }

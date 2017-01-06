@@ -25,6 +25,7 @@ package no.difi.vefa.peppol.lookup.locator;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
+import no.difi.vefa.peppol.mode.Mode;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.TextParseException;
 
@@ -34,8 +35,20 @@ public class BusdoxLocator extends AbstractLocator {
 
     private DynamicHostnameGenerator hostnameGenerator;
 
+    public BusdoxLocator(Mode mode) {
+        this(
+                mode.getString("locator.busdox.prefix"),
+                mode.getString("locator.hostname"),
+                mode.getString("locator.busdox.algorithm")
+        );
+    }
+
     public BusdoxLocator(String hostname) {
-        hostnameGenerator = new DynamicHostnameGenerator("B-", hostname, "MD5");
+        this("B-", hostname, "MD5");
+    }
+
+    public BusdoxLocator(String prefix, String hostname, String algorithm) {
+        hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, algorithm);
     }
 
     @Override

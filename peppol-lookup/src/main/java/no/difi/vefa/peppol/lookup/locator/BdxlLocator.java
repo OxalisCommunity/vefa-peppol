@@ -26,6 +26,8 @@ import com.google.common.io.BaseEncoding;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
+import no.difi.vefa.peppol.lookup.util.EncodingUtils;
+import no.difi.vefa.peppol.mode.Mode;
 import org.xbill.DNS.*;
 
 import java.net.URI;
@@ -40,6 +42,15 @@ import java.util.regex.Pattern;
 public class BdxlLocator extends AbstractLocator {
 
     private DynamicHostnameGenerator hostnameGenerator;
+
+    public BdxlLocator(Mode mode) {
+        this(
+                mode.getString("locator.bdxl.prefix"),
+                mode.getString("locator.hostname"),
+                mode.getString("locator.bdxl.algorithm"),
+                EncodingUtils.get(mode.getString("locator.bdxl.encoding"))
+        );
+    }
 
     /**
      * Initiate a new instance of BDXL lookup functionality using SHA-224 for hashing.

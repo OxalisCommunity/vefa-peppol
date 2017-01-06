@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.security.util;
 
+import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
@@ -32,7 +33,7 @@ public class EmptyCertificateValidator implements CertificateValidator {
     public static final CertificateValidator INSTANCE = new EmptyCertificateValidator();
 
     @Override
-    public void validate(X509Certificate certificate) throws PeppolSecurityException {
+    public void validate(Service service, X509Certificate certificate) throws PeppolSecurityException {
         // No action
     }
 }

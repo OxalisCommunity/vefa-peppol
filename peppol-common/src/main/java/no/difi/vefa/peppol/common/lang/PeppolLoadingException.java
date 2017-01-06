@@ -20,18 +20,14 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.security.api;
+package no.difi.vefa.peppol.common.lang;
 
-import no.difi.vefa.peppol.common.code.Service;
+public class PeppolLoadingException extends PeppolException {
+    public PeppolLoadingException(String message) {
+        super(message);
+    }
 
-import java.io.InputStream;
-
-public interface ModeDescription {
-
-    String getIdentifier();
-
-    String[] getIssuers(Service service);
-
-    InputStream getKeystore();
-
+    public PeppolLoadingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

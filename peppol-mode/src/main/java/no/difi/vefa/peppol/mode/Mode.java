@@ -24,12 +24,15 @@ package no.difi.vefa.peppol.mode;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class Mode {
 
     public static final String PRODUCTION = "PRODUCTION";
+
     public static final String TEST = "TEST";
 
     private Config config;
@@ -58,5 +61,26 @@ public class Mode {
 
     public Config getConfig() {
         return config;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> T initiate(String key, Class<T> type) throws PeppolLoadingException {
+        try {
+            return (T) initiate(Class.forName(getString(key)));
+        } catch (ClassNotFoundException e) {
+            throw new PeppolLoadingException(String.format("Unable to initiate '%s'", getString(key)), e);
+        }
+    }
+
+    public <T> T initiate(Class<T> cls) throws PeppolLoadingException {
+        try {
+            try {
+                return cls.getConstructor(Mode.class).newInstance(this);
+            } catch (NoSuchMethodException e) {
+                return cls.newInstance();
+            }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            throw new PeppolLoadingException(String.format("Unable to initiate '%s'", cls), e);
+        }
     }
 }

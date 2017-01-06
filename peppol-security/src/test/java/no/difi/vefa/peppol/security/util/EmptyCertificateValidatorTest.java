@@ -34,7 +34,7 @@ public class EmptyCertificateValidatorTest {
     public void simple() throws Exception {
         Assert.assertNotNull(EmptyCertificateValidator.INSTANCE);
 
-        EmptyCertificateValidator.INSTANCE.validate(null);
-        EmptyCertificateValidator.INSTANCE.validate(Mockito.mock(X509Certificate.class));
+        EmptyCertificateValidator.INSTANCE.validate(null, null);
+        EmptyCertificateValidator.INSTANCE.validate(null, Mockito.mock(X509Certificate.class));
     }
 }

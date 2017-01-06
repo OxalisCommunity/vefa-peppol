@@ -22,12 +22,13 @@
 
 package no.difi.vefa.peppol.security.api;
 
+import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.security.cert.X509Certificate;
 
 public interface CertificateValidator {
 
-    void validate(X509Certificate certificate) throws PeppolSecurityException;
+    void validate(Service service, X509Certificate certificate) throws PeppolSecurityException;
     
 }

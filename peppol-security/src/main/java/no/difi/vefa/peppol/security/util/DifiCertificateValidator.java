@@ -22,31 +22,38 @@
 
 package no.difi.vefa.peppol.security.util;
 
-import no.difi.certvalidator.Validator;
+import no.difi.certvalidator.ValidatorGroup;
+import no.difi.certvalidator.ValidatorLoader;
 import no.difi.certvalidator.api.CertificateValidationException;
-import no.difi.vefa.peppol.security.api.*;
+import no.difi.certvalidator.lang.ValidatorParsingException;
+import no.difi.vefa.peppol.common.code.Service;
+import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
+import no.difi.vefa.peppol.mode.Mode;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.security.cert.X509Certificate;
 
 public class DifiCertificateValidator implements CertificateValidator {
 
-    private static Logger logger = LoggerFactory.getLogger(DifiCertificateValidator.class);
+    private ValidatorGroup validator;
 
-    public Validator validator;
+    private Mode mode;
 
-    public DifiCertificateValidator(Validator validator) {
-        this.validator = validator;
+    public DifiCertificateValidator(Mode mode) throws PeppolLoadingException {
+        this.mode = mode;
+
+        try {
+            validator = ValidatorLoader.newInstance().build(getClass().getResourceAsStream(mode.getString("security.pki")));
+        } catch (ValidatorParsingException e) {
+            throw new PeppolLoadingException("Unable to initiate PKI.", e);
+        }
     }
 
     @Override
-    public void validate(X509Certificate certificate) throws PeppolSecurityException {
+    public void validate(Service service, X509Certificate certificate) throws PeppolSecurityException {
         try {
-            logger.debug("Validating '{}'.", certificate.getSubjectX500Principal().getName());
-
-            validator.validate(certificate);
+            validator.validate(mode.getString(String.format("security.validator.%s", service.toString())), certificate);
         } catch (CertificateValidationException e) {
             throw new PeppolSecurityException(e.getMessage(), e);
         }

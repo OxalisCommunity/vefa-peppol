@@ -24,6 +24,7 @@ package no.difi.vefa.peppol.lookup.locator;
 
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.MetadataLocator;
+import no.difi.vefa.peppol.mode.Mode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,7 +34,7 @@ public class BdxlLocatorTest {
 
     @Test
     public void simple() throws Exception {
-        MetadataLocator locator = new BdxlLocator(DynamicLocator.OPENPEPPOL_TEST);
+        MetadataLocator locator = new BdxlLocator(Mode.of("TEST"));
         Assert.assertEquals(
                 locator.lookup(ParticipantIdentifier.of("9908:810418052")),
                 URI.create("http://test-smp.difi.no.publisher.acc.edelivery.tech.ec.europa.eu")

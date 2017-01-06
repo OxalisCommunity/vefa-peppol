@@ -23,13 +23,14 @@
 package no.difi.vefa.peppol.lookup.locator;
 
 import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.mode.Mode;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
 public class BusdoxLocatorTest {
 
-    private BusdoxLocator busdoxLocator = new BusdoxLocator(DynamicLocator.OPENPEPPOL_PRODUCTION);
+    private BusdoxLocator busdoxLocator = new BusdoxLocator(Mode.of("PRODUCTION"));
 
     @Test
     public void simple() throws LookupException {

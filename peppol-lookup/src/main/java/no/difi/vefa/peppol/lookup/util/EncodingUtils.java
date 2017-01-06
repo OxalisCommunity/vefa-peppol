@@ -20,16 +20,23 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.security.mode;
+package no.difi.vefa.peppol.lookup.util;
 
-import no.difi.vefa.peppol.common.code.Service;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import com.google.common.io.BaseEncoding;
 
-public class TestModeTest {
+public class EncodingUtils {
 
-    @Test
-    public void simple() {
-        Assert.assertEquals(new TestMode().getIssuersInternal(Service.ALL).length, 0);
+    public static BaseEncoding get(String identifier) {
+        switch (identifier) {
+            case "base64":
+                return BaseEncoding.base64();
+            case "base32":
+                return BaseEncoding.base32();
+            case "base16":
+                return BaseEncoding.base16();
+            default:
+                return null;
+        }
     }
+
 }

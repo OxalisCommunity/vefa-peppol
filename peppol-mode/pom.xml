@@ -74,6 +74,13 @@
     </licenses>
 
     <dependencies>
+        <!-- VEFA PEPPOL -->
+        <dependency>
+            <groupId>no.difi.vefa</groupId>
+            <artifactId>peppol-common</artifactId>
+        </dependency>
+
+        <!-- Typesafe Config -->
         <dependency>
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
