@@ -56,9 +56,20 @@ public class MultiReaderTest {
     }
 
     @Test
-    public void bdxrDocumentIdentifers() throws Exception {
+    public void bdxr201407DocumentIdentifers() throws Exception {
         List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
                 new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
+
+        assertEquals(result.size(), 7);
+
+        for (DocumentTypeIdentifier documentTypeIdentifier : result)
+            logger.debug("{}", documentTypeIdentifier);
+    }
+
+    @Test
+    public void bdxr201605DocumentIdentifers() throws Exception {
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
+                new FetcherResponse(getClass().getResourceAsStream("/bdxr201605-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 

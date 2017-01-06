@@ -45,19 +45,11 @@ public enum EvidenceTypeInstance {
         this.localName = localName;
     }
 
-    public String getLocalName() {
-        return localName;
-    }
-
     public JAXBElement<REMEvidenceType> toJAXBElement(REMEvidenceType remEvidenceType) {
-        switch (this) {
-            case RELAY_REM_MD_ACCEPTANCE_REJECTION:
-                return RemHelper.OBJECT_FACTORY.createRelayREMMDAcceptanceRejection(remEvidenceType);
-            case DELIVERY_NON_DELIVERY_TO_RECIPIENT:
-                return RemHelper.OBJECT_FACTORY.createDeliveryNonDeliveryToRecipient(remEvidenceType);
-        }
-
-        return null;
+        if (this == RELAY_REM_MD_ACCEPTANCE_REJECTION)
+            return RemHelper.OBJECT_FACTORY.createRelayREMMDAcceptanceRejection(remEvidenceType);
+        else
+            return RemHelper.OBJECT_FACTORY.createDeliveryNonDeliveryToRecipient(remEvidenceType);
     }
 
     public static EvidenceTypeInstance findByLocalName(String localName) {
