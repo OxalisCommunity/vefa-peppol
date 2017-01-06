@@ -23,7 +23,6 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 
 import java.io.Serializable;
@@ -188,17 +187,9 @@ public class Evidence implements Serializable {
         return originalReceipts;
     }
 
-    public Evidence originalReceipt(byte[] content) {
-        return originalReceipt(null, content);
-    }
-
-    public Evidence originalReceipt(String type, byte[] content) {
-        OriginalReceiptType originalReceipt = new OriginalReceiptType();
-        originalReceipt.setType(type);
-        originalReceipt.setValue(content);
-
+    public Evidence originalReceipt(Receipt receipt) {
         List<Receipt> originalReceipts = new ArrayList<>(this.originalReceipts);
-        originalReceipts.add(Receipt.of(type, content));
+        originalReceipts.add(receipt);
         originalReceipts = Collections.unmodifiableList(originalReceipts);
 
         return new Evidence(this.type, eventCode, eventReason, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
@@ -227,7 +218,7 @@ public class Evidence implements Serializable {
         if (transportProtocol != null ? !transportProtocol.equals(evidence.transportProtocol) : evidence.transportProtocol != null)
             return false;
         if (transmissionRole != evidence.transmissionRole) return false;
-        return !(originalReceipts != null ? !originalReceipts.equals(evidence.originalReceipts) : evidence.originalReceipts != null);
+        return originalReceipts.equals(evidence.originalReceipts);
 
     }
 
@@ -245,7 +236,7 @@ public class Evidence implements Serializable {
         result = 31 * result + (messageIdentifier != null ? messageIdentifier.hashCode() : 0);
         result = 31 * result + (transportProtocol != null ? transportProtocol.hashCode() : 0);
         result = 31 * result + (transmissionRole != null ? transmissionRole.hashCode() : 0);
-        result = 31 * result + (originalReceipts != null ? originalReceipts.hashCode() : 0);
+        result = 31 * result + originalReceipts.hashCode();
         return result;
     }
 

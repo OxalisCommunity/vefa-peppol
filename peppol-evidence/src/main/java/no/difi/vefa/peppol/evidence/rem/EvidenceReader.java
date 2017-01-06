@@ -102,7 +102,7 @@ public class EvidenceReader {
                         evidence = evidence.transmissionRole(peppolRemExtension.getTransmissionRole());
 
                         for (OriginalReceiptType receiptType : peppolRemExtension.getOriginalReceipt())
-                            evidence = evidence.originalReceipt(receiptType.getType(), receiptType.getValue());
+                            evidence = evidence.originalReceipt(Receipt.of(receiptType.getType(), receiptType.getValue()));
                     }
                 }
             }

@@ -22,41 +22,22 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.code.DigestMethod;
-import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.util.Date;
 
 public class EvidenceCombinedTest {
-
-    public static final Evidence EVIDENCE = Evidence.newInstance()
-            .type(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT)
-            .eventCode(EventCode.ACCEPTANCE)
-            .eventReason(EventReason.OTHER)
-            .evidenceIdentifier(InstanceIdentifier.generateUUID())
-            .timestamp(new Date())
-            .sender(ParticipantIdentifier.of("9908:123456785"))
-            .receiver(ParticipantIdentifier.of("9908:987654325"))
-            .documentTypeIdentifier(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1", Scheme.NONE))
-            .messageIdentifier(InstanceIdentifier.generateUUID())
-            .digest(Digest.of(DigestMethod.SHA256, "VGhpc0lzQVNIQTI1NkRpZ2VzdA==".getBytes()))
-            .transportProtocol(TransportProtocol.AS2)
-            .transmissionRole(TransmissionRole.C_3)
-            .originalReceipt("text/plain", "Hello World!".getBytes());
 
     @Test
     public void simple() throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
-        EvidenceWriter.write(outputStream, EVIDENCE);
+        EvidenceWriter.write(outputStream, EvidenceTest.EVIDENCE);
 
         Evidence newEvidence = EvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
 
-        Assert.assertEquals(newEvidence, EVIDENCE);
+        Assert.assertEquals(newEvidence, EvidenceTest.EVIDENCE);
     }
 }

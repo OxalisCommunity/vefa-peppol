@@ -20,26 +20,17 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.evidence.rem;
+package no.difi.vefa.peppol.evidence.lang;
 
-import no.difi.vefa.peppol.common.model.Signed;
-import org.testng.Assert;
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-
-public class SignedEvidenceCombinedTest {
+public class RemEvidenceExceptionTest {
 
     @Test
-    public void simple() throws Exception {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-
-        SignedEvidenceWriter.write(outputStream, TestResources.getPrivateKey(), EvidenceTest.EVIDENCE);
-
-        Signed<Evidence> evidenceSigned = SignedEvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
-
-        Assert.assertEquals(evidenceSigned.getCertificate(), TestResources.getPrivateKey().getCertificate());
-        Assert.assertEquals(evidenceSigned.getContent(), EvidenceTest.EVIDENCE);
+    @SuppressWarnings("all")
+    public void simple() {
+        new RemEvidenceException("Text...");
+        new RemEvidenceException("Text...", Mockito.mock(Exception.class));
     }
 }
