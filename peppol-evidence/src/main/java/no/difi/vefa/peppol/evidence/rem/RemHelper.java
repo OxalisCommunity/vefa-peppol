@@ -31,6 +31,9 @@ import no.difi.vefa.peppol.evidence.jaxb.rem.*;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -40,7 +43,7 @@ import java.util.GregorianCalendar;
 
 class RemHelper {
 
-    public static JAXBContext jaxbContext;
+    private static JAXBContext jaxbContext;
 
     public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
@@ -98,5 +101,13 @@ class RemHelper {
 
     public static Date fromXmlGregorianCalendar(XMLGregorianCalendar calendar) {
         return calendar.toGregorianCalendar().getTime();
+    }
+
+    public static Marshaller getMarshaller() throws JAXBException {
+        return jaxbContext.createMarshaller();
+    }
+
+    public static Unmarshaller getUnmarshaller() throws JAXBException {
+        return jaxbContext.createUnmarshaller();
     }
 }

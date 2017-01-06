@@ -119,7 +119,7 @@ public class RemEvidenceTransformer {
     protected static JAXBElement<REMEvidenceType> toJaxb(Document signedRemDocument) throws RemEvidenceException {
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement;
         try {
-            Unmarshaller unmarshaller = RemHelper.jaxbContext.createUnmarshaller();
+            Unmarshaller unmarshaller = RemHelper.getUnmarshaller();
             remEvidenceTypeJAXBElement = unmarshaller.unmarshal(signedRemDocument, REMEvidenceType.class);
         } catch (JAXBException e) {
             throw new RemEvidenceException("Unable to create unmarshaller");

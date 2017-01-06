@@ -363,7 +363,7 @@ public class RemEvidenceBuilder {
         // Marshals the JAXBElement into DOM object for signing
         Marshaller marshaller;
         try {
-            marshaller = RemHelper.jaxbContext.createMarshaller();
+            marshaller = RemHelper.getMarshaller();
         } catch (JAXBException e) {
             throw new RemEvidenceException("Unable to create marshaller for transformation into a DOM object for creating the signature", e);
         }

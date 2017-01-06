@@ -53,7 +53,7 @@ public class EvidenceReader {
 
     private static Evidence read(Source source) throws RemEvidenceException {
         try {
-            Unmarshaller unmarshaller = RemHelper.jaxbContext.createUnmarshaller();
+            Unmarshaller unmarshaller = RemHelper.getUnmarshaller();
             JAXBElement<REMEvidenceType> jaxbRemEvidence = unmarshaller.unmarshal(source, REMEvidenceType.class);
 
             REMEvidenceType remEvidence = jaxbRemEvidence.getValue();

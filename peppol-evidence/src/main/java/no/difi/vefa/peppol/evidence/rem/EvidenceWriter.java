@@ -32,6 +32,9 @@ import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.transform.Result;
+import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.stream.StreamResult;
 import java.io.OutputStream;
 
 public class EvidenceWriter {
@@ -43,13 +46,13 @@ public class EvidenceWriter {
     public static void write(OutputStream outputStream, Evidence evidence) throws RemEvidenceException {
         EvidenceWriter evidenceWriter = new EvidenceWriter(evidence);
         evidenceWriter.prepare();
-        evidenceWriter.write(outputStream);
+        evidenceWriter.write(new StreamResult(outputStream));
     }
 
     public static void write(Node node, Evidence evidence) throws RemEvidenceException {
         EvidenceWriter evidenceWriter = new EvidenceWriter(evidence);
         evidenceWriter.prepare();
-        evidenceWriter.write(node);
+        evidenceWriter.write(new DOMResult(node));
     }
 
     private EvidenceWriter(Evidence evidence) {
@@ -112,20 +115,10 @@ public class EvidenceWriter {
         remEvidence.getExtensions().getExtension().add(extensionType);
     }
 
-    private void write(OutputStream outputStream) throws RemEvidenceException {
+    private void write(Result result) throws RemEvidenceException {
         try {
-            Marshaller marshaller = RemHelper.jaxbContext.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-            marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), outputStream);
-        } catch (JAXBException e) {
-            throw new RemEvidenceException("Unable to marshal content.", e);
-        }
-    }
-
-    private void write(Node node) throws RemEvidenceException {
-        try {
-            Marshaller marshaller = RemHelper.jaxbContext.createMarshaller();
-            marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), node);
+            Marshaller marshaller = RemHelper.getMarshaller();
+            marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), result);
         } catch (JAXBException e) {
             throw new RemEvidenceException("Unable to marshal content.", e);
         }

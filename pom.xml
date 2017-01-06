@@ -205,10 +205,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>org/etsi/**</exclude>
-                        <exclude>org/w3/**</exclude>
-                        <exclude>oasis/names/**</exclude>
-                        <exclude>eu/peppol/**</exclude>
+                        <exclude>no/difi/vefa/peppol/**/jaxb/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
