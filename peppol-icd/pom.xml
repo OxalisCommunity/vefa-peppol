@@ -72,11 +72,11 @@
         </license>
     </licenses>
 
-    <!-- <dependencies>
+    <dependencies>
         <dependency>
             <groupId>no.difi.vefa</groupId>
             <artifactId>peppol-common</artifactId>
         </dependency>
-    </dependencies> -->
+    </dependencies>
 
 </project>
