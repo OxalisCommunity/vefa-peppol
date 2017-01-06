@@ -1,26 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-  ~ Copyright 2016-2017 Direktoratet for forvaltning og IKT
-  ~
-  ~ Licensed under the EUPL, Version 1.1 or – as soon they
-  ~ will be approved by the European Commission - subsequent
-  ~ versions of the EUPL (the "Licence");
-  ~
-  ~ You may not use this work except in compliance with the Licence.
-  ~
-  ~ You may obtain a copy of the Licence at:
-  ~
-  ~ https://joinup.ec.europa.eu/community/eupl/og_page/eupl
-  ~
-  ~ Unless required by applicable law or agreed to in
-  ~ writing, software distributed under the Licence is
-  ~ distributed on an "AS IS" basis,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-  ~ express or implied.
-  ~ See the Licence for the specific language governing
-  ~ permissions and limitations under the Licence.
-  -->
-
-<test xmlns:sign="http://www.w3.org/2000/09/xmldsig"><name>Difi</name><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>2I7YHMSTdhysL6E1J01o3tkLKxI=</DigestValue></Reference></SignedInfo><SignatureValue>jBlptf++S2qSwYt2scMEZm6ROAgg0IndXLstejIQOvRUag8mh1gxalCKgc7fGkn8pzEoSr6HuWVP
+<?xml version="1.0" encoding="UTF-8"?><test xmlns:sign="http://www.w3.org/2000/09/xmldsig"><name>Difi</name><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>2I7YHMSTdhysL6E1J01o3tkLKxI=</DigestValue></Reference></SignedInfo><SignatureValue>jBlptf++S2qSwYt2scMEZm6ROAgg0IndXLstejIQOvRUag8mh1gxalCKgc7fGkn8pzEoSr6HuWVP
 VxvB9Exl4aoRIov/Te/7KsXrtTyJVoVc9mI/d+d/lCFhS4SIkNDpuC/+RUu8He6a7uub8hsXcZ7X
 wG4JuRQftpgqeMSb+343aOiqI90jmY33+au9PPYJ8CmxA23xZLKaq0V3dh89+o9NAIg+jW30ibpH
 apMN4tibwpK6vElnvA5LBjoxirWLO/KaJ4r+8t+ay9q+9TcxharDCRyFkanzeJ9Htp7QBXyRlYCa

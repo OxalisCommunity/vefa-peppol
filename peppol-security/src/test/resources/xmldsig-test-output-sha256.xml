@@ -1,26 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!--
-  ~ Copyright 2016-2017 Direktoratet for forvaltning og IKT
-  ~
-  ~ Licensed under the EUPL, Version 1.1 or – as soon they
-  ~ will be approved by the European Commission - subsequent
-  ~ versions of the EUPL (the "Licence");
-  ~
-  ~ You may not use this work except in compliance with the Licence.
-  ~
-  ~ You may obtain a copy of the Licence at:
-  ~
-  ~ https://joinup.ec.europa.eu/community/eupl/og_page/eupl
-  ~
-  ~ Unless required by applicable law or agreed to in
-  ~ writing, software distributed under the Licence is
-  ~ distributed on an "AS IS" basis,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-  ~ express or implied.
-  ~ See the Licence for the specific language governing
-  ~ permissions and limitations under the Licence.
-  -->
-
-<test xmlns:sign="http://www.w3.org/2000/09/xmldsig"><name>Difi</name><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>JjkybHs/hf2dmvzKRpdDG7AiGvppptmzrgSMRI4QIZM=</DigestValue></Reference></SignedInfo><SignatureValue>H+o718RjqtruvornFKChq0KDqG/g8Qfxkfos88bhV+6z/cYcI5v2Fx/klZjO5i1ew2ae4Z5hQ3O5
+<?xml version="1.0" encoding="UTF-8"?><test xmlns:sign="http://www.w3.org/2000/09/xmldsig"><name>Difi</name><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256"/><DigestValue>JjkybHs/hf2dmvzKRpdDG7AiGvppptmzrgSMRI4QIZM=</DigestValue></Reference></SignedInfo><SignatureValue>H+o718RjqtruvornFKChq0KDqG/g8Qfxkfos88bhV+6z/cYcI5v2Fx/klZjO5i1ew2ae4Z5hQ3O5
 S9WjWJZg0Q07Wx3VlnDQLsc9PbMuNnYZ8yZyALaKUUzET4+gDikGvsTG3JusgdK+/1JOvsiUolly
 rEDHu0PXCZi7WGhRO3KerI5AFYvZ8szOHSAYPq8ibj8WxRVyjml9lfh8aLxp/uRpmH1UtAVgPQ/p
 K59dQi7M0UyBIzMlNDiAz7aPVLSpiO0HLqg9rtMsFDOl1U0SP3LTDngl5Srnn56nKMXOn/3/SBW2
