@@ -32,6 +32,11 @@ import java.security.cert.X509Certificate;
 
 public class ModeDetectorTest {
 
+    @Test
+    public void simpleConstructor() {
+        new ModeDetector();
+    }
+
     @Test(expectedExceptions = PeppolLoadingException.class)
     public void simpleDetectError() throws Exception {
         X509Certificate certificate = Validator.getCertificate(getClass().getResourceAsStream("/web-difi.cer"));

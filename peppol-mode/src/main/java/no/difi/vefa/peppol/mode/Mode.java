@@ -27,7 +27,6 @@ import com.typesafe.config.ConfigFactory;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 public class Mode {
 
@@ -53,10 +52,6 @@ public class Mode {
 
     public String getString(String key) {
         return config.getString(key);
-    }
-
-    public List<String> getStringList(String key) {
-        return config.getStringList(key);
     }
 
     public Config getConfig() {
