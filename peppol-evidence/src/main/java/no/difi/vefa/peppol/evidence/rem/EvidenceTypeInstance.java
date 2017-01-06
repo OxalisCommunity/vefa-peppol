@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Direktoratet for forvaltning og IKT
+ * Copyright 2016-2017 Direktoratet for forvaltning og IKT
  *
  * Licensed under the EUPL, Version 1.1 or – as soon they
  * will be approved by the European Commission - subsequent

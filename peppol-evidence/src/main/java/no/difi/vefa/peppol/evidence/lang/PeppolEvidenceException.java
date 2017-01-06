@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Direktoratet for forvaltning og IKT
+ * Copyright 2016-2017 Direktoratet for forvaltning og IKT
  *
  * Licensed under the EUPL, Version 1.1 or – as soon they
  * will be approved by the European Commission - subsequent
@@ -24,13 +24,13 @@ package no.difi.vefa.peppol.evidence.lang;
 
 import no.difi.vefa.peppol.common.lang.PeppolException;
 
-public class EvidenceException extends PeppolException {
+public class PeppolEvidenceException extends PeppolException {
 
-    public EvidenceException(String message) {
+    public PeppolEvidenceException(String message) {
         super(message);
     }
 
-    public EvidenceException(String message, Throwable cause) {
+    public PeppolEvidenceException(String message, Throwable cause) {
         super(message, cause);
     }
 }
