@@ -22,10 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.InstanceIdentifier;
-import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.TransportProtocol;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
@@ -46,7 +43,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.dom.DOMResult;
 import java.security.KeyStore;
 import java.util.Date;
-import java.util.UUID;
 
 /**
  * Builds instances of SignedRemEvidence based upon the properties supplied.
@@ -58,66 +54,15 @@ import java.util.UUID;
  */
 public class RemEvidenceBuilder {
 
-    public static final String REM_VERSION = "2";
-
-    private final EvidenceTypeInstance evidenceTypeInstance;
-
-    private final String version = REM_VERSION;
-
-    private final String evidenceIdentifier = UUID.randomUUID().toString();
-
-    private EventCode eventCode;
-
-    private EventReason eventReason;
-
-    private String evidenceIssuerDetails;
+    private Evidence evidence;
 
     private String evidenceIssuerPolicyID;
 
-    // This will used to set the uaMessageIdentifier element
-    private String documentTypeInstanceId;
-
-    // The timestamp of the delivery, defaults to current date and time.
-    private Date eventTime = new Date();
-
-    private ParticipantIdentifier senderIdentifier;
-
-    private ParticipantIdentifier recipientIdentifier;
-
-    private DocumentTypeIdentifier documentTypeId;
-
-    private InstanceIdentifier instanceIdentifier;
-
-    private byte[] payloadDigest;
-
-    private TransmissionRole transmissionRole;
-
-    private TransportProtocol transportProtocol;
-
-    private byte[] protocolSpecificBytes;
-
     protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance) {
-        this.evidenceTypeInstance = evidenceTypeInstance;
-    }
-
-    /**
-     * Transforms the REMEvidenceType, which is an XML Type into an XML instance represented in Java as
-     * a JAXBElement.
-     */
-    static JAXBElement<REMEvidenceType> createRemEvidenceTypeXmlInstance(REMEvidenceType remEvidenceType, EvidenceTypeInstance evidenceTypeInstance) throws RemEvidenceException {
-        JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance;
-        ObjectFactory objectFactory = new ObjectFactory();
-        switch (evidenceTypeInstance) {
-            case DELIVERY_NON_DELIVERY_TO_RECIPIENT:
-                remEvidenceTypeXmlInstance = objectFactory.createDeliveryNonDeliveryToRecipient(remEvidenceType);
-                break;
-            case RELAY_REM_MD_ACCEPTANCE_REJECTION:
-                remEvidenceTypeXmlInstance = objectFactory.createRelayREMMDAcceptanceRejection(remEvidenceType);
-                break;
-            default:
-                throw new RemEvidenceException("Invalid or unsupported evidenceType " + evidenceTypeInstance);
-        }
-        return remEvidenceTypeXmlInstance;
+        evidence = Evidence.newInstance()
+                .type(evidenceTypeInstance)
+                .evidenceIdentifier(InstanceIdentifier.generateUUID())
+                .timestamp(new Date());
     }
 
     /**
@@ -191,7 +136,7 @@ public class RemEvidenceBuilder {
 
 
     public RemEvidenceBuilder eventCode(EventCode eventCode) {
-        this.eventCode = eventCode;
+        evidence = evidence.eventCode(eventCode);
         return this;
     }
 
@@ -200,12 +145,12 @@ public class RemEvidenceBuilder {
      * a cardinality of 0..1
      */
     public RemEvidenceBuilder eventReason(EventReason eventReason) {
-        this.eventReason = eventReason;
+        evidence = evidence.eventReason(eventReason);
         return this;
     }
 
     public RemEvidenceBuilder eventTime(Date date) {
-        this.eventTime = date;
+        evidence = evidence.timestamp(date);
         return this;
     }
 
@@ -215,27 +160,27 @@ public class RemEvidenceBuilder {
     }
 
     public RemEvidenceBuilder evidenceIssuerDetails(String evidenceIssuerDetails) {
-        this.evidenceIssuerDetails = evidenceIssuerDetails;
+        evidence = evidence.issuer(evidenceIssuerDetails);
         return this;
     }
 
     public RemEvidenceBuilder senderIdentifier(ParticipantIdentifier senderIdentifier) {
-        this.senderIdentifier = senderIdentifier;
+        evidence = evidence.sender(senderIdentifier);
         return this;
     }
 
     public RemEvidenceBuilder recipientIdentifer(ParticipantIdentifier recipientIdentifier) {
-        this.recipientIdentifier = recipientIdentifier;
+        evidence = evidence.receiver(recipientIdentifier);
         return this;
     }
 
     public RemEvidenceBuilder documentTypeId(DocumentTypeIdentifier documentTypeId) {
-        this.documentTypeId = documentTypeId;
+        evidence = evidence.documentTypeIdentifier(documentTypeId);
         return this;
     }
 
     public RemEvidenceBuilder documentTypeInstanceIdentifier(String documentTypeInstanceId) {
-        this.documentTypeInstanceId = documentTypeInstanceId;
+        evidence = evidence.documentIdentifier(InstanceIdentifier.of(documentTypeInstanceId));
         return this;
     }
 
@@ -246,19 +191,20 @@ public class RemEvidenceBuilder {
      * @return reference to the builder
      */
     public RemEvidenceBuilder instanceIdentifier(InstanceIdentifier instanceIdentifier) {
-        this.instanceIdentifier = instanceIdentifier;
+        evidence = evidence.messageIdentifier(instanceIdentifier);
         return this;
     }
 
     public RemEvidenceBuilder payloadDigest(byte[] payloadDigest) {
-        this.payloadDigest = payloadDigest;
+        evidence = evidence.digest(Digest.of(null, payloadDigest));
         return this;
     }
 
     public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProtocol transportProtocol, byte[] protocolSpecificBytes) {
-        this.transmissionRole = transmissionRole;
-        this.transportProtocol = transportProtocol;
-        this.protocolSpecificBytes = protocolSpecificBytes;
+        evidence = evidence
+                .transmissionRole(transmissionRole)
+                .transportProtocol(transportProtocol)
+                .originalReceipt(Receipt.of(protocolSpecificBytes));
         return this;
     }
 
@@ -275,37 +221,39 @@ public class RemEvidenceBuilder {
 
         REMEvidenceType evidence = new REMEvidenceType();
 
-        evidence.setVersion(version);
+        evidence.setVersion("2");
 
         //
-        if (eventCode == null) {
+        if (this.evidence.getEventCode() == null)
             throw new RemEvidenceException("REM EventCode is required");
-        }
-        evidence.setEventCode(eventCode.getValue());
+
+        evidence.setEventCode(this.evidence.getEventCode().getValue());
 
         // EventReason
-        if (eventReason != null) {
-            evidence.setEventReasons(RemHelper.createEventReasonsType(eventReason));
+        if (this.evidence.getEventReason() != null) {
+            evidence.setEventReasons(RemHelper.createEventReasonsType(this.evidence.getEventReason()));
         }
 
         // EvidenceIdentifier a unique identifier
-        evidence.setEvidenceIdentifier(evidenceIdentifier);
+        evidence.setEvidenceIdentifier(this.evidence.getEvidenceIdentifier().getValue());
 
         // Event time
-        evidence.setEventTime(RemHelper.toXmlGregorianCalendar(eventTime));
+        evidence.setEventTime(RemHelper.toXmlGregorianCalendar(this.evidence.getTimestamp()));
 
         // EvidencePolicyID
         if (evidenceIssuerPolicyID == null)
             throw new RemEvidenceException("Evidence Issuer Policy ID missing");
+
         EvidenceIssuerPolicyIDType policyIDs = new EvidenceIssuerPolicyIDType();
         policyIDs.getPolicyID().add(evidenceIssuerPolicyID);
         evidence.setEvidenceIssuerPolicyID(policyIDs);
 
         // EvidenceIssuerDetails
-        if (evidenceIssuerDetails == null)
+        if (this.evidence.getIssuer() == null)
             throw new RemEvidenceException("Issuer details missing");
+
         EntityNameType entityName = new EntityNameType();
-        entityName.getName().add(evidenceIssuerDetails);
+        entityName.getName().add(this.evidence.getIssuer());
         NamePostalAddressType evidenceIssuerNameAndAddressType = new NamePostalAddressType();
         evidenceIssuerNameAndAddressType.setEntityName(entityName);
         NamesPostalAddressListType namesAndAddressList = new NamesPostalAddressListType();
@@ -315,32 +263,34 @@ public class RemEvidenceBuilder {
         evidence.setEvidenceIssuerDetails(evidenceIssuerDetailsType);
 
         // SenderDetails
-        if (senderIdentifier != null) {
-            evidence.setSenderDetails(new EntityDetailsType());
-            evidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().add(
-                    RemHelper.createElectronicAddressType(senderIdentifier));
-        } else
+        if (this.evidence.getSender() == null)
             throw new RemEvidenceException("Sender details missing");
 
+        evidence.setSenderDetails(new EntityDetailsType());
+        evidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().add(
+                RemHelper.createElectronicAddressType(this.evidence.getSender()));
+
         // Receiver details
-        if (recipientIdentifier != null) {
-            evidence.setRecipientsDetails(new EntityDetailsListType());
-            EntityDetailsType entityDetailsType = new EntityDetailsType();
-            entityDetailsType.getAttributedElectronicAddressOrElectronicAddress().add(
-                    RemHelper.createElectronicAddressType(recipientIdentifier));
-            evidence.getRecipientsDetails().getEntityDetails().add(entityDetailsType);
-        }
+        if (this.evidence.getReceiver() == null)
+            throw new RemEvidenceException("Receiver details missing");
+
+        evidence.setRecipientsDetails(new EntityDetailsListType());
+        EntityDetailsType entityDetailsType = new EntityDetailsType();
+        entityDetailsType.getAttributedElectronicAddressOrElectronicAddress().add(
+                RemHelper.createElectronicAddressType(this.evidence.getReceiver()));
+        evidence.getRecipientsDetails().getEntityDetails().add(entityDetailsType);
 
 
-        injectTransmissionMetaData(evidence, documentTypeId.getIdentifier(), documentTypeInstanceId,
-                instanceIdentifier.getValue(), payloadDigest);
+        injectTransmissionMetaData(evidence, this.evidence.getDocumentTypeIdentifier().getIdentifier(),
+                this.evidence.getDocumentIdentifier() == null ? null : this.evidence.getDocumentIdentifier().getValue(),
+                this.evidence.getMessageIdentifier().getValue(), this.evidence.getDigest().getValue());
 
         // Injects the transport level receipt (if supplied), i.e. AS2 MDN or AS4 Soap Header
-        if (protocolSpecificBytes != null)
-            injectPeppolExtensions(evidence, transmissionRole, transportProtocol, protocolSpecificBytes);
+        if (this.evidence.getOriginalReceipts().size() > 0)
+            injectPeppolExtensions(evidence, this.evidence.getTransmissionRole(), this.evidence.getTransportProtocol(), this.evidence.getOriginalReceipts().get(0).getValue());
 
         // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
-        JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = createRemEvidenceTypeXmlInstance(evidence, evidenceTypeInstance);
+        JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = this.evidence.getType().toJAXBElement(evidence);
 
         // Signs the REMEvidenceType instance
         Document signedRemDocument = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);

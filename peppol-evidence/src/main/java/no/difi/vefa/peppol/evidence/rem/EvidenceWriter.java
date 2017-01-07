@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.common.model.Receipt;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
@@ -30,7 +31,6 @@ import no.difi.vefa.peppol.evidence.jaxb.xmldsig.DigestMethodType;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Node;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
@@ -99,7 +99,9 @@ public class EvidenceWriter {
         // Sender Message Details
         MessageDetailsType messageDetailsType = new MessageDetailsType();
         messageDetailsType.setMessageSubject(evidence.getDocumentTypeIdentifier().getIdentifier());
-        messageDetailsType.setUAMessageIdentifier(evidence.getMessageIdentifier().getValue());
+        if (evidence.getDocumentIdentifier() != null)
+            messageDetailsType.setUAMessageIdentifier(evidence.getDocumentIdentifier().getValue());
+        messageDetailsType.setMessageIdentifierByREMMD(evidence.getMessageIdentifier().getValue());
         DigestMethodType digestMethodType = new DigestMethodType();
         digestMethodType.setAlgorithm(evidence.getDigest().getMethod().getUri());
         messageDetailsType.setDigestMethod(digestMethodType);
@@ -111,28 +113,31 @@ public class EvidenceWriter {
         remEvidence.setExtensions(new ExtensionsListType());
 
         // PEPPOL REM Extension
-        PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
-        peppolRemExtension.setTransmissionProtocol(evidence.getTransportProtocol().getIdentifier());
-        peppolRemExtension.setTransmissionRole(evidence.getTransmissionRole());
+        if (evidence.getTransmissionRole() != null || evidence.getTransportProtocol() != null || evidence.getOriginalReceipts().size() > 0) {
+            PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
+            peppolRemExtension.setTransmissionProtocol(evidence.getTransportProtocol().getIdentifier());
+            peppolRemExtension.setTransmissionRole(evidence.getTransmissionRole());
 
-        for (Receipt receipt : evidence.getOriginalReceipts()) {
-            OriginalReceiptType originalReceiptType = new OriginalReceiptType();
-            originalReceiptType.setType(receipt.getType());
-            originalReceiptType.setValue(receipt.getValue());
-            peppolRemExtension.getOriginalReceipt().add(originalReceiptType);
+            for (Receipt receipt : evidence.getOriginalReceipts()) {
+                OriginalReceiptType originalReceiptType = new OriginalReceiptType();
+                originalReceiptType.setType(receipt.getType());
+                originalReceiptType.setValue(receipt.getValue());
+                peppolRemExtension.getOriginalReceipt().add(originalReceiptType);
+            }
+
+            ExtensionType extensionType = new ExtensionType();
+            extensionType.getContent().add(peppolRemExtension);
+            remEvidence.getExtensions().getExtension().add(extensionType);
         }
-
-        ExtensionType extensionType = new ExtensionType();
-        extensionType.getContent().add(peppolRemExtension);
-        remEvidence.getExtensions().getExtension().add(extensionType);
     }
 
-    private void write(Result result) throws RemEvidenceException {
-        try {
-            Marshaller marshaller = RemHelper.getMarshaller();
-            marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), result);
-        } catch (JAXBException e) {
-            throw new RemEvidenceException("Unable to marshal content.", e);
-        }
+    private void write(final Result result) throws RemEvidenceException {
+        RemEvidenceException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                Marshaller marshaller = RemHelper.getMarshaller();
+                marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), result);
+            }
+        });
     }
 }

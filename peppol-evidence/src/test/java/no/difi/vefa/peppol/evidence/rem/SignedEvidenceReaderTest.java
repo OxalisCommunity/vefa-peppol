@@ -22,7 +22,12 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
+import org.w3c.dom.Node;
+
+import java.io.InputStream;
 
 public class SignedEvidenceReaderTest {
 
@@ -30,4 +35,15 @@ public class SignedEvidenceReaderTest {
     public void simpleConstructor() {
         new SignedEvidenceReader();
     }
+
+    @Test(expectedExceptions = RemEvidenceException.class, expectedExceptionsMessageRegExp = "Node of type Document required\\.")
+    public void exceptionOnNonDocumentType() throws Exception {
+        SignedEvidenceReader.read(Mockito.mock(Node.class));
+    }
+
+    @Test(expectedExceptions = RemEvidenceException.class)
+    public void exceptionOnInputStreamError() throws Exception {
+        SignedEvidenceReader.read(Mockito.mock(InputStream.class));
+    }
+
 }

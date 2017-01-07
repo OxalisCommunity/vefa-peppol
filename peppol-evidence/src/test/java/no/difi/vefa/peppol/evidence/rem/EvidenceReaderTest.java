@@ -22,12 +22,21 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
+
+import java.io.InputStream;
 
 public class EvidenceReaderTest {
 
     @Test
     public void simpleConstructor() {
         new EvidenceReader();
+    }
+
+    @Test(expectedExceptions = RemEvidenceException.class)
+    public void exceptionOnInputStreamError() throws Exception {
+        EvidenceReader.read(Mockito.mock(InputStream.class));
     }
 }

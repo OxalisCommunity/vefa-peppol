@@ -42,6 +42,7 @@ public class EvidenceTest {
             .sender(ParticipantIdentifier.of("9908:123456785"))
             .receiver(ParticipantIdentifier.of("9908:987654325"))
             .documentTypeIdentifier(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Tender-2::Tender##urn:www.cenbii.eu:transaction:biitrdm090:ver3.0::2.1", Scheme.NONE))
+            .documentIdentifier(InstanceIdentifier.generateUUID())
             .messageIdentifier(InstanceIdentifier.generateUUID())
             .digest(Digest.of(DigestMethod.SHA256, "VGhpc0lzQVNIQTI1NkRpZ2VzdA==".getBytes()))
             .transportProtocol(TransportProtocol.AS2)
@@ -65,6 +66,7 @@ public class EvidenceTest {
         Assert.assertNotNull(EVIDENCE.sender(null).hashCode());
         Assert.assertNotNull(EVIDENCE.receiver(null).hashCode());
         Assert.assertNotNull(EVIDENCE.documentTypeIdentifier(null).hashCode());
+        Assert.assertNotNull(EVIDENCE.documentIdentifier(null).hashCode());
         Assert.assertNotNull(EVIDENCE.digest(null).hashCode());
         Assert.assertNotNull(EVIDENCE.messageIdentifier(null).hashCode());
         Assert.assertNotNull(EVIDENCE.transportProtocol(null).hashCode());
@@ -86,6 +88,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.sender(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.receiver(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.documentTypeIdentifier(null)));
+        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.documentIdentifier(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.digest(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.messageIdentifier(null)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.transportProtocol(null)));
@@ -100,6 +103,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.sender(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.receiver(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.documentTypeIdentifier(null).equals(EVIDENCE));
+        Assert.assertFalse(EVIDENCE.documentIdentifier(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.digest(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.messageIdentifier(null).equals(EVIDENCE));
         Assert.assertFalse(EVIDENCE.transportProtocol(null).equals(EVIDENCE));
@@ -114,6 +118,7 @@ public class EvidenceTest {
         Assert.assertTrue(EVIDENCE.sender(null).equals(EVIDENCE.sender(null)));
         Assert.assertTrue(EVIDENCE.receiver(null).equals(EVIDENCE.receiver(null)));
         Assert.assertTrue(EVIDENCE.documentTypeIdentifier(null).equals(EVIDENCE.documentTypeIdentifier(null)));
+        Assert.assertTrue(EVIDENCE.documentIdentifier(null).equals(EVIDENCE.documentIdentifier(null)));
         Assert.assertTrue(EVIDENCE.digest(null).equals(EVIDENCE.digest(null)));
         Assert.assertTrue(EVIDENCE.messageIdentifier(null).equals(EVIDENCE.messageIdentifier(null)));
         Assert.assertTrue(EVIDENCE.transportProtocol(null).equals(EVIDENCE.transportProtocol(null)));
@@ -128,6 +133,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.sender(ParticipantIdentifier.of("9908:999999999"))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.receiver(ParticipantIdentifier.of("9908:111111111"))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.documentTypeIdentifier(DocumentTypeIdentifier.of("Testing..."))));
+        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.documentIdentifier(InstanceIdentifier.generateUUID())));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.digest(Digest.of(DigestMethod.SHA1, "test".getBytes()))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.messageIdentifier(InstanceIdentifier.generateUUID())));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.transportProtocol(TransportProtocol.INTERNAL)));

@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
@@ -45,14 +46,15 @@ public class SignedEvidenceWriter {
         write(privateKeyEntry, evidence, new DOMResult(node));
     }
 
-    public static void write(KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence, Result result) throws RemEvidenceException, PeppolSecurityException {
-        try {
-            Document document = RemHelper.DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().newDocument();
-            EvidenceWriter.write(document, evidence);
+    public static void write(final KeyStore.PrivateKeyEntry privateKeyEntry, final Evidence evidence, final Result result) throws RemEvidenceException, PeppolSecurityException {
+        RemEvidenceException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                Document document = RemHelper.DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().newDocument();
+                EvidenceWriter.write(document, evidence);
 
-            XmldsigSigner.SHA256().sign(document, privateKeyEntry, result);
-        } catch (ParserConfigurationException e) {
-            throw new RemEvidenceException(e.getMessage(), e);
-        }
+                XmldsigSigner.SHA256().sign(document, privateKeyEntry, result);
+            }
+        });
     }
 }

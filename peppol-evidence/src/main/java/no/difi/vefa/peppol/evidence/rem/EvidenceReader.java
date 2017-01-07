@@ -90,7 +90,9 @@ public class EvidenceReader {
 
             // Sender Message Details
             evidence = evidence.digest(Digest.of(DigestMethod.fromUri(remEvidence.getSenderMessageDetails().getDigestMethod().getAlgorithm()), remEvidence.getSenderMessageDetails().getDigestValue()));
-            evidence = evidence.messageIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getUAMessageIdentifier()));
+            if (remEvidence.getSenderMessageDetails().getUAMessageIdentifier() != null)
+                evidence = evidence.documentIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getUAMessageIdentifier()));
+            evidence = evidence.messageIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getMessageIdentifierByREMMD()));
             evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(remEvidence.getSenderMessageDetails().getMessageSubject(), Scheme.NONE));
 
             // Extensions
