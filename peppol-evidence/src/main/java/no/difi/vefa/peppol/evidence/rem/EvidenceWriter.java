@@ -68,8 +68,10 @@ public class EvidenceWriter {
         remEvidence.setEventCode(evidence.getEventCode().getValue());
 
         // Event Reason
-        remEvidence.setEventReasons(new EventReasonsType());
-        remEvidence.getEventReasons().getEventReason().add(RemHelper.createEventReasonType(evidence.getEventReason()));
+        if (evidence.getEventReason() != null) {
+            remEvidence.setEventReasons(new EventReasonsType());
+            remEvidence.getEventReasons().getEventReason().add(RemHelper.createEventReasonType(evidence.getEventReason()));
+        }
 
         // Issuer
         NamePostalAddressType namePostalAddressType = new NamePostalAddressType();
@@ -82,6 +84,12 @@ public class EvidenceWriter {
 
         // Evidence Identifier
         remEvidence.setEvidenceIdentifier(evidence.getEvidenceIdentifier().getValue());
+
+        // Issuer Policy
+        if (evidence.getIssuerPolicy() != null) {
+            remEvidence.setEvidenceIssuerPolicyID(new EvidenceIssuerPolicyIDType());
+            remEvidence.getEvidenceIssuerPolicyID().getPolicyID().add(evidence.getIssuerPolicy());
+        }
 
         // Event Time
         remEvidence.setEventTime(RemHelper.toXmlGregorianCalendar(evidence.getTimestamp()));

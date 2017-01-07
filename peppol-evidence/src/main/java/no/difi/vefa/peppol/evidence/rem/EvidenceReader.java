@@ -79,6 +79,9 @@ public class EvidenceReader {
             // Evidence Identifier
             evidence = evidence.evidenceIdentifier(InstanceIdentifier.of(remEvidence.getEvidenceIdentifier()));
 
+            if (remEvidence.getEvidenceIssuerPolicyID() != null)
+                evidence = evidence.issuerPolicy(remEvidence.getEvidenceIssuerPolicyID().getPolicyID().get(0));
+
             // Event Time
             evidence = evidence.timestamp(RemHelper.fromXmlGregorianCalendar(remEvidence.getEventTime()));
 

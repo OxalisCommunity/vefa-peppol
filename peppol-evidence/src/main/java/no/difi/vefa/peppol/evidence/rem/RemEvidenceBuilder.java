@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.code.DigestMethod;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
@@ -55,8 +56,6 @@ import java.util.Date;
 public class RemEvidenceBuilder {
 
     private Evidence evidence;
-
-    private String evidenceIssuerPolicyID;
 
     protected RemEvidenceBuilder(final EvidenceTypeInstance evidenceTypeInstance) {
         evidence = Evidence.newInstance()
@@ -155,7 +154,7 @@ public class RemEvidenceBuilder {
     }
 
     public RemEvidenceBuilder evidenceIssuerPolicyID(String evidencePolicyID) {
-        this.evidenceIssuerPolicyID = evidencePolicyID;
+        evidence = evidence.issuerPolicy(evidencePolicyID);
         return this;
     }
 
@@ -196,7 +195,7 @@ public class RemEvidenceBuilder {
     }
 
     public RemEvidenceBuilder payloadDigest(byte[] payloadDigest) {
-        evidence = evidence.digest(Digest.of(null, payloadDigest));
+        evidence = evidence.digest(Digest.of(DigestMethod.SHA256, payloadDigest));
         return this;
     }
 
@@ -241,11 +240,11 @@ public class RemEvidenceBuilder {
         evidence.setEventTime(RemHelper.toXmlGregorianCalendar(this.evidence.getTimestamp()));
 
         // EvidencePolicyID
-        if (evidenceIssuerPolicyID == null)
+        if (this.evidence.getIssuerPolicy() == null)
             throw new RemEvidenceException("Evidence Issuer Policy ID missing");
 
         EvidenceIssuerPolicyIDType policyIDs = new EvidenceIssuerPolicyIDType();
-        policyIDs.getPolicyID().add(evidenceIssuerPolicyID);
+        policyIDs.getPolicyID().add(this.evidence.getIssuerPolicy());
         evidence.setEvidenceIssuerPolicyID(policyIDs);
 
         // EvidenceIssuerDetails
@@ -292,7 +291,7 @@ public class RemEvidenceBuilder {
         // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = this.evidence.getType().toJAXBElement(evidence);
 
-        //try {
+        // try {
         // Signs the REMEvidenceType instance
         Document signedRemDocument = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);
         // Document signedRemDocument = SignedEvidenceWriter.write(privateKeyEntry, this.evidence);
@@ -302,7 +301,7 @@ public class RemEvidenceBuilder {
 
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, signedRemDocument);
         //} catch (PeppolSecurityException e) {
-        //throw new RemEvidenceException(e.getMessage(), e);
+        //    throw new RemEvidenceException(e.getMessage(), e);
         //}
     }
 
