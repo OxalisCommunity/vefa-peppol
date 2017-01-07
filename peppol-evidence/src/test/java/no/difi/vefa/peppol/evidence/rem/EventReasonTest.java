@@ -26,16 +26,22 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
-/**
- * Created by soc on 30.11.2015.
- */
 public class EventReasonTest {
 
     @Test
     public void testValueForCode() throws Exception {
-
         String code = EventReason.INVALID_USER_SIGNATURE.getCode();
         EventReason eventReason = EventReason.valueForCode(code);
         assertEquals(EventReason.INVALID_USER_SIGNATURE, eventReason );
+    }
+
+    @Test
+    public void testValueOf() {
+        assertEquals(EventReason.OTHER, EventReason.valueOf("OTHER"));
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void valueForCodeException() {
+        EventReason.valueForCode("Test...");
     }
 }

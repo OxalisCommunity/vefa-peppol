@@ -55,6 +55,26 @@ public class EvidenceTest {
     }
 
     @Test
+    public void simpleHasPeppolExtensionValues() {
+        Assert.assertFalse(Evidence.newInstance()
+                .hasPeppolExtensionValues());
+
+        Assert.assertTrue(Evidence.newInstance()
+                .transmissionRole(TransmissionRole.C_2)
+                .hasPeppolExtensionValues());
+
+        Assert.assertTrue(Evidence.newInstance()
+                .transportProtocol(TransportProtocol.INTERNAL)
+                .hasPeppolExtensionValues());
+
+        Assert.assertTrue(Evidence.newInstance()
+                .originalReceipt(Receipt.of("Hello World!".getBytes()))
+                .hasPeppolExtensionValues());
+
+        Assert.assertTrue(EVIDENCE.hasPeppolExtensionValues());
+    }
+
+    @Test
     public void simpleHashCode() {
         Assert.assertNotNull(EVIDENCE.hashCode());
         Assert.assertNotNull(EVIDENCE.type(null).hashCode());

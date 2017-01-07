@@ -221,6 +221,10 @@ public class Evidence implements Serializable {
         return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
     }
 
+    boolean hasPeppolExtensionValues() {
+        return (transmissionRole != null || transportProtocol != null || originalReceipts.size() > 0);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

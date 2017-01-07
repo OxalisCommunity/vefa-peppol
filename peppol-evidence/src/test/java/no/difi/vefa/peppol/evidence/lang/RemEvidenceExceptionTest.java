@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.lang;
 
+import no.difi.vefa.peppol.common.api.Perform;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
@@ -32,5 +33,15 @@ public class RemEvidenceExceptionTest {
     public void simple() {
         new RemEvidenceException("Text...");
         new RemEvidenceException("Text...", Mockito.mock(Exception.class));
+    }
+
+    @Test(expectedExceptions = RemEvidenceException.class)
+    public void verifyPerform() throws Exception {
+        RemEvidenceException.verify(new Perform() {
+            @Override
+            public void action() throws Exception {
+                throw new Exception("Some reason...");
+            }
+        });
     }
 }

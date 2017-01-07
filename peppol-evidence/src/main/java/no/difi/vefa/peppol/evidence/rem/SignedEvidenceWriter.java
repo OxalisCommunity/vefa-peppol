@@ -22,14 +22,12 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.Perform;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigSigner;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;
@@ -42,19 +40,20 @@ public class SignedEvidenceWriter {
         write(privateKeyEntry, evidence, new StreamResult(outputStream));
     }
 
+    public static Document write(KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence) throws RemEvidenceException, PeppolSecurityException {
+        Document document = RemHelper.getDocumentBuilder().newDocument();
+        write(document, privateKeyEntry, evidence);
+        return document;
+    }
+
     public static void write(Node node, KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence) throws RemEvidenceException, PeppolSecurityException {
         write(privateKeyEntry, evidence, new DOMResult(node));
     }
 
     public static void write(final KeyStore.PrivateKeyEntry privateKeyEntry, final Evidence evidence, final Result result) throws RemEvidenceException, PeppolSecurityException {
-        RemEvidenceException.verify(new Perform() {
-            @Override
-            public void action() throws Exception {
-                Document document = RemHelper.DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().newDocument();
-                EvidenceWriter.write(document, evidence);
+        Document document = RemHelper.getDocumentBuilder().newDocument();
+        EvidenceWriter.write(document, evidence);
 
-                XmldsigSigner.SHA256().sign(document, privateKeyEntry, result);
-            }
-        });
+        XmldsigSigner.SHA256().sign(document, privateKeyEntry, result);
     }
 }

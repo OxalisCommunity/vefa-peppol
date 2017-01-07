@@ -37,7 +37,7 @@ public enum EventCode {
     DELIVERY("http:uri.etsi.org/02640/Event#Delivery"),
     DELIVERY_EXPIRATION("http:uri.etsi.org/02640/Event#DeliveryExpiration");
 
-    private String value;
+    private final String value;
 
     EventCode(String value) {
         this.value = value;
@@ -47,14 +47,11 @@ public enum EventCode {
         return value;
     }
 
-    public static EventCode valueFor(String valueToLookup) {
-        if (valueToLookup == null)
-            throw new IllegalArgumentException("null is invalid argument!");
-
+    public static EventCode valueFor(String value) {
         for (EventCode eventCode : values())
-            if (eventCode.value.equals(valueToLookup))
+            if (eventCode.value.equals(value))
                 return eventCode;
 
-        throw new IllegalArgumentException(valueToLookup + " does not represent a valid EventCode");
+        throw new IllegalArgumentException(String.format("Value '%s' does not represent a valid EventCode", value));
     }
 }

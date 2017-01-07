@@ -25,6 +25,7 @@ package no.difi.vefa.peppol.evidence.rem;
 import no.difi.vefa.peppol.common.model.Signed;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.w3c.dom.Document;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,12 +33,22 @@ import java.io.ByteArrayOutputStream;
 public class SignedEvidenceCombinedTest {
 
     @Test
-    public void simple() throws Exception {
+    public void simpleStream() throws Exception {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         SignedEvidenceWriter.write(outputStream, TestResources.getPrivateKey(), EvidenceTest.EVIDENCE);
 
         Signed<Evidence> evidenceSigned = SignedEvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
+
+        Assert.assertEquals(evidenceSigned.getCertificate(), TestResources.getPrivateKey().getCertificate());
+        Assert.assertEquals(evidenceSigned.getContent(), EvidenceTest.EVIDENCE);
+    }
+
+    @Test
+    public void simpleNode() throws Exception {
+        Document document = SignedEvidenceWriter.write(TestResources.getPrivateKey(), EvidenceTest.EVIDENCE);
+
+        Signed<Evidence> evidenceSigned = SignedEvidenceReader.read(document);
 
         Assert.assertEquals(evidenceSigned.getCertificate(), TestResources.getPrivateKey().getCertificate());
         Assert.assertEquals(evidenceSigned.getContent(), EvidenceTest.EVIDENCE);

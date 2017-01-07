@@ -30,7 +30,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.cert.X509Certificate;
@@ -39,8 +38,8 @@ public class SignedEvidenceReader {
 
     public static Signed<Evidence> read(InputStream inputStream) throws RemEvidenceException, PeppolSecurityException {
         try {
-            return read(RemHelper.DOCUMENT_BUILDER_FACTORY.newDocumentBuilder().parse(inputStream));
-        } catch (SAXException | ParserConfigurationException | IOException e) {
+            return read(RemHelper.getDocumentBuilder().parse(inputStream));
+        } catch (SAXException | IOException e) {
             throw new RemEvidenceException(e.getMessage(), e);
         }
     }

@@ -113,7 +113,7 @@ public class EvidenceWriter {
         remEvidence.setExtensions(new ExtensionsListType());
 
         // PEPPOL REM Extension
-        if (evidence.getTransmissionRole() != null || evidence.getTransportProtocol() != null || evidence.getOriginalReceipts().size() > 0) {
+        if (evidence.hasPeppolExtensionValues()) {
             PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
             peppolRemExtension.setTransmissionProtocol(evidence.getTransportProtocol().getIdentifier());
             peppolRemExtension.setTransmissionRole(evidence.getTransmissionRole());

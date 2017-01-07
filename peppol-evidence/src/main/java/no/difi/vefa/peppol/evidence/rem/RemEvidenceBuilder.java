@@ -286,19 +286,24 @@ public class RemEvidenceBuilder {
                 this.evidence.getMessageIdentifier().getValue(), this.evidence.getDigest().getValue());
 
         // Injects the transport level receipt (if supplied), i.e. AS2 MDN or AS4 Soap Header
-        if (this.evidence.getOriginalReceipts().size() > 0)
+        if (this.evidence.hasPeppolExtensionValues())
             injectPeppolExtensions(evidence, this.evidence.getTransmissionRole(), this.evidence.getTransportProtocol(), this.evidence.getOriginalReceipts().get(0).getValue());
 
         // Creates the actual REMEvidenceType instance in accordance with the type of evidence specified.
         JAXBElement<REMEvidenceType> remEvidenceTypeXmlInstance = this.evidence.getType().toJAXBElement(evidence);
 
+        //try {
         // Signs the REMEvidenceType instance
         Document signedRemDocument = injectSignature(privateKeyEntry, remEvidenceTypeXmlInstance);
+        // Document signedRemDocument = SignedEvidenceWriter.write(privateKeyEntry, this.evidence);
 
         // Transforms the REMEvidenceType DOM Document instance it's JAXB representation.
         JAXBElement<REMEvidenceType> remEvidenceTypeJAXBElement = RemEvidenceTransformer.toJaxb(signedRemDocument);
 
         return new SignedRemEvidence(remEvidenceTypeJAXBElement, signedRemDocument);
+        //} catch (PeppolSecurityException e) {
+        //throw new RemEvidenceException(e.getMessage(), e);
+        //}
     }
 
     /**

@@ -25,18 +25,25 @@ package no.difi.vefa.peppol.evidence.rem;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNull;
 
-/**
- * Created by soc on 30.11.2015.
- */
 public class EventCodeTest {
 
     @Test
     public void testValueFor() throws Exception {
-
         String value = EventCode.DELIVERY_EXPIRATION.getValue();
 
         EventCode eventCode = EventCode.valueFor(value);
         assertEquals(eventCode, EventCode.DELIVERY_EXPIRATION);
+    }
+
+    @Test
+    public void testValueOf() {
+        assertEquals(EventCode.valueOf("ACCEPTANCE"), EventCode.ACCEPTANCE);
+    }
+
+    @Test(expectedExceptions = IllegalArgumentException.class)
+    public void valueForException() {
+        EventCode.valueFor("Test...");
     }
 }

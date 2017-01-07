@@ -113,6 +113,8 @@ public class EvidenceReader {
             }
 
             return evidence;
+        } catch (RemEvidenceException e) {
+            throw e;
         } catch (JAXBException | PeppolException e) {
             throw new RemEvidenceException("Unable to unmarshal content.", e);
         }

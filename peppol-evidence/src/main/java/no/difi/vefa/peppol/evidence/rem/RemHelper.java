@@ -34,11 +34,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -111,5 +112,13 @@ class RemHelper {
 
     public static Unmarshaller getUnmarshaller() throws JAXBException {
         return jaxbContext.createUnmarshaller();
+    }
+
+    public static DocumentBuilder getDocumentBuilder() throws RemEvidenceException {
+        try {
+            return DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            throw new RemEvidenceException(e.getMessage(), e);
+        }
     }
 }

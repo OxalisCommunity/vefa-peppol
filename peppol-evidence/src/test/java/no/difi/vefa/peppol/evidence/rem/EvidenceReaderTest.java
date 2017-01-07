@@ -39,4 +39,9 @@ public class EvidenceReaderTest {
     public void exceptionOnInputStreamError() throws Exception {
         EvidenceReader.read(Mockito.mock(InputStream.class));
     }
+
+    @Test(expectedExceptions = RemEvidenceException.class, expectedExceptionsMessageRegExp = "Version .*")
+    public void exceptionOnInvalidVersion() throws Exception {
+        EvidenceReader.read(getClass().getResourceAsStream("/test-version-1.xml"));
+    }
 }

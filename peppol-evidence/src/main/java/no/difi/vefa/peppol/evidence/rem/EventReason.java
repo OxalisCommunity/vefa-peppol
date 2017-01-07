@@ -60,8 +60,6 @@ public enum EventReason {
 
     EventReason(String details, String code) {
         this.details = details;
-
-        assert Integer.valueOf(code) > 0;
         this.code = code;
     }
 
@@ -74,16 +72,10 @@ public enum EventReason {
     }
 
     public static EventReason valueForCode(String code) {
-        if (code == null) {
-            throw new IllegalArgumentException("argument 'code' is required!");
-        }
-
-        for (EventReason eventReason : values()) {
-            if (eventReason.getCode().equals(code)) {
+        for (EventReason eventReason : values())
+            if (eventReason.getCode().equals(code))
                 return eventReason;
-            }
-        }
 
-        throw new IllegalStateException(code + " is not a valid code for EventReason");
+        throw new IllegalArgumentException(String.format("Code '%s' is not a valid code for EventReason", code));
     }
 }
