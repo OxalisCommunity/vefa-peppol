@@ -24,6 +24,7 @@ package no.difi.vefa.peppol.lookup.fetcher;
 
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.mode.Mode;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
@@ -35,12 +36,16 @@ import java.net.URLConnection;
 
 public class UrlFetcher extends AbstractFetcher {
 
+    public UrlFetcher(Mode mode) {
+        super(mode);
+    }
+
     @Override
     public FetcherResponse fetch(URI uri) throws LookupException {
         try {
             URLConnection urlConnection = uri.toURL().openConnection();
-            urlConnection.setConnectTimeout(TIMEOUT);
-            urlConnection.setReadTimeout(TIMEOUT);
+            urlConnection.setConnectTimeout(timeout);
+            urlConnection.setReadTimeout(timeout);
 
             return new FetcherResponse(
                     new BufferedInputStream(urlConnection.getInputStream()),

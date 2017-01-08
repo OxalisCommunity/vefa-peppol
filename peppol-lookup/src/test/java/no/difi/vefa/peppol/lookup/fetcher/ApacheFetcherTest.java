@@ -24,37 +24,32 @@ package no.difi.vefa.peppol.lookup.fetcher;
 
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
+import no.difi.vefa.peppol.mode.Mode;
 import org.testng.annotations.Test;
 
 import java.net.URI;
 
 public class ApacheFetcherTest {
 
+    private MetadataFetcher fetcher = new ApacheFetcher(Mode.of("TEST"));
+
     @Test(expectedExceptions = LookupException.class)
     public void simpleTimeout() throws LookupException {
-        MetadataFetcher fetcher = new ApacheFetcher();
-
         fetcher.fetch(URI.create("http://invalid.example.com/"));
     }
 
     @Test(expectedExceptions = LookupException.class)
     public void simple404() throws LookupException {
-        MetadataFetcher fetcher = new ApacheFetcher();
-
         fetcher.fetch(URI.create("http://httpstat.us/404"));
     }
 
     @Test(expectedExceptions = LookupException.class)
     public void simple500() throws LookupException {
-        MetadataFetcher fetcher = new ApacheFetcher();
-
         fetcher.fetch(URI.create("http://httpstat.us/500"));
     }
 
     @Test(expectedExceptions = LookupException.class)
     public void simpleNullPointer() throws LookupException {
-        MetadataFetcher fetcher = new ApacheFetcher();
-
         fetcher.fetch(null);
     }
 }

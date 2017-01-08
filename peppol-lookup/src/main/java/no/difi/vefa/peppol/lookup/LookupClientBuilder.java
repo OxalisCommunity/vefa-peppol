@@ -97,13 +97,13 @@ public class LookupClientBuilder {
 
     public LookupClient build() throws PeppolLoadingException {
         if (metadataLocator == null)
-            locator(mode.initiate("locator.class", MetadataLocator.class));
+            locator(mode.initiate("lookup.locator.class", MetadataLocator.class));
         if (metadataProvider == null)
-            provider(mode.initiate("provider.class", MetadataProvider.class));
+            provider(mode.initiate("lookup.provider.class", MetadataProvider.class));
         if (metadataFetcher == null)
-            fetcher(mode.initiate("fetcher.class", MetadataFetcher.class));
+            fetcher(mode.initiate("lookup.fetcher.class", MetadataFetcher.class));
         if (metadataReader == null)
-            reader(mode.initiate("reader.class", MetadataReader.class));
+            reader(mode.initiate("lookup.reader.class", MetadataReader.class));
 
         return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, certificateValidator);
     }

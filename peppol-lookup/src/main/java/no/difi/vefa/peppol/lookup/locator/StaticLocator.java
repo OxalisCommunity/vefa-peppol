@@ -33,7 +33,7 @@ public class StaticLocator extends AbstractLocator {
     private URI defaultUri;
 
     public StaticLocator(Mode mode) {
-        this(mode.getString("locator.hostname"));
+        this(mode.getString("lookup.locator.hostname"));
     }
 
     public StaticLocator(String defaultUri) {

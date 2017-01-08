@@ -37,9 +37,9 @@ public class BusdoxLocator extends AbstractLocator {
 
     public BusdoxLocator(Mode mode) {
         this(
-                mode.getString("locator.busdox.prefix"),
-                mode.getString("locator.hostname"),
-                mode.getString("locator.busdox.algorithm")
+                mode.getString("lookup.locator.busdox.prefix"),
+                mode.getString("lookup.locator.hostname"),
+                mode.getString("lookup.locator.busdox.algorithm")
         );
     }
 

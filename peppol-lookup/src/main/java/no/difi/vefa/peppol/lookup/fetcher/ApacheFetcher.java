@@ -24,6 +24,7 @@ package no.difi.vefa.peppol.lookup.fetcher;
 
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.mode.Mode;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -42,18 +43,19 @@ public class ApacheFetcher extends AbstractFetcher {
 
     private RequestConfig requestConfig;
 
-    public ApacheFetcher(HttpClient httpClient) {
+    public ApacheFetcher(Mode mode, HttpClient httpClient) {
+        super(mode);
         this.httpClient = httpClient;
 
         this.requestConfig = RequestConfig.custom()
-                .setConnectionRequestTimeout(TIMEOUT)
-                .setConnectTimeout(TIMEOUT)
-                .setSocketTimeout(TIMEOUT)
+                .setConnectionRequestTimeout(timeout)
+                .setConnectTimeout(timeout)
+                .setSocketTimeout(timeout)
                 .build();
     }
 
-    public ApacheFetcher() {
-        this(HttpClients.createDefault());
+    public ApacheFetcher(Mode mode) {
+        this(mode, HttpClients.createDefault());
     }
 
     @Override

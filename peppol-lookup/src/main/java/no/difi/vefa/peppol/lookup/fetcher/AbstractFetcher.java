@@ -23,9 +23,13 @@
 package no.difi.vefa.peppol.lookup.fetcher;
 
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
+import no.difi.vefa.peppol.mode.Mode;
 
 public abstract class AbstractFetcher implements MetadataFetcher {
 
-    public static final int TIMEOUT = 10000;
+    protected int timeout = 10000;
 
+    public AbstractFetcher(Mode mode) {
+        timeout = Integer.parseInt(mode.getString("lookup.fetcher.timeout"));
+    }
 }

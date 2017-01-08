@@ -45,10 +45,10 @@ public class BdxlLocator extends AbstractLocator {
 
     public BdxlLocator(Mode mode) {
         this(
-                mode.getString("locator.bdxl.prefix"),
-                mode.getString("locator.hostname"),
-                mode.getString("locator.bdxl.algorithm"),
-                EncodingUtils.get(mode.getString("locator.bdxl.encoding"))
+                mode.getString("lookup.locator.bdxl.prefix"),
+                mode.getString("lookup.locator.hostname"),
+                mode.getString("lookup.locator.bdxl.algorithm"),
+                EncodingUtils.get(mode.getString("lookup.locator.bdxl.encoding"))
         );
     }
 
