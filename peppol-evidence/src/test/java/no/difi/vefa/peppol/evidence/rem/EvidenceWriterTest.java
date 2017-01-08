@@ -23,32 +23,20 @@
 package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
-import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 
-public class EvidenceReaderTest {
-
-    @Test
-    public void simpleConstructor() {
-        new EvidenceReader();
-    }
-
-    @Test(expectedExceptions = RemEvidenceException.class)
-    public void exceptionOnInputStreamError() throws Exception {
-        EvidenceReader.read(Mockito.mock(InputStream.class));
-    }
-
-    @Test(expectedExceptions = RemEvidenceException.class, expectedExceptionsMessageRegExp = "Version .*")
-    public void exceptionOnInvalidVersion() throws Exception {
-        EvidenceReader.read(getClass().getResourceAsStream("/test-version-1.xml"));
-    }
+public class EvidenceWriterTest {
 
     @Test
-    public void readSimpleFile() throws Exception {
-        Evidence evidence = EvidenceReader.read(getClass().getResourceAsStream("/sample-signed-formatted-rem.xml"));
-        Assert.assertFalse(evidence.hasPeppolExtensionValues());
+    public void eventReasonNotMandatory() throws RemEvidenceException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        EvidenceWriter.write(outputStream, EvidenceTest.EVIDENCE
+                .eventReason(null));
+
+        Assert.assertTrue(outputStream.size() > 0);
     }
 }

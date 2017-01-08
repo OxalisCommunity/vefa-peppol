@@ -74,7 +74,8 @@ public class EvidenceReader {
             evidence = evidence.eventReason(EventReason.valueForCode(remEvidence.getEventReasons().getEventReason().get(0).getCode()));
 
             // Issuer
-            evidence = evidence.issuer(remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0));
+            if (remEvidence.getEvidenceIssuerDetails() != null)
+                evidence = evidence.issuer(remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0));
 
             // Evidence Identifier
             evidence = evidence.evidenceIdentifier(InstanceIdentifier.of(remEvidence.getEvidenceIdentifier()));

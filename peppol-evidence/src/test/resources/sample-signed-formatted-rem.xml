@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <DeliveryNonDeliveryToRecipient xmlns="http://uri.etsi.org/02640/v2#" xmlns:ns3="http://www.w3.org/2000/09/xmldsig#"
                                 xmlns:ns4="http://uri.etsi.org/01903/v1.3.2#"
-                                xmlns:ns7="http://peppol.eu/xsd/ticc/receipt/1.0">
+                                xmlns:ns7="http://peppol.eu/xsd/ticc/receipt/1.0" version="2">
 
-    <!-- NOTE! This sample REM Evidence will fail XML signature verification due to formatting issues -->
+    <!-- NOTE! This sample REM Evidence will fail XML signature verification due to formatting and change issues -->
     <EventCode>http:uri.etsi.org/02640/Event#Acceptance</EventCode>
     <EventReasons>
         <EventReason>

@@ -22,6 +22,8 @@
 
 package no.difi.vefa.peppol.mode;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.mode.classes.ProductionObject;
 import no.difi.vefa.peppol.mode.classes.SomeObject;
@@ -61,5 +63,21 @@ public class ModeTest {
     @Test(expectedExceptions = PeppolLoadingException.class)
     public void simpleInvalid() throws Exception {
         Mode.of("INVALID").initiate("class", SomeObject.class);
+    }
+
+    @Test
+    public void simpleNonExisting() throws Exception {
+        Mode mode = Mode.of("Unknown");
+        Assert.assertNotNull(mode);
+        Assert.assertEquals(mode.getIdentifier(), "Unknown");
+    }
+
+    @Test
+    public void simpleEmpty() throws Exception {
+        Config config = ConfigFactory.empty();
+
+        Mode mode = Mode.of(config, "Some");
+        Assert.assertNotNull(mode);
+        Assert.assertEquals(mode.getConfig(), config);
     }
 }
