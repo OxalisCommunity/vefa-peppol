@@ -37,6 +37,30 @@ public class ExceptionUtilTest {
         new ExceptionUtil();
     }
 
+    @Test
+    public void simpleNoException() throws Exception {
+        ExceptionUtil.perform(Exception.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                // No action.
+            }
+        });
+
+        ExceptionUtil.perform(Exception.class, new PerformResult<Object>() {
+            @Override
+            public Object action() throws Exception {
+                return null;
+            }
+        });
+
+        ExceptionUtil.perform(Exception.class, "Not to be thrown.", new PerformResult<Object>() {
+            @Override
+            public Object action() throws Exception {
+                return null;
+            }
+        });
+    }
+
     @Test(expectedExceptions = IOException.class, expectedExceptionsMessageRegExp = "1337")
     public void simpleThrowIOException() throws Exception {
         ExceptionUtil.perform(IOException.class, new PerformAction() {
@@ -65,5 +89,19 @@ public class ExceptionUtilTest {
                 throw new Exception("2000");
             }
         });
+    }
+
+    @Test(expectedExceptions = PeppolRuntimeException.class)
+    public void simpleTooSimpleExtension() throws Exception {
+        ExceptionUtil.perform(SimpleExtension.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                throw new Exception("Test");
+            }
+        });
+    }
+
+    public class SimpleExtension extends Exception {
+
     }
 }

@@ -29,7 +29,10 @@ import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
-import no.difi.vefa.peppol.evidence.jaxb.rem.*;
+import no.difi.vefa.peppol.evidence.jaxb.rem.AttributedElectronicAddressType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.EventReasonType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.ObjectFactory;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 
 import javax.xml.bind.JAXBContext;
@@ -84,14 +87,6 @@ class RemHelper {
         o.setDetails(eventReason.getDetails());
 
         return o;
-    }
-
-    public static EventReasonsType createEventReasonsType(EventReason... list) {
-        EventReasonsType eventReasonsType = new EventReasonsType();
-        for (EventReason o : list)
-            eventReasonsType.getEventReason().add(createEventReasonType(o));
-
-        return eventReasonsType;
     }
 
     public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws RemEvidenceException {

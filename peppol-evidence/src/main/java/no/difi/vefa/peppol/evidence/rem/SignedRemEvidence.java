@@ -22,12 +22,17 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
+import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
-import no.difi.vefa.peppol.evidence.jaxb.rem.*;
+import no.difi.vefa.peppol.evidence.jaxb.rem.AttributedElectronicAddressType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.EntityDetailsListType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.EntityDetailsType;
+import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Document;
 
@@ -69,19 +74,7 @@ public class SignedRemEvidence {
     }
 
     public EvidenceTypeInstance getEvidenceType() {
-        try {
-            String evElementName = signedRemEvidenceXml.getDocumentElement().getLocalName();
-            switch (evElementName) {
-                case "DeliveryNonDeliveryToRecipient":
-                    return EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT;
-                case "RelayREMMDAcceptanceRejection":
-                    return EvidenceTypeInstance.RELAY_REM_MD_ACCEPTANCE_REJECTION;
-                default:
-                    return null;
-            }
-        } catch (NullPointerException npe) {
-            return null;
-        }
+        return EvidenceTypeInstance.findByLocalName(signedRemEvidenceXml.getDocumentElement().getLocalName());
     }
 
     public String getEvidenceIdentifier() {
@@ -93,13 +86,7 @@ public class SignedRemEvidence {
     }
 
     public EventReason getEventReason() {
-        assert e() != null : "jaxbElement.getValue() returned null";
-        assert e().getEventReasons() != null : "There are no event reasons";
-        assert e().getEventReasons().getEventReason() != null : "getEventReasons() returned null";
-        assert !e().getEventReasons().getEventReason().isEmpty() : "List of event reasons is empty";
-
-        EventReasonType eventReasonType = e().getEventReasons().getEventReason().get(0);
-        return EventReason.valueForCode(eventReasonType.getCode());
+        return EventReason.valueForCode(e().getEventReasons().getEventReason().get(0).getCode());
     }
 
     public Date getEventTime() {
@@ -109,29 +96,25 @@ public class SignedRemEvidence {
     public String getEvidenceIssuerPolicyID() throws RemEvidenceException {
         if (e().getEvidenceIssuerPolicyID() == null)
             throw new RemEvidenceException("Evidence issuer policy ID is not set");
-        else
-            return e().getEvidenceIssuerPolicyID().getPolicyID().get(0);
+
+        return e().getEvidenceIssuerPolicyID().getPolicyID().get(0);
     }
 
     public String getEvidenceIssuerDetails() throws RemEvidenceException {
-        try {
-            return e().getEvidenceIssuerDetails()
-                    .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
-        } catch (NullPointerException npe) {
-            throw new RemEvidenceException("There are no Event Issuer Details");
-        }
+        return ExceptionUtil.perform(RemEvidenceException.class, "There are no Event Issuer Details", new PerformResult<String>() {
+            @Override
+            public String action() throws Exception {
+                return e().getEvidenceIssuerDetails()
+                        .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
+            }
+        });
     }
 
     public ParticipantIdentifier getSenderIdentifier() {
-
         EntityDetailsType senderDetails = e().getSenderDetails();
         List<Object> attributedElectronicAddressOrElectronicAddress = senderDetails.getAttributedElectronicAddressOrElectronicAddress();
 
-        AttributedElectronicAddressType attributedElectronicAddressType = (AttributedElectronicAddressType) attributedElectronicAddressOrElectronicAddress.get(0);
-        String scheme = attributedElectronicAddressType.getScheme();
-        String value = attributedElectronicAddressType.getValue();
-
-        return ParticipantIdentifier.of(value, Scheme.of(scheme));
+        return RemHelper.readElectronicAddressType((AttributedElectronicAddressType) attributedElectronicAddressOrElectronicAddress.get(0));
     }
 
 
@@ -147,19 +130,11 @@ public class SignedRemEvidence {
         EntityDetailsType entityDetailsType = entityDetailsListType.getEntityDetails().get(0);
         List<Object> objectList = entityDetailsType.getAttributedElectronicAddressOrElectronicAddress();
 
-        AttributedElectronicAddressType attributedElectronicAddressType = (AttributedElectronicAddressType) objectList.get(0);
-        String scheme = attributedElectronicAddressType.getScheme();
-        String value = attributedElectronicAddressType.getValue();
-
-
-        return ParticipantIdentifier.of(value, Scheme.of(scheme));
+        return RemHelper.readElectronicAddressType((AttributedElectronicAddressType) objectList.get(0));
     }
 
     public DocumentTypeIdentifier getDocumentTypeIdentifier() {
-        MessageDetailsType senderMessageDetails = e().getSenderMessageDetails();
-        String messageSubject = senderMessageDetails.getMessageSubject();
-
-        return DocumentTypeIdentifier.of(messageSubject);
+        return DocumentTypeIdentifier.of(e().getSenderMessageDetails().getMessageSubject(), Scheme.NONE);
     }
 
     public String getDocumentTypeInstanceIdentifier() {
@@ -167,21 +142,14 @@ public class SignedRemEvidence {
     }
 
     public InstanceIdentifier getInstanceIdentifier() {
-        String remMDMessageIdentifier = e().getSenderMessageDetails().getMessageIdentifierByREMMD();
-
-        return InstanceIdentifier.of(remMDMessageIdentifier);
+        return InstanceIdentifier.of(e().getSenderMessageDetails().getMessageIdentifierByREMMD());
     }
 
     public byte[] getPayloadDigestValue() {
-        assert e() != null : "jaxbElement.getValue() returned null";
-        assert e().getSenderMessageDetails() != null : "getSenderMessageDetails() returned null";
-
         return e().getSenderMessageDetails().getDigestValue();
     }
 
     public PeppolRemExtension getTransmissionEvidence() {
-        ExtensionType extensionType = e().getExtensions().getExtension().get(0);
-
-        return (PeppolRemExtension) extensionType.getContent().get(0);
+        return (PeppolRemExtension) e().getExtensions().getExtension().get(0).getContent().get(0);
     }
 }
