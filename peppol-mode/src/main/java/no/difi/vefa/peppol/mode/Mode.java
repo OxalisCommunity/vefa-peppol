@@ -36,18 +36,35 @@ public class Mode {
 
     private Config config;
 
-    public static Mode of(String mode) {
-        Config config = ConfigFactory.load();
-        return of(config.getConfig(String.format("vefa.mode.%s", mode))
-                .withFallback(config.getConfig("vefa.mode.default")));
+    private String identifier;
+
+    public static Mode of(String identifier) {
+        return of(ConfigFactory.load(), identifier);
     }
 
-    public static Mode of(Config config) {
-        return new Mode(config);
+    public static Mode of(Config config, String identifier) {
+        // Loading configuration based on identifier.
+        if (identifier != null && config.hasPath(String.format("vefa.mode.%s", identifier)))
+            config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", identifier)));
+
+        // Load inherited configuration.
+        if (config.hasPath("mode.inherit"))
+            config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", config.getString("mode.inherit"))));
+
+        // Load default configuration.
+        if (config.hasPath("vefa.mode.default"))
+            config = config.withFallback(config.getConfig("vefa.mode.default"));
+
+        return new Mode(config, identifier);
     }
 
-    private Mode(Config config) {
+    private Mode(Config config, String identifier) {
         this.config = config;
+        this.identifier = identifier;
+    }
+
+    public String getIdentifier() {
+        return identifier;
     }
 
     public String getString(String key) {
@@ -58,7 +75,7 @@ public class Mode {
         return config;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "unused"})
     public <T> T initiate(String key, Class<T> type) throws PeppolLoadingException {
         try {
             return (T) initiate(Class.forName(getString(key)));

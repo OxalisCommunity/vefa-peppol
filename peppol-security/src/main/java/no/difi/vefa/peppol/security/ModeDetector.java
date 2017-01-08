@@ -22,26 +22,27 @@
 
 package no.difi.vefa.peppol.security;
 
+import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
-import no.difi.vefa.peppol.security.util.DifiCertificateValidator;
 
 import java.security.cert.X509Certificate;
 
 public class ModeDetector {
 
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
-        for (String token : ConfigFactory.load().getObject("vefa.mode").keySet()) {
-            if (!token.equals("default")) {
-                Mode mode = Mode.of(token);
-                CertificateValidator validator = new DifiCertificateValidator(mode);
+        Config config = ConfigFactory.load();
 
+        for (String token : config.getObject("vefa.mode").keySet()) {
+            if (!token.equals("default")) {
                 try {
-                    validator.validate(Service.ALL, certificate);
+                    Mode mode = Mode.of(config, token);
+                    mode.initiate("security.validator.class", CertificateValidator.class)
+                            .validate(Service.ALL, certificate);
                     return mode;
                 } catch (PeppolSecurityException e) {
                     // No action.

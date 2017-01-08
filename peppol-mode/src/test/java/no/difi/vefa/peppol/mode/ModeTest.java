@@ -47,6 +47,12 @@ public class ModeTest {
         Assert.assertNotNull(mode.getConfig());
     }
 
+    @Test
+    public void simpleInherit() throws Exception {
+        Mode mode = Mode.of("ERROR");
+        Assert.assertEquals(mode.getString("value"), "World");
+    }
+
     @Test(expectedExceptions = PeppolLoadingException.class)
     public void simpleClassNotFound() throws Exception {
         Mode.of("ERROR").initiate("class", SomeObject.class);
