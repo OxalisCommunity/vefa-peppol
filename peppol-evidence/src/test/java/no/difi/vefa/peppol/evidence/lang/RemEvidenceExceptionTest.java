@@ -22,7 +22,8 @@
 
 package no.difi.vefa.peppol.evidence.lang;
 
-import no.difi.vefa.peppol.common.api.Perform;
+import no.difi.vefa.peppol.common.api.PerformAction;
+import no.difi.vefa.peppol.common.api.PerformResult;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
@@ -36,11 +37,21 @@ public class RemEvidenceExceptionTest {
     }
 
     @Test(expectedExceptions = RemEvidenceException.class)
-    public void verifyPerform() throws Exception {
-        RemEvidenceException.verify(new Perform() {
+    public void verifyPerformAction() throws Exception {
+        RemEvidenceException.verify(new PerformAction() {
             @Override
             public void action() throws Exception {
                 throw new Exception("Some reason...");
+            }
+        });
+    }
+
+    @Test(expectedExceptions = RemEvidenceException.class)
+    public void verifyPerformResult() throws Exception {
+        RemEvidenceException.verify(new PerformResult<Object>() {
+            @Override
+            public Object action() throws Exception {
+                throw new Exception("Other reason...");
             }
         });
     }

@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.sbdh;
 
-import no.difi.vefa.peppol.common.api.Perform;
+import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -50,7 +50,7 @@ class SbdhHelper {
     public static XMLOutputFactory XML_OUTPUT_FACTORY;
 
     static {
-        PeppolRuntimeException.verify(new Perform() {
+        PeppolRuntimeException.verify(new PerformAction() {
             @Override
             public void action() throws Exception {
                 JAXB_CONTEXT =

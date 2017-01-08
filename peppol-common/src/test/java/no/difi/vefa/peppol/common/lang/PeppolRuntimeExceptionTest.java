@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.common.lang;
 
-import no.difi.vefa.peppol.common.api.Perform;
+import no.difi.vefa.peppol.common.api.PerformAction;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
@@ -36,7 +36,7 @@ public class PeppolRuntimeExceptionTest {
 
     @Test(expectedExceptions = PeppolRuntimeException.class)
     public void simpleVerifyThrowException() {
-        PeppolRuntimeException.verify(new Perform() {
+        PeppolRuntimeException.verify(new PerformAction() {
             @Override
             public void action() throws Exception {
                 throw new Exception();
@@ -46,7 +46,7 @@ public class PeppolRuntimeExceptionTest {
 
     @Test
     public void simpleVerifyNoException() {
-        PeppolRuntimeException.verify(new Perform() {
+        PeppolRuntimeException.verify(new PerformAction() {
             @Override
             public void action() throws Exception {
                 // No action.

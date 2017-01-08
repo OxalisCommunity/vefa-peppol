@@ -20,21 +20,10 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.lang;
+package no.difi.vefa.peppol.common.api;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
+public interface PerformAction {
 
-public class PeppolRuntimeException extends RuntimeException {
+    void action() throws Exception;
 
-    public static void verify(PerformAction performAction) {
-        try {
-            performAction.action();
-        } catch (Exception e) {
-            throw new PeppolRuntimeException(e.getMessage(), e);
-        }
-    }
-
-    public PeppolRuntimeException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

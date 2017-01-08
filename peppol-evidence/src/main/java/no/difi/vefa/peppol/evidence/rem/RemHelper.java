@@ -22,7 +22,8 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.Perform;
+import no.difi.vefa.peppol.common.api.PerformAction;
+import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
@@ -39,7 +40,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -54,7 +54,7 @@ class RemHelper {
     public static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
 
     static {
-        PeppolRuntimeException.verify(new Perform() {
+        PeppolRuntimeException.verify(new PerformAction() {
             @Override
             public void action() throws Exception {
                 jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
@@ -115,10 +115,11 @@ class RemHelper {
     }
 
     public static DocumentBuilder getDocumentBuilder() throws RemEvidenceException {
-        try {
-            return DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            throw new RemEvidenceException(e.getMessage(), e);
-        }
+        return RemEvidenceException.verify(new PerformResult<DocumentBuilder>() {
+            @Override
+            public DocumentBuilder action() throws Exception {
+                return DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+            }
+        });
     }
 }
