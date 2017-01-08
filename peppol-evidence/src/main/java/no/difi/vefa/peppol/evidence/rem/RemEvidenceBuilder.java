@@ -73,8 +73,6 @@ public class RemEvidenceBuilder {
 
         // Extensions/Extension/Any
         ExtensionType extensionType = new ExtensionType();
-        AnyType anyType = new AnyType();
-        JAXBElement<AnyType> extensionAny = objectFactory.createAny(anyType);
 
         // //PeppolRemExtension
         PeppolRemExtension peppolRemExtension = new PeppolRemExtension();
@@ -84,13 +82,10 @@ public class RemEvidenceBuilder {
         originalReceiptType.setValue(specificReceiptBytes);
         peppolRemExtension.getOriginalReceipt().add(originalReceiptType);
 
-        // xpath: //Any/PeppolRemExtension
-        anyType.getContent().add(peppolRemExtension);
+        // xpath: //Extension/PeppolRemExtension
+        extensionType.getContent().add(peppolRemExtension);
 
-        // xpath: //Extension/Any/PeppolRemExtension
-        extensionType.getContent().add(extensionAny);
-
-        // xpath: //Extensions/Extension/Any/PeppolRemExtension
+        // xpath: //Extensions/Extension/PeppolRemExtension
         remEvidenceType.setExtensions(new ExtensionsListType());
         remEvidenceType.getExtensions().getExtension().add(extensionType);
     }

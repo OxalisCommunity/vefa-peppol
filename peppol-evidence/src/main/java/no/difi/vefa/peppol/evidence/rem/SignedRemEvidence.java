@@ -28,7 +28,6 @@ import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.rem.*;
-import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
 import org.w3c.dom.Document;
 
@@ -180,14 +179,9 @@ public class SignedRemEvidence {
         return e().getSenderMessageDetails().getDigestValue();
     }
 
-    @SuppressWarnings("unchecked")
     public PeppolRemExtension getTransmissionEvidence() {
-
         ExtensionType extensionType = e().getExtensions().getExtension().get(0);
 
-        JAXBElement<AnyType> anyType = (JAXBElement<AnyType>) extensionType.getContent().get(0);
-        AnyType value = anyType.getValue();
-
-        return (PeppolRemExtension) value.getContent().get(0);
+        return (PeppolRemExtension) extensionType.getContent().get(0);
     }
 }

@@ -30,12 +30,10 @@ import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 import no.difi.vefa.peppol.evidence.jaxb.rem.ExtensionType;
 import no.difi.vefa.peppol.evidence.jaxb.rem.ExtensionsListType;
 import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
-import no.difi.vefa.peppol.evidence.jaxb.xades.AnyType;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBElement;
 import java.io.ByteArrayOutputStream;
 import java.security.KeyStore;
 import java.util.Date;
@@ -196,12 +194,11 @@ public class RemEvidenceBuilderTest {
 
 
         ExtensionType extensionType = signedRemEvidence.getRemEvidenceType().getExtensions().getExtension().get(0);
-        JAXBElement<AnyType> anyTypeJAXBElement = (JAXBElement<AnyType>) extensionType.getContent().get(0);
-        AnyType value = anyTypeJAXBElement.getValue();
+        Object value = extensionType.getContent().get(0);
 
-        assertTrue(value.getContent().get(0) instanceof PeppolRemExtension);
+        assertTrue(value instanceof PeppolRemExtension);
 
-        PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value.getContent().get(0);
+        PeppolRemExtension peppolRemExtension = (PeppolRemExtension) value;
         byte[] evidenceBytes = peppolRemExtension.getOriginalReceipt().get(0).getValue();
 
         assertEquals(evidenceBytes, specificReceiptBytes);
