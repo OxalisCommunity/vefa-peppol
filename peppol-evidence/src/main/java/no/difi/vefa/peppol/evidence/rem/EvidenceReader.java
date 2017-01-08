@@ -100,20 +100,23 @@ public class EvidenceReader {
             evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(remEvidence.getSenderMessageDetails().getMessageSubject(), Scheme.NONE));
 
             // Extensions
+            if (remEvidence.getExtensions() != null) {
 
-            // PEPPOL REM Extension
-            for (ExtensionType extensionType : remEvidence.getExtensions().getExtension()) {
-                for (Object o : extensionType.getContent()) {
-                    if (o instanceof PeppolRemExtension) {
-                        PeppolRemExtension peppolRemExtension = (PeppolRemExtension) o;
+                // PEPPOL REM Extension
+                for (ExtensionType extensionType : remEvidence.getExtensions().getExtension()) {
+                    for (Object o : extensionType.getContent()) {
+                        if (o instanceof PeppolRemExtension) {
+                            PeppolRemExtension peppolRemExtension = (PeppolRemExtension) o;
 
-                        evidence = evidence.transportProtocol(TransportProtocol.of(peppolRemExtension.getTransmissionProtocol()));
-                        evidence = evidence.transmissionRole(peppolRemExtension.getTransmissionRole());
+                            evidence = evidence.transportProtocol(TransportProtocol.of(peppolRemExtension.getTransmissionProtocol()));
+                            evidence = evidence.transmissionRole(peppolRemExtension.getTransmissionRole());
 
-                        for (OriginalReceiptType receiptType : peppolRemExtension.getOriginalReceipt())
-                            evidence = evidence.originalReceipt(Receipt.of(receiptType.getType(), receiptType.getValue()));
+                            for (OriginalReceiptType receiptType : peppolRemExtension.getOriginalReceipt())
+                                evidence = evidence.originalReceipt(Receipt.of(receiptType.getType(), receiptType.getValue()));
+                        }
                     }
                 }
+
             }
 
             return evidence;

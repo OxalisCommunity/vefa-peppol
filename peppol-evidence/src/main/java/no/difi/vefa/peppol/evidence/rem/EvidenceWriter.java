@@ -119,7 +119,7 @@ public class EvidenceWriter {
         remEvidence.setSenderMessageDetails(messageDetailsType);
 
         // Extensions
-        remEvidence.setExtensions(new ExtensionsListType());
+        ExtensionsListType extensionsListType = new ExtensionsListType();
 
         // PEPPOL REM Extension
         if (evidence.hasPeppolExtensionValues()) {
@@ -136,8 +136,11 @@ public class EvidenceWriter {
 
             ExtensionType extensionType = new ExtensionType();
             extensionType.getContent().add(peppolRemExtension);
-            remEvidence.getExtensions().getExtension().add(extensionType);
+            extensionsListType.getExtension().add(extensionType);
         }
+
+        if (extensionsListType.getExtension().size() > 0)
+            remEvidence.setExtensions(extensionsListType);
     }
 
     private void write(final Result result) throws RemEvidenceException {
