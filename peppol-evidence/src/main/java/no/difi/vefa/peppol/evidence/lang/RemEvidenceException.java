@@ -23,28 +23,9 @@
 package no.difi.vefa.peppol.evidence.lang;
 
 
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.api.PerformResult;
-
 public class RemEvidenceException extends PeppolEvidenceException {
 
     private static final long serialVersionUID = 8324791890166619197L;
-
-    public static void verify(PerformAction performAction) throws RemEvidenceException {
-        try {
-            performAction.action();
-        } catch (Exception e) {
-            throw new RemEvidenceException(e.getMessage(), e);
-        }
-    }
-
-    public static <T> T verify(PerformResult<T> performResult) throws RemEvidenceException {
-        try {
-            return performResult.action();
-        } catch (Exception e) {
-            throw new RemEvidenceException(e.getMessage(), e);
-        }
-    }
 
     public RemEvidenceException(String message) {
         super(message);

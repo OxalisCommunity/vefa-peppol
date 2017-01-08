@@ -24,6 +24,7 @@ package no.difi.vefa.peppol.evidence.rem;
 
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.model.Receipt;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.PeppolRemExtension;
 import no.difi.vefa.peppol.evidence.jaxb.rem.*;
@@ -140,7 +141,7 @@ public class EvidenceWriter {
     }
 
     private void write(final Result result) throws RemEvidenceException {
-        RemEvidenceException.verify(new PerformAction() {
+        ExceptionUtil.perform(RemEvidenceException.class, new PerformAction() {
             @Override
             public void action() throws Exception {
                 Marshaller marshaller = RemHelper.getMarshaller();

@@ -22,10 +22,14 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.vefa.peppol.common.api.PerformAction;
+import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.Header;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import no.difi.vefa.peppol.sbdh.util.XMLBinaryOutputStream;
 import no.difi.vefa.peppol.sbdh.util.XMLStreamWriterWrapper;
+import no.difi.vefa.peppol.sbdh.util.XMLTextOutputStream;
 
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
@@ -41,24 +45,27 @@ public class SbdWriter implements Closeable {
         return new SbdWriter(outputStream, header);
     }
 
-    private SbdWriter(OutputStream outputStream, Header header) throws SbdhException {
-        try {
-            writer = SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
-            initiateDocument(header);
-        } catch (XMLStreamException e) {
-            throw new SbdhException("Unable to initiate SBD.", e);
-        }
+    private SbdWriter(final OutputStream outputStream, Header header) throws SbdhException {
+        writer = ExceptionUtil.perform(SbdhException.class, "Unable to initiate SBD.", new PerformResult<XMLStreamWriter>() {
+            @Override
+            public XMLStreamWriter action() throws Exception {
+                return SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
+            }
+        });
+
+        initiateDocument(header);
     }
 
-    private void initiateDocument(Header header) throws SbdhException {
-        try {
-            writer.writeStartDocument("UTF-8", "1.0");
-            writer.writeStartElement("", Ns.QNAME_SBD.getLocalPart(), Ns.SBDH);
-            writer.writeDefaultNamespace(Ns.SBDH);
-            SbdhWriter.write(writer, header);
-        } catch (XMLStreamException e) {
-            throw new SbdhException(e.getMessage(), e);
-        }
+    private void initiateDocument(final Header header) throws SbdhException {
+        ExceptionUtil.perform(SbdhException.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                writer.writeStartDocument("UTF-8", "1.0");
+                writer.writeStartElement("", Ns.QNAME_SBD.getLocalPart(), Ns.SBDH);
+                writer.writeDefaultNamespace(Ns.SBDH);
+                SbdhWriter.write(writer, header);
+            }
+        });
     }
 
     public XMLStreamWriter xmlWriter() {
@@ -73,22 +80,28 @@ public class SbdWriter implements Closeable {
         return new XMLBinaryOutputStream(xmlWriter(), mimeType, encoding);
     }
 
+    public OutputStream textWriter(String mimeType) throws XMLStreamException {
+        return new XMLTextOutputStream(xmlWriter(), mimeType);
+    }
+
     private void finalizeDocument() throws SbdhException {
-        try {
-            writer.writeEndElement();
-            writer.writeEndDocument();
-        } catch (XMLStreamException e) {
-            throw new SbdhException(e.getMessage(), e);
-        }
+        ExceptionUtil.perform(SbdhException.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                writer.writeEndElement();
+                writer.writeEndDocument();
+            }
+        });
     }
 
     @Override
     public void close() throws IOException {
-        try {
-            finalizeDocument();
-            writer.close();
-        } catch (XMLStreamException | SbdhException e) {
-            throw new IOException(e.getMessage(), e);
-        }
+        ExceptionUtil.perform(IOException.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                finalizeDocument();
+                writer.close();
+            }
+        });
     }
 }

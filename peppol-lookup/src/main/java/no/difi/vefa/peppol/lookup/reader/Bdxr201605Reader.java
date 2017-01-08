@@ -25,6 +25,7 @@ package no.difi.vefa.peppol.lookup.reader;
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
@@ -67,7 +68,7 @@ public class Bdxr201605Reader implements MetadataReader {
     private static CertificateFactory certificateFactory;
 
     static {
-        PeppolRuntimeException.verify(new PerformAction() {
+        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
             @Override
             public void action() throws Exception {
                 jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,

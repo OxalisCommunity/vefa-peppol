@@ -27,11 +27,11 @@ import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.unece.cefact.namespaces.standardbusinessdocumentheader.*;
 
 import javax.xml.bind.JAXBContext;
-import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.stream.XMLInputFactory;
@@ -49,8 +49,10 @@ class SbdhHelper {
 
     public static XMLOutputFactory XML_OUTPUT_FACTORY;
 
+    public static DatatypeFactory DATATYPE_FACTORY;
+
     static {
-        PeppolRuntimeException.verify(new PerformAction() {
+        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
             @Override
             public void action() throws Exception {
                 JAXB_CONTEXT =
@@ -59,6 +61,8 @@ class SbdhHelper {
                 XML_INPUT_FACTORY = XMLInputFactory.newFactory();
 
                 XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
+
+                DATATYPE_FACTORY = DatatypeFactory.newInstance();
             }
         });
     }
@@ -105,12 +109,7 @@ class SbdhHelper {
     public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws SbdhException {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
-        try {
-            return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
-        } catch (DatatypeConfigurationException e) {
-            throw new SbdhException(
-                    String.format("Unable to create XMLGregorianCalendar instance from '%s'", date), e);
-        }
+        return DATATYPE_FACTORY.newXMLGregorianCalendar(c);
     }
 
     public static Date fromXMLGregorianCalendar(XMLGregorianCalendar calendar) {

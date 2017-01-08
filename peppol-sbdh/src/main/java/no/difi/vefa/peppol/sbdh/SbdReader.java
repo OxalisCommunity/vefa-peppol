@@ -22,10 +22,14 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.vefa.peppol.common.api.PerformAction;
+import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.Header;
+import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import no.difi.vefa.peppol.sbdh.util.XMLBinaryInputStream;
 import no.difi.vefa.peppol.sbdh.util.XMLStreamPartialReaderWrapper;
+import no.difi.vefa.peppol.sbdh.util.XMLTextInputStream;
 
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -40,12 +44,13 @@ public class SbdReader implements Closeable {
 
     private Header header;
 
-    public static SbdReader newInstance(InputStream inputStream) throws SbdhException {
-        try {
-            return newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream));
-        } catch (XMLStreamException e) {
-            throw new SbdhException(e.getMessage(), e);
-        }
+    public static SbdReader newInstance(final InputStream inputStream) throws SbdhException {
+        return ExceptionUtil.perform(SbdhException.class, new PerformResult<SbdReader>() {
+            @Override
+            public SbdReader action() throws Exception {
+                return newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream));
+            }
+        });
     }
 
     public static SbdReader newInstance(XMLStreamReader xmlStreamReader) throws SbdhException {
@@ -85,7 +90,12 @@ public class SbdReader implements Closeable {
     }
 
     public Type getType() {
-        return reader.getName().equals(Ns.QNAME_BINARY_CONTENT) ? Type.BINARY : Type.XML;
+        if (reader.getName().equals(Ns.QNAME_BINARY_CONTENT))
+            return Type.BINARY;
+        else if (reader.getName().equals(Ns.QNAME_TEXT_CONTENT))
+            return Type.TEXT;
+        else
+            return Type.XML;
     }
 
     public XMLStreamReader xmlReader() {
@@ -96,16 +106,21 @@ public class SbdReader implements Closeable {
         return new XMLBinaryInputStream(xmlReader());
     }
 
+    public InputStream textReader() throws XMLStreamException {
+        return new XMLTextInputStream();
+    }
+
     @Override
     public void close() throws IOException {
-        try {
-            reader.close();
-        } catch (XMLStreamException e) {
-            throw new IOException(e.getMessage(), e);
-        }
+        ExceptionUtil.perform(IOException.class, new PerformAction() {
+            @Override
+            public void action() throws Exception {
+                reader.close();
+            }
+        });
     }
 
     public enum Type {
-        BINARY, XML
+        BINARY, TEXT, XML
     }
 }

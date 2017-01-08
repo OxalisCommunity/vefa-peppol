@@ -20,17 +20,16 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.lang;
+package no.difi.vefa.peppol.sbdh.util;
 
-import org.mockito.Mockito;
-import org.testng.annotations.Test;
+import java.io.IOException;
+import java.io.InputStream;
 
-public class PeppolRuntimeExceptionTest {
+public class XMLTextInputStream extends InputStream {
 
-    @Test
-    @SuppressWarnings("all")
-    public void simpleConstructors() {
-        new PeppolRuntimeException("Message", Mockito.mock(Throwable.class));
+    @Override
+    public int read() throws IOException {
+        // TODO
+        return 0;
     }
-
 }
