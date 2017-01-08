@@ -44,8 +44,9 @@ public class Mode {
 
     public static Mode of(Config config, String identifier) {
         // Loading configuration based on identifier.
-        if (identifier != null && config.hasPath(String.format("vefa.mode.%s", identifier)))
-            config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", identifier)));
+        if (identifier != null)
+            if (config.hasPath(String.format("vefa.mode.%s", identifier)))
+                config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", identifier)));
 
         // Load inherited configuration.
         if (config.hasPath("mode.inherit"))

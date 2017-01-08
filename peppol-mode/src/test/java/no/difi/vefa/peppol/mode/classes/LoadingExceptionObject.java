@@ -20,21 +20,13 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.security.util;
+package no.difi.vefa.peppol.mode.classes;
 
-import com.typesafe.config.ConfigFactory;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
-import no.difi.vefa.peppol.mode.Mode;
-import org.testng.annotations.Test;
 
-public class DifiCertificateValidatorTest {
+public class LoadingExceptionObject implements SomeObject {
 
-    @Test(expectedExceptions = PeppolLoadingException.class)
-    public void loadingException() throws PeppolLoadingException{
-        // Create invalid configuration and mode.
-        Mode mode = Mode.of(ConfigFactory.parseString("security.pki = /testing.txt"), null);
-
-        // Initiate validator without the required configuration.
-        mode.initiate(DifiCertificateValidator.class);
+    public LoadingExceptionObject() throws PeppolLoadingException {
+        throw new PeppolLoadingException("Test");
     }
 }

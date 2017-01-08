@@ -76,8 +76,13 @@ public class ModeTest {
     public void simpleEmpty() throws Exception {
         Config config = ConfigFactory.empty();
 
-        Mode mode = Mode.of(config, "Some");
+        Mode mode = Mode.of(config, null);
         Assert.assertNotNull(mode);
         Assert.assertEquals(mode.getConfig(), config);
+    }
+
+    @Test(expectedExceptions = PeppolLoadingException.class)
+    public void simpleLoadingException() throws Exception {
+        Mode.of("EXCEPTION").initiate("class", SomeObject.class);
     }
 }
