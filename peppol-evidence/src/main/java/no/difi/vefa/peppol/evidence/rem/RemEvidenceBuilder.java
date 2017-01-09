@@ -126,6 +126,9 @@ public class RemEvidenceBuilder {
         return this;
     }
 
+    public Evidence getEvidence() {
+        return evidence;
+    }
 
     /**
      * Builds an instance of SignedRemEvidence based upon the previously supplied parameters.
