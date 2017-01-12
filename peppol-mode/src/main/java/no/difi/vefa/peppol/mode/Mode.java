@@ -45,16 +45,16 @@ public class Mode {
     public static Mode of(Config config, String identifier) {
         // Loading configuration based on identifier.
         if (identifier != null)
-            if (config.hasPath(String.format("vefa.mode.%s", identifier)))
-                config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", identifier)));
+            if (config.hasPath(String.format("mode.%s", identifier)))
+                config = config.withFallback(config.getConfig(String.format("mode.%s", identifier)));
 
         // Load inherited configuration.
-        if (config.hasPath("mode.inherit"))
-            config = config.withFallback(config.getConfig(String.format("vefa.mode.%s", config.getString("mode.inherit"))));
+        if (config.hasPath("inherit"))
+            config = config.withFallback(config.getConfig(String.format("mode.%s", config.getString("inherit"))));
 
         // Load default configuration.
-        if (config.hasPath("vefa.mode.default"))
-            config = config.withFallback(config.getConfig("vefa.mode.default"));
+        if (config.hasPath("mode.default"))
+            config = config.withFallback(config.getConfig("mode.default"));
 
         return new Mode(config, identifier);
     }

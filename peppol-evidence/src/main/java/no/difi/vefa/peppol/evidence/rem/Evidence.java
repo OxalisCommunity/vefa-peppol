@@ -225,6 +225,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence originalReceipt(Receipt receipt) {
+        if (receipt == null)
+            return this;
+
         List<Receipt> originalReceipts = new ArrayList<>(this.originalReceipts);
         originalReceipts.add(receipt);
         originalReceipts = Collections.unmodifiableList(originalReceipts);

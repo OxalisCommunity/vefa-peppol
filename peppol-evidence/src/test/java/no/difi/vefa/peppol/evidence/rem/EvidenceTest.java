@@ -57,6 +57,18 @@ public class EvidenceTest {
     }
 
     @Test
+    public void allowAddingNullReceipt() {
+        Evidence evidence = Evidence.newInstance();
+        Assert.assertEquals(evidence.getOriginalReceipts().size(), 0);
+
+        evidence = evidence.originalReceipt(null);
+        Assert.assertEquals(evidence.getOriginalReceipts().size(), 0);
+
+        evidence = evidence.originalReceipt(Receipt.of("Hello World!".getBytes()));
+        Assert.assertEquals(evidence.getOriginalReceipts().size(), 1);
+    }
+
+    @Test
     public void simpleHasPeppolExtensionValues() {
         Assert.assertFalse(Evidence.newInstance()
                 .hasPeppolExtensionValues());

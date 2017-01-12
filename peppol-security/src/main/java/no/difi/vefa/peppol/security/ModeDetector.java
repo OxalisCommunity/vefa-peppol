@@ -37,7 +37,7 @@ public class ModeDetector {
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
         Config config = ConfigFactory.load();
 
-        for (String token : config.getObject("vefa.mode").keySet()) {
+        for (String token : config.getObject("mode").keySet()) {
             if (!token.equals("default")) {
                 try {
                     Mode mode = Mode.of(config, token);
