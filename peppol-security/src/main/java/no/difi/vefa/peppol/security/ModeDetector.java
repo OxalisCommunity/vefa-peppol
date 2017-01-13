@@ -29,10 +29,14 @@ import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.security.cert.X509Certificate;
 
 public class ModeDetector {
+
+    private static Logger logger = LoggerFactory.getLogger(ModeDetector.class);
 
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
         Config config = ConfigFactory.load();
@@ -45,7 +49,7 @@ public class ModeDetector {
                             .validate(Service.ALL, certificate);
                     return mode;
                 } catch (PeppolSecurityException e) {
-                    // No action.
+                    logger.info("Detection error ({}): {}", token, e.getMessage());
                 }
             }
         }
