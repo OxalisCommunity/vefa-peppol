@@ -134,7 +134,7 @@ public class Bdxr201605Reader implements MetadataReader {
                                     Scheme.of(processType.getProcessIdentifier().getScheme())
                             ),
                             TransportProfile.of(endpointType.getTransportProfile()),
-                            endpointType.getEndpointURI(),
+                            URI.create(endpointType.getEndpointURI()),
                             certificateInstance(endpointType.getCertificate())
                     ));
                 }

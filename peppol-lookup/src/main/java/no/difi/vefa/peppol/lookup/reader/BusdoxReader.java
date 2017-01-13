@@ -138,7 +138,7 @@ public class BusdoxReader implements MetadataReader {
                                     Scheme.of(processType.getProcessIdentifier().getScheme())
                             ),
                             TransportProfile.of(endpointType.getTransportProfile()),
-                            endpointType.getEndpointReference().getAddress().getValue(),
+                            URI.create(endpointType.getEndpointReference().getAddress().getValue()),
                             certificateInstance(Base64.decodeBase64(endpointType.getCertificate()))
                     ));
                 }

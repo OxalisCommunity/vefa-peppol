@@ -23,6 +23,7 @@
 package no.difi.vefa.peppol.common.model;
 
 import java.io.Serializable;
+import java.net.URI;
 import java.security.cert.X509Certificate;
 
 public class Endpoint implements Serializable {
@@ -33,18 +34,17 @@ public class Endpoint implements Serializable {
 
     private TransportProfile transportProfile;
 
-    private String address;
+    private URI address;
 
     private X509Certificate certificate;
 
-    public static Endpoint of(ProcessIdentifier processIdentifier, TransportProfile transportProfile, String address,
+    public static Endpoint of(ProcessIdentifier processIdentifier, TransportProfile transportProfile, URI address,
                               X509Certificate certificate) {
         return new Endpoint(processIdentifier, transportProfile, address, certificate);
     }
 
-    @Deprecated
-    public Endpoint(ProcessIdentifier processIdentifier, TransportProfile transportProfile, String address,
-                    X509Certificate certificate) {
+    private Endpoint(ProcessIdentifier processIdentifier, TransportProfile transportProfile, URI address,
+                     X509Certificate certificate) {
         this.processIdentifier = processIdentifier;
         this.transportProfile = transportProfile;
         this.address = address;
@@ -59,7 +59,7 @@ public class Endpoint implements Serializable {
         return transportProfile;
     }
 
-    public String getAddress() {
+    public URI getAddress() {
         return address;
     }
 

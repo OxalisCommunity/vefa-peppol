@@ -27,6 +27,7 @@ import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.net.URI;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
@@ -37,19 +38,19 @@ public class ServiceMetadataTest {
         Endpoint endpoint1 = Endpoint.of(
                 ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
         Endpoint endpoint2 = Endpoint.of(
                 ProcessIdentifier.of("Other:Process"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
         Endpoint endpoint3 = Endpoint.of(
                 ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS4,
-                "https://ap.example.com/as4",
+                URI.create("https://ap.example.com/as4"),
                 Mockito.mock(X509Certificate.class)
         );
 

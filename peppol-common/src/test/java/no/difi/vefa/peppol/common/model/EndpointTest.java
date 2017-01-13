@@ -26,6 +26,7 @@ import org.mockito.Mockito;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.net.URI;
 import java.security.cert.X509Certificate;
 
 public class EndpointTest {
@@ -35,13 +36,13 @@ public class EndpointTest {
         Endpoint endpoint = Endpoint.of(
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
 
         Assert.assertEquals(endpoint.getProcessIdentifier(), ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"));
         Assert.assertEquals(endpoint.getTransportProfile(), TransportProfile.AS2_1_0);
-        Assert.assertEquals(endpoint.getAddress(), "https://ap.example.com/as2");
+        Assert.assertEquals(endpoint.getAddress(), URI.create("https://ap.example.com/as2"));
         Assert.assertNotNull(endpoint.getCertificate());
 
         Assert.assertTrue(endpoint.equals(endpoint));
@@ -53,25 +54,25 @@ public class EndpointTest {
         Assert.assertFalse(endpoint.equals(Endpoint.of(
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
 
         Assert.assertFalse(endpoint.equals(Endpoint.of(
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
                 TransportProfile.AS4,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
 
         Assert.assertFalse(endpoint.equals(Endpoint.of(
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as",
+                URI.create("https://ap.example.com/as"),
                 Mockito.mock(X509Certificate.class))));
 
         Assert.assertFalse(endpoint.equals(Endpoint.of(
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
                 TransportProfile.AS2_1_0,
-                "https://ap.example.com/as2",
+                URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
     }
 }
