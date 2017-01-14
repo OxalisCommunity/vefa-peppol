@@ -23,18 +23,48 @@
 package no.difi.vefa.peppol.security.util;
 
 import com.typesafe.config.ConfigFactory;
+import no.difi.certvalidator.Validator;
+import no.difi.certvalidator.api.CertificateValidationException;
+import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.mode.Mode;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
+import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import org.testng.annotations.Test;
 
 public class DifiCertificateValidatorTest {
 
     @Test(expectedExceptions = PeppolLoadingException.class)
-    public void loadingException() throws PeppolLoadingException{
+    public void loadingException() throws PeppolLoadingException {
         // Create invalid configuration and mode.
         Mode mode = Mode.of(ConfigFactory.parseString("security.pki = /testing.txt"), null);
 
         // Initiate validator without the required configuration.
         mode.initiate(DifiCertificateValidator.class);
     }
+
+    @Test
+    public void simpleApProd() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
+        CertificateValidator validator = Mode.of(Mode.PRODUCTION).initiate(DifiCertificateValidator.class);
+        validator.validate(Service.AP, Validator.getCertificate(getClass().getResourceAsStream("/ap-difi-prod.cer")));
+    }
+
+    @Test
+    public void simpleApTest() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
+        CertificateValidator validator = Mode.of(Mode.TEST).initiate(DifiCertificateValidator.class);
+        validator.validate(Service.AP, Validator.getCertificate(getClass().getResourceAsStream("/ap-difi-test.cer")));
+    }
+
+    @Test
+    public void simpleSmpProd() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
+        CertificateValidator validator = Mode.of(Mode.PRODUCTION).initiate(DifiCertificateValidator.class);
+        validator.validate(Service.SMP, Validator.getCertificate(getClass().getResourceAsStream("/smp-difi-prod.cer")));
+    }
+
+    @Test
+    public void simpleSmpTest() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
+        CertificateValidator validator = Mode.of(Mode.TEST).initiate(DifiCertificateValidator.class);
+        validator.validate(Service.SMP, Validator.getCertificate(getClass().getResourceAsStream("/smp-difi-test.cer")));
+    }
+
 }

@@ -30,6 +30,7 @@ import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -41,24 +42,42 @@ public class LookupClientTest {
 
     private Mode testMode = Mode.of("TEST");
 
-    @Test(enabled = false)
+    @Test
     public void simple() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction()
                 .fetcher(testMode.initiate(ApacheFetcher.class))
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
-                ParticipantIdentifier.of("9908:991825827"));
+                ParticipantIdentifier.of("9908:810418052"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(
-                ParticipantIdentifier.of("9908:991825827"),
+                ParticipantIdentifier.of("9908:810418052"),
                 DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
                         "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
                         ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
         assertNotNull(serviceMetadata);
+    }
+
+    @Test
+    public void simpleHeader() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forMode(testMode)
+                .fetcher(testMode.initiate(ApacheFetcher.class))
+                .build();
+
+        Endpoint endpoint = client.getEndpoint(
+                Header.newInstance()
+                .receiver(ParticipantIdentifier.of("9908:810418052"))
+                .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
+                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"))
+                .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0")),
+                TransportProfile.AS2_1_0);
+
+        Assert.assertNotNull(endpoint);
     }
 
     @Test

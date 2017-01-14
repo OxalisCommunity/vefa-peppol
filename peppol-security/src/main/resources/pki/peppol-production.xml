@@ -40,7 +40,7 @@
     </Validator>
     <Validator name="AP" timeout="10">
         <PrincipleName field="CN" principal="ISSUER">
-            <Value>PEPPOL ACCESS TEST CA</Value>
+            <Value>PEPPOL ACCESS POINT CA</Value>
         </PrincipleName>
         <ValidatorReference>default</ValidatorReference>
     </Validator>
