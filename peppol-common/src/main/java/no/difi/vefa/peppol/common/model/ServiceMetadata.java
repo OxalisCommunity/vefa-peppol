@@ -27,7 +27,9 @@ import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import java.io.Serializable;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ServiceMetadata implements Serializable {
 
@@ -37,33 +39,32 @@ public class ServiceMetadata implements Serializable {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessIdentifier> processIdentifiers = new ArrayList<>();
+    private Set<ProcessIdentifier> processIdentifiers = new HashSet<>();
 
-    private List<TransportProfile> transportProfiles = new ArrayList<>();
+    private Set<TransportProfile> transportProfiles = new HashSet<>();
 
     private X509Certificate signer;
 
-    private List<Endpoint> endpoints;
+    private List<ProcessMetadata> processMetadatas;
 
     public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
-                                     DocumentTypeIdentifier documentTypeIdentifier, List<Endpoint> endpoints,
+                                     DocumentTypeIdentifier documentTypeIdentifier, List<ProcessMetadata> processMetadatas,
                                      X509Certificate signer) {
-        return new ServiceMetadata(participantIdentifier, documentTypeIdentifier, endpoints, signer);
+        return new ServiceMetadata(participantIdentifier, documentTypeIdentifier, processMetadatas, signer);
     }
 
-    @Deprecated
-    public ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
-                           List<Endpoint> endpoints, X509Certificate signer) {
+    private ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
+                            List<ProcessMetadata> processMetadatas, X509Certificate signer) {
         this.participantIdentifier = participantIdentifier;
         this.documentTypeIdentifier = documentTypeIdentifier;
-        this.endpoints = endpoints;
+        this.processMetadatas = processMetadatas;
         this.signer = signer;
 
-        for (Endpoint endpoint : endpoints) {
-            if (!this.processIdentifiers.contains(endpoint.getProcessIdentifier()))
-                this.processIdentifiers.add(endpoint.getProcessIdentifier());
-            if (!this.transportProfiles.contains(endpoint.getTransportProfile()))
-                this.transportProfiles.add(endpoint.getTransportProfile());
+        for (ProcessMetadata processMetadata : processMetadatas) {
+            this.processIdentifiers.add(processMetadata.getProcessIdentifier());
+            for (TransportProfile transportProfile : processMetadata.getTransportProfiles()) {
+                this.transportProfiles.add(transportProfile);
+            }
         }
     }
 
@@ -76,24 +77,18 @@ public class ServiceMetadata implements Serializable {
     }
 
     public List<ProcessIdentifier> getProcessIdentifiers() {
-        return processIdentifiers;
+        return new ArrayList<>(processIdentifiers);
     }
 
     public List<TransportProfile> getTransportProfiles() {
-        return transportProfiles;
-    }
-
-    public List<Endpoint> getEndpoints() {
-        return this.endpoints;
+        return new ArrayList<>(transportProfiles);
     }
 
     public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
             throws EndpointNotFoundException {
-        for (TransportProfile transportProfile : transportProfiles)
-            for (Endpoint endpoint : endpoints)
-                if (endpoint.getTransportProfile().equals(transportProfile)
-                        && endpoint.getProcessIdentifier().equals(processIdentifier))
-                    return endpoint;
+        for (ProcessMetadata processMetadata : processMetadatas)
+            if (processMetadata.getProcessIdentifier().equals(processIdentifier))
+                return processMetadata.getEndpoint(transportProfiles);
 
         throw new EndpointNotFoundException(
                 String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));

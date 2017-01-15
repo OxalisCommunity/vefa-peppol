@@ -36,34 +36,33 @@ public class ServiceMetadataTest {
     @Test
     public void simple() throws Exception {
         Endpoint endpoint1 = Endpoint.of(
-                ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
         Endpoint endpoint2 = Endpoint.of(
-                ProcessIdentifier.of("Other:Process"),
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
         Endpoint endpoint3 = Endpoint.of(
-                ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS4,
                 URI.create("https://ap.example.com/as4"),
                 Mockito.mock(X509Certificate.class)
         );
 
+        ProcessMetadata processMetadata1 = ProcessMetadata.of(ProcessIdentifier.of("Some:Process"), endpoint1, endpoint3);
+        ProcessMetadata processMetadata2 = ProcessMetadata.of(ProcessIdentifier.of("Other:Process"), endpoint2);
+
         ServiceMetadata serviceMetadata = ServiceMetadata.of(
                 ParticipantIdentifier.of("9908:991825827"),
                 DocumentTypeIdentifier.of("Some:Document"),
-                Arrays.asList(endpoint1, endpoint2, endpoint3),
+                Arrays.asList(processMetadata1, processMetadata2),
                 Mockito.mock(X509Certificate.class)
         );
 
         Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
         Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
-        Assert.assertEquals(serviceMetadata.getEndpoints().size(), 3);
         Assert.assertEquals(serviceMetadata.getProcessIdentifiers().size(), 2);
         Assert.assertEquals(serviceMetadata.getTransportProfiles().size(), 2);
         Assert.assertNotNull(serviceMetadata.getSigner());

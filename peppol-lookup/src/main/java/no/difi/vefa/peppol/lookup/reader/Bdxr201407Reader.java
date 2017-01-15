@@ -125,19 +125,24 @@ public class Bdxr201407Reader implements MetadataReader {
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
 
-            List<Endpoint> endpoints = new ArrayList<>();
+            List<ProcessMetadata> processMetadatas = new ArrayList<>();
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
+                List<Endpoint> endpoints = new ArrayList<>();
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
                     endpoints.add(Endpoint.of(
-                            ProcessIdentifier.of(
-                                    processType.getProcessIdentifier().getValue(),
-                                    Scheme.of(processType.getProcessIdentifier().getScheme())
-                            ),
                             TransportProfile.of(endpointType.getTransportProfile()),
                             URI.create(endpointType.getEndpointURI()),
                             certificateInstance(endpointType.getCertificate())
                     ));
                 }
+
+                processMetadatas.add(ProcessMetadata.of(
+                        ProcessIdentifier.of(
+                                processType.getProcessIdentifier().getValue(),
+                                Scheme.of(processType.getProcessIdentifier().getScheme())
+                        ),
+                        endpoints
+                ));
             }
 
             return ServiceMetadata.of(
@@ -149,7 +154,7 @@ public class Bdxr201407Reader implements MetadataReader {
                             serviceInformation.getDocumentIdentifier().getValue(),
                             Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
                     ),
-                    endpoints,
+                    processMetadatas,
                     signer
             );
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {

@@ -33,46 +33,54 @@ public class EndpointTest {
 
     @Test
     public void simple() {
-        Endpoint endpoint = Endpoint.of(
-                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
+        Endpoint endpoint1 = Endpoint.of(
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class)
         );
+        Endpoint endpoint2 = Endpoint.of(
+                TransportProfile.AS2_1_0,
+                URI.create("https://ap.example.com/as2"),
+                null
+        );
+        Endpoint endpoint3 = Endpoint.of(
+                TransportProfile.AS2_1_0,
+                URI.create("https://ap.example.com/as2"),
+                null
+        );
 
-        Assert.assertEquals(endpoint.getProcessIdentifier(), ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"));
-        Assert.assertEquals(endpoint.getTransportProfile(), TransportProfile.AS2_1_0);
-        Assert.assertEquals(endpoint.getAddress(), URI.create("https://ap.example.com/as2"));
-        Assert.assertNotNull(endpoint.getCertificate());
+        Assert.assertEquals(endpoint1.getTransportProfile(), TransportProfile.AS2_1_0);
+        Assert.assertEquals(endpoint1.getAddress(), URI.create("https://ap.example.com/as2"));
+        Assert.assertNotNull(endpoint1.getCertificate());
 
-        Assert.assertTrue(endpoint.equals(endpoint));
-        Assert.assertFalse(endpoint.equals("Endpoint"));
-        Assert.assertFalse(endpoint.equals(null));
+        Assert.assertTrue(endpoint1.equals(endpoint1));
+        Assert.assertFalse(endpoint1.equals("Endpoint"));
+        Assert.assertFalse(endpoint1.equals(null));
 
-        Assert.assertNotNull(endpoint.hashCode());
+        Assert.assertNotNull(endpoint1.hashCode());
 
-        Assert.assertFalse(endpoint.equals(Endpoint.of(
-                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"),
+        Assert.assertFalse(endpoint1.equals(Endpoint.of(
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
 
-        Assert.assertFalse(endpoint.equals(Endpoint.of(
-                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
+        Assert.assertFalse(endpoint1.equals(Endpoint.of(
                 TransportProfile.AS4,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
 
-        Assert.assertFalse(endpoint.equals(Endpoint.of(
-                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
+        Assert.assertFalse(endpoint1.equals(Endpoint.of(
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as"),
                 Mockito.mock(X509Certificate.class))));
 
-        Assert.assertFalse(endpoint.equals(Endpoint.of(
-                ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"),
+        Assert.assertFalse(endpoint1.equals(Endpoint.of(
                 TransportProfile.AS2_1_0,
                 URI.create("https://ap.example.com/as2"),
                 Mockito.mock(X509Certificate.class))));
+
+        Assert.assertFalse(endpoint1.equals(endpoint2));
+        Assert.assertFalse(endpoint2.equals(endpoint1));
+        Assert.assertTrue(endpoint2.equals(endpoint3));
     }
 }

@@ -30,29 +30,20 @@ public class Endpoint implements Serializable {
 
     private static final long serialVersionUID = 5892469135654700883L;
 
-    private ProcessIdentifier processIdentifier;
-
     private TransportProfile transportProfile;
 
     private URI address;
 
     private X509Certificate certificate;
 
-    public static Endpoint of(ProcessIdentifier processIdentifier, TransportProfile transportProfile, URI address,
-                              X509Certificate certificate) {
-        return new Endpoint(processIdentifier, transportProfile, address, certificate);
+    public static Endpoint of(TransportProfile transportProfile, URI address, X509Certificate certificate) {
+        return new Endpoint(transportProfile, address, certificate);
     }
 
-    private Endpoint(ProcessIdentifier processIdentifier, TransportProfile transportProfile, URI address,
-                     X509Certificate certificate) {
-        this.processIdentifier = processIdentifier;
+    private Endpoint(TransportProfile transportProfile, URI address, X509Certificate certificate) {
         this.transportProfile = transportProfile;
         this.address = address;
         this.certificate = certificate;
-    }
-
-    public ProcessIdentifier getProcessIdentifier() {
-        return processIdentifier;
     }
 
     public TransportProfile getTransportProfile() {
@@ -74,19 +65,17 @@ public class Endpoint implements Serializable {
 
         Endpoint endpoint = (Endpoint) o;
 
-        if (!processIdentifier.equals(endpoint.processIdentifier)) return false;
         if (!transportProfile.equals(endpoint.transportProfile)) return false;
         if (!address.equals(endpoint.address)) return false;
-        return certificate.equals(endpoint.certificate);
+        return !(certificate != null ? !certificate.equals(endpoint.certificate) : endpoint.certificate != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = processIdentifier.hashCode();
-        result = 31 * result + transportProfile.hashCode();
+        int result = transportProfile.hashCode();
         result = 31 * result + address.hashCode();
-        result = 31 * result + certificate.hashCode();
+        result = 31 * result + (certificate != null ? certificate.hashCode() : 0);
         return result;
     }
 }
