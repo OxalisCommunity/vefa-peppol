@@ -78,4 +78,13 @@ public class Endpoint implements Serializable {
         result = 31 * result + (certificate != null ? certificate.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Endpoint{" +
+                "transportProfile=" + transportProfile +
+                ", address=" + address +
+                ", certificate=" + certificate +
+                '}';
+    }
 }

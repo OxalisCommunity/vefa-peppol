@@ -82,5 +82,7 @@ public class EndpointTest {
         Assert.assertFalse(endpoint1.equals(endpoint2));
         Assert.assertFalse(endpoint2.equals(endpoint1));
         Assert.assertTrue(endpoint2.equals(endpoint3));
+
+        Assert.assertNotNull(endpoint1.toString());
     }
 }

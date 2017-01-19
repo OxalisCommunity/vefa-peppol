@@ -178,4 +178,24 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.transportProtocol(TransportProtocol.INTERNAL)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.transmissionRole(TransmissionRole.C_2)));
     }
+
+    @Test
+    public void simpleHeader() {
+        ParticipantIdentifier sender = ParticipantIdentifier.of("9908:999999999");
+        ParticipantIdentifier receiver = ParticipantIdentifier.of("9908:111111111");
+        DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier.of("Testing...");
+        InstanceIdentifier documentIdentifier = InstanceIdentifier.generateUUID();
+
+        Evidence evidence = Evidence.newInstance()
+                .header(Header.newInstance()
+                        .sender(sender)
+                        .receiver(receiver)
+                        .documentType(documentTypeIdentifier)
+                        .identifier(documentIdentifier));
+
+        Assert.assertEquals(evidence.getSender(), sender);
+        Assert.assertEquals(evidence.getReceiver(), receiver);
+        Assert.assertEquals(evidence.getDocumentIdentifier(), documentIdentifier);
+        Assert.assertEquals(evidence.getDocumentTypeIdentifier(), documentTypeIdentifier);
+    }
 }

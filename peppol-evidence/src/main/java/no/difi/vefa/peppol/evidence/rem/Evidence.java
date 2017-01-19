@@ -98,7 +98,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence type(EvidenceTypeInstance type) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.type = type;
+        return evidence;
     }
 
     public EventCode getEventCode() {
@@ -106,7 +108,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence eventCode(EventCode eventCode) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.eventCode = eventCode;
+        return evidence;
     }
 
     public EventReason getEventReason() {
@@ -114,7 +118,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence eventReason(EventReason eventReason) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.eventReason = eventReason;
+        return evidence;
     }
 
     public String getIssuer() {
@@ -122,7 +128,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence issuer(String issuer) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.issuer = issuer;
+        return evidence;
     }
 
     public InstanceIdentifier getEvidenceIdentifier() {
@@ -130,7 +138,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence evidenceIdentifier(InstanceIdentifier evidenceIdentifier) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.evidenceIdentifier = evidenceIdentifier;
+        return evidence;
     }
 
     public Date getTimestamp() {
@@ -145,7 +155,18 @@ public class Evidence implements Serializable {
             timestamp = calendar.getTime();
         }
 
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.timestamp = timestamp;
+        return evidence;
+    }
+
+    public Evidence header(Header header) {
+        Evidence evidence = copy();
+        evidence.sender = header.getSender();
+        evidence.receiver = header.getReceiver();
+        evidence.documentTypeIdentifier = header.getDocumentType();
+        evidence.documentIdentifier = header.getIdentifier();
+        return evidence;
     }
 
     public ParticipantIdentifier getSender() {
@@ -153,7 +174,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence sender(ParticipantIdentifier sender) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.sender = sender;
+        return evidence;
     }
 
     public ParticipantIdentifier getReceiver() {
@@ -161,7 +184,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence receiver(ParticipantIdentifier receiver) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.receiver = receiver;
+        return evidence;
     }
 
     public DocumentTypeIdentifier getDocumentTypeIdentifier() {
@@ -169,7 +194,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence documentTypeIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.documentTypeIdentifier = documentTypeIdentifier;
+        return evidence;
     }
 
     public InstanceIdentifier getDocumentIdentifier() {
@@ -177,7 +204,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence documentIdentifier(InstanceIdentifier documentIdentifier) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.documentIdentifier = documentIdentifier;
+        return evidence;
     }
 
     public String getIssuerPolicy() {
@@ -185,7 +214,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence issuerPolicy(String issuerPolicy) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.issuerPolicy = issuerPolicy;
+        return evidence;
     }
 
     public Digest getDigest() {
@@ -193,7 +224,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence digest(Digest digest) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.digest = digest;
+        return evidence;
     }
 
     public InstanceIdentifier getMessageIdentifier() {
@@ -201,7 +234,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence messageIdentifier(InstanceIdentifier messageIdentifier) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.messageIdentifier = messageIdentifier;
+        return evidence;
     }
 
     public TransportProtocol getTransportProtocol() {
@@ -209,7 +244,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence transportProtocol(TransportProtocol transportProtocol) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.transportProtocol = transportProtocol;
+        return evidence;
     }
 
     public TransmissionRole getTransmissionRole() {
@@ -217,7 +254,9 @@ public class Evidence implements Serializable {
     }
 
     public Evidence transmissionRole(TransmissionRole transmissionRole) {
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.transmissionRole = transmissionRole;
+        return evidence;
     }
 
     public List<Receipt> getOriginalReceipts() {
@@ -225,14 +264,20 @@ public class Evidence implements Serializable {
     }
 
     public Evidence originalReceipt(Receipt receipt) {
-        if (receipt == null)
-            return this;
+        return originalReceipts(Collections.singletonList(receipt));
+    }
 
+    public Evidence originalReceipts(List<Receipt> receipts) {
         List<Receipt> originalReceipts = new ArrayList<>(this.originalReceipts);
-        originalReceipts.add(receipt);
+
+        for (Receipt receipt : receipts)
+            if (receipt != null)
+                originalReceipts.add(receipt);
         originalReceipts = Collections.unmodifiableList(originalReceipts);
 
-        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver, documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier, transportProtocol, transmissionRole, originalReceipts);
+        Evidence evidence = copy();
+        evidence.originalReceipts = originalReceipts;
+        return evidence;
     }
 
     boolean hasPeppolExtensionValues() {
@@ -312,5 +357,11 @@ public class Evidence implements Serializable {
                 ",\n transmissionRole=" + transmissionRole +
                 ",\n originalReceipts=" + originalReceipts +
                 '}';
+    }
+
+    private Evidence copy() {
+        return new Evidence(type, eventCode, eventReason, issuer, evidenceIdentifier, timestamp, sender, receiver,
+                documentTypeIdentifier, documentIdentifier, issuerPolicy, digest, messageIdentifier,
+                transportProtocol, transmissionRole, originalReceipts);
     }
 }
