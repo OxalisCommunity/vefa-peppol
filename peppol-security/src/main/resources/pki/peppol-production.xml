@@ -19,7 +19,7 @@
   ~ See the Licence for the specific language governing
   ~ permissions and limitations under the Licence.
   -->
-<ValidatorRecipe xmlns="http://difi.no/xsd/certvalidator/1.0" name="peppol-test" version="2016-10-16">
+<ValidatorRecipe xmlns="http://difi.no/xsd/certvalidator/1.0" name="peppol-test" version="2017-01-21">
     <Validator>
         <Expiration/>
         <Signing type="PUBLIC_SIGNED"/>
@@ -32,7 +32,9 @@
             <IntermediateBucketReference>intermediate</IntermediateBucketReference>
         </Chain>
         <Cached timeout="60">
-            <CRL/>
+            <HandleError>
+                <CRL/>
+            </HandleError>
             <OCSP>
                 <IntermediateBucketReference>intermediate</IntermediateBucketReference>
             </OCSP>
