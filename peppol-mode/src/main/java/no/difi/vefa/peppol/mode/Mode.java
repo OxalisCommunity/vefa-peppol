@@ -39,24 +39,32 @@ public class Mode {
     private String identifier;
 
     public static Mode of(String identifier) {
-        return of(ConfigFactory.load(), identifier);
+        return of(ConfigFactory.empty(), identifier);
     }
 
     public static Mode of(Config config, String identifier) {
+        Config referenceConfig = ConfigFactory.defaultReference();
+
+        Config result = ConfigFactory.systemProperties()
+                .withFallback(config)
+                .withFallback(referenceConfig);
+
         // Loading configuration based on identifier.
         if (identifier != null)
-            if (config.hasPath(String.format("mode.%s", identifier)))
-                config = config.withFallback(config.getConfig(String.format("mode.%s", identifier)));
+            if (referenceConfig.hasPath(String.format("mode.%s", identifier)))
+                result = result.withFallback(
+                        referenceConfig.getConfig(String.format("mode.%s", identifier)));
 
         // Load inherited configuration.
-        if (config.hasPath("inherit"))
-            config = config.withFallback(config.getConfig(String.format("mode.%s", config.getString("inherit"))));
+        if (result.hasPath("inherit"))
+            result = result.withFallback(
+                    referenceConfig.getConfig(String.format("mode.%s", result.getString("inherit"))));
 
         // Load default configuration.
-        if (config.hasPath("mode.default"))
-            config = config.withFallback(config.getConfig("mode.default"));
+        if (referenceConfig.hasPath("mode.default"))
+            result = result.withFallback(referenceConfig.getConfig("mode.default"));
 
-        return new Mode(config, identifier);
+        return new Mode(result, identifier);
     }
 
     private Mode(Config config, String identifier) {

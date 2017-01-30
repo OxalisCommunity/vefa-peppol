@@ -78,7 +78,7 @@ public class ModeTest {
 
         Mode mode = Mode.of(config, null);
         Assert.assertNotNull(mode);
-        Assert.assertEquals(mode.getConfig(), config);
+        Assert.assertNotEquals(mode.getConfig(), config);
     }
 
     @Test(expectedExceptions = PeppolLoadingException.class)
