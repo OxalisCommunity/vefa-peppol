@@ -90,7 +90,7 @@ public class Bdxr201605Reader implements MetadataReader {
             for (ServiceMetadataReferenceType reference :
                     serviceGroup.getServiceMetadataReferenceCollection().getServiceMetadataReference()) {
                 String hrefDocumentTypeIdentifier =
-                        URLDecoder.decode(reference.getHref().split("/services/")[1], "UTF-8");
+                        URLDecoder.decode(reference.getHref(), "UTF-8").split("/services/")[1];
                 String[] parts = hrefDocumentTypeIdentifier.split("::", 2);
 
                 try {
