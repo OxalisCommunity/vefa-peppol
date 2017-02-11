@@ -73,4 +73,16 @@ public class BusdoxReaderTest {
                 "O=EVRY AS, CN=APP_1000000025, C=NO"
         );
     }
+
+    @Test
+    public void documentIdentifersDocsLogistics() throws Exception {
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/busdox-servicegroup-docslogistics.xml"), null));
+
+        assertEquals(result.size(), 25);
+
+        for (DocumentTypeIdentifier documentTypeIdentifier : result)
+            logger.debug("{}", documentTypeIdentifier);
+    }
+
 }
