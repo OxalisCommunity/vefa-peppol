@@ -22,7 +22,9 @@
 
 package no.difi.vefa.peppol.common.model;
 
-public abstract class AbstractSingleIdentifier {
+import no.difi.vefa.peppol.common.api.SingleIdentifier;
+
+public abstract class AbstractSingleIdentifier implements SingleIdentifier {
 
     private String value;
 
@@ -30,6 +32,7 @@ public abstract class AbstractSingleIdentifier {
         this.value = value;
     }
 
+    @Override
     public String getValue() {
         return value;
     }
