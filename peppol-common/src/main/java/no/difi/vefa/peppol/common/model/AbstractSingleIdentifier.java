@@ -22,22 +22,35 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import java.io.Serializable;
-import java.util.UUID;
+public abstract class AbstractSingleIdentifier {
 
-public class InstanceIdentifier extends AbstractSingleIdentifier implements Serializable {
+    private String value;
 
-    private static final long serialVersionUID = 3616828001672136897L;
-
-    public static InstanceIdentifier generateUUID() {
-        return of(UUID.randomUUID().toString());
+    protected AbstractSingleIdentifier(String value) {
+        this.value = value;
     }
 
-    public static InstanceIdentifier of(String value) {
-        return new InstanceIdentifier(value);
+    public String getValue() {
+        return value;
     }
 
-    public InstanceIdentifier(String value) {
-        super(value);
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AbstractSingleIdentifier that = (AbstractSingleIdentifier) o;
+
+        return value.equals(that.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }
