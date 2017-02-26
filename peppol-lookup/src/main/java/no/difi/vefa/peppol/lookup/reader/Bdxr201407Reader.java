@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.commons.bdx.jaxb.smp._2014._07.*;
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
@@ -33,7 +34,6 @@ import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import org.oasis_open.docs.bdxr.ns.smp._2014._07.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

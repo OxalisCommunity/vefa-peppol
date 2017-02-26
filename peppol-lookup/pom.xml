@@ -88,12 +88,12 @@
 
         <!-- VEFA Commons -->
         <dependency>
-            <groupId>no.difi.vefa</groupId>
+            <groupId>no.difi.commons</groupId>
             <artifactId>commons-busdox</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.difi.vefa</groupId>
-            <artifactId>commons-bdxr</artifactId>
+            <groupId>no.difi.commons</groupId>
+            <artifactId>commons-bdx</artifactId>
         </dependency>
 
         <!-- SLF4J -->

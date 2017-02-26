@@ -22,18 +22,21 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.commons.sbdh.jaxb.PartnerIdentification;
+import no.difi.commons.sbdh.jaxb.Scope;
+import no.difi.commons.sbdh.jaxb.StandardBusinessDocumentHeader;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.PartnerIdentification;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.Scope;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.StandardBusinessDocumentHeader;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
+import java.util.regex.Pattern;
 
 public class SbdhReader {
+
+    private static final Pattern PATTERN_DOCUMENTID = Pattern.compile("^[busdox|bdx]\\-");
 
     SbdhReader() {
 
@@ -88,10 +91,22 @@ public class SbdhReader {
 
         // Scope
         for (Scope scope : sbdh.getBusinessScope().getScope()) {
-            if (scope.getType().equals("DOCUMENTID"))
-                header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier()));
-            else if (scope.getType().equals("PROCESSID"))
+            if (scope.getType().equals("DOCUMENTID")) {
+                if (scope.getIdentifier() == null)
+                    header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier()));
+                else {
+                    if (PATTERN_DOCUMENTID.matcher(scope.getIdentifier()).matches())
+                        header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier(), Scheme.of(scope.getIdentifier())));
+                    else {
+                        header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier()));
+                        header = header.reference(InstanceIdentifier.of(scope.getIdentifier()));
+                    }
+                }
+
+            } else if (scope.getType().equals("PROCESSID"))
                 header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier()));
+            else if (scope.getType().equals("REFERENCEID"))
+                header = header.reference(InstanceIdentifier.of(scope.getInstanceIdentifier()));
         }
 
         return header;

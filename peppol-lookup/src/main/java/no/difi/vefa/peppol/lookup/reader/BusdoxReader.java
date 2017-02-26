@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup.reader;
 
+import no.difi.commons.busdox.jaxb.smp.*;
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
@@ -34,7 +35,6 @@ import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
 import org.apache.commons.codec.binary.Base64;
-import org.busdox.servicemetadata.publishing._1.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;

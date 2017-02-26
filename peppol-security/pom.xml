@@ -83,13 +83,9 @@
         </dependency>
 
         <!-- Difi commons -->
-        <!-- <dependency>
+        <dependency>
             <groupId>no.difi.commons</groupId>
             <artifactId>commons-certvalidator</artifactId>
-        </dependency> -->
-        <dependency>
-            <groupId>com.github.difi</groupId>
-            <artifactId>certvalidator</artifactId>
         </dependency>
 
         <!-- Google Guava -->

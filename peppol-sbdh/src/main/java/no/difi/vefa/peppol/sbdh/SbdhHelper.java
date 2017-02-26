@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.commons.sbdh.jaxb.*;
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
@@ -29,7 +30,6 @@ import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.datatype.DatatypeFactory;

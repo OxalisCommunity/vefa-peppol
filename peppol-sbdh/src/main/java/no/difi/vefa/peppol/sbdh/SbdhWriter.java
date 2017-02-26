@@ -22,10 +22,10 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.commons.sbdh.jaxb.DocumentIdentification;
+import no.difi.commons.sbdh.jaxb.StandardBusinessDocumentHeader;
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.DocumentIdentification;
-import org.unece.cefact.namespaces.standardbusinessdocumentheader.StandardBusinessDocumentHeader;
 
 import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLStreamWriter;
