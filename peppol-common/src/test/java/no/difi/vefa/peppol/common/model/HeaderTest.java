@@ -38,7 +38,6 @@ public class HeaderTest {
                 .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
                         "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
-                .reference(InstanceIdentifier.of("12"))
                 .creationTimestamp(new Date())
                 .identifier(InstanceIdentifier.generateUUID());
 
@@ -49,7 +48,6 @@ public class HeaderTest {
                 .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
                         "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
-                .reference(InstanceIdentifier.of("12"))
                 .creationTimestamp(header.getCreationTimestamp())
                 .identifier(InstanceIdentifier.of(header.getIdentifier().getValue()));
 
@@ -66,7 +64,6 @@ public class HeaderTest {
         Assert.assertEquals(header.getProcess(), header2.getProcess());
         Assert.assertEquals(header.getDocumentType(), header2.getDocumentType());
         Assert.assertEquals(header.getInstanceType(), header2.getInstanceType());
-        Assert.assertEquals(header.getReference(), header2.getReference());
         Assert.assertEquals(header.getCreationTimestamp(), header2.getCreationTimestamp());
         Assert.assertEquals(header.getIdentifier(), header2.getIdentifier());
     }
@@ -91,7 +88,7 @@ public class HeaderTest {
                 ParticipantIdentifier.of("9908123456785"),
                 ProcessIdentifier.of("Some:Process"),
                 DocumentTypeIdentifier.of("Some:Document"),
-                null, null, null, null
+                null, null, null
         )));
         Assert.assertFalse(header.equals(Header.of(
                 ParticipantIdentifier.of("9908:98764321"),

@@ -41,8 +41,6 @@ public class Header implements Serializable {
 
     private InstanceType instanceType;
 
-    private InstanceIdentifier reference;
-
     private Date creationTimestamp;
 
     public static Header newInstance() {
@@ -51,14 +49,14 @@ public class Header implements Serializable {
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                             DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
-                            InstanceType instanceType, InstanceIdentifier documentIdentifier, Date creationTimestamp) {
+                            InstanceType instanceType, Date creationTimestamp) {
         return new Header(sender, receiver, process, documentType, identifier,
-                instanceType, documentIdentifier, creationTimestamp);
+                instanceType, creationTimestamp);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                             DocumentTypeIdentifier documentType) {
-        return new Header(sender, receiver, process, documentType, null, null, null, null);
+        return new Header(sender, receiver, process, documentType, null, null, null);
     }
 
     private Header() {
@@ -67,14 +65,13 @@ public class Header implements Serializable {
 
     private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                    DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
-                   InstanceIdentifier reference, Date creationTimestamp) {
+                   Date creationTimestamp) {
         this.sender = sender;
         this.receiver = receiver;
         this.process = process;
         this.documentType = documentType;
         this.identifier = identifier;
         this.instanceType = instanceType;
-        this.reference = reference;
         this.creationTimestamp = creationTimestamp;
     }
 
@@ -138,16 +135,6 @@ public class Header implements Serializable {
         return header;
     }
 
-    public InstanceIdentifier getReference() {
-        return reference;
-    }
-
-    public Header reference(InstanceIdentifier reference) {
-        Header header = copy();
-        header.reference = reference;
-        return header;
-    }
-
     public Date getCreationTimestamp() {
         return creationTimestamp;
     }
@@ -172,7 +159,6 @@ public class Header implements Serializable {
         if (identifier != null ? !identifier.equals(header.identifier) : header.identifier != null) return false;
         if (instanceType != null ? !instanceType.equals(header.instanceType) : header.instanceType != null)
             return false;
-        if (reference != null ? !reference.equals(header.reference) : header.reference != null) return false;
         return !(creationTimestamp != null ?
                 !creationTimestamp.equals(header.creationTimestamp) : header.creationTimestamp != null);
     }
@@ -185,7 +171,6 @@ public class Header implements Serializable {
         result = 31 * result + documentType.hashCode();
         result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
         result = 31 * result + (instanceType != null ? instanceType.hashCode() : 0);
-        result = 31 * result + (reference != null ? reference.hashCode() : 0);
         result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
         return result;
     }
@@ -199,13 +184,12 @@ public class Header implements Serializable {
                 ", documentType=" + documentType +
                 ", identifier=" + identifier +
                 ", instanceType=" + instanceType +
-                ", reference=" + reference +
                 ", creationTimestamp=" + creationTimestamp +
                 '}';
     }
 
     private Header copy() {
         return new Header(sender, receiver, process, documentType, identifier,
-                instanceType, reference, creationTimestamp);
+                instanceType, creationTimestamp);
     }
 }
