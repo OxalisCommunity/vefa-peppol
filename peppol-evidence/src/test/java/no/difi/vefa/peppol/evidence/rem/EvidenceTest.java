@@ -167,7 +167,7 @@ public class EvidenceTest {
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.eventReason(EventReason.MAILBOX_FULL)));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.issuer("Somebody")));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.evidenceIdentifier(InstanceIdentifier.generateUUID())));
-        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.timestamp(new Date())));
+        Assert.assertFalse(EVIDENCE.equals(EVIDENCE.timestamp(new Date(System.currentTimeMillis() + (10 * 1000)))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.sender(ParticipantIdentifier.of("9908:999999999"))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.receiver(ParticipantIdentifier.of("9908:111111111"))));
         Assert.assertFalse(EVIDENCE.equals(EVIDENCE.documentTypeIdentifier(DocumentTypeIdentifier.of("Testing..."))));

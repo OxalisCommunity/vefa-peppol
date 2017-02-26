@@ -36,7 +36,7 @@ public class SignedTest {
         X509Certificate certificate = Mockito.mock(X509Certificate.class);
         Date date = new Date();
 
-        Signed<String> signed = Signed.of("1",certificate);
+        Signed<String> signed = Signed.of("1", certificate);
 
         Assert.assertEquals(signed.getContent(), "1");
         Assert.assertNotNull(signed.getCertificate());
@@ -52,7 +52,8 @@ public class SignedTest {
         Assert.assertFalse(Signed.of("1", Mockito.mock(X509Certificate.class), date).equals(signed));
         Assert.assertFalse(Signed.of("1", Mockito.mock(X509Certificate.class), date).equals(signed));
         Assert.assertTrue(Signed.of("1", certificate, date).equals(Signed.of("1", certificate, date)));
-        Assert.assertFalse(Signed.of("1", certificate, date).equals(Signed.of("1", certificate, new Date())));
+        Assert.assertFalse(Signed.of("1", certificate, date)
+                .equals(Signed.of("1", certificate, new Date(System.currentTimeMillis() + (10 * 1000)))));
 
         Assert.assertNotNull(signed.hashCode());
         Assert.assertNotNull(Signed.of("1", certificate, date).hashCode());
