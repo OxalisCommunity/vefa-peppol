@@ -32,7 +32,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>peppol-sbdh</artifactId>
+
     <name>VEFA PEPPOL :: SBDH</name>
+    <description>SBDH utilities for PEPPOL.</description>
     <url>https://github.com/difi/vefa-peppol</url>
 
     <scm>

@@ -34,6 +34,7 @@
     <artifactId>peppol-icd</artifactId>
 
     <name>VEFA PEPPOL :: ICD</name>
+    <description>Support for ICDs.</description>
     <url>https://github.com/difi/vefa-peppol</url>
 
     <scm>
