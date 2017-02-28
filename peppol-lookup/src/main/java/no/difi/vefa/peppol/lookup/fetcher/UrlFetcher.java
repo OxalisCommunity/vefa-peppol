@@ -29,10 +29,7 @@ import no.difi.vefa.peppol.mode.Mode;
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.URI;
-import java.net.URLConnection;
+import java.net.*;
 
 public class UrlFetcher extends AbstractFetcher {
 
@@ -43,9 +40,13 @@ public class UrlFetcher extends AbstractFetcher {
     @Override
     public FetcherResponse fetch(URI uri) throws LookupException {
         try {
-            URLConnection urlConnection = uri.toURL().openConnection();
+            HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
             urlConnection.setConnectTimeout(timeout);
             urlConnection.setReadTimeout(timeout);
+
+            if (urlConnection.getResponseCode() != 200)
+                throw new LookupException(
+                        String.format("Received code '%s' from SMP.", urlConnection.getResponseCode()));
 
             return new FetcherResponse(
                     new BufferedInputStream(urlConnection.getInputStream()),
