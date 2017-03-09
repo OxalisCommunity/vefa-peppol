@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
 import no.difi.vefa.peppol.common.util.ModelUtils;
 
 import java.io.Serializable;
@@ -40,20 +41,24 @@ public class DocumentTypeIdentifier implements Serializable {
     private String value;
 
     public static DocumentTypeIdentifier of(String identifier) {
-        return new DocumentTypeIdentifier(identifier);
+        return new DocumentTypeIdentifier(identifier, DEFAULT_SCHEME);
     }
 
     public static DocumentTypeIdentifier of(String identifier, Scheme scheme) {
         return new DocumentTypeIdentifier(identifier, scheme);
     }
 
-    @Deprecated
-    public DocumentTypeIdentifier(String value) {
-        this(value, DEFAULT_SCHEME);
+    public static DocumentTypeIdentifier parse(String str) throws PeppolParsingException {
+        String[] parts = str.split("::", 2);
+
+        if (parts.length != 2)
+            throw new PeppolParsingException(String.format("Unable to parse document type identifier '%s'.", str));
+
+        return of(parts[1], Scheme.of(parts[0]));
     }
 
     @Deprecated
-    public DocumentTypeIdentifier(String value, Scheme scheme) {
+    protected DocumentTypeIdentifier(String value, Scheme scheme) {
         this.scheme = scheme;
         this.value = value;
     }

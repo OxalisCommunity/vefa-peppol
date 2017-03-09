@@ -39,7 +39,7 @@ public class ParticipantIdentifierTest {
 
         assertEquals(ParticipantIdentifier.of("else", Scheme.of("something")).toString(), "something::else");
 
-        assertEquals(new ParticipantIdentifier("9908:991825827").getIdentifier(), "9908:991825827");
+        assertEquals(ParticipantIdentifier.of("9908:991825827").getIdentifier(), "9908:991825827");
         assertTrue(ParticipantIdentifier.of("9908:991825827").urlencoded().contains("991825827"));
 
         ParticipantIdentifier participantIdentifier = ParticipantIdentifier.of("9908:991825827");

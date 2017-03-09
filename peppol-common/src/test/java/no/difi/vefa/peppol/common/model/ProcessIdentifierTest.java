@@ -41,4 +41,11 @@ public class ProcessIdentifierTest {
         Assert.assertFalse(process04.equals(process05));
         Assert.assertEquals(process04.getScheme(), process05.getScheme());
     }
+
+    @Test
+    public void simpleParse() throws Exception {
+        ProcessIdentifier processIdentifier = ProcessIdentifier.parse("some::process");
+        Assert.assertEquals(processIdentifier.getIdentifier(), "process");
+        Assert.assertEquals(processIdentifier.getScheme().getValue(), "some");
+    }
 }

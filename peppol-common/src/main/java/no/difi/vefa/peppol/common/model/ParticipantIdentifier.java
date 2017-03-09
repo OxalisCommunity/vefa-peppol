@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
 import no.difi.vefa.peppol.common.util.ModelUtils;
 
 import java.io.Serializable;
@@ -51,14 +52,13 @@ public class ParticipantIdentifier implements Serializable {
         return new ParticipantIdentifier(value, scheme);
     }
 
-    /**
-     * Creation of identifier based on ISO6523 as defined by OpenPEPPOL.
-     *
-     * @param value Normal identifier like '9908:987654321'.
-     */
-    @Deprecated
-    public ParticipantIdentifier(String value) {
-        this(value, DEFAULT_SCHEME);
+    public static ParticipantIdentifier parse(String str) throws PeppolParsingException {
+        String[] parts = str.split("::", 2);
+
+        if (parts.length != 2)
+            throw new PeppolParsingException(String.format("Unable to parse participant identifier '%s'.", str));
+
+        return of(parts[1], Scheme.of(parts[0]));
     }
 
     /**
@@ -67,8 +67,7 @@ public class ParticipantIdentifier implements Serializable {
      * @param identifier Normal identifier like '9908:987654321'.
      * @param scheme     Scheme for identifier.
      */
-    @Deprecated
-    public ParticipantIdentifier(String identifier, Scheme scheme) {
+    private ParticipantIdentifier(String identifier, Scheme scheme) {
         this.value = identifier.trim().toLowerCase(Locale.US);
         this.scheme = scheme;
     }

@@ -22,6 +22,9 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
+import no.difi.vefa.peppol.common.util.ModelUtils;
+
 import java.io.Serializable;
 
 /**
@@ -38,20 +41,23 @@ public class ProcessIdentifier implements Serializable {
     private Scheme scheme;
 
     public static ProcessIdentifier of(String identifier) {
-        return new ProcessIdentifier(identifier);
+        return new ProcessIdentifier(identifier, DEFAULT_SCHEME);
     }
 
     public static ProcessIdentifier of(String identifier, Scheme scheme) {
         return new ProcessIdentifier(identifier, scheme);
     }
 
-    @Deprecated
-    public ProcessIdentifier(String value) {
-        this(value, DEFAULT_SCHEME);
+    public static ProcessIdentifier parse(String str) throws PeppolParsingException {
+        String[] parts = str.split("::", 2);
+
+        if (parts.length != 2)
+            throw new PeppolParsingException(String.format("Unable to parse process identifier '%s'.", str));
+
+        return of(parts[1], Scheme.of(parts[0]));
     }
 
-    @Deprecated
-    public ProcessIdentifier(String value, Scheme scheme) {
+    private ProcessIdentifier(String value, Scheme scheme) {
         this.value = value;
         this.scheme = scheme;
     }
@@ -62,6 +68,10 @@ public class ProcessIdentifier implements Serializable {
 
     public Scheme getScheme() {
         return scheme;
+    }
+
+    public String urlencoded() {
+        return ModelUtils.urlencode("%s::%s", scheme.getValue(), value);
     }
 
     @Override

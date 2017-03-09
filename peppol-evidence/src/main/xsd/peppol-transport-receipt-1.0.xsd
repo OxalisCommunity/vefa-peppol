@@ -19,6 +19,8 @@
             <xs:element name="ErrorCode" type="ErrorCodeType" minOccurs="0"/>
             <!-- Transmission data. -->
             <xs:element name="Transmission" type="TransmissionType" minOccurs="1"/>
+            <!-- Source -->
+            <xs:element name="Source" type="Source" minOccurs="0"/>
             <!-- Payload data. -->
             <xs:element name="Payload" type="PayloadType" minOccurs="1"/>
             <!-- Original protocol specific receipt -->
@@ -49,9 +51,9 @@
             <!-- Timestamp recorded received, most cases from protocol specific receipt. -->
             <xs:element name="Timestamp" type="xs:dateTime" minOccurs="1"/>
             <!-- Protocol used for sending. -->
-            <xs:element name="Protocol" type="xs:string" minOccurs="1"/>
+            <xs:element name="Protocol" type="xs:string" minOccurs="0"/>
             <!-- Role of signer in transmission. -->
-            <xs:element name="Role" type="TransmissionRole" minOccurs="1"/>
+            <xs:element name="Role" type="TransmissionRole" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -118,6 +120,18 @@
             <xs:enumeration value="C2"/>
             <!-- Receiver/inbound -->
             <xs:enumeration value="C3"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- Source of receipt -->
+    <xs:simpleType name="Source">
+        <xs:restriction base="xs:string">
+            <!-- Sender/outbound -->
+            <xs:enumeration value="C2"/>
+            <!-- Receiver/inbound -->
+            <xs:enumeration value="C3"/>
+            <!-- Receiver/reception -->
+            <xs:enumeration value="C4"/>
         </xs:restriction>
     </xs:simpleType>
 

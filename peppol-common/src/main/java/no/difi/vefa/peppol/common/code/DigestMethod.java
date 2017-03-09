@@ -37,6 +37,10 @@ public enum DigestMethod {
         this.uri = uri;
     }
 
+    public String getIdentifier() {
+        return identifier;
+    }
+
     public String getUri() {
         return uri;
     }

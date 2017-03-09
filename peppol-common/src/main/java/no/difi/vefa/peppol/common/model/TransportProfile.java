@@ -40,8 +40,7 @@ public class TransportProfile implements Serializable {
         return new TransportProfile(value);
     }
 
-    @Deprecated
-    public TransportProfile(String value) {
+    private TransportProfile(String value) {
         this.value = value;
     }
 

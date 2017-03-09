@@ -28,7 +28,7 @@ public class Scheme implements Serializable {
 
     private static final long serialVersionUID = -6022267082161778285L;
 
-    public static final Scheme NONE = new Scheme("NONE");
+    public static final Scheme NONE = of("NONE");
 
     private String value;
 
@@ -36,8 +36,7 @@ public class Scheme implements Serializable {
         return new Scheme(value);
     }
 
-    @Deprecated
-    public Scheme(String value) {
+    private Scheme(String value) {
         this.value = value;
     }
 

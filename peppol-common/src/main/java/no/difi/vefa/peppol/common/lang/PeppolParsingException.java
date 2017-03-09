@@ -20,20 +20,14 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.code;
+package no.difi.vefa.peppol.common.lang;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+/**
+ * @author erlend
+ */
+public class PeppolParsingException extends PeppolException {
 
-public class DigestMethodTest {
-
-    @Test
-    public void simple() {
-        Assert.assertTrue(DigestMethod.SHA256.getUri().contains("sha256"));
-        Assert.assertEquals(DigestMethod.fromUri(DigestMethod.SHA256.getUri()), DigestMethod.SHA256);
-        Assert.assertNull(DigestMethod.fromUri("something"));
-        Assert.assertEquals(DigestMethod.valueOf("SHA256"), DigestMethod.SHA256);
-        Assert.assertEquals(DigestMethod.SHA256.getIdentifier(), "SHA-256");
+    public PeppolParsingException(String message) {
+        super(message);
     }
-
 }
