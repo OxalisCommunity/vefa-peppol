@@ -75,9 +75,17 @@ public class LookupClientBuilder {
         return this;
     }
 
+    public LookupClientBuilder fetcher(Class<? extends MetadataFetcher> metadataFetcher) throws PeppolLoadingException {
+        return fetcher(mode.initiate(metadataFetcher));
+    }
+
     public LookupClientBuilder locator(MetadataLocator metadataLocator) {
         this.metadataLocator = metadataLocator;
         return this;
+    }
+
+    public LookupClientBuilder locator(Class<? extends MetadataLocator> metadataLocator) throws PeppolLoadingException {
+        return locator(mode.initiate(metadataLocator));
     }
 
     public LookupClientBuilder provider(MetadataProvider metadataProvider) {
@@ -85,9 +93,18 @@ public class LookupClientBuilder {
         return this;
     }
 
+    public LookupClientBuilder provider(Class<? extends MetadataProvider> metadataProvider)
+            throws PeppolLoadingException {
+        return provider(mode.initiate(metadataProvider));
+    }
+
     public LookupClientBuilder reader(MetadataReader metadataReader) {
         this.metadataReader = metadataReader;
         return this;
+    }
+
+    public LookupClientBuilder reader(Class<? extends MetadataReader> metadataReader) throws PeppolLoadingException {
+        return reader(mode.initiate(metadataReader));
     }
 
     public LookupClientBuilder certificateValidator(CertificateValidator certificateValidator) {

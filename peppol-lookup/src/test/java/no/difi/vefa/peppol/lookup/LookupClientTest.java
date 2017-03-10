@@ -45,7 +45,7 @@ public class LookupClientTest {
     @Test
     public void simple() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction()
-                .fetcher(testMode.initiate(ApacheFetcher.class))
+                .fetcher(ApacheFetcher.class)
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
@@ -65,7 +65,7 @@ public class LookupClientTest {
     @Test
     public void simpleHeader() throws PeppolException {
         LookupClient client = LookupClientBuilder.forMode(testMode)
-                .fetcher(testMode.initiate(ApacheFetcher.class))
+                .fetcher(ApacheFetcher.class)
                 .build();
 
         Endpoint endpoint = client.getEndpoint(
@@ -120,7 +120,7 @@ public class LookupClientTest {
     @Test(enabled = false)
     public void simple9915() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest()
-                .fetcher(testMode.initiate(UrlFetcher.class))
+                .fetcher(UrlFetcher.class)
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers =
@@ -133,7 +133,7 @@ public class LookupClientTest {
     @Test(enabled = false)
     public void simple9933() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction()
-                .fetcher(testMode.initiate(UrlFetcher.class))
+                .fetcher(UrlFetcher.class)
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers =
@@ -154,7 +154,7 @@ public class LookupClientTest {
     public void noSmp() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
-                        .locator(testMode.initiate(BusdoxLocator.class))
+                        .locator(BusdoxLocator.class)
                         .build();
 
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
@@ -164,8 +164,8 @@ public class LookupClientTest {
     public void noSmpApache() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
-                        .fetcher(testMode.initiate(ApacheFetcher.class))
-                        .locator(testMode.initiate(BusdoxLocator.class))
+                        .fetcher(ApacheFetcher.class)
+                        .locator(BusdoxLocator.class)
                         .build();
 
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
@@ -175,7 +175,7 @@ public class LookupClientTest {
     public void noSml() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
-                        .locator(testMode.initiate(BusdoxLocator.class))
+                        .locator(BusdoxLocator.class)
                         .build();
 
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-sml"));

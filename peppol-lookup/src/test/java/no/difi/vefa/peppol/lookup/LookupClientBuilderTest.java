@@ -22,10 +22,13 @@
 
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
+import no.difi.vefa.peppol.lookup.api.MetadataLocator;
+import no.difi.vefa.peppol.lookup.api.MetadataProvider;
+import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotNull;
-import static org.testng.Assert.fail;
 
 public class LookupClientBuilderTest {
 
@@ -37,21 +40,21 @@ public class LookupClientBuilderTest {
 
     @Test
     public void testMissingLocator() throws Exception {
-        assertNotNull(LookupClientBuilder.forProduction().locator(null).build());
+        assertNotNull(LookupClientBuilder.forProduction().locator((MetadataLocator) null).build());
     }
 
     @Test
     public void testMissingProvider() throws Exception {
-        assertNotNull(LookupClientBuilder.forProduction().provider(null).build());
+        assertNotNull(LookupClientBuilder.forProduction().provider((MetadataProvider) null).build());
     }
 
     @Test
     public void testMissingFetcher() throws Exception {
-        assertNotNull(LookupClientBuilder.forProduction().fetcher(null).build());
+        assertNotNull(LookupClientBuilder.forProduction().fetcher((MetadataFetcher) null).build());
     }
 
     @Test
     public void testMissingReader() throws Exception {
-        assertNotNull(LookupClientBuilder.forProduction().reader(null).build());
+        assertNotNull(LookupClientBuilder.forProduction().reader((MetadataReader) null).build());
     }
 }
