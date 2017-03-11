@@ -22,18 +22,18 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.api.SingleIdentifier;
+import no.difi.vefa.peppol.common.api.SimpleIdentifier;
 
-public abstract class AbstractSingleIdentifier implements SingleIdentifier {
+public abstract class AbstractSimpleIdentifier implements SimpleIdentifier {
 
-    private String value;
+    protected String value;
 
-    protected AbstractSingleIdentifier(String value) {
+    protected AbstractSimpleIdentifier(String value) {
         this.value = value;
     }
 
     @Override
-    public String getValue() {
+    public String getIdentifier() {
         return value;
     }
 
@@ -47,7 +47,7 @@ public abstract class AbstractSingleIdentifier implements SingleIdentifier {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        AbstractSingleIdentifier that = (AbstractSingleIdentifier) o;
+        AbstractSimpleIdentifier that = (AbstractSimpleIdentifier) o;
 
         return value.equals(that.value);
     }

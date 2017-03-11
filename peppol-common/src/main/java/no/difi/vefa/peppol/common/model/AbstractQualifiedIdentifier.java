@@ -20,12 +20,38 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.api;
+package no.difi.vefa.peppol.common.model;
+
+import no.difi.vefa.peppol.common.api.QualifiedIdentifier;
+import no.difi.vefa.peppol.common.util.ModelUtils;
 
 /**
  * @author erlend
  */
-public interface SingleIdentifier {
+public abstract class AbstractQualifiedIdentifier implements QualifiedIdentifier {
 
-    String getValue();
+    protected Scheme scheme;
+
+    protected String identifier;
+
+    public AbstractQualifiedIdentifier(String identifier, Scheme scheme) {
+        this.scheme = scheme;
+        this.identifier = identifier;
+    }
+
+    @Override
+    public Scheme getScheme() {
+        return scheme;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    @Override
+    public String urlencoded() {
+        return ModelUtils.urlencode("%s::%s", scheme.getValue(), identifier);
+    }
+
 }

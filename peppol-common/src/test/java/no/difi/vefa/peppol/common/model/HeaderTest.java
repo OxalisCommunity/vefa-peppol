@@ -49,7 +49,7 @@ public class HeaderTest {
                         "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
                 .creationTimestamp(header.getCreationTimestamp())
-                .identifier(InstanceIdentifier.of(header.getIdentifier().getValue()));
+                .identifier(InstanceIdentifier.of(header.getIdentifier().getIdentifier()));
 
         Assert.assertEquals(header, header2);
         Assert.assertNotNull(header.hashCode());

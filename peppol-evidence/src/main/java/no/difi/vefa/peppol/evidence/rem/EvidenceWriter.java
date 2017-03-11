@@ -84,7 +84,7 @@ public class EvidenceWriter {
         remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().add(namePostalAddressType);
 
         // Evidence Identifier
-        remEvidence.setEvidenceIdentifier(evidence.getEvidenceIdentifier().getValue());
+        remEvidence.setEvidenceIdentifier(evidence.getEvidenceIdentifier().getIdentifier());
 
         // Issuer Policy
         if (evidence.getIssuerPolicy() != null) {
@@ -109,8 +109,8 @@ public class EvidenceWriter {
         MessageDetailsType messageDetailsType = new MessageDetailsType();
         messageDetailsType.setMessageSubject(evidence.getDocumentTypeIdentifier().getIdentifier());
         if (evidence.getDocumentIdentifier() != null)
-            messageDetailsType.setUAMessageIdentifier(evidence.getDocumentIdentifier().getValue());
-        messageDetailsType.setMessageIdentifierByREMMD(evidence.getMessageIdentifier().getValue());
+            messageDetailsType.setUAMessageIdentifier(evidence.getDocumentIdentifier().getIdentifier());
+        messageDetailsType.setMessageIdentifierByREMMD(evidence.getMessageIdentifier().getIdentifier());
         DigestMethodType digestMethodType = new DigestMethodType();
         digestMethodType.setAlgorithm(evidence.getDigest().getMethod().getUri());
         messageDetailsType.setDigestMethod(digestMethodType);

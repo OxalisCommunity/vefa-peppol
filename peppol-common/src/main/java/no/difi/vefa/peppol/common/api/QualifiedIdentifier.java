@@ -20,24 +20,24 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.model;
+package no.difi.vefa.peppol.common.api;
 
-import java.io.Serializable;
-import java.util.UUID;
+import no.difi.vefa.peppol.common.model.Scheme;
 
-public class InstanceIdentifier extends AbstractSimpleIdentifier implements Serializable {
+/**
+ * @author erlend
+ */
+public interface QualifiedIdentifier {
 
-    private static final long serialVersionUID = 3616828001672136897L;
+    Scheme getScheme();
 
-    public static InstanceIdentifier generateUUID() {
-        return of(UUID.randomUUID().toString());
-    }
+    /**
+     * Identifier of participant.
+     *
+     * @return Identifier.
+     */
+    String getIdentifier();
 
-    public static InstanceIdentifier of(String value) {
-        return new InstanceIdentifier(value);
-    }
+    String urlencoded();
 
-    public InstanceIdentifier(String value) {
-        super(value);
-    }
 }

@@ -22,7 +22,7 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.SingleIdentifier;
+import no.difi.vefa.peppol.common.api.SimpleIdentifier;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.TransmissionRole;
 
@@ -41,7 +41,7 @@ public class Evidence implements Serializable {
 
     private String issuer = "Unknown";
 
-    private SingleIdentifier evidenceIdentifier;
+    private SimpleIdentifier evidenceIdentifier;
 
     private Date timestamp;
 
@@ -51,13 +51,13 @@ public class Evidence implements Serializable {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private SingleIdentifier documentIdentifier;
+    private SimpleIdentifier documentIdentifier;
 
     private String issuerPolicy;
 
     private Digest digest;
 
-    private SingleIdentifier messageIdentifier;
+    private SimpleIdentifier messageIdentifier;
 
     private TransportProtocol transportProtocol;
 
@@ -72,9 +72,9 @@ public class Evidence implements Serializable {
     private Evidence() {
     }
 
-    private Evidence(EvidenceTypeInstance type, EventCode eventCode, EventReason eventReason, String issuer, SingleIdentifier evidenceIdentifier, Date timestamp, ParticipantIdentifier sender,
-                     ParticipantIdentifier receiver, DocumentTypeIdentifier documentTypeIdentifier, SingleIdentifier documentIdentifier, String issuerPolicy, Digest digest,
-                     SingleIdentifier messageIdentifier, TransportProtocol transportProtocol, TransmissionRole transmissionRole,
+    private Evidence(EvidenceTypeInstance type, EventCode eventCode, EventReason eventReason, String issuer, SimpleIdentifier evidenceIdentifier, Date timestamp, ParticipantIdentifier sender,
+                     ParticipantIdentifier receiver, DocumentTypeIdentifier documentTypeIdentifier, SimpleIdentifier documentIdentifier, String issuerPolicy, Digest digest,
+                     SimpleIdentifier messageIdentifier, TransportProtocol transportProtocol, TransmissionRole transmissionRole,
                      List<Receipt> originalReceipts) {
         this.type = type;
         this.eventCode = eventCode;
@@ -134,11 +134,11 @@ public class Evidence implements Serializable {
         return evidence;
     }
 
-    public SingleIdentifier getEvidenceIdentifier() {
+    public SimpleIdentifier getEvidenceIdentifier() {
         return evidenceIdentifier;
     }
 
-    public Evidence evidenceIdentifier(SingleIdentifier evidenceIdentifier) {
+    public Evidence evidenceIdentifier(SimpleIdentifier evidenceIdentifier) {
         Evidence evidence = copy();
         evidence.evidenceIdentifier = evidenceIdentifier;
         return evidence;
@@ -200,11 +200,11 @@ public class Evidence implements Serializable {
         return evidence;
     }
 
-    public SingleIdentifier getDocumentIdentifier() {
+    public SimpleIdentifier getDocumentIdentifier() {
         return documentIdentifier;
     }
 
-    public Evidence documentIdentifier(SingleIdentifier documentIdentifier) {
+    public Evidence documentIdentifier(SimpleIdentifier documentIdentifier) {
         Evidence evidence = copy();
         evidence.documentIdentifier = documentIdentifier;
         return evidence;
@@ -230,11 +230,11 @@ public class Evidence implements Serializable {
         return evidence;
     }
 
-    public SingleIdentifier getMessageIdentifier() {
+    public SimpleIdentifier getMessageIdentifier() {
         return messageIdentifier;
     }
 
-    public Evidence messageIdentifier(SingleIdentifier messageIdentifier) {
+    public Evidence messageIdentifier(SimpleIdentifier messageIdentifier) {
         Evidence evidence = copy();
         evidence.messageIdentifier = messageIdentifier;
         return evidence;

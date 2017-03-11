@@ -23,22 +23,17 @@
 package no.difi.vefa.peppol.common.model;
 
 import no.difi.vefa.peppol.common.lang.PeppolParsingException;
-import no.difi.vefa.peppol.common.util.ModelUtils;
 
 import java.io.Serializable;
 
 /**
  * Immutable object.
  */
-public class ProcessIdentifier implements Serializable {
+public class ProcessIdentifier extends AbstractQualifiedIdentifier implements Serializable {
 
     private static final long serialVersionUID = 7486398061021950763L;
 
     public static final Scheme DEFAULT_SCHEME = Scheme.of("cenbii-procid-ubl");
-
-    private String value;
-
-    private Scheme scheme;
 
     public static ProcessIdentifier of(String identifier) {
         return new ProcessIdentifier(identifier, DEFAULT_SCHEME);
@@ -58,20 +53,7 @@ public class ProcessIdentifier implements Serializable {
     }
 
     private ProcessIdentifier(String value, Scheme scheme) {
-        this.value = value;
-        this.scheme = scheme;
-    }
-
-    public String getIdentifier() {
-        return value;
-    }
-
-    public Scheme getScheme() {
-        return scheme;
-    }
-
-    public String urlencoded() {
-        return ModelUtils.urlencode("%s::%s", scheme.getValue(), value);
+        super(value, scheme);
     }
 
     @Override
@@ -81,20 +63,20 @@ public class ProcessIdentifier implements Serializable {
 
         ProcessIdentifier that = (ProcessIdentifier) o;
 
-        if (!value.equals(that.value)) return false;
+        if (!identifier.equals(that.identifier)) return false;
         return scheme.equals(that.scheme);
 
     }
 
     @Override
     public int hashCode() {
-        int result = value.hashCode();
+        int result = identifier.hashCode();
         result = 31 * result + scheme.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
-        return String.format("%s::%s", scheme, value);
+        return String.format("%s::%s", scheme, identifier);
     }
 }

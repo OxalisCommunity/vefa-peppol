@@ -29,11 +29,11 @@ public class InstanceIdentifierTest {
 
     @Test
     public void simple() {
-        Assert.assertNotNull(InstanceIdentifier.generateUUID().getValue());
+        Assert.assertNotNull(InstanceIdentifier.generateUUID().getIdentifier());
 
         InstanceIdentifier identifier = InstanceIdentifier.of("TEST");
 
-        Assert.assertEquals(identifier.getValue(), "TEST");
+        Assert.assertEquals(identifier.getIdentifier(), "TEST");
         Assert.assertEquals(identifier.toString(), "TEST");
 
         Assert.assertTrue(identifier.equals(identifier));

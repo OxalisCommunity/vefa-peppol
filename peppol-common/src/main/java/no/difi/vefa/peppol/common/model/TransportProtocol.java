@@ -27,7 +27,7 @@ import no.difi.vefa.peppol.common.lang.PeppolException;
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
-public class TransportProtocol implements Serializable {
+public class TransportProtocol extends AbstractSimpleIdentifier implements Serializable {
 
     private static final long serialVersionUID = -5938766453542971103L;
 
@@ -39,8 +39,6 @@ public class TransportProtocol implements Serializable {
 
     public static final TransportProtocol INTERNAL = new TransportProtocol("INTERNAL");
 
-    private String value;
-
     public static TransportProtocol of(String value) throws PeppolException {
         if (!pattern.matcher(value).matches())
             throw new PeppolException("Identifier not according to pattern.");
@@ -49,26 +47,7 @@ public class TransportProtocol implements Serializable {
     }
 
     private TransportProtocol(String identifier) {
-        this.value = identifier;
-    }
-
-    public String getIdentifier() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TransportProtocol that = (TransportProtocol) o;
-
-        return value.equals(that.value);
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
+        super(identifier);
     }
 
     @Override

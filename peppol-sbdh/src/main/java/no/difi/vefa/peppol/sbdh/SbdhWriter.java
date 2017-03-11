@@ -66,7 +66,7 @@ public class SbdhWriter {
             // TypeVersion
             sbdh.getDocumentIdentification().setTypeVersion(header.getInstanceType().getVersion());
             // Identifier
-            sbdh.getDocumentIdentification().setInstanceIdentifier(header.getIdentifier().getValue());
+            sbdh.getDocumentIdentification().setInstanceIdentifier(header.getIdentifier().getIdentifier());
             // Type
             sbdh.getDocumentIdentification().setType(header.getInstanceType().getType());
             // CreationDateAndTime

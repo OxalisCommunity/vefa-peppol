@@ -113,7 +113,7 @@ public class RemEvidenceBuilderTest {
         System.out.println(xmlOutput);
 
         assertTrue(xmlOutput.contains(TestResources.DOC_TYPE_ID.getIdentifier()), "Document type id has not been included in the REM XML");
-        assertTrue(xmlOutput.contains(TestResources.INSTANCE_IDENTIFIER.getValue()), "Instance identifier missing");
+        assertTrue(xmlOutput.contains(TestResources.INSTANCE_IDENTIFIER.getIdentifier()), "Instance identifier missing");
         assertTrue(xmlOutput.contains(TestResources.SENDER_IDENTIFIER.getIdentifier()), "Sender identifier missing in generated xml");
         assertTrue(xmlOutput.contains(TestResources.RECIPIENT_IDENTIFIER.getIdentifier()), "Recipient identifier missing in generated xml");
 

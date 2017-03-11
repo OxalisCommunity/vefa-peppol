@@ -23,22 +23,17 @@
 package no.difi.vefa.peppol.common.model;
 
 import no.difi.vefa.peppol.common.lang.PeppolParsingException;
-import no.difi.vefa.peppol.common.util.ModelUtils;
 
 import java.io.Serializable;
 
 /**
  * DocumentTypeIdentifier is a combination of XML type and customizationId.
  */
-public class DocumentTypeIdentifier implements Serializable {
+public class DocumentTypeIdentifier extends AbstractQualifiedIdentifier implements Serializable {
 
     private static final long serialVersionUID = -3748163459655880167L;
 
     public static final Scheme DEFAULT_SCHEME = Scheme.of("busdox-docid-qns");
-
-    private Scheme scheme;
-
-    private String value;
 
     public static DocumentTypeIdentifier of(String identifier) {
         return new DocumentTypeIdentifier(identifier, DEFAULT_SCHEME);
@@ -57,22 +52,8 @@ public class DocumentTypeIdentifier implements Serializable {
         return of(parts[1], Scheme.of(parts[0]));
     }
 
-    @Deprecated
     protected DocumentTypeIdentifier(String value, Scheme scheme) {
-        this.scheme = scheme;
-        this.value = value;
-    }
-
-    public Scheme getScheme() {
-        return scheme;
-    }
-
-    public String getIdentifier() {
-        return value;
-    }
-
-    public String urlencoded() {
-        return ModelUtils.urlencode("%s::%s", scheme.getValue(), value);
+        super(value, scheme);
     }
 
     @Override
@@ -92,6 +73,6 @@ public class DocumentTypeIdentifier implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("%s::%s", scheme, value);
+        return String.format("%s::%s", scheme, identifier);
     }
 }
