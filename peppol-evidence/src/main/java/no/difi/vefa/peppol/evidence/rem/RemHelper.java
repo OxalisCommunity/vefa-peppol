@@ -34,6 +34,7 @@ import no.difi.vefa.peppol.evidence.jaxb.rem.EventReasonType;
 import no.difi.vefa.peppol.evidence.jaxb.rem.ObjectFactory;
 import no.difi.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import no.difi.vefa.peppol.evidence.lang.RemEvidenceException;
+import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -43,7 +44,6 @@ import javax.xml.datatype.DatatypeConstants;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -55,8 +55,6 @@ class RemHelper {
 
     private static DatatypeFactory datatypeFactory;
 
-    public static final DocumentBuilderFactory DOCUMENT_BUILDER_FACTORY = DocumentBuilderFactory.newInstance();
-
     static {
         ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
             @Override
@@ -65,8 +63,6 @@ class RemHelper {
                 datatypeFactory = DatatypeFactory.newInstance();
             }
         });
-
-        DOCUMENT_BUILDER_FACTORY.setNamespaceAware(true);
     }
 
     public static AttributedElectronicAddressType createElectronicAddressType(ParticipantIdentifier participant) {
@@ -114,7 +110,7 @@ class RemHelper {
         return ExceptionUtil.perform(RemEvidenceException.class, new PerformResult<DocumentBuilder>() {
             @Override
             public DocumentBuilder action() throws Exception {
-                return DOCUMENT_BUILDER_FACTORY.newDocumentBuilder();
+                return DomUtils.newDocumentBuilder();
             }
         });
     }

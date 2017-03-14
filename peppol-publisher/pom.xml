@@ -21,7 +21,8 @@
   ~ permissions and limitations under the Licence.
   -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>peppol-parent</artifactId>
         <groupId>no.difi.vefa</groupId>
@@ -29,10 +30,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>peppol-security</artifactId>
+    <artifactId>peppol-publisher</artifactId>
 
-    <name>VEFA PEPPOL :: Security</name>
-    <description>Library for security related to PEPPOL.</description>
+    <name>VEFA PEPPOL :: Publisher</name>
+    <description>Tools for metadata publishers.</description>
     <url>https://github.com/difi/vefa-peppol</url>
 
     <scm>
@@ -79,19 +80,36 @@
         </dependency>
         <dependency>
             <groupId>no.difi.vefa</groupId>
-            <artifactId>peppol-mode</artifactId>
+            <artifactId>peppol-lookup</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>no.difi.vefa</groupId>
+            <artifactId>peppol-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>no.difi.vefa</groupId>
+                    <artifactId>peppol-mode</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>no.difi.commons</groupId>
+                    <artifactId>commons-certvalidator</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- Difi commons -->
+        <!-- Difi Commons -->
         <dependency>
             <groupId>no.difi.commons</groupId>
-            <artifactId>commons-certvalidator</artifactId>
+            <artifactId>commons-busdox</artifactId>
         </dependency>
-
-        <!-- Google Guava -->
         <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
+            <groupId>no.difi.commons</groupId>
+            <artifactId>commons-bdx</artifactId>
         </dependency>
 
         <!-- SLF4J -->
@@ -99,6 +117,15 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+
+        <!-- Java -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
+
 
 </project>

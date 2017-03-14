@@ -26,10 +26,9 @@ import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 
 import java.io.Serializable;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class ServiceMetadata implements Serializable {
 
@@ -39,13 +38,9 @@ public class ServiceMetadata implements Serializable {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private Set<ProcessIdentifier> processIdentifiers = new HashSet<>();
-
-    private Set<TransportProfile> transportProfiles = new HashSet<>();
-
     private X509Certificate signer;
 
-    private List<ProcessMetadata> processMetadatas;
+    private List<ProcessMetadata> processes;
 
     public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
                                      DocumentTypeIdentifier documentTypeIdentifier, List<ProcessMetadata> processMetadatas,
@@ -54,18 +49,11 @@ public class ServiceMetadata implements Serializable {
     }
 
     private ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
-                            List<ProcessMetadata> processMetadatas, X509Certificate signer) {
+                            List<ProcessMetadata> processes, X509Certificate signer) {
         this.participantIdentifier = participantIdentifier;
         this.documentTypeIdentifier = documentTypeIdentifier;
-        this.processMetadatas = processMetadatas;
+        this.processes = processes;
         this.signer = signer;
-
-        for (ProcessMetadata processMetadata : processMetadatas) {
-            this.processIdentifiers.add(processMetadata.getProcessIdentifier());
-            for (TransportProfile transportProfile : processMetadata.getTransportProfiles()) {
-                this.transportProfiles.add(transportProfile);
-            }
-        }
     }
 
     public ParticipantIdentifier getParticipantIdentifier() {
@@ -76,17 +64,13 @@ public class ServiceMetadata implements Serializable {
         return documentTypeIdentifier;
     }
 
-    public List<ProcessIdentifier> getProcessIdentifiers() {
-        return new ArrayList<>(processIdentifiers);
-    }
-
-    public List<TransportProfile> getTransportProfiles() {
-        return new ArrayList<>(transportProfiles);
+    public List<ProcessMetadata> getProcesses() {
+        return Collections.unmodifiableList(processes);
     }
 
     public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
             throws EndpointNotFoundException {
-        for (ProcessMetadata processMetadata : processMetadatas)
+        for (ProcessMetadata processMetadata : processes)
             if (processMetadata.getProcessIdentifier().equals(processIdentifier))
                 return processMetadata.getEndpoint(transportProfiles);
 

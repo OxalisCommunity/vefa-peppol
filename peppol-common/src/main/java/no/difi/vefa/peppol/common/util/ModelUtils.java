@@ -23,6 +23,7 @@
 package no.difi.vefa.peppol.common.util;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 
 public class ModelUtils {
@@ -31,6 +32,14 @@ public class ModelUtils {
         try {
             return URLEncoder.encode(String.format(format, args), "UTF-8");
         } catch (UnsupportedEncodingException | NullPointerException e) {
+            throw new IllegalStateException("UTF-8 not supported.");
+        }
+    }
+
+    public static String urldecode(String string) {
+        try {
+            return URLDecoder.decode(string, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
     }

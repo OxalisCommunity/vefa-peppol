@@ -86,7 +86,7 @@
             <artifactId>peppol-security</artifactId>
         </dependency>
 
-        <!-- VEFA Commons -->
+        <!-- Difi Commons -->
         <dependency>
             <groupId>no.difi.commons</groupId>
             <artifactId>commons-busdox</artifactId>

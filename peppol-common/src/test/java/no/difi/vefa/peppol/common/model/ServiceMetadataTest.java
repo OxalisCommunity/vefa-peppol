@@ -63,8 +63,6 @@ public class ServiceMetadataTest {
 
         Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
         Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
-        Assert.assertEquals(serviceMetadata.getProcessIdentifiers().size(), 2);
-        Assert.assertEquals(serviceMetadata.getTransportProfiles().size(), 2);
         Assert.assertNotNull(serviceMetadata.getSigner());
 
         Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS2_1_0), endpoint1);
