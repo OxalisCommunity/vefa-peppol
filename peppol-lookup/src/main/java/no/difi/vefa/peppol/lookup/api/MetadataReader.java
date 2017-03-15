@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup.api;
 
+import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
@@ -33,6 +34,6 @@ public interface MetadataReader {
     List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
             throws LookupException;
 
-    ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+    PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException;
 }

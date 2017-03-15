@@ -30,6 +30,10 @@ public class FetcherResponse {
 
     private String namespace;
 
+    public FetcherResponse(InputStream inputStream) {
+        this(inputStream, null);
+    }
+
     public FetcherResponse(InputStream inputStream, String namespace) {
         this.inputStream = inputStream;
         this.namespace = namespace;

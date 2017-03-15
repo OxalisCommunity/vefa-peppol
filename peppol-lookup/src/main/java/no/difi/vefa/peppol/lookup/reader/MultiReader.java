@@ -23,6 +23,7 @@
 package no.difi.vefa.peppol.lookup.reader;
 
 import com.google.common.io.ByteStreams;
+import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
@@ -62,7 +63,7 @@ public class MultiReader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+    public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
         FetcherResponse response = fetcherResponse;
 

@@ -57,13 +57,11 @@ public class ServiceMetadataTest {
         ServiceMetadata serviceMetadata = ServiceMetadata.of(
                 ParticipantIdentifier.of("9908:991825827"),
                 DocumentTypeIdentifier.of("Some:Document"),
-                Arrays.asList(processMetadata1, processMetadata2),
-                Mockito.mock(X509Certificate.class)
+                Arrays.asList(processMetadata1, processMetadata2)
         );
 
         Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
         Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
-        Assert.assertNotNull(serviceMetadata.getSigner());
 
         Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS2_1_0), endpoint1);
         Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS2_1_0, TransportProfile.AS4), endpoint1);

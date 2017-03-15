@@ -24,6 +24,7 @@ package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.commons.bdx.jaxb.smp._2014._07.*;
 import no.difi.vefa.peppol.common.api.PerformAction;
+import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
@@ -108,7 +109,7 @@ public class Bdxr201407Reader implements MetadataReader {
     }
 
     @Override
-    public ServiceMetadata parseServiceMetadata(FetcherResponse fetcherResponse)
+    public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
         try {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
@@ -145,7 +146,7 @@ public class Bdxr201407Reader implements MetadataReader {
                 ));
             }
 
-            return ServiceMetadata.of(
+            return Signed.of(ServiceMetadata.of(
                     ParticipantIdentifier.of(
                             serviceInformation.getParticipantIdentifier().getValue(),
                             Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
@@ -154,9 +155,8 @@ public class Bdxr201407Reader implements MetadataReader {
                             serviceInformation.getDocumentIdentifier().getValue(),
                             Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
                     ),
-                    processMetadatas,
-                    signer
-            );
+                    processMetadatas
+            ), signer);
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

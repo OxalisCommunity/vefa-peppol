@@ -52,8 +52,14 @@ public class Signed<T> implements PotentiallySigned<T>, Serializable {
         this.timestamp = timestamp;
     }
 
+    @Override
     public T getContent() {
         return content;
+    }
+
+    @Override
+    public <S> Signed<S> ofSubset(S s) {
+        return new Signed<>(s, certificate, timestamp);
     }
 
     public X509Certificate getCertificate() {

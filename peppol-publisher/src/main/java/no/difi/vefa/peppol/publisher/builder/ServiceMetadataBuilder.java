@@ -16,6 +16,14 @@ public class ServiceMetadataBuilder {
 
     private List<ProcessMetadata> processes = new ArrayList<>();
 
+    public static ServiceMetadataBuilder newInstance() {
+        return new ServiceMetadataBuilder();
+    }
+
+    private ServiceMetadataBuilder() {
+
+    }
+
     public ServiceMetadataBuilder participant(ParticipantIdentifier participantIdentifier) {
         this.participantIdentifier = participantIdentifier;
         return this;
@@ -32,6 +40,6 @@ public class ServiceMetadataBuilder {
     }
 
     public ServiceMetadata build() {
-        return ServiceMetadata.of(participantIdentifier, documentTypeIdentifier, processes, null);
+        return ServiceMetadata.of(participantIdentifier, documentTypeIdentifier, processes);
     }
 }

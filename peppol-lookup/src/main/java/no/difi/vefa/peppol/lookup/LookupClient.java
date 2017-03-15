@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup;
 
+import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 import no.difi.vefa.peppol.common.model.*;
@@ -67,11 +68,12 @@ public class LookupClient {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
 
-        ServiceMetadata serviceMetadata = reader.parseServiceMetadata(fetcher.fetch(provider));
+        PotentiallySigned<ServiceMetadata> serviceMetadata = reader.parseServiceMetadata(fetcher.fetch(provider));
 
-        validator.validate(Service.SMP, serviceMetadata.getSigner());
+        if (serviceMetadata instanceof Signed)
+            validator.validate(Service.SMP, ((Signed) serviceMetadata).getCertificate());
 
-        return serviceMetadata;
+        return serviceMetadata.getContent();
     }
 
     public Endpoint getEndpoint(ServiceMetadata serviceMetadata, ProcessIdentifier processIdentifier,

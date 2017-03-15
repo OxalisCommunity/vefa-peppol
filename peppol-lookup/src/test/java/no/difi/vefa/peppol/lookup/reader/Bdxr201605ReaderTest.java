@@ -57,7 +57,7 @@ public class Bdxr201605ReaderTest {
     @Test(enabled = false)
     public void serviceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml"), null));
+                getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml"))).getContent();
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
 

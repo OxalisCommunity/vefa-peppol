@@ -40,8 +40,14 @@ public class Unsigned<T> implements PotentiallySigned<T>, Serializable {
         this.content = content;
     }
 
+    @Override
     public T getContent() {
         return content;
+    }
+
+    @Override
+    public <S> Unsigned<S> ofSubset(S s) {
+        return new Unsigned<>(s);
     }
 
     @Override

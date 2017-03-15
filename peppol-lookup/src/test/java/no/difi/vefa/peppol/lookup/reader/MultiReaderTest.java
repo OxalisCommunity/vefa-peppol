@@ -80,7 +80,7 @@ public class MultiReaderTest {
     @Test
     public void busdoxServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
+                getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"))).getContent();
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
 
@@ -102,7 +102,7 @@ public class MultiReaderTest {
     @Test
     public void busdoxServiceMetadataMultiProcess() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9933-061828591.xml"), null));
+                getClass().getResourceAsStream("/busdox-servicemetadata-9933-061828591.xml"))).getContent();
 
         ProcessIdentifier processIdentifier1 = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
         ProcessIdentifier processIdentifier2 = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii46:ver1.0");
@@ -139,7 +139,8 @@ public class MultiReaderTest {
     @Test
     public void bdxrServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(
-                new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml"), null));
+                new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml")))
+                .getContent();
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
 

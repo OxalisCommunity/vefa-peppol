@@ -26,4 +26,6 @@ public interface PotentiallySigned<T> {
 
     T getContent();
 
+    <S> PotentiallySigned<S> ofSubset(S s);
+
 }

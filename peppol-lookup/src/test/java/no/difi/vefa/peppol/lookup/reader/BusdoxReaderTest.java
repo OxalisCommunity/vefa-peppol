@@ -23,9 +23,12 @@
 package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.ProcessIdentifier;
+import no.difi.vefa.peppol.common.model.ServiceMetadata;
+import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import no.difi.vefa.peppol.common.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
@@ -54,7 +57,7 @@ public class BusdoxReaderTest {
     @Test
     public void serviceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"), null));
+                getClass().getResourceAsStream("/busdox-servicemetadata-9908-991825827.xml"))).getContent();
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
 
