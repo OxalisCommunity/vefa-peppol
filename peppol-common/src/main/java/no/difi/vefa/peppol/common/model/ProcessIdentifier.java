@@ -56,10 +56,6 @@ public class ProcessIdentifier extends AbstractQualifiedIdentifier implements Se
         super(value, scheme);
     }
 
-    public ProcessIdentifier() {
-        super(null, null);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -28,4 +28,7 @@ package no.difi.vefa.peppol.common.api;
 public interface SimpleIdentifier {
 
     String getIdentifier();
+
+    @Deprecated
+    String getValue();
 }

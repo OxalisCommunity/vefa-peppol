@@ -41,7 +41,4 @@ public class InstanceIdentifier extends AbstractSimpleIdentifier implements Seri
         super(value);
     }
 
-    public InstanceIdentifier() {
-        super(null);
-    }
 }

@@ -56,10 +56,6 @@ public class DocumentTypeIdentifier extends AbstractQualifiedIdentifier implemen
         super(value, scheme);
     }
 
-    public DocumentTypeIdentifier() {
-        super(null, null);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
