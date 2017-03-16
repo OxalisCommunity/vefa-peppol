@@ -66,6 +66,10 @@ public class ParticipantIdentifier extends AbstractQualifiedIdentifier implement
         super(identifier.trim().toLowerCase(Locale.US), scheme);
     }
 
+    public ParticipantIdentifier() {
+        super(null, null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
