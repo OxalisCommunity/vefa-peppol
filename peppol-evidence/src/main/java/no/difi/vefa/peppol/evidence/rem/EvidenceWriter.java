@@ -71,7 +71,8 @@ public class EvidenceWriter {
         // Event Reason
         if (evidence.getEventReason() != null) {
             remEvidence.setEventReasons(new EventReasonsType());
-            remEvidence.getEventReasons().getEventReason().add(RemHelper.createEventReasonType(evidence.getEventReason()));
+            remEvidence.getEventReasons().getEventReason().add(
+                    RemHelper.createEventReasonType(evidence.getEventReason()));
         }
 
         // Issuer
@@ -81,7 +82,8 @@ public class EvidenceWriter {
 
         remEvidence.setEvidenceIssuerDetails(new EntityDetailsType());
         remEvidence.getEvidenceIssuerDetails().setNamesPostalAddresses(new NamesPostalAddressListType());
-        remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().add(namePostalAddressType);
+        remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses()
+                .getNamePostalAddress().add(namePostalAddressType);
 
         // Evidence Identifier
         remEvidence.setEvidenceIdentifier(evidence.getEvidenceIdentifier().getIdentifier());
@@ -97,12 +99,15 @@ public class EvidenceWriter {
 
         // Sender
         remEvidence.setSenderDetails(new EntityDetailsType());
-        remEvidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().add(RemHelper.createElectronicAddressType(evidence.getSender()));
+        remEvidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().add(
+                RemHelper.createElectronicAddressType(evidence.getSender()));
 
         // Receiver
         remEvidence.setRecipientsDetails(new EntityDetailsListType());
         remEvidence.getRecipientsDetails().getEntityDetails().add(new EntityDetailsType());
-        remEvidence.getRecipientsDetails().getEntityDetails().get(0).getAttributedElectronicAddressOrElectronicAddress().add(RemHelper.createElectronicAddressType(evidence.getReceiver()));
+        remEvidence.getRecipientsDetails().getEntityDetails().get(0)
+                .getAttributedElectronicAddressOrElectronicAddress()
+                .add(RemHelper.createElectronicAddressType(evidence.getReceiver()));
         remEvidence.setEvidenceRefersToRecipient(BigInteger.valueOf(1));
 
         // Sender Message Details

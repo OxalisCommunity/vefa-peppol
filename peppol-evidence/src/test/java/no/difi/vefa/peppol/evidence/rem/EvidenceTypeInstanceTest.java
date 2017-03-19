@@ -41,6 +41,8 @@ public class EvidenceTypeInstanceTest {
 
     @Test
     public void simpleValueOf() {
-        Assert.assertEquals(EvidenceTypeInstance.valueOf(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT.toString()), EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT);
+        Assert.assertEquals(
+                EvidenceTypeInstance.valueOf(EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT.toString()),
+                EvidenceTypeInstance.DELIVERY_NON_DELIVERY_TO_RECIPIENT);
     }
 }

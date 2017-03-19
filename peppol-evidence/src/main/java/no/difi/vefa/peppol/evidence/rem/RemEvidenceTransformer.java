@@ -62,7 +62,8 @@ public class RemEvidenceTransformer {
      * @param outputStream
      * @throws RemEvidenceException
      */
-    public void toUnformattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
+    public void toUnformattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream)
+            throws RemEvidenceException {
         format(signedRemEvidence, outputStream, false);
     }
 
@@ -75,7 +76,8 @@ public class RemEvidenceTransformer {
      * @param outputStream
      * @throws RemEvidenceException
      */
-    public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream) throws RemEvidenceException {
+    public void toFormattedXml(SignedRemEvidence signedRemEvidence, OutputStream outputStream)
+            throws RemEvidenceException {
         format(signedRemEvidence, outputStream, true);
     }
 
@@ -87,7 +89,8 @@ public class RemEvidenceTransformer {
      * @param formatted         indicates whether the output should be formatted (true) or not (false)
      * @throws RemEvidenceException
      */
-    protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted) throws RemEvidenceException {
+    protected void format(SignedRemEvidence signedRemEvidence, OutputStream outputStream, boolean formatted)
+            throws RemEvidenceException {
         Transformer transformer;
         try {
             transformer = TransformerFactory.newInstance().newTransformer();

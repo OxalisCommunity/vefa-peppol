@@ -71,11 +71,13 @@ public class EvidenceReader {
             evidence = evidence.eventCode(EventCode.valueFor(remEvidence.getEventCode()));
 
             // Event Reason
-            evidence = evidence.eventReason(EventReason.valueForCode(remEvidence.getEventReasons().getEventReason().get(0).getCode()));
+            evidence = evidence.eventReason(EventReason.valueForCode(remEvidence.getEventReasons()
+                    .getEventReason().get(0).getCode()));
 
             // Issuer
             if (remEvidence.getEvidenceIssuerDetails() != null)
-                evidence = evidence.issuer(remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0));
+                evidence = evidence.issuer(remEvidence.getEvidenceIssuerDetails().getNamesPostalAddresses()
+                        .getNamePostalAddress().get(0).getEntityName().getName().get(0));
 
             // Evidence Identifier
             evidence = evidence.evidenceIdentifier(InstanceIdentifier.of(remEvidence.getEvidenceIdentifier()));
@@ -87,17 +89,24 @@ public class EvidenceReader {
             evidence = evidence.timestamp(RemHelper.fromXmlGregorianCalendar(remEvidence.getEventTime()));
 
             // Sender
-            evidence = evidence.sender(RemHelper.readElectronicAddressType((AttributedElectronicAddressType) remEvidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().get(0)));
+            evidence = evidence.sender(RemHelper.readElectronicAddressType((AttributedElectronicAddressType)
+                    remEvidence.getSenderDetails().getAttributedElectronicAddressOrElectronicAddress().get(0)));
 
             // Receiver
-            evidence = evidence.receiver(RemHelper.readElectronicAddressType((AttributedElectronicAddressType) remEvidence.getRecipientsDetails().getEntityDetails().get(0).getAttributedElectronicAddressOrElectronicAddress().get(0)));
+            evidence = evidence.receiver(RemHelper.readElectronicAddressType((AttributedElectronicAddressType)
+                    remEvidence.getRecipientsDetails().getEntityDetails().get(0)
+                            .getAttributedElectronicAddressOrElectronicAddress().get(0)));
 
             // Sender Message Details
-            evidence = evidence.digest(Digest.of(DigestMethod.fromUri(remEvidence.getSenderMessageDetails().getDigestMethod().getAlgorithm()), remEvidence.getSenderMessageDetails().getDigestValue()));
+            evidence = evidence.digest(Digest.of(DigestMethod.fromUri(remEvidence.getSenderMessageDetails()
+                    .getDigestMethod().getAlgorithm()), remEvidence.getSenderMessageDetails().getDigestValue()));
             if (remEvidence.getSenderMessageDetails().getUAMessageIdentifier() != null)
-                evidence = evidence.documentIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getUAMessageIdentifier()));
-            evidence = evidence.messageIdentifier(InstanceIdentifier.of(remEvidence.getSenderMessageDetails().getMessageIdentifierByREMMD()));
-            evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(remEvidence.getSenderMessageDetails().getMessageSubject(), Scheme.NONE));
+                evidence = evidence.documentIdentifier(InstanceIdentifier.of(
+                        remEvidence.getSenderMessageDetails().getUAMessageIdentifier()));
+            evidence = evidence.messageIdentifier(InstanceIdentifier.of(
+                    remEvidence.getSenderMessageDetails().getMessageIdentifierByREMMD()));
+            evidence = evidence.documentTypeIdentifier(DocumentTypeIdentifier.of(
+                    remEvidence.getSenderMessageDetails().getMessageSubject(), Scheme.NONE));
 
             // Extensions
             if (remEvidence.getExtensions() != null) {
@@ -108,11 +117,13 @@ public class EvidenceReader {
                         if (o instanceof PeppolRemExtension) {
                             PeppolRemExtension peppolRemExtension = (PeppolRemExtension) o;
 
-                            evidence = evidence.transportProtocol(TransportProtocol.of(peppolRemExtension.getTransmissionProtocol()));
+                            evidence = evidence.transportProtocol(TransportProtocol.of(
+                                    peppolRemExtension.getTransmissionProtocol()));
                             evidence = evidence.transmissionRole(peppolRemExtension.getTransmissionRole());
 
                             for (OriginalReceiptType receiptType : peppolRemExtension.getOriginalReceipt())
-                                evidence = evidence.originalReceipt(Receipt.of(receiptType.getType(), receiptType.getValue()));
+                                evidence = evidence.originalReceipt(
+                                        Receipt.of(receiptType.getType(), receiptType.getValue()));
                         }
                     }
                 }

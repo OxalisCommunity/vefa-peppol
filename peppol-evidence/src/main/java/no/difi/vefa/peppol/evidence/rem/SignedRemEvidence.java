@@ -54,6 +54,7 @@ import java.util.List;
 public class SignedRemEvidence {
 
     private final JAXBElement<REMEvidenceType> jaxbElement;
+
     private final Document signedRemEvidenceXml;
 
     public SignedRemEvidence(JAXBElement<REMEvidenceType> jaxbElement, Document signedRemEvidenceXml) {
@@ -112,9 +113,11 @@ public class SignedRemEvidence {
 
     public ParticipantIdentifier getSenderIdentifier() {
         EntityDetailsType senderDetails = e().getSenderDetails();
-        List<Object> attributedElectronicAddressOrElectronicAddress = senderDetails.getAttributedElectronicAddressOrElectronicAddress();
+        List<Object> attributedElectronicAddressOrElectronicAddress = senderDetails
+                .getAttributedElectronicAddressOrElectronicAddress();
 
-        return RemHelper.readElectronicAddressType((AttributedElectronicAddressType) attributedElectronicAddressOrElectronicAddress.get(0));
+        return RemHelper.readElectronicAddressType((AttributedElectronicAddressType)
+                attributedElectronicAddressOrElectronicAddress.get(0));
     }
 
 

@@ -46,12 +46,13 @@ public class SbdWriter implements Closeable {
     }
 
     private SbdWriter(final OutputStream outputStream, Header header) throws SbdhException {
-        writer = ExceptionUtil.perform(SbdhException.class, "Unable to initiate SBD.", new PerformResult<XMLStreamWriter>() {
-            @Override
-            public XMLStreamWriter action() throws Exception {
-                return SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
-            }
-        });
+        writer = ExceptionUtil.perform(SbdhException.class, "Unable to initiate SBD.",
+                new PerformResult<XMLStreamWriter>() {
+                    @Override
+                    public XMLStreamWriter action() throws Exception {
+                        return SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
+                    }
+                });
 
         initiateDocument(header);
     }

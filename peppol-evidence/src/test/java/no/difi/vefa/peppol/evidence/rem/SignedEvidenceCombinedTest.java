@@ -38,7 +38,8 @@ public class SignedEvidenceCombinedTest {
 
         SignedEvidenceWriter.write(outputStream, TestResources.getPrivateKey(), EvidenceTest.EVIDENCE);
 
-        Signed<Evidence> evidenceSigned = SignedEvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
+        Signed<Evidence> evidenceSigned =
+                SignedEvidenceReader.read(new ByteArrayInputStream(outputStream.toByteArray()));
 
         Assert.assertEquals(evidenceSigned.getCertificate(), TestResources.getPrivateKey().getCertificate());
         Assert.assertEquals(evidenceSigned.getContent(), EvidenceTest.EVIDENCE);

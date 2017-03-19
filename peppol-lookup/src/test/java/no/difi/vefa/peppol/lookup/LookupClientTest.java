@@ -70,11 +70,12 @@ public class LookupClientTest {
 
         Endpoint endpoint = client.getEndpoint(
                 Header.newInstance()
-                .receiver(ParticipantIdentifier.of("9908:810418052"))
-                .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
-                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"))
-                .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0")),
+                        .receiver(ParticipantIdentifier.of("9908:810418052"))
+                        .documentType(DocumentTypeIdentifier.of(
+                                "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
+                                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"))
+                        .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0")),
                 TransportProfile.AS2_1_0);
 
         Assert.assertNotNull(endpoint);
@@ -88,9 +89,10 @@ public class LookupClientTest {
 
         Endpoint endpoint = client.getEndpoint(
                 ParticipantIdentifier.of("9908:991825827"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
-                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"),
+                DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
+                                ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"),
                 ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"),
                 TransportProfile.AS2_1_0
         );
@@ -108,9 +110,10 @@ public class LookupClientTest {
                 .sender(ParticipantIdentifier.of("9908:invalid"))
                 .receiver(ParticipantIdentifier.of("9908:991825827"))
                 .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0"))
-                .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                        "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
-                        ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
+                .documentType(DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
+                                ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1"));
 
         Endpoint endpoint = client.getEndpoint(header, TransportProfile.AS2_1_0);
 
@@ -144,9 +147,10 @@ public class LookupClientTest {
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(
                 ParticipantIdentifier.of("9933:061828591"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                        "urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
-                        ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"));
+                DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
+                                ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"));
         assertNotNull(serviceMetadata);
     }
 

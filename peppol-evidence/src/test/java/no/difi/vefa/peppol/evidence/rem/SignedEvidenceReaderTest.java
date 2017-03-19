@@ -36,7 +36,8 @@ public class SignedEvidenceReaderTest {
         new SignedEvidenceReader();
     }
 
-    @Test(expectedExceptions = RemEvidenceException.class, expectedExceptionsMessageRegExp = "Node of type Document required\\.")
+    @Test(expectedExceptions = RemEvidenceException.class,
+            expectedExceptionsMessageRegExp = "Node of type Document required\\.")
     public void exceptionOnNonDocumentType() throws Exception {
         SignedEvidenceReader.read(Mockito.mock(Node.class));
     }

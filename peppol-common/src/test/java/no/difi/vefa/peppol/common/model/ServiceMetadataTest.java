@@ -51,8 +51,10 @@ public class ServiceMetadataTest {
                 Mockito.mock(X509Certificate.class)
         );
 
-        ProcessMetadata<Endpoint> processMetadata1 = ProcessMetadata.of(ProcessIdentifier.of("Some:Process"), endpoint1, endpoint3);
-        ProcessMetadata<Endpoint> processMetadata2 = ProcessMetadata.of(ProcessIdentifier.of("Other:Process"), endpoint2);
+        ProcessMetadata<Endpoint> processMetadata1 = ProcessMetadata.of(
+                ProcessIdentifier.of("Some:Process"), endpoint1, endpoint3);
+        ProcessMetadata<Endpoint> processMetadata2 = ProcessMetadata.of(
+                ProcessIdentifier.of("Other:Process"), endpoint2);
 
         ServiceMetadata serviceMetadata = ServiceMetadata.of(
                 ParticipantIdentifier.of("9908:991825827"),
@@ -65,19 +67,30 @@ public class ServiceMetadataTest {
         Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
         Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
 
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS2_1_0), endpoint1);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS2_1_0, TransportProfile.AS4), endpoint1);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"), TransportProfile.AS4, TransportProfile.AS2_1_0), endpoint3);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Other:Process"), TransportProfile.AS2_1_0), endpoint2);
+        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+                TransportProfile.AS2_1_0),
+                endpoint1);
+        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+                TransportProfile.AS2_1_0, TransportProfile.AS4),
+                endpoint1);
+        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+                TransportProfile.AS4, TransportProfile.AS2_1_0),
+                endpoint3);
+        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Other:Process"),
+                TransportProfile.AS2_1_0),
+                endpoint2);
 
         try {
             serviceMetadata.getEndpoint(ProcessIdentifier.of("Other:Process"), TransportProfile.AS4);
+            Assert.fail();
         } catch (EndpointNotFoundException e) {
             // No action.
         }
 
         try {
-            serviceMetadata.getEndpoint(ProcessIdentifier.of("Another:Process"), TransportProfile.AS4, TransportProfile.AS2_1_0, TransportProfile.START);
+            serviceMetadata.getEndpoint(ProcessIdentifier.of("Another:Process"),
+                    TransportProfile.AS4, TransportProfile.AS2_1_0, TransportProfile.START);
+            Assert.fail();
         } catch (EndpointNotFoundException e) {
             // No action.
         }

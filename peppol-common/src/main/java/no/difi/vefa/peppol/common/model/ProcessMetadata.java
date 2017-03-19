@@ -36,11 +36,13 @@ public class ProcessMetadata<T extends SimpleEndpoint> implements Serializable {
 
     private final Map<TransportProfile, T> endpoints = new HashMap<>();
 
-    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(ProcessIdentifier processIdentifier, T... endpoints) {
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
+            ProcessIdentifier processIdentifier, T... endpoints) {
         return of(processIdentifier, Arrays.asList(endpoints));
     }
 
-    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(ProcessIdentifier processIdentifier, List<T> endpoints) {
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
+            ProcessIdentifier processIdentifier, List<T> endpoints) {
         return new ProcessMetadata<>(processIdentifier, endpoints);
     }
 

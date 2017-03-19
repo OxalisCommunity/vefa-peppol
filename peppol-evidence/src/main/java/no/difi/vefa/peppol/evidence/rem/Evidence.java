@@ -72,9 +72,12 @@ public class Evidence implements Serializable {
     private Evidence() {
     }
 
-    private Evidence(EvidenceTypeInstance type, EventCode eventCode, EventReason eventReason, String issuer, SimpleIdentifier evidenceIdentifier, Date timestamp, ParticipantIdentifier sender,
-                     ParticipantIdentifier receiver, DocumentTypeIdentifier documentTypeIdentifier, SimpleIdentifier documentIdentifier, String issuerPolicy, Digest digest,
-                     SimpleIdentifier messageIdentifier, TransportProtocol transportProtocol, TransmissionRole transmissionRole,
+    private Evidence(EvidenceTypeInstance type, EventCode eventCode, EventReason eventReason, String issuer,
+                     SimpleIdentifier evidenceIdentifier, Date timestamp, ParticipantIdentifier sender,
+                     ParticipantIdentifier receiver, DocumentTypeIdentifier documentTypeIdentifier,
+                     SimpleIdentifier documentIdentifier, String issuerPolicy, Digest digest,
+                     SimpleIdentifier messageIdentifier, TransportProtocol transportProtocol,
+                     TransmissionRole transmissionRole,
                      List<Receipt> originalReceipts) {
         this.type = type;
         this.eventCode = eventCode;
@@ -296,21 +299,26 @@ public class Evidence implements Serializable {
         if (eventCode != evidence.eventCode) return false;
         if (eventReason != evidence.eventReason) return false;
         if (issuer != null ? !issuer.equals(evidence.issuer) : evidence.issuer != null) return false;
-        if (evidenceIdentifier != null ? !evidenceIdentifier.equals(evidence.evidenceIdentifier) : evidence.evidenceIdentifier != null)
+        if (evidenceIdentifier != null ? !evidenceIdentifier.equals(evidence.evidenceIdentifier) :
+                evidence.evidenceIdentifier != null)
             return false;
         if (timestamp != null ? !timestamp.equals(evidence.timestamp) : evidence.timestamp != null) return false;
         if (sender != null ? !sender.equals(evidence.sender) : evidence.sender != null) return false;
         if (receiver != null ? !receiver.equals(evidence.receiver) : evidence.receiver != null) return false;
-        if (documentTypeIdentifier != null ? !documentTypeIdentifier.equals(evidence.documentTypeIdentifier) : evidence.documentTypeIdentifier != null)
+        if (documentTypeIdentifier != null ? !documentTypeIdentifier.equals(evidence.documentTypeIdentifier) :
+                evidence.documentTypeIdentifier != null)
             return false;
-        if (documentIdentifier != null ? !documentIdentifier.equals(evidence.documentIdentifier) : evidence.documentIdentifier != null)
+        if (documentIdentifier != null ? !documentIdentifier.equals(evidence.documentIdentifier) :
+                evidence.documentIdentifier != null)
             return false;
         if (issuerPolicy != null ? !issuerPolicy.equals(evidence.issuerPolicy) : evidence.issuerPolicy != null)
             return false;
         if (digest != null ? !digest.equals(evidence.digest) : evidence.digest != null) return false;
-        if (messageIdentifier != null ? !messageIdentifier.equals(evidence.messageIdentifier) : evidence.messageIdentifier != null)
+        if (messageIdentifier != null ? !messageIdentifier.equals(evidence.messageIdentifier) :
+                evidence.messageIdentifier != null)
             return false;
-        if (transportProtocol != null ? !transportProtocol.equals(evidence.transportProtocol) : evidence.transportProtocol != null)
+        if (transportProtocol != null ? !transportProtocol.equals(evidence.transportProtocol) :
+                evidence.transportProtocol != null)
             return false;
         if (transmissionRole != evidence.transmissionRole) return false;
         return originalReceipts.equals(evidence.originalReceipts);

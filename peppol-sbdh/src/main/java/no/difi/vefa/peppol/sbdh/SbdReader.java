@@ -45,7 +45,7 @@ public class SbdReader implements Closeable {
     private Header header;
 
     public static SbdReader newInstance(final InputStream inputStream) throws SbdhException {
-        return ExceptionUtil.perform(SbdhException.class, new PerformResult<SbdReader>() {
+        return ExceptionUtil.perform(SbdhException.class,   new PerformResult<SbdReader>() {
             @Override
             public SbdReader action() throws Exception {
                 return newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream));
@@ -71,7 +71,8 @@ public class SbdReader implements Closeable {
             // Read header
             reader.nextTag();
             if (!reader.getName().equals(Ns.QNAME_SBDH))
-                throw new SbdhException("Element 'StandardBusinessDocumentHeader' not found as first element in 'StandardBusinessDocument'.");
+                throw new SbdhException("Element 'StandardBusinessDocumentHeader' not found " +
+                        "as first element in 'StandardBusinessDocument'.");
 
             this.header = SbdhReader.read(reader);
 
