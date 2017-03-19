@@ -36,21 +36,26 @@ import java.security.KeyStore;
 
 public class SignedEvidenceWriter {
 
-    public static void write(OutputStream outputStream, KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence) throws RemEvidenceException, PeppolSecurityException {
+    public static void write(OutputStream outputStream, KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence)
+            throws RemEvidenceException, PeppolSecurityException {
         write(privateKeyEntry, evidence, new StreamResult(outputStream));
     }
 
-    public static Document write(KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence) throws RemEvidenceException, PeppolSecurityException {
+    public static Document write(KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence)
+            throws RemEvidenceException, PeppolSecurityException {
         Document document = RemHelper.getDocumentBuilder().newDocument();
         write(document, privateKeyEntry, evidence);
         return document;
     }
 
-    public static void write(Node node, KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence) throws RemEvidenceException, PeppolSecurityException {
+    public static void write(Node node, KeyStore.PrivateKeyEntry privateKeyEntry, Evidence evidence)
+            throws RemEvidenceException, PeppolSecurityException {
         write(privateKeyEntry, evidence, new DOMResult(node));
     }
 
-    public static void write(final KeyStore.PrivateKeyEntry privateKeyEntry, final Evidence evidence, final Result result) throws RemEvidenceException, PeppolSecurityException {
+    public static void write(final KeyStore.PrivateKeyEntry privateKeyEntry,
+                             final Evidence evidence, final Result result)
+            throws RemEvidenceException, PeppolSecurityException {
         Document document = RemHelper.getDocumentBuilder().newDocument();
         EvidenceWriter.write(document, evidence);
 

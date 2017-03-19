@@ -61,8 +61,7 @@ public class XMLStreamPartialReaderWrapper extends XMLStreamReaderWrapper {
                 || (eventType == XMLStreamConstants.CDATA && isWhiteSpace()) // skip whitespace
                 || eventType == XMLStreamConstants.SPACE
                 || eventType == XMLStreamConstants.PROCESSING_INSTRUCTION
-                || eventType == XMLStreamConstants.COMMENT
-                ) {
+                || eventType == XMLStreamConstants.COMMENT) {
             eventType = next();
         }
 

@@ -102,13 +102,14 @@ public class SignedRemEvidence {
     }
 
     public String getEvidenceIssuerDetails() throws RemEvidenceException {
-        return ExceptionUtil.perform(RemEvidenceException.class, "There are no Event Issuer Details", new PerformResult<String>() {
-            @Override
-            public String action() throws Exception {
-                return e().getEvidenceIssuerDetails()
-                        .getNamesPostalAddresses().getNamePostalAddress().get(0).getEntityName().getName().get(0);
-            }
-        });
+        return ExceptionUtil.perform(RemEvidenceException.class, "There are no Event Issuer Details",
+                new PerformResult<String>() {
+                    @Override
+                    public String action() throws Exception {
+                        return e().getEvidenceIssuerDetails().getNamesPostalAddresses()
+                                .getNamePostalAddress().get(0).getEntityName().getName().get(0);
+                    }
+                });
     }
 
     public ParticipantIdentifier getSenderIdentifier() {

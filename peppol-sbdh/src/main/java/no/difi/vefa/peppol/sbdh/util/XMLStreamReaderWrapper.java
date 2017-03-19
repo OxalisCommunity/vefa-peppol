@@ -177,7 +177,8 @@ public class XMLStreamReaderWrapper implements XMLStreamReader {
     }
 
     @Override
-    public int getTextCharacters(int sourceStart, char[] target, int targetStart, int length) throws XMLStreamException {
+    public int getTextCharacters(int sourceStart, char[] target, int targetStart, int length)
+            throws XMLStreamException {
         return reader.getTextCharacters(sourceStart, target, targetStart, length);
     }
 

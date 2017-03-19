@@ -99,10 +99,12 @@ public class TestResources {
 
         } catch (MessagingException e) {
             throw new IllegalStateException(
-                    String.format("Unable to load mime message from resource %s class path: %s", resourceName, e.getMessage()), e);
+                    String.format("Unable to load mime message from resource %s class path: %s",
+                            resourceName, e.getMessage()), e);
         } catch (IOException e) {
             throw new IllegalStateException(
-                    String.format("Unable to write contents of mime message to byte array %s", e.getMessage()), e);
+                    String.format("Unable to write contents of mime message to byte array %s",
+                            e.getMessage()), e);
         }
 
         return baos.toByteArray();
@@ -127,7 +129,8 @@ public class TestResources {
             throw new IllegalStateException("Unable to create KeyStore instance ", e);
         }
         try {
-            keyStore.load(TestResources.class.getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
+            keyStore.load(
+                    TestResources.class.getResourceAsStream("/keystore-self-signed.jks"), "changeit".toCharArray());
         } catch (IOException | NoSuchAlgorithmException | CertificateException e) {
             throw new IllegalStateException("Unable to load data into keystore from 'keystore-self-signed.jks'", e);
         }
@@ -139,7 +142,8 @@ public class TestResources {
         KeyStore localKeyStore = getKeystore();
         KeyStore.PrivateKeyEntry privateKeyEntry;
         try {
-            privateKeyEntry = (KeyStore.PrivateKeyEntry) localKeyStore.getEntry("self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
+            privateKeyEntry = (KeyStore.PrivateKeyEntry) localKeyStore.getEntry(
+                    "self-signed", new KeyStore.PasswordProtection("changeit".toCharArray()));
         } catch (NoSuchAlgorithmException | UnrecoverableEntryException | KeyStoreException e) {
             throw new IllegalStateException("Unable to load private key entry with alias 'self-signed'", e);
         }
@@ -172,6 +176,5 @@ public class TestResources {
 
 
         return builder.buildRemEvidenceInstance(privateKey);
-
     }
 }

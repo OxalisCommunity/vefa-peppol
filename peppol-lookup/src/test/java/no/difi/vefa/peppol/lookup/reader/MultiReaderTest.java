@@ -46,8 +46,8 @@ public class MultiReaderTest {
 
     @Test
     public void busdoxDocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
-                new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -57,8 +57,8 @@ public class MultiReaderTest {
 
     @Test
     public void bdxr201407DocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
-                new FetcherResponse(getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -68,8 +68,8 @@ public class MultiReaderTest {
 
     @Test
     public void bdxr201605DocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(
-                new FetcherResponse(getClass().getResourceAsStream("/bdxr201605-servicegroup-9908-991825827.xml"), null));
+        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/bdxr201605-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
 
@@ -161,8 +161,8 @@ public class MultiReaderTest {
 
     @Test
     public void busdoxServiceGroup() throws Exception {
-        List<DocumentTypeIdentifier> identifiers = reader.parseDocumentIdentifiers(
-                new FetcherResponse(getClass().getResourceAsStream("/busdox-servicegroup-9915-setcce-test.xml"), null));
+        List<DocumentTypeIdentifier> identifiers = reader.parseDocumentIdentifiers(new FetcherResponse(
+                getClass().getResourceAsStream("/busdox-servicegroup-9915-setcce-test.xml"), null));
         assertEquals(identifiers.size(), 1);
     }
 }

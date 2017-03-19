@@ -44,7 +44,8 @@ public class DifiCertificateValidator implements CertificateValidator {
         this.mode = mode;
 
         try {
-            validator = ValidatorLoader.newInstance().build(getClass().getResourceAsStream(mode.getString("security.pki")));
+            validator = ValidatorLoader.newInstance().build(
+                    getClass().getResourceAsStream(mode.getString("security.pki")));
         } catch (ValidatorParsingException e) {
             throw new PeppolLoadingException("Unable to initiate PKI.", e);
         }

@@ -98,7 +98,8 @@ public class RemEvidenceServiceTest {
                 .documentTypeId(TestResources.DOC_TYPE_ID)
                 .instanceIdentifier(TestResources.INSTANCE_IDENTIFIER)
                 .payloadDigest("ThisIsASHA256Digest".getBytes())
-                .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2, "Jabla jabla fake MDN".getBytes());
+                .protocolSpecificEvidence(TransmissionRole.C_3, TransportProtocol.AS2,
+                        "Jabla jabla fake MDN".getBytes());
 
         // Signs and builds the REMEvidenceType instance
         SignedRemEvidence signedRemEvidence = builder.buildRemEvidenceInstance(privateKey);
@@ -109,3 +110,4 @@ public class RemEvidenceServiceTest {
         XmldsigVerifier.verify(signedRemEvidence.getDocument());
     }
 }
+

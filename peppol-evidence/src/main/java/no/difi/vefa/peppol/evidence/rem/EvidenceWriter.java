@@ -132,12 +132,8 @@ public class EvidenceWriter {
             peppolRemExtension.setTransmissionProtocol(evidence.getTransportProtocol().getIdentifier());
             peppolRemExtension.setTransmissionRole(evidence.getTransmissionRole());
 
-            for (Receipt receipt : evidence.getOriginalReceipts()) {
-                OriginalReceiptType originalReceiptType = new OriginalReceiptType();
-                originalReceiptType.setType(receipt.getType());
-                originalReceiptType.setValue(receipt.getValue());
-                peppolRemExtension.getOriginalReceipt().add(originalReceiptType);
-            }
+            for (Receipt receipt : evidence.getOriginalReceipts())
+                peppolRemExtension.getOriginalReceipt().add(convert(receipt));
 
             ExtensionType extensionType = new ExtensionType();
             extensionType.getContent().add(peppolRemExtension);
@@ -146,6 +142,13 @@ public class EvidenceWriter {
 
         if (extensionsListType.getExtension().size() > 0)
             remEvidence.setExtensions(extensionsListType);
+    }
+
+    private OriginalReceiptType convert(Receipt receipt) {
+        OriginalReceiptType originalReceiptType = new OriginalReceiptType();
+        originalReceiptType.setType(receipt.getType());
+        originalReceiptType.setValue(receipt.getValue());
+        return originalReceiptType;
     }
 
     private void write(final Result result) throws RemEvidenceException {

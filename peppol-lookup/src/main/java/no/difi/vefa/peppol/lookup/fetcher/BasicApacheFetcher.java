@@ -69,8 +69,8 @@ public class BasicApacheFetcher extends AbstractFetcher {
                     case 404:
                         throw new LookupException("Not supported.");
                     default:
-                        throw new LookupException(
-                                String.format("Received code %s for lookup.", response.getStatusLine().getStatusCode()));
+                        throw new LookupException(String.format(
+                                "Received code %s for lookup.", response.getStatusLine().getStatusCode()));
                 }
             }
         } catch (SocketTimeoutException | SocketException | UnknownHostException e) {

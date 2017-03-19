@@ -75,7 +75,8 @@ public class TestResourcesTest {
         // Headers are not part of the MIME message itself, the are however part of the MimeMessage object:
         //
         // MIME-Version: 1.0
-        // Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-1; boundary="----=_Part_34_426016548.1445612302735"
+        // Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-1;
+        // boundary="----=_Part_34_426016548.1445612302735"
         assertEquals(counter, mimeMessage.getSize());
 
         // Should contain the complete content type with parameters

@@ -59,8 +59,8 @@ public class RemEvidenceBuilder {
     }
 
     /**
-     * Spec says that multiple event reasons may be added in theory, however the details for each concrete instance indicates
-     * a cardinality of 0..1
+     * Spec says that multiple event reasons may be added in theory, however the details for each
+     * concrete instance indicates a cardinality of 0..1
      */
     public RemEvidenceBuilder eventReason(EventReason eventReason) {
         evidence = evidence.eventReason(eventReason);
@@ -118,7 +118,9 @@ public class RemEvidenceBuilder {
         return this;
     }
 
-    public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole, TransportProtocol transportProtocol, byte[] protocolSpecificBytes) {
+    public RemEvidenceBuilder protocolSpecificEvidence(TransmissionRole transmissionRole,
+                                                       TransportProtocol transportProtocol,
+                                                       byte[] protocolSpecificBytes) {
         evidence = evidence
                 .transmissionRole(transmissionRole)
                 .transportProtocol(transportProtocol)

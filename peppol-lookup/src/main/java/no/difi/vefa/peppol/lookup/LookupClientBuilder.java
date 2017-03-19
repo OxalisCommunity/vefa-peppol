@@ -122,6 +122,7 @@ public class LookupClientBuilder {
         if (metadataReader == null)
             reader(mode.initiate("lookup.reader.class", MetadataReader.class));
 
-        return new LookupClient(metadataLocator, metadataProvider, metadataFetcher, metadataReader, certificateValidator);
+        return new LookupClient(metadataLocator, metadataProvider,
+                metadataFetcher, metadataReader, certificateValidator);
     }
 }

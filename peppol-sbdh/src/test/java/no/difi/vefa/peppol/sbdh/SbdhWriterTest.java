@@ -27,7 +27,6 @@ import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
-import javax.xml.stream.XMLStreamReader;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.OutputStream;
 import java.util.Date;
@@ -38,8 +37,10 @@ public class SbdhWriterTest {
             .sender(ParticipantIdentifier.of("9908:987654325"))
             .receiver(ParticipantIdentifier.of("9908:123456785"))
             .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"))
-            .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
-                    "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0:#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
+            .documentType(DocumentTypeIdentifier.of(
+                    "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
+                            "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
+                            ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
             .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
             .creationTimestamp(new Date())
             .identifier(InstanceIdentifier.generateUUID());

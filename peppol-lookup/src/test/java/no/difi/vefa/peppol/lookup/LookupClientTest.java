@@ -30,7 +30,6 @@ import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -78,7 +77,7 @@ public class LookupClientTest {
                         .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0")),
                 TransportProfile.AS2_1_0);
 
-        Assert.assertNotNull(endpoint);
+        assertNotNull(endpoint);
     }
 
     @Test

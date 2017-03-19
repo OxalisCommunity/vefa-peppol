@@ -42,7 +42,7 @@ public class ModeDetector {
         Config config = ConfigFactory.load();
 
         for (String token : config.getObject("mode").keySet()) {
-            if (!token.equals("default")) {
+            if (!"default".equals(token)) {
                 try {
                     Mode mode = Mode.of(config, token);
                     mode.initiate("security.validator.class", CertificateValidator.class)

@@ -143,9 +143,9 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
         if (date == null)
             return null;
 
-        return DATATYPE_FACTORY.newXMLGregorianCalendar(new GregorianCalendar() {{
-            setTime(date);
-        }});
+        GregorianCalendar gregorianCalendar = new GregorianCalendar();
+        gregorianCalendar.setTime(date);
+        return DATATYPE_FACTORY.newXMLGregorianCalendar(gregorianCalendar);
     }
 
     private ServiceMetadataReferenceType convertRef(ParticipantIdentifier participantIdentifier,

@@ -284,7 +284,7 @@ public class Evidence implements Serializable {
         return evidence;
     }
 
-    boolean hasPeppolExtensionValues() {
+    protected boolean hasPeppolExtensionValues() {
         return (transmissionRole != null || transportProtocol != null || originalReceipts.size() > 0);
     }
 

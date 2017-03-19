@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.lookup.reader;
 
+import com.google.common.collect.Lists;
 import no.difi.commons.busdox.jaxb.smp.*;
 import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.api.PotentiallySigned;
@@ -131,9 +132,9 @@ public class BusdoxReader implements MetadataReader {
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
 
-            List<ProcessMetadata<Endpoint>> processMetadatas = new ArrayList<>();
+            List<ProcessMetadata<Endpoint>> processMetadatas = Lists.newArrayList();
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
-                List<Endpoint> endpoints = new ArrayList<>();
+                List<Endpoint> endpoints = Lists.newArrayList();
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
                     endpoints.add(Endpoint.of(
                             TransportProfile.of(endpointType.getTransportProfile()),

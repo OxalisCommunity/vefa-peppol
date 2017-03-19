@@ -38,16 +38,16 @@ public class SbdReaderTest {
     public void simpleBinary() throws Exception {
         byte[] document = ByteStreams.toByteArray(getClass().getResourceAsStream("/valid-t10.xml"));
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-        SbdWriter sbdWriter = SbdWriter.newInstance(byteArrayOutputStream, SbdWriterTest.header);
+        SbdWriter sbdWriter = SbdWriter.newInstance(baos, SbdWriterTest.header);
         try (InputStream inputStream = new ByteArrayInputStream(document);
              OutputStream outputStream = sbdWriter.binaryWriter("application/xml")) {
             ByteStreams.copy(inputStream, outputStream);
         }
         sbdWriter.close();
 
-        try (SbdReader sbdReader = SbdReader.newInstance(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()))) {
+        try (SbdReader sbdReader = SbdReader.newInstance(new ByteArrayInputStream(baos.toByteArray()))) {
 
             Assert.assertEquals(sbdReader.getHeader(), SbdWriterTest.header);
             Assert.assertEquals(sbdReader.getType(), SbdReader.Type.BINARY);
@@ -72,6 +72,7 @@ public class SbdReaderTest {
     @Test(expectedExceptions = SbdhException.class)
     public void exceptionOnNotSBDH() throws Exception {
         SbdReader.newInstance(new ByteArrayInputStream(String.format(
-                "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>", Ns.SBDH).getBytes()));
+                "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>",
+                Ns.SBDH).getBytes()));
     }
 }

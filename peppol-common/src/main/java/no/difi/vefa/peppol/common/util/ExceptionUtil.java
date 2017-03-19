@@ -52,7 +52,8 @@ public class ExceptionUtil {
         }
     }
 
-    private static <E extends Exception> E prepareException(Class<E> cls, String message, Throwable throwable) throws E {
+    private static <E extends Exception> E prepareException(Class<E> cls, String message, Throwable throwable)
+            throws E {
         try {
             return cls.getConstructor(String.class, Throwable.class).newInstance(message, throwable);
         } catch (Exception e) {

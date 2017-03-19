@@ -41,7 +41,8 @@ public class XMLBinaryOutputStream extends OutputStream {
 
     private int counter;
 
-    public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType, String encoding) throws XMLStreamException {
+    public XMLBinaryOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType, String encoding)
+            throws XMLStreamException {
         this.xmlStreamWriter = xmlStreamWriter;
 
         xmlStreamWriter.writeStartElement("", Ns.QNAME_BINARY_CONTENT.getLocalPart(), Ns.EXTENSION);
