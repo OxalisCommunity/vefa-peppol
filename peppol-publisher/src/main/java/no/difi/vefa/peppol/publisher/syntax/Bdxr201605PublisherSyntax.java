@@ -1,18 +1,27 @@
 package no.difi.vefa.peppol.publisher.syntax;
 
 import no.difi.commons.bdx.jaxb.smp._2016._05.*;
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.common.api.PerformResult;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.ProcessIdentifier;
+import no.difi.vefa.peppol.common.model.ProcessMetadata;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.publisher.annotation.Syntax;
 import no.difi.vefa.peppol.publisher.api.PublisherSyntax;
+import no.difi.vefa.peppol.publisher.model.PublisherEndpoint;
+import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 import java.net.URI;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * @author erlend
@@ -20,20 +29,26 @@ import java.net.URI;
 @Syntax({"bdxr", "bdxr-201605"})
 public class Bdxr201605PublisherSyntax implements PublisherSyntax {
 
+    private static final DatatypeFactory DATATYPE_FACTORY =
+            ExceptionUtil.perform(IllegalStateException.class, new PerformResult<DatatypeFactory>() {
+                @Override
+                public DatatypeFactory action() throws Exception {
+                    return DatatypeFactory.newInstance();
+                }
+            });
+
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
-    private static JAXBContext jaxbContext;
+    private static final JAXBContext JAXB_CONTEXT =
+            ExceptionUtil.perform(IllegalStateException.class, new PerformResult<JAXBContext>() {
+                @Override
+                public JAXBContext action() throws Exception {
+                    return JAXBContext.newInstance(ServiceGroupType.class,
+                            ServiceMetadataType.class, SignedServiceMetadataType.class);
+                }
+            });
 
-    static {
-        ExceptionUtil.perform(IllegalStateException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                jaxbContext = JAXBContext.newInstance(ServiceGroupType.class,
-                        ServiceMetadataType.class, SignedServiceMetadataType.class);
-            }
-        });
-    }
-
+    @SuppressWarnings("all")
     @Override
     public JAXBElement<?> of(ServiceGroup serviceGroup, URI rootUri) {
         ServiceGroupType serviceGroupType = new ServiceGroupType();
@@ -49,8 +64,9 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
         return OBJECT_FACTORY.createServiceGroup(serviceGroupType);
     }
 
+    @SuppressWarnings("all")
     @Override
-    public JAXBElement<?> of(ServiceMetadata serviceMetadata, boolean forSigning) {
+    public JAXBElement<?> of(PublisherServiceMetadata serviceMetadata, boolean forSigning) {
         ServiceInformationType serviceInformationType = new ServiceInformationType();
         serviceInformationType.setParticipantIdentifier(convert(serviceMetadata.getParticipantIdentifier()));
         serviceInformationType.setDocumentIdentifier(convert(serviceMetadata.getDocumentTypeIdentifier()));
@@ -73,7 +89,7 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
 
     @Override
     public Marshaller getMarshaller() throws JAXBException {
-        return jaxbContext.createMarshaller();
+        return JAXB_CONTEXT.createMarshaller();
     }
 
     private ParticipantIdentifierType convert(ParticipantIdentifier participantIdentifier) {
@@ -93,29 +109,43 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
     private DocumentIdentifierType convert(DocumentTypeIdentifier documentTypeIdentifier) {
         DocumentIdentifierType documentIdentifierType = new DocumentIdentifierType();
         documentIdentifierType.setScheme(documentTypeIdentifier.getScheme().getValue());
-        documentIdentifierType.setValue(documentIdentifierType.getValue());
+        documentIdentifierType.setValue(documentTypeIdentifier.getIdentifier());
         return documentIdentifierType;
     }
 
-    private ProcessType convert(ProcessMetadata processMetadata) {
+    @SuppressWarnings("all")
+    private ProcessType convert(ProcessMetadata<PublisherEndpoint> processMetadata) {
         ProcessType processType = new ProcessType();
         processType.setProcessIdentifier(convert(processMetadata.getProcessIdentifier()));
         processType.setServiceEndpointList(new ServiceEndpointList());
 
-        for (Endpoint endpoint : processMetadata.getEndpoints())
+        for (PublisherEndpoint endpoint : processMetadata.getEndpoints())
             processType.getServiceEndpointList().getEndpoint().add(convert(endpoint));
 
         return processType;
     }
 
-    private EndpointType convert(Endpoint endpoint) {
+    private EndpointType convert(PublisherEndpoint endpoint) {
         EndpointType endpointType = new EndpointType();
         endpointType.setTransportProfile(endpoint.getTransportProfile().getValue());
         endpointType.setRequireBusinessLevelSignature(false);
         endpointType.setEndpointURI(endpoint.getAddress().toString());
-        // endpointType.setCertificate(endpoint.getCertificate().getEncoded());
+        endpointType.setServiceActivationDate(convert(endpoint.getActivationDate()));
+        endpointType.setServiceExpirationDate(convert(endpoint.getExpirationDate()));
+        endpointType.setCertificate(endpoint.getCertificate());
+        endpointType.setServiceDescription(endpoint.getDescription());
+        endpointType.setTechnicalContactUrl(endpoint.getTechnicalContact());
 
         return endpointType;
+    }
+
+    private XMLGregorianCalendar convert(final Date date) {
+        if (date == null)
+            return null;
+
+        return DATATYPE_FACTORY.newXMLGregorianCalendar(new GregorianCalendar() {{
+            setTime(date);
+        }});
     }
 
     private ServiceMetadataReferenceType convertRef(ParticipantIdentifier participantIdentifier,

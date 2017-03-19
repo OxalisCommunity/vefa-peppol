@@ -1,6 +1,11 @@
 package no.difi.vefa.peppol.publisher.builder;
 
-import no.difi.vefa.peppol.common.model.*;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.ProcessIdentifier;
+import no.difi.vefa.peppol.common.model.ProcessMetadata;
+import no.difi.vefa.peppol.publisher.model.PublisherEndpoint;
+import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +19,7 @@ public class ServiceMetadataBuilder {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessMetadata> processes = new ArrayList<>();
+    private List<ProcessMetadata<PublisherEndpoint>> processes = new ArrayList<>();
 
     public static ServiceMetadataBuilder newInstance() {
         return new ServiceMetadataBuilder();
@@ -34,12 +39,12 @@ public class ServiceMetadataBuilder {
         return this;
     }
 
-    public ServiceMetadataBuilder add(ProcessIdentifier processIdentifier, Endpoint... endpoint) {
-        this.processes.add(ProcessMetadata.of(processIdentifier, endpoint));
+    public ServiceMetadataBuilder add(ProcessIdentifier processIdentifier, PublisherEndpoint... endpoints) {
+        this.processes.add(ProcessMetadata.of(processIdentifier, endpoints));
         return this;
     }
 
-    public ServiceMetadata build() {
-        return ServiceMetadata.of(participantIdentifier, documentTypeIdentifier, processes);
+    public PublisherServiceMetadata build() {
+        return new PublisherServiceMetadata(participantIdentifier, documentTypeIdentifier, processes);
     }
 }

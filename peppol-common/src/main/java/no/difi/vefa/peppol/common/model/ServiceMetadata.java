@@ -22,53 +22,21 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
-
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
 
-public class ServiceMetadata implements Serializable {
+public class ServiceMetadata extends AbstractServiceMetadata<Endpoint> implements Serializable {
 
     private static final long serialVersionUID = -7523336374349545534L;
 
-    private ParticipantIdentifier participantIdentifier;
-
-    private DocumentTypeIdentifier documentTypeIdentifier;
-
-    private List<ProcessMetadata> processes;
-
     public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
-                                     DocumentTypeIdentifier documentTypeIdentifier, List<ProcessMetadata> processes) {
+                                     DocumentTypeIdentifier documentTypeIdentifier,
+                                     List<ProcessMetadata<Endpoint>> processes) {
         return new ServiceMetadata(participantIdentifier, documentTypeIdentifier, processes);
     }
 
     private ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
-                            List<ProcessMetadata> processes) {
-        this.participantIdentifier = participantIdentifier;
-        this.documentTypeIdentifier = documentTypeIdentifier;
-        this.processes = processes;
-    }
-
-    public ParticipantIdentifier getParticipantIdentifier() {
-        return participantIdentifier;
-    }
-
-    public DocumentTypeIdentifier getDocumentTypeIdentifier() {
-        return documentTypeIdentifier;
-    }
-
-    public List<ProcessMetadata> getProcesses() {
-        return Collections.unmodifiableList(processes);
-    }
-
-    public Endpoint getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
-            throws EndpointNotFoundException {
-        for (ProcessMetadata processMetadata : processes)
-            if (processMetadata.getProcessIdentifier().equals(processIdentifier))
-                return processMetadata.getEndpoint(transportProfiles);
-
-        throw new EndpointNotFoundException(
-                String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));
+                            List<ProcessMetadata<Endpoint>> processes) {
+        super(participantIdentifier, documentTypeIdentifier, processes);
     }
 }

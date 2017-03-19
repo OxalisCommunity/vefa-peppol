@@ -2,12 +2,11 @@ package no.difi.vefa.peppol.publisher;
 
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.ServiceMetadata;
-import no.difi.vefa.peppol.publisher.annotation.Syntax;
 import no.difi.vefa.peppol.publisher.api.PublisherSyntax;
 import no.difi.vefa.peppol.publisher.api.ServiceGroupProvider;
 import no.difi.vefa.peppol.publisher.api.ServiceMetadataProvider;
 import no.difi.vefa.peppol.publisher.lang.PublisherException;
+import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import org.w3c.dom.Document;
@@ -18,9 +17,6 @@ import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ServiceLoader;
 
 /**
  * @author erlend
@@ -31,23 +27,18 @@ public class PublisherService extends HttpServlet {
 
     private ServiceMetadataProvider serviceMetadataProvider;
 
+    private PublisherSyntaxProvider publisherSyntaxProvider;
+
     private Signer signer;
-
-    private Map<String, PublisherSyntax> syntaxMap = new HashMap<>();
-
-    private String defaultSyntax;
 
     public PublisherService(ServiceGroupProvider serviceGroupProvider,
                             ServiceMetadataProvider serviceMetadataProvider,
-                            Signer signer, String defaultSyntax) {
+                            PublisherSyntaxProvider publisherSyntaxProvider,
+                            Signer signer) {
         this.serviceGroupProvider = serviceGroupProvider;
         this.serviceMetadataProvider = serviceMetadataProvider;
+        this.publisherSyntaxProvider = publisherSyntaxProvider;
         this.signer = signer;
-        this.defaultSyntax = defaultSyntax;
-
-        for (PublisherSyntax syntax : ServiceLoader.load(PublisherSyntax.class))
-            for (String syntaxKey : syntax.getClass().getAnnotation(Syntax.class).value())
-                syntaxMap.put(syntaxKey, syntax);
     }
 
     public void serviceGroup(OutputStream outputStream, String syntax, URI rootUri,
@@ -55,7 +46,7 @@ public class PublisherService extends HttpServlet {
             throws IOException, JAXBException, PublisherException {
         ServiceGroup serviceGroup = serviceGroupProvider.get(participantIdentifier);
 
-        PublisherSyntax publisherSyntax = getSyntax(syntax);
+        PublisherSyntax publisherSyntax = publisherSyntaxProvider.getSyntax(syntax);
         Marshaller marshaller = publisherSyntax.getMarshaller();
         marshaller.marshal(publisherSyntax.of(serviceGroup, rootUri), outputStream);
     }
@@ -63,9 +54,10 @@ public class PublisherService extends HttpServlet {
     public void metadataProvider(OutputStream outputStream, String syntax, ParticipantIdentifier participantIdentifier,
                                  DocumentTypeIdentifier documentTypeIdentifier)
             throws IOException, JAXBException, PublisherException {
-        ServiceMetadata serviceMetadata = serviceMetadataProvider.get(participantIdentifier, documentTypeIdentifier);
+        PublisherServiceMetadata serviceMetadata =
+                serviceMetadataProvider.get(participantIdentifier, documentTypeIdentifier);
 
-        PublisherSyntax publisherSyntax = getSyntax(syntax);
+        PublisherSyntax publisherSyntax = publisherSyntaxProvider.getSyntax(syntax);
         Marshaller marshaller = publisherSyntax.getMarshaller();
 
         if (signer == null) {
@@ -75,12 +67,5 @@ public class PublisherService extends HttpServlet {
             marshaller.marshal(publisherSyntax.of(serviceMetadata, true), document);
             signer.sign(document, outputStream);
         }
-    }
-
-    protected PublisherSyntax getSyntax(String syntax) {
-        if (syntax != null && syntaxMap.containsKey(syntax))
-            return syntaxMap.get(syntax);
-
-        return syntaxMap.get(defaultSyntax);
     }
 }

@@ -125,6 +125,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Google Guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+
     </dependencies>
 
 

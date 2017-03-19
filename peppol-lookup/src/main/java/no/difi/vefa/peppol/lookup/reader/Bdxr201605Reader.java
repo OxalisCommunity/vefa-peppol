@@ -79,6 +79,7 @@ public class Bdxr201605Reader implements MetadataReader {
         });
     }
 
+    @SuppressWarnings("all")
     @Override
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
             throws LookupException {
@@ -108,6 +109,7 @@ public class Bdxr201605Reader implements MetadataReader {
         }
     }
 
+    @SuppressWarnings("all")
     @Override
     public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
@@ -126,7 +128,7 @@ public class Bdxr201605Reader implements MetadataReader {
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
 
-            List<ProcessMetadata> processMetadatas = new ArrayList<>();
+            List<ProcessMetadata<Endpoint>> processMetadatas = new ArrayList<>();
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
                 List<Endpoint> endpoints = new ArrayList<>();
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {

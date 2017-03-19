@@ -80,6 +80,7 @@ public class BusdoxReader implements MetadataReader {
         });
     }
 
+    @SuppressWarnings("all")
     @Override
     public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
             throws LookupException {
@@ -130,7 +131,7 @@ public class BusdoxReader implements MetadataReader {
 
             ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
 
-            List<ProcessMetadata> processMetadatas = new ArrayList<>();
+            List<ProcessMetadata<Endpoint>> processMetadatas = new ArrayList<>();
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
                 List<Endpoint> endpoints = new ArrayList<>();
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {

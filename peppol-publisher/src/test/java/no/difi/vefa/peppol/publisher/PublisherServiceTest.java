@@ -2,14 +2,17 @@ package no.difi.vefa.peppol.publisher;
 
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.ServiceMetadata;
+import no.difi.vefa.peppol.common.model.ProcessIdentifier;
+import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
 import no.difi.vefa.peppol.publisher.api.ServiceGroupProvider;
 import no.difi.vefa.peppol.publisher.api.ServiceMetadataProvider;
+import no.difi.vefa.peppol.publisher.builder.EndpointBuilder;
 import no.difi.vefa.peppol.publisher.builder.ServiceGroupBuilder;
 import no.difi.vefa.peppol.publisher.builder.ServiceMetadataBuilder;
+import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
 import org.mockito.Mockito;
 import org.testng.Assert;
@@ -19,6 +22,7 @@ import org.testng.annotations.Test;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,13 +35,17 @@ public class PublisherServiceTest {
                     "##urn:www.cenbii.eu:transaction:biitrns010:ver2.0" +
                     ":extended:urn:www.peppol.eu:bis:peppol4a:ver2.0::2.1");
 
+    private static final ProcessIdentifier PI_INVOICE = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver2.0");
+
 
     private ServiceGroupProvider serviceGroupProvider = Mockito.mock(ServiceGroupProvider.class);
 
     private ServiceMetadataProvider serviceMetadataProvider = Mockito.mock(ServiceMetadataProvider.class);
 
+    private PublisherSyntaxProvider publisherSyntaxProvider = new PublisherSyntaxProvider("bdxr");
+
     private PublisherService publisherService =
-            new PublisherService(serviceGroupProvider, serviceMetadataProvider, null, "bdxr");
+            new PublisherService(serviceGroupProvider, serviceMetadataProvider, publisherSyntaxProvider, null);
 
     private MetadataReader metadataReader = new MultiReader();
 
@@ -68,9 +76,16 @@ public class PublisherServiceTest {
 
     @Test
     public void simpleServiceMetadata() throws Exception {
-        ServiceMetadata serviceMetadata = ServiceMetadataBuilder.newInstance()
+        PublisherServiceMetadata serviceMetadata = ServiceMetadataBuilder.newInstance()
                 .participant(ParticipantIdentifier.of("9908:999888777"))
                 .documentTypeIdentifier(DTI_INVOICE)
+                .add(PI_INVOICE, EndpointBuilder.newInstance()
+                        .transportProfile(TransportProfile.AS2_1_0)
+                        .address(URI.create("http://localhost:8080/as2"))
+                        .activationDate(new Date())
+                        .expirationDate(new Date())
+                        .certificate("Test".getBytes())
+                        .build())
                 .build();
 
         Mockito.when(serviceMetadataProvider.get(
@@ -80,5 +95,7 @@ public class PublisherServiceTest {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         publisherService.metadataProvider(byteArrayOutputStream, null,
                 ParticipantIdentifier.of("9908:999888777"), DTI_INVOICE);
+
+        System.out.println(byteArrayOutputStream.toString());
     }
 }

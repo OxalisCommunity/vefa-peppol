@@ -51,8 +51,8 @@ public class ServiceMetadataTest {
                 Mockito.mock(X509Certificate.class)
         );
 
-        ProcessMetadata processMetadata1 = ProcessMetadata.of(ProcessIdentifier.of("Some:Process"), endpoint1, endpoint3);
-        ProcessMetadata processMetadata2 = ProcessMetadata.of(ProcessIdentifier.of("Other:Process"), endpoint2);
+        ProcessMetadata<Endpoint> processMetadata1 = ProcessMetadata.of(ProcessIdentifier.of("Some:Process"), endpoint1, endpoint3);
+        ProcessMetadata<Endpoint> processMetadata2 = ProcessMetadata.of(ProcessIdentifier.of("Other:Process"), endpoint2);
 
         ServiceMetadata serviceMetadata = ServiceMetadata.of(
                 ParticipantIdentifier.of("9908:991825827"),

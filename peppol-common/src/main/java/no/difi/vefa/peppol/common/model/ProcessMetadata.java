@@ -22,31 +22,32 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.SimpleEndpoint;
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 
 import java.io.Serializable;
 import java.util.*;
 
-public class ProcessMetadata implements Serializable {
+public class ProcessMetadata<T extends SimpleEndpoint> implements Serializable {
 
     private static final long serialVersionUID = -8684282659539348955L;
 
     private ProcessIdentifier processIdentifier;
 
-    private Map<TransportProfile, Endpoint> endpoints = new HashMap<>();
+    private Map<TransportProfile, T> endpoints = new HashMap<>();
 
-    public static ProcessMetadata of(ProcessIdentifier processIdentifier, Endpoint... endpoints) {
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(ProcessIdentifier processIdentifier, T... endpoints) {
         return of(processIdentifier, Arrays.asList(endpoints));
     }
 
-    public static ProcessMetadata of(ProcessIdentifier processIdentifier, List<Endpoint> endpoints) {
-        return new ProcessMetadata(processIdentifier, endpoints);
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(ProcessIdentifier processIdentifier, List<T> endpoints) {
+        return new ProcessMetadata<>(processIdentifier, endpoints);
     }
 
-    private ProcessMetadata(ProcessIdentifier processIdentifier, List<Endpoint> endpoints) {
+    private ProcessMetadata(ProcessIdentifier processIdentifier, List<T> endpoints) {
         this.processIdentifier = processIdentifier;
 
-        for (Endpoint endpoint : endpoints)
+        for (T endpoint : endpoints)
             this.endpoints.put(endpoint.getTransportProfile(), endpoint);
     }
 
@@ -58,11 +59,11 @@ public class ProcessMetadata implements Serializable {
         return new ArrayList<>(endpoints.keySet());
     }
 
-    public List<Endpoint> getEndpoints() {
+    public List<T> getEndpoints() {
         return new ArrayList<>(endpoints.values());
     }
 
-    public Endpoint getEndpoint(TransportProfile... transportProfiles) throws EndpointNotFoundException {
+    public T getEndpoint(TransportProfile... transportProfiles) throws EndpointNotFoundException {
         for (TransportProfile transportProfile : transportProfiles)
             if (endpoints.containsKey(transportProfile))
                 return endpoints.get(transportProfile);

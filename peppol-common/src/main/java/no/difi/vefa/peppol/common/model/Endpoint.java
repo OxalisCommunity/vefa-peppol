@@ -22,11 +22,13 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.SimpleEndpoint;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.security.cert.X509Certificate;
 
-public class Endpoint implements Serializable {
+public class Endpoint implements Serializable, SimpleEndpoint {
 
     private static final long serialVersionUID = 5892469135654700883L;
 
