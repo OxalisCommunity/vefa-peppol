@@ -30,4 +30,8 @@ public class PeppolParsingException extends PeppolException {
     public PeppolParsingException(String message) {
         super(message);
     }
+
+    public PeppolParsingException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }

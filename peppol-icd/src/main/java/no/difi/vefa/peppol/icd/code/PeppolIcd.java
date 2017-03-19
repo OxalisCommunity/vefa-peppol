@@ -25,7 +25,7 @@ package no.difi.vefa.peppol.icd.code;
 import no.difi.vefa.peppol.icd.api.Icd;
 import no.difi.vefa.peppol.common.model.Scheme;
 
-public enum Iso6523Icd implements Icd {
+public enum PeppolIcd implements Icd {
     FR_SIRENE("FR:SIRENE", "0002"),
     SE_ORGNR("SE:ORGNR", "0007"),
     FR_SIRET("FR:SIRET", "0009"),
@@ -45,7 +45,6 @@ public enum Iso6523Icd implements Icd {
     IT_VAT("IT:VAT", "9906"),
     IT_CF("IT:CF", "9907"),
     NO_ORGNR("NO:ORGNR", "9908"),
-    @Deprecated
     NO_VAT("NO:VAT", "9909"),
     HU_VAT("HU:VAT", "9910"),
     @Deprecated
@@ -101,9 +100,10 @@ public enum Iso6523Icd implements Icd {
     private static final Scheme SCHEME = Scheme.of("iso6523-actorid-upis");
 
     private final String identifier;
+
     private final String code;
 
-    Iso6523Icd(String identifier, String code) {
+    PeppolIcd(String identifier, String code) {
         this.identifier = identifier;
         this.code = code;
     }
@@ -124,7 +124,7 @@ public enum Iso6523Icd implements Icd {
     }
 
     public static Icd valueOfIcd(String icd) {
-        for (Iso6523Icd v : values())
+        for (PeppolIcd v : values())
             if (v.code.equals(icd))
                 return v;
 

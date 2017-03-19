@@ -28,11 +28,11 @@ public class InstanceType implements Serializable {
 
     private static final long serialVersionUID = -8577145245367335582L;
 
-    private String standard;
+    private final String standard;
 
-    private String type;
+    private final String type;
 
-    private String version;
+    private final String version;
 
     public static InstanceType of(String standard, String type, String version) {
         return new InstanceType(standard, type, version);

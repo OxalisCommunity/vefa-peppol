@@ -32,9 +32,9 @@ public class ProcessMetadata<T extends SimpleEndpoint> implements Serializable {
 
     private static final long serialVersionUID = -8684282659539348955L;
 
-    private ProcessIdentifier processIdentifier;
+    private final ProcessIdentifier processIdentifier;
 
-    private Map<TransportProfile, T> endpoints = new HashMap<>();
+    private final Map<TransportProfile, T> endpoints = new HashMap<>();
 
     public static <T extends SimpleEndpoint> ProcessMetadata<T> of(ProcessIdentifier processIdentifier, T... endpoints) {
         return of(processIdentifier, Arrays.asList(endpoints));

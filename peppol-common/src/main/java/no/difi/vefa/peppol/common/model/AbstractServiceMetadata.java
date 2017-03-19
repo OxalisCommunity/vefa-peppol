@@ -33,11 +33,11 @@ public abstract class AbstractServiceMetadata<T extends SimpleEndpoint> implemen
 
     private static final long serialVersionUID = -7523336374349545534L;
 
-    private ParticipantIdentifier participantIdentifier;
+    private final ParticipantIdentifier participantIdentifier;
 
-    private DocumentTypeIdentifier documentTypeIdentifier;
+    private final DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessMetadata<T>> processes;
+    private final List<ProcessMetadata<T>> processes;
 
     protected AbstractServiceMetadata(ParticipantIdentifier participantIdentifier,
                                       DocumentTypeIdentifier documentTypeIdentifier,

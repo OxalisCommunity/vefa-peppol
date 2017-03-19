@@ -24,7 +24,7 @@ package no.difi.vefa.peppol.common.model;
 
 import java.io.Serializable;
 
-public class TransportProfile implements Serializable {
+public class TransportProfile extends AbstractSimpleIdentifier implements Serializable {
 
     private static final long serialVersionUID = -8215053834194901976L;
 
@@ -34,38 +34,16 @@ public class TransportProfile implements Serializable {
 
     public static final TransportProfile AS4 = TransportProfile.of("bdxr-transport-ebms3-as4-v1p0");
 
-    private String value;
-
     public static TransportProfile of(String value) {
         return new TransportProfile(value);
     }
 
     private TransportProfile(String value) {
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
+        super(value);
     }
 
     @Override
     public String toString() {
         return "TransportProfile{" + value + '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        TransportProfile that = (TransportProfile) o;
-
-        return value.equals(that.value);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
     }
 }

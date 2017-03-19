@@ -30,9 +30,9 @@ import no.difi.vefa.peppol.common.util.ModelUtils;
  */
 public abstract class AbstractQualifiedIdentifier implements QualifiedIdentifier {
 
-    protected Scheme scheme;
+    protected final Scheme scheme;
 
-    protected String identifier;
+    protected final String identifier;
 
     public AbstractQualifiedIdentifier(String identifier, Scheme scheme) {
         this.scheme = scheme;

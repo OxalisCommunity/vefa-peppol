@@ -30,7 +30,7 @@ public class Unsigned<T> implements PotentiallySigned<T>, Serializable {
 
     private static final long serialVersionUID = 2731552303222094156L;
 
-    private T content;
+    private final T content;
 
     public static <T> Unsigned<T> of(T content) {
         return new Unsigned<>(content);

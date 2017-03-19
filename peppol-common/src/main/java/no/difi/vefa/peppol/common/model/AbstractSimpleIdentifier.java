@@ -26,7 +26,7 @@ import no.difi.vefa.peppol.common.api.SimpleIdentifier;
 
 public abstract class AbstractSimpleIdentifier implements SimpleIdentifier {
 
-    protected String value;
+    protected final String value;
 
     protected AbstractSimpleIdentifier(String value) {
         this.value = value;

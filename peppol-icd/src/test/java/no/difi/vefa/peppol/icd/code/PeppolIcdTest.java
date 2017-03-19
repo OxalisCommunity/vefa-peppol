@@ -25,21 +25,21 @@ package no.difi.vefa.peppol.icd.code;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class Iso6523IcdTest {
+public class PeppolIcdTest {
 
     @Test
     public void simple() {
-        Assert.assertEquals(Iso6523Icd.NO_ORGNR.getIdentifier(), "NO:ORGNR");
-        Assert.assertEquals(Iso6523Icd.NO_ORGNR.getCode(), "9908");
+        Assert.assertEquals(PeppolIcd.NO_ORGNR.getIdentifier(), "NO:ORGNR");
+        Assert.assertEquals(PeppolIcd.NO_ORGNR.getCode(), "9908");
 
-        Assert.assertNotNull(Iso6523Icd.valueOf("NO_ORGNR"));
-        Assert.assertNotNull(Iso6523Icd.valueOf("NO_ORGNR").getScheme());
+        Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR"));
+        Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR").getScheme());
 
-        Assert.assertEquals(Iso6523Icd.valueOfIcd("9908"), Iso6523Icd.NO_ORGNR);
+        Assert.assertEquals(PeppolIcd.valueOfIcd("9908"), PeppolIcd.NO_ORGNR);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void exceptionOnUnknownCode() {
-        Iso6523Icd.valueOfIcd("invalid");
+        PeppolIcd.valueOfIcd("invalid");
     }
 }

@@ -32,11 +32,11 @@ public class Endpoint implements Serializable, SimpleEndpoint {
 
     private static final long serialVersionUID = 5892469135654700883L;
 
-    private TransportProfile transportProfile;
+    private final TransportProfile transportProfile;
 
-    private URI address;
+    private final URI address;
 
-    private X509Certificate certificate;
+    private final X509Certificate certificate;
 
     public static Endpoint of(TransportProfile transportProfile, URI address, X509Certificate certificate) {
         return new Endpoint(transportProfile, address, certificate);

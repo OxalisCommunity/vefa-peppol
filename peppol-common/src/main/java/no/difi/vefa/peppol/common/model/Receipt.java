@@ -29,9 +29,9 @@ public class Receipt implements Serializable {
 
     private static final long serialVersionUID = -2334768925814974368L;
 
-    private String type;
+    private final String type;
 
-    private byte[] value;
+    private final byte[] value;
 
     public static Receipt of(String type, byte[] value) {
         return new Receipt(type, value);
