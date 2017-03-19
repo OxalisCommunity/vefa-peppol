@@ -20,36 +20,17 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common.util;
+package no.difi.vefa.peppol.common.lang;
 
-import org.testng.Assert;
+import org.mockito.Mockito;
 import org.testng.annotations.Test;
 
-public class ModelUtilsTest {
+public class PeppolParsingExceptionTest {
 
     @Test
-    public void simpleConstructor() {
-        new ModelUtils();
-    }
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void simpleEncoderNullPointer() {
-        ModelUtils.urlencode(null, "Some", "values");
-    }
-
-    @Test(expectedExceptions = IllegalStateException.class)
-    public void simpleDecoderNullPointer() {
-        ModelUtils.urldecode(null);
-    }
-
-    @Test
-    public void simple() throws Exception {
-        String value = "9908:991825827";
-
-        String encoded = ModelUtils.urlencode(value);
-        Assert.assertNotEquals(encoded, value);
-
-        String decoded = ModelUtils.urldecode(encoded);
-        Assert.assertEquals(decoded, value);
+    @SuppressWarnings("all")
+    public void simpleConstructors() {
+        new PeppolParsingException("Message");
+        new PeppolParsingException("Message", Mockito.mock(Throwable.class));
     }
 }

@@ -22,6 +22,8 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
@@ -50,4 +52,21 @@ public class ParticipantIdentifierTest {
 
         assertFalse(participantIdentifier.equals(ParticipantIdentifier.of("9908:991825827", Scheme.of("Other"))));
     }
+
+    @Test
+    public void simpleParse() throws Exception {
+        ParticipantIdentifier participantIdentifier = ParticipantIdentifier
+                .parse("qualifier::identifier");
+
+        Assert.assertEquals(participantIdentifier.getIdentifier(), "identifier");
+        Assert.assertEquals(participantIdentifier.getScheme().getValue(), "qualifier");
+
+        try {
+            ParticipantIdentifier.parse("value");
+            Assert.fail();
+        } catch (PeppolParsingException e) {
+            // Valid!
+        }
+    }
+
 }

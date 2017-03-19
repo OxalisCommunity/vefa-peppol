@@ -38,6 +38,8 @@ public class ProcessMetadataTest {
 
         ProcessMetadata processMetadata = ProcessMetadata.of(processIdentifier1, endpoint1);
 
+        Assert.assertEquals(processMetadata.getTransportProfiles().size(), 1);
+
         Assert.assertNotNull(processMetadata.hashCode());
         Assert.assertNotNull(processMetadata.toString());
 

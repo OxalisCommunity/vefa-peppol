@@ -22,6 +22,7 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -44,8 +45,17 @@ public class ProcessIdentifierTest {
 
     @Test
     public void simpleParse() throws Exception {
-        ProcessIdentifier processIdentifier = ProcessIdentifier.parse("some::process");
-        Assert.assertEquals(processIdentifier.getIdentifier(), "process");
-        Assert.assertEquals(processIdentifier.getScheme().getValue(), "some");
+        ProcessIdentifier processIdentifier = ProcessIdentifier
+                .parse("qualifier::identifier");
+
+        Assert.assertEquals(processIdentifier.getIdentifier(), "identifier");
+        Assert.assertEquals(processIdentifier.getScheme().getValue(), "qualifier");
+
+        try {
+            ProcessIdentifier.parse("value");
+            Assert.fail();
+        } catch (PeppolParsingException e) {
+            // Valid!
+        }
     }
 }

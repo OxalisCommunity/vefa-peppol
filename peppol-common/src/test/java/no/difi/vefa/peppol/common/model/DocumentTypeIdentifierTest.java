@@ -22,6 +22,8 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import no.difi.vefa.peppol.common.lang.PeppolParsingException;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
@@ -46,5 +48,21 @@ public class DocumentTypeIdentifierTest {
         assertTrue(documentTypeIdentifier.equals(documentTypeIdentifier));
         assertFalse(documentTypeIdentifier.equals(documentIdentifier));
         assertFalse(documentTypeIdentifier.equals(null));
+    }
+
+    @Test
+    public void simpleParse() throws Exception {
+        DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier
+                .parse("qualifier::identifier");
+
+        Assert.assertEquals(documentTypeIdentifier.getIdentifier(), "identifier");
+        Assert.assertEquals(documentTypeIdentifier.getScheme().getValue(), "qualifier");
+
+        try {
+            DocumentTypeIdentifier.parse("value");
+            Assert.fail();
+        } catch (PeppolParsingException e) {
+            // Valid!
+        }
     }
 }

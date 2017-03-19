@@ -60,6 +60,8 @@ public class ServiceMetadataTest {
                 Arrays.asList(processMetadata1, processMetadata2)
         );
 
+        Assert.assertEquals(serviceMetadata.getProcesses().size(), 2);
+
         Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
         Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
 

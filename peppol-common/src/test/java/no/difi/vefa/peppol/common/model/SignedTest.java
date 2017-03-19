@@ -61,4 +61,16 @@ public class SignedTest {
         Assert.assertTrue(signed.toString().contains("1"));
     }
 
+    @Test
+    public void simpleSubset() {
+        X509Certificate certificate = Mockito.mock(X509Certificate.class);
+
+        Signed<String> signed = Signed.of("Text", certificate);
+
+        Assert.assertEquals(signed.getCertificate(), certificate);
+
+        signed = signed.ofSubset(signed.getContent().substring(1));
+
+        Assert.assertEquals(signed.getCertificate(), certificate);
+    }
 }

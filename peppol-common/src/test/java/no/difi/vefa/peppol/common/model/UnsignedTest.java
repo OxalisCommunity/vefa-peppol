@@ -39,6 +39,9 @@ public class UnsignedTest {
         Unsigned<String> unsigned = Unsigned.of("1");
         Assert.assertTrue(unsigned.equals(unsigned));
 
+        Unsigned<String> unsignedSubset = unsigned.ofSubset(unsigned.getContent());
+        Assert.assertTrue(unsigned.equals(unsignedSubset));
+
         Assert.assertNotNull(Unsigned.of("1").hashCode());
 
         Assert.assertTrue(Unsigned.of("TEST").toString().contains("TEST"));

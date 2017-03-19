@@ -39,7 +39,7 @@ public class ModelUtils {
     public static String urldecode(String string) {
         try {
             return URLDecoder.decode(string, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException | NullPointerException e) {
             throw new IllegalStateException("UTF-8 not supported.");
         }
     }
