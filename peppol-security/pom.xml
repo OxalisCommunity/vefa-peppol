@@ -22,7 +22,7 @@
     <parent>
         <artifactId>peppol-parent</artifactId>
         <groupId>no.difi.vefa</groupId>
-        <version>0.9.8-SNAPSHOT</version>
+        <version>0.9.8</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -33,7 +33,7 @@
     <url>https://github.com/difi/vefa-peppol</url>
 
     <scm>
-        <tag>HEAD</tag>
+        <tag>0.9.8</tag>
         <url>https://github.com/difi/vefa-peppol</url>
         <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
