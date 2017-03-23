@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright 2016-2017 Direktoratet for forvaltning og IKT
+  ~ Copyright 2015-2017 Direktoratet for forvaltning og IKT
+  ~
+  ~ This source code is subject to dual licensing:
+  ~
   ~
   ~ Licensed under the EUPL, Version 1.1 or – as soon they
   ~ will be approved by the European Commission - subsequent
   ~ versions of the EUPL (the "Licence");
   ~
-  ~ You may not use this work except in compliance with the Licence.
+  ~ This Source Code Form is subject to the terms of the Mozilla Public
+  ~ License, v. 2.0. If a copy of the MPL was not distributed with this
+  ~ file, You can obtain one at http://mozilla.org/MPL/2.0/.
   ~
-  ~ You may obtain a copy of the Licence at:
   ~
-  ~ https://joinup.ec.europa.eu/community/eupl/og_page/eupl
-  ~
-  ~ Unless required by applicable law or agreed to in
-  ~ writing, software distributed under the Licence is
-  ~ distributed on an "AS IS" basis,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either
-  ~ express or implied.
   ~ See the Licence for the specific language governing
   ~ permissions and limitations under the Licence.
   -->
@@ -67,6 +64,11 @@
         <license>
             <name>European Union Public Licence (EUPL v.1.1)</name>
             <url>https://joinup.ec.europa.eu/community/eupl/og_page/european-union-public-licence-eupl-v11</url>
+            <distribution>repo</distribution>
+        </license>
+        <license>
+            <name>Mozilla Public License Version 2.0</name>
+            <url>https://www.mozilla.org/en-US/MPL/2.0/</url>
             <distribution>repo</distribution>
         </license>
     </licenses>
