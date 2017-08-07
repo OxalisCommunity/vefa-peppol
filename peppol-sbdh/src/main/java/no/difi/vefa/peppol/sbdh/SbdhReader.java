@@ -56,7 +56,7 @@ public class SbdhReader {
         }
     }
 
-    public static Header read(StandardBusinessDocumentHeader sbdh) {
+    public static Header read(StandardBusinessDocumentHeader sbdh) throws SbdhException {
         Header header = Header.newInstance();
 
         // Sender
@@ -80,6 +80,9 @@ public class SbdhReader {
         ));
 
         // CreationTimestamp
+        if (sbdh.getDocumentIdentification().getCreationDateAndTime() == null)
+            throw new SbdhException("Element 'CreationDateAndTime' is not set or contains invalid value.");
+
         header = header.creationTimestamp(
                 SbdhHelper.fromXMLGregorianCalendar(sbdh.getDocumentIdentification().getCreationDateAndTime()));
 
