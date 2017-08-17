@@ -25,12 +25,18 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class XMLTextOutputStream extends OutputStream {
 
-    private XMLStreamWriter xmlStreamWriter;
+    private final XMLStreamWriter xmlStreamWriter;
 
-    public XMLTextOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType) throws XMLStreamException {
+    private byte[] bytes = new byte[64];
+
+    private int counter;
+
+    public XMLTextOutputStream(XMLStreamWriter xmlStreamWriter, String mimeType)
+            throws XMLStreamException {
         this.xmlStreamWriter = xmlStreamWriter;
 
         xmlStreamWriter.writeStartElement("", Ns.QNAME_TEXT_CONTENT.getLocalPart(), Ns.EXTENSION);
@@ -40,6 +46,27 @@ public class XMLTextOutputStream extends OutputStream {
 
     @Override
     public void write(int b) throws IOException {
-        // TODO
+        bytes[counter++] = (byte) b;
+
+        if (counter == bytes.length) {
+            try {
+                xmlStreamWriter.writeCharacters(new String(bytes));
+                counter = 0;
+            } catch (XMLStreamException e) {
+                throw new IOException(e.getMessage(), e);
+            }
+        }
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            if (counter > 0)
+                xmlStreamWriter.writeCharacters(new String(Arrays.copyOf(bytes, counter)));
+
+            xmlStreamWriter.writeEndElement();
+        } catch (XMLStreamException e) {
+            throw new IOException(e.getMessage(), e);
+        }
     }
 }

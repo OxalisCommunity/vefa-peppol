@@ -24,7 +24,6 @@ import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
-import no.difi.vefa.peppol.sbdh.util.XMLBinaryInputStream;
 import no.difi.vefa.peppol.sbdh.util.XMLStreamPartialReaderWrapper;
 import no.difi.vefa.peppol.sbdh.util.XMLTextInputStream;
 import org.apache.commons.codec.binary.Base64InputStream;
@@ -43,7 +42,7 @@ public class SbdReader implements Closeable {
     private Header header;
 
     public static SbdReader newInstance(final InputStream inputStream) throws SbdhException {
-        return ExceptionUtil.perform(SbdhException.class,   new PerformResult<SbdReader>() {
+        return ExceptionUtil.perform(SbdhException.class, new PerformResult<SbdReader>() {
             @Override
             public SbdReader action() throws Exception {
                 return newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream));
@@ -102,12 +101,11 @@ public class SbdReader implements Closeable {
     }
 
     public InputStream binaryReader() throws XMLStreamException {
-        return new Base64InputStream(new XMLBinaryInputStream(xmlReader()));
-        // return new XMLBinaryInputStream(xmlReader());
+        return new Base64InputStream(new XMLTextInputStream(xmlReader()));
     }
 
     public InputStream textReader() throws XMLStreamException {
-        return new XMLTextInputStream();
+        return new XMLTextInputStream(xmlReader());
     }
 
     @Override

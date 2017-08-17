@@ -19,14 +19,42 @@
 
 package no.difi.vefa.peppol.sbdh.util;
 
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class XMLTextInputStream extends InputStream {
 
+    private final XMLStreamReader reader;
+
+    private byte[] bytes = new byte[0];
+
+    private int counter;
+
+    public XMLTextInputStream(XMLStreamReader reader) throws XMLStreamException {
+        this.reader = reader;
+
+        while (!reader.isCharacters())
+            reader.next();
+    }
+
     @Override
     public int read() throws IOException {
-        // TODO
-        return 0;
+        if (counter == bytes.length) {
+            if (!reader.isCharacters())
+                return -1;
+
+            bytes = reader.getText().getBytes();
+            counter = 0;
+
+            try {
+                reader.next();
+            } catch (XMLStreamException e) {
+                throw new IOException(e.getMessage(), e);
+            }
+        }
+
+        return bytes[counter++];
     }
 }
