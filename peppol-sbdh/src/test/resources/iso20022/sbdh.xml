@@ -1,0 +1,26 @@
+<StandardBusinessDocumentHeader xmlns="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader">
+  <HeaderVersion>1.0</HeaderVersion>
+  <Sender>
+    <Identifier Authority="iso6523-actorid-upis">9908:991825827</Identifier>
+  </Sender>
+  <Receiver>
+    <Identifier Authority="iso6523-actorid-upis">9908:810418052</Identifier>
+  </Receiver>
+  <DocumentIdentification>
+    <Standard>urn:iso:std:iso:20022:tech:xsd:pain.001.001.03</Standard>
+    <TypeVersion>03</TypeVersion>
+    <InstanceIdentifier>13bea627-5c12-42ff-a2c2-35540d279965</InstanceIdentifier>
+    <Type>Document</Type>
+    <CreationDateAndTime>2017-05-05T22:00:00</CreationDateAndTime>
+  </DocumentIdentification>
+  <BusinessScope>
+    <Scope>
+      <Type>DOCUMENTID</Type>
+      <InstanceIdentifier>urn:iso:std:iso:20022:tech:xsd:pain.001.001.03::Document##urn:fdc:bits.no:2017:iso20022:1.5::03</InstanceIdentifier>
+    </Scope>
+    <Scope>
+      <Type>PROCESSID</Type>
+      <InstanceIdentifier>urn:fdc:bits.no:2017:profile:01:1.0</InstanceIdentifier>
+    </Scope>
+  </BusinessScope>
+</StandardBusinessDocumentHeader>

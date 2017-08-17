@@ -210,6 +210,13 @@
                 <version>${slf4j.version}</version>
             </dependency>
 
+            <!-- Apache Commons -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.10</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

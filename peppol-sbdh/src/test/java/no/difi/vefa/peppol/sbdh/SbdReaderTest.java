@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import com.google.common.io.BaseEncoding;
 import com.google.common.io.ByteStreams;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.testng.Assert;
@@ -71,5 +72,33 @@ public class SbdReaderTest {
         SbdReader.newInstance(new ByteArrayInputStream(String.format(
                 "<StandardBusinessDocument xmlns=\"%s\"><Header></Header></StandardBusinessDocument>",
                 Ns.SBDH).getBytes()));
+    }
+
+    @Test
+    public void simple() throws Exception {
+        byte[] expected = ByteStreams.toByteArray(getClass().getResourceAsStream("/iso20022/iso20022-outer.asice"));
+
+        // Create SBD
+        ByteArrayOutputStream result = new ByteArrayOutputStream();
+        try (SbdWriter sbdWriter = SbdWriter.newInstance(result, SbdhReader.read(getClass().getResourceAsStream("/iso20022/sbdh.xml")))) {
+            try (OutputStream binaryOutputStream = sbdWriter.binaryWriter("application/vnd.etsi.asic-e+zip", "UTF-8")) {
+                ByteStreams.copy(new ByteArrayInputStream(expected), binaryOutputStream);
+            }
+        }
+
+        // Parse SBD
+        ByteArrayOutputStream actual = new ByteArrayOutputStream();
+        try (SbdReader sbdReader = SbdReader.newInstance(new ByteArrayInputStream(result.toByteArray()))) {
+            try (InputStream binaryInputStream = sbdReader.binaryReader()) {
+                ByteStreams.copy(binaryInputStream, actual);
+            }
+        }
+
+        // Verify
+        BaseEncoding encoding = BaseEncoding.base64().withSeparator("\r\n", 40);
+        Assert.assertEquals(
+                encoding.encode(actual.toByteArray()),
+                encoding.encode(expected)
+        );
     }
 }
