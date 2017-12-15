@@ -37,7 +37,7 @@ import static org.testng.Assert.*;
 
 public class MultiReaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(MultiReaderTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MultiReaderTest.class);
 
     private MetadataReader reader = new MultiReader();
 
@@ -49,7 +49,7 @@ public class MultiReaderTest {
         assertEquals(result.size(), 7);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
@@ -60,7 +60,7 @@ public class MultiReaderTest {
         assertEquals(result.size(), 7);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
@@ -71,7 +71,7 @@ public class MultiReaderTest {
         assertEquals(result.size(), 7);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test

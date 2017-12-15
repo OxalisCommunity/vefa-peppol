@@ -26,16 +26,11 @@ public abstract class AbstractSimpleIdentifier implements SimpleIdentifier {
     protected final String value;
 
     protected AbstractSimpleIdentifier(String value) {
-        this.value = value;
+        this.value = value == null ? null : value.trim();
     }
 
     @Override
     public String getIdentifier() {
-        return value;
-    }
-
-    @Override
-    public String getValue() {
         return value;
     }
 

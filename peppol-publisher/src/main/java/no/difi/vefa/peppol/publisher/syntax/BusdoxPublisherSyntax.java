@@ -123,21 +123,21 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
 
     private ParticipantIdentifierType convert(ParticipantIdentifier participantIdentifier) {
         ParticipantIdentifierType participantIdentifierType = new ParticipantIdentifierType();
-        participantIdentifierType.setScheme(participantIdentifier.getScheme().getValue());
+        participantIdentifierType.setScheme(participantIdentifier.getScheme().getIdentifier());
         participantIdentifierType.setValue(participantIdentifier.getIdentifier());
         return participantIdentifierType;
     }
 
     private ProcessIdentifierType convert(ProcessIdentifier processIdentifier) {
         ProcessIdentifierType processIdentifierType = new ProcessIdentifierType();
-        processIdentifierType.setScheme(processIdentifier.getScheme().getValue());
+        processIdentifierType.setScheme(processIdentifier.getScheme().getIdentifier());
         processIdentifierType.setValue(processIdentifier.getIdentifier());
         return processIdentifierType;
     }
 
     private DocumentIdentifierType convert(DocumentTypeIdentifier documentTypeIdentifier) {
         DocumentIdentifierType documentIdentifierType = new DocumentIdentifierType();
-        documentIdentifierType.setScheme(documentTypeIdentifier.getScheme().getValue());
+        documentIdentifierType.setScheme(documentTypeIdentifier.getScheme().getIdentifier());
         documentIdentifierType.setValue(documentTypeIdentifier.getIdentifier());
         return documentIdentifierType;
     }
@@ -164,7 +164,7 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
         endpointReferenceType.setReferenceParameters(new ReferenceParametersType());
 
         EndpointType endpointType = new EndpointType();
-        endpointType.setTransportProfile(endpoint.getTransportProfile().getValue());
+        endpointType.setTransportProfile(endpoint.getTransportProfile().getIdentifier());
         endpointType.setEndpointReference(endpointReferenceType);
         endpointType.setRequireBusinessLevelSignature(false);
         endpointType.setServiceActivationDate(convert(endpoint.getActivationDate()));

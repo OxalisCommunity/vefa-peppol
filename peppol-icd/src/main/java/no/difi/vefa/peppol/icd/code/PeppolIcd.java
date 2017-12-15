@@ -120,11 +120,19 @@ public enum PeppolIcd implements Icd {
         return SCHEME;
     }
 
-    public static Icd valueOfIcd(String icd) {
+    public static Icd findByCode(String icd) {
         for (PeppolIcd v : values())
             if (v.code.equals(icd))
                 return v;
 
         throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", icd));
+    }
+
+    public static Icd findByIdentifier(String icd) {
+        for (PeppolIcd v : values())
+            if (v.identifier.equals(icd))
+                return v;
+
+        throw new IllegalArgumentException(String.format("Identifier '%s' is not valid ICD.", icd));
     }
 }

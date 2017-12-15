@@ -57,7 +57,7 @@ import java.util.List;
 
 public class Bdxr201605Reader implements MetadataReader {
 
-    private static Logger logger = LoggerFactory.getLogger(Bdxr201605Reader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Bdxr201605Reader.class);
 
     public static final String NAMESPACE = "http://docs.oasis-open.org/bdxr/ns/SMP/2016/05";
 
@@ -96,7 +96,7 @@ public class Bdxr201605Reader implements MetadataReader {
                     documentTypeIdentifiers.add(DocumentTypeIdentifierWithUri.of(
                             parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
+                    LOGGER.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }
             }
 

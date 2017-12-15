@@ -22,9 +22,12 @@ package no.difi.vefa.peppol.sbdh;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import org.mockito.Mockito;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
@@ -44,7 +47,25 @@ public class SbdhWriterTest {
 
     @Test
     public void simple() throws Exception {
-        SbdhWriter.write(System.out, header);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        SbdhWriter.write(byteArrayOutputStream, header);
+
+        Header actual = SbdhReader.read(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        Assert.assertEquals(actual, header);
+    }
+
+    @Test
+    public void withScheme() throws Exception {
+        Header expected = header
+                .documentType(DocumentTypeIdentifier.of("urn:cen.eu:en16931:2017", Scheme.of("busdox-docid-edifact")))
+                .process(ProcessIdentifier.NO_PROCESS);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        SbdhWriter.write(byteArrayOutputStream, expected);
+
+        Header actual = SbdhReader.read(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        Assert.assertEquals(actual, expected);
+
     }
 
     @Test
@@ -61,6 +82,4 @@ public class SbdhWriterTest {
     public void triggerExceptionUsingOutputStream() throws Exception {
         SbdhWriter.write(Mockito.mock(OutputStream.class), null);
     }
-
-
 }

@@ -89,9 +89,14 @@ public class SbdhReader {
         // Scope
         for (Scope scope : sbdh.getBusinessScope().getScope()) {
             if (scope.getType().equals("DOCUMENTID")) {
-                header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier()));
-            } else if (scope.getType().equals("PROCESSID"))
-                header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier()));
+                Scheme scheme = scope.getIdentifier() != null ?
+                        Scheme.of(scope.getIdentifier()) : DocumentTypeIdentifier.DEFAULT_SCHEME;
+                header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier(), scheme));
+            } else if (scope.getType().equals("PROCESSID")) {
+                Scheme scheme = scope.getIdentifier() != null ?
+                        Scheme.of(scope.getIdentifier()) : ProcessIdentifier.DEFAULT_SCHEME;
+                header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier(), scheme));
+            }
         }
 
         return header;

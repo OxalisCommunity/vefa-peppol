@@ -26,6 +26,4 @@ public interface SimpleIdentifier {
 
     String getIdentifier();
 
-    @Deprecated
-    String getValue();
 }

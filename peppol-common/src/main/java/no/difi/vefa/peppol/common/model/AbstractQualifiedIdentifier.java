@@ -33,7 +33,7 @@ public abstract class AbstractQualifiedIdentifier implements QualifiedIdentifier
 
     public AbstractQualifiedIdentifier(String identifier, Scheme scheme) {
         this.scheme = scheme;
-        this.identifier = identifier;
+        this.identifier = identifier == null ? null : identifier.trim();
     }
 
     @Override
@@ -48,7 +48,6 @@ public abstract class AbstractQualifiedIdentifier implements QualifiedIdentifier
 
     @Override
     public String urlencoded() {
-        return ModelUtils.urlencode("%s::%s", scheme.getValue(), identifier);
+        return ModelUtils.urlencode("%s::%s", scheme.getIdentifier(), identifier);
     }
-
 }

@@ -70,7 +70,7 @@ class SbdhHelper {
 
     public static Partner createPartner(ParticipantIdentifier participant) {
         PartnerIdentification partnerIdentification = new PartnerIdentification();
-        partnerIdentification.setAuthority(participant.getScheme().getValue());
+        partnerIdentification.setAuthority(participant.getScheme().getIdentifier());
         partnerIdentification.setValue(participant.getIdentifier());
 
         Partner partner = new Partner();
@@ -91,6 +91,8 @@ class SbdhHelper {
         Scope scope = new Scope();
         scope.setType("PROCESSID");
         scope.setInstanceIdentifier(processIdentifier.getIdentifier());
+        if (!processIdentifier.getScheme().equals(ProcessIdentifier.DEFAULT_SCHEME))
+            scope.setIdentifier(processIdentifier.getScheme().getIdentifier());
 
         return scope;
     }
@@ -99,6 +101,8 @@ class SbdhHelper {
         Scope scope = new Scope();
         scope.setType("DOCUMENTID");
         scope.setInstanceIdentifier(documentTypeIdentifier.getIdentifier());
+        if (!documentTypeIdentifier.getScheme().equals(DocumentTypeIdentifier.DEFAULT_SCHEME))
+            scope.setIdentifier(documentTypeIdentifier.getScheme().getIdentifier());
 
         return scope;
     }

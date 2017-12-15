@@ -56,7 +56,7 @@ public class ParticipantIdentifierTest {
                 .parse("qualifier::identifier");
 
         Assert.assertEquals(participantIdentifier.getIdentifier(), "identifier");
-        Assert.assertEquals(participantIdentifier.getScheme().getValue(), "qualifier");
+        Assert.assertEquals(participantIdentifier.getScheme().getIdentifier(), "qualifier");
 
         try {
             ParticipantIdentifier.parse("value");

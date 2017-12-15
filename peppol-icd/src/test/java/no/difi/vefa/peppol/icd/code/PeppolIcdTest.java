@@ -32,11 +32,11 @@ public class PeppolIcdTest {
         Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR"));
         Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR").getScheme());
 
-        Assert.assertEquals(PeppolIcd.valueOfIcd("9908"), PeppolIcd.NO_ORGNR);
+        Assert.assertEquals(PeppolIcd.findByCode("9908"), PeppolIcd.NO_ORGNR);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
     public void exceptionOnUnknownCode() {
-        PeppolIcd.valueOfIcd("invalid");
+        PeppolIcd.findByCode("invalid");
     }
 }

@@ -40,7 +40,7 @@ public class DifiCertificateValidatorTest {
         mode.initiate(DifiCertificateValidator.class);
     }
 
-    @Test
+    @Test(enabled = false)
     public void simpleApProd() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
         CertificateValidator validator = Mode.of(Mode.PRODUCTION).initiate(DifiCertificateValidator.class);
         validator.validate(Service.AP, Validator.getCertificate(getClass().getResourceAsStream("/ap-difi-prod.cer")));

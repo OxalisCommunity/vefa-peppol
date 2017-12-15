@@ -40,7 +40,7 @@ import java.util.Enumeration;
 public class TestResourcesTest {
 
 
-    public static Logger log = LoggerFactory.getLogger(TestResourcesTest.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(TestResourcesTest.class);
 
     /** Attempts to retrieve the private key held in our test keystore */
     @Test
@@ -59,15 +59,15 @@ public class TestResourcesTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         mimeMessage.writeTo(baos);
 
-        log.debug("Size of baos: " + baos.size());
-        log.debug("Size of mime message:" + mimeMessage.getSize());
+        LOGGER.debug("Size of baos: " + baos.size());
+        LOGGER.debug("Size of mime message:" + mimeMessage.getSize());
 
         InputStream rawInputStream = mimeMessage.getRawInputStream();
         int counter = 0;
         while (rawInputStream.read() >= 0) {
             counter++;
         }
-        log.debug("Size of raw input stream " + counter);
+        LOGGER.debug("Size of raw input stream " + counter);
 
         // Headers are not part of the MIME message itself, the are however part of the MimeMessage object:
         //
@@ -83,7 +83,7 @@ public class TestResourcesTest {
         Enumeration allHeaderLines = mimeMessage.getAllHeaderLines();
         while (allHeaderLines.hasMoreElements()) {
             String s = (String) allHeaderLines.nextElement();
-            log.debug(s);
+            LOGGER.debug(s);
         }
     }
 }

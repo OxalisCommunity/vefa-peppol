@@ -33,11 +33,13 @@ import java.security.cert.X509Certificate;
 
 public class ModeDetector {
 
-    private static Logger logger = LoggerFactory.getLogger(ModeDetector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModeDetector.class);
 
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
-        Config config = ConfigFactory.load();
+        return detect(certificate, ConfigFactory.load());
+    }
 
+    public static Mode detect(X509Certificate certificate, Config config) throws PeppolLoadingException {
         for (String token : config.getObject("mode").keySet()) {
             if (!"default".equals(token)) {
                 try {
@@ -46,7 +48,7 @@ public class ModeDetector {
                             .validate(Service.ALL, certificate);
                     return mode;
                 } catch (PeppolSecurityException e) {
-                    logger.info("Detection error ({}): {}", token, e.getMessage());
+                    LOGGER.info("Detection error ({}): {}", token, e.getMessage());
                 }
             }
         }

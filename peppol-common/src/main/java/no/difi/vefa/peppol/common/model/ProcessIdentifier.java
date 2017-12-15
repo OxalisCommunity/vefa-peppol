@@ -32,6 +32,9 @@ public class ProcessIdentifier extends AbstractQualifiedIdentifier implements Se
 
     public static final Scheme DEFAULT_SCHEME = Scheme.of("cenbii-procid-ubl");
 
+    public static final ProcessIdentifier NO_PROCESS =
+            ProcessIdentifier.of("bdx:noprocess", Scheme.of("bdx-procid-transport"));
+
     public static ProcessIdentifier of(String identifier) {
         return new ProcessIdentifier(identifier, DEFAULT_SCHEME);
     }

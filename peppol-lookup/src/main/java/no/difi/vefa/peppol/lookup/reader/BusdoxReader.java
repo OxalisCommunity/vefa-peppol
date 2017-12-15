@@ -59,7 +59,7 @@ import java.util.List;
 
 public class BusdoxReader implements MetadataReader {
 
-    private static Logger logger = LoggerFactory.getLogger(BusdoxReader.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusdoxReader.class);
 
     public static final String NAMESPACE = "http://busdox.org/serviceMetadata/publishing/1.0/";
 
@@ -98,7 +98,7 @@ public class BusdoxReader implements MetadataReader {
                     documentTypeIdentifiers.add(DocumentTypeIdentifierWithUri.of(
                             parts[1], Scheme.of(parts[0]), URI.create(reference.getHref())));
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    logger.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
+                    LOGGER.warn("Unable to parse '{}'.", hrefDocumentTypeIdentifier);
                 }
             }
 

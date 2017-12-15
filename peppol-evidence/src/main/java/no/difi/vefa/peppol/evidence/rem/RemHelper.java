@@ -65,7 +65,7 @@ class RemHelper {
     public static AttributedElectronicAddressType createElectronicAddressType(ParticipantIdentifier participant) {
         AttributedElectronicAddressType o = new AttributedElectronicAddressType();
         o.setValue(participant.getIdentifier());
-        o.setScheme(participant.getScheme().getValue());
+        o.setScheme(participant.getScheme().getIdentifier());
 
         return o;
     }

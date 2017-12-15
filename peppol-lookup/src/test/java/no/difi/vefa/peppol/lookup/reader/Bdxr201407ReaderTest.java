@@ -36,7 +36,7 @@ import static org.testng.Assert.*;
 
 public class Bdxr201407ReaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(Bdxr201407ReaderTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Bdxr201407ReaderTest.class);
 
     private MetadataReader reader = new Bdxr201407Reader();
 
@@ -48,7 +48,7 @@ public class Bdxr201407ReaderTest {
         assertEquals(result.size(), 7);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test

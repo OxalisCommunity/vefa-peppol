@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardBusinessDocumentHeader xmlns="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader">
+    <HeaderVersion>1.0</HeaderVersion>
+    <Sender>
+        <Identifier Authority="iso6523-actorid-upis">9908:810418052</Identifier>
+    </Sender>
+    <Receiver>
+        <Identifier Authority="iso6523-actorid-upis">9908:810418052</Identifier>
+    </Receiver>
+    <DocumentIdentification>
+        <Standard>EDIFACT</Standard>
+        <TypeVersion>D.14B</TypeVersion>
+        <InstanceIdentifier>7f58475e-a9cc-4386-904c-cf09c2662c19</InstanceIdentifier>
+        <Type>INVOIC</Type>
+        <CreationDateAndTime>2017-12-06T10:17:05.734+01:00</CreationDateAndTime>
+    </DocumentIdentification>
+    <BusinessScope>
+        <Scope>
+            <Type>DOCUMENTID</Type>
+            <InstanceIdentifier>urn:cen.eu:en16931:2017</InstanceIdentifier>
+            <Identifier>busdox-docid-edifact</Identifier>
+        </Scope>
+        <Scope>
+            <Type>PROCESSID</Type>
+            <InstanceIdentifier>bdx:noprocess</InstanceIdentifier>
+            <Identifier>bdx-procid-transport</Identifier>
+        </Scope>
+    </BusinessScope>
+</StandardBusinessDocumentHeader>

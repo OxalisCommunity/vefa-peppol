@@ -28,7 +28,7 @@ public class SchemeTest {
     @Test
     public void simple() {
         Scheme schema = Scheme.of("SCHEME");
-        Assert.assertEquals(schema.getValue(), "SCHEME");
+        Assert.assertEquals(schema.getIdentifier(), "SCHEME");
         Assert.assertEquals(schema.toString(), "SCHEME");
         Assert.assertNotNull(schema.hashCode());
 

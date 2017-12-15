@@ -46,7 +46,7 @@ public class ProcessIdentifierTest {
                 .parse("qualifier::identifier");
 
         Assert.assertEquals(processIdentifier.getIdentifier(), "identifier");
-        Assert.assertEquals(processIdentifier.getScheme().getValue(), "qualifier");
+        Assert.assertEquals(processIdentifier.getScheme().getIdentifier(), "qualifier");
 
         try {
             ProcessIdentifier.parse("value");

@@ -27,7 +27,7 @@ public class TransportProfileTest {
     @Test
     public void simple() {
         Assert.assertTrue(TransportProfile.AS2_1_0.toString().contains("as2"));
-        Assert.assertTrue(TransportProfile.AS2_1_0.toString().contains(TransportProfile.AS2_1_0.getValue()));
+        Assert.assertTrue(TransportProfile.AS2_1_0.toString().contains(TransportProfile.AS2_1_0.getIdentifier()));
 
         Assert.assertTrue(TransportProfile.AS2_1_0.equals(TransportProfile.AS2_1_0));
         Assert.assertFalse(TransportProfile.AS2_1_0.equals(TransportProfile.AS4));

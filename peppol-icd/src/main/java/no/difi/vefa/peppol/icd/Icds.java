@@ -70,9 +70,8 @@ public class Icds {
 
     public Icd findBySchemeAndCode(Scheme scheme, String code) {
         for (Icd v : values)
-            if (v.getCode().equals(code))
-                if (v.getScheme().equals(scheme))
-                    return v;
+            if (v.getCode().equals(code) && v.getScheme().equals(scheme))
+                return v;
 
         throw new IllegalArgumentException(String.format("Value '%s::%s' is not valid ICD.", scheme, code));
     }

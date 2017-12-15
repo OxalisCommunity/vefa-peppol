@@ -36,7 +36,7 @@ import static org.testng.Assert.*;
 
 public class BusdoxReaderTest {
 
-    private static Logger logger = LoggerFactory.getLogger(BusdoxReaderTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BusdoxReaderTest.class);
 
     private MetadataReader reader = new BusdoxReader();
 
@@ -48,7 +48,7 @@ public class BusdoxReaderTest {
         assertEquals(result.size(), 7);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class BusdoxReaderTest {
         assertEquals(result.size(), 25);
 
         for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            logger.debug("{}", documentTypeIdentifier);
+            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
 }

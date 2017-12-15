@@ -53,7 +53,7 @@ public class DocumentTypeIdentifierTest {
                 .parse("qualifier::identifier");
 
         Assert.assertEquals(documentTypeIdentifier.getIdentifier(), "identifier");
-        Assert.assertEquals(documentTypeIdentifier.getScheme().getValue(), "qualifier");
+        Assert.assertEquals(documentTypeIdentifier.getScheme().getIdentifier(), "qualifier");
 
         try {
             DocumentTypeIdentifier.parse("value");
