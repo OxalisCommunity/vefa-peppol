@@ -64,10 +64,10 @@ public class BasicApacheFetcher extends AbstractFetcher {
                                         response.getFirstHeader("X-SMP-Namespace").getValue() : null
                         );
                     case 404:
-                        throw new LookupException("Not supported.");
+                        throw new LookupException(String.format("Not supported. URI: %s", uri));
                     default:
                         throw new LookupException(String.format(
-                                "Received code %s for lookup.", response.getStatusLine().getStatusCode()));
+                                "Received code %s for lookup. URI: %s", response.getStatusLine().getStatusCode(), uri));
                 }
             }
         } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
