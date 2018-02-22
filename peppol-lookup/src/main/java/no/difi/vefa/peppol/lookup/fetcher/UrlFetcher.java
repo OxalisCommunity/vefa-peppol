@@ -49,7 +49,7 @@ public class UrlFetcher extends AbstractFetcher {
                     new BufferedInputStream(urlConnection.getInputStream()),
                     urlConnection.getHeaderField("X-SMP-Namespace"));
         } catch (FileNotFoundException e) {
-            throw new LookupException(String.format("Invalid response from SMP. URI: %s", uri), e);
+            return null;
         } catch (SocketTimeoutException | SocketException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
         } catch (IOException e) {

@@ -22,6 +22,7 @@ package no.difi.vefa.peppol.lookup.fetcher;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataFetcher;
 import no.difi.vefa.peppol.mode.Mode;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.net.URI;
@@ -35,9 +36,9 @@ public class ApacheFetcherTest {
         fetcher.fetch(URI.create("http://invalid.example.com/"));
     }
 
-    @Test(expectedExceptions = LookupException.class)
+    @Test
     public void simple404() throws LookupException {
-        fetcher.fetch(URI.create("http://httpstat.us/404"));
+        Assert.assertNull(fetcher.fetch(URI.create("http://httpstat.us/404")));
     }
 
     @Test(expectedExceptions = LookupException.class)

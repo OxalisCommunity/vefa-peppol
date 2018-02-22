@@ -56,7 +56,12 @@ public class LookupClient {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
 
-        return reader.parseDocumentIdentifiers(fetcher.fetch(provider));
+        FetcherResponse fetcherResponse = fetcher.fetch(provider);
+
+        if (fetcherResponse == null)
+            throw new LookupException("Receiver not found.");
+
+        return reader.parseDocumentIdentifiers(fetcherResponse);
     }
 
     public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier,
@@ -65,7 +70,12 @@ public class LookupClient {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
 
-        PotentiallySigned<ServiceMetadata> serviceMetadata = reader.parseServiceMetadata(fetcher.fetch(provider));
+        FetcherResponse fetcherResponse = fetcher.fetch(provider);
+
+        if (fetcherResponse == null)
+            throw new LookupException("Combination of receiver and document type identifier not supported.");
+
+        PotentiallySigned<ServiceMetadata> serviceMetadata = reader.parseServiceMetadata(fetcherResponse);
 
         if (serviceMetadata instanceof Signed)
             validator.validate(Service.SMP, ((Signed) serviceMetadata).getCertificate());
