@@ -20,10 +20,11 @@
 package no.difi.vefa.peppol.lookup.api;
 
 
+import java.io.FileNotFoundException;
 import java.net.URI;
 
 public interface MetadataFetcher {
 
-    FetcherResponse fetch(URI uri) throws LookupException;
+    FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException;
 
 }
