@@ -44,13 +44,9 @@ public enum PeppolIcd implements Icd {
     NO_ORGNR("NO:ORGNR", "9908"),
     NO_VAT("NO:VAT", "9909"),
     HU_VAT("HU:VAT", "9910"),
-    @Deprecated
-    EU_VAT("EU:VAT", "9912"),
     EU_REID("EU:REID", "9913"),
     AT_VAT("AT:VAT", "9914"),
     AT_GOV("AT:GOV", "9915"),
-    @Deprecated
-    AT_CID("AT:CID", "9916"),
     IS_KT("IS:KT", "9917"),
     IBAN("IBAN", "9918"),
     AT_KUR("AT:KUR", "9919"),
@@ -91,8 +87,7 @@ public enum PeppolIcd implements Icd {
     NL_ION("NL:OIN", "9954"),
     SE_VAT("SE:VAT", "9955"),
     BE_CBE("BE:CBE", "9956"),
-    FR_VAT("FR:VAT", "9957"),
-    ZZZ("ZZZ", "9999");
+    FR_VAT("FR:VAT", "9957");
 
     private static final Scheme SCHEME = Scheme.of("iso6523-actorid-upis");
 
