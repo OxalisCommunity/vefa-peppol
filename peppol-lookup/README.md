@@ -23,9 +23,9 @@ Include dependency in your pom.xml:
 
 ```xml
 <dependency>
-	<groupId>no.difi.vefa</groupId>
-	<artifactId>peppol-lookup</artifactId>
-	<version>0.9.5</version>
+  <groupId>no.difi.vefa</groupId>
+  <artifactId>peppol-lookup</artifactId>
+  <version>1.0.1</version>
 </dependency>
 ```
 
