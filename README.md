@@ -9,7 +9,11 @@ This project implements some aspects of PEPPOL for inclusion in other projects.
 
 * [Common](peppol-common) - Data model for PEPPOL functionality.
 * [Evidence](peppol-evidence) - Implementation of ETSI REM Evidence.
+* ICD - Handling of ICDs as used in PEPPOL.
 * [Lookup](peppol-lookup) - Functionality for looking up participants in PEPPOL.
+* Mode - Feature to configure a PEPPOL application based on a PEPPOL certificate.
+* Publisher - Generic implementation of SMP interface.
+* SBDH - Optimized library for handling of envelope.
 * [Security](peppol-security) - Security features for PEPPOL.
 
 Please see [changelog](/CHANGELOG.md) for changes.
