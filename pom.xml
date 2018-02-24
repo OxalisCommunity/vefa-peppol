@@ -24,7 +24,7 @@
     <groupId>no.difi.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <name>VEFA PEPPOL :: Parent</name>
     <description>Library for features to support use of PEPPOL infrastructure.</description>
@@ -42,7 +42,7 @@
     </modules>
 
     <scm>
-        <tag>1.0.1</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/difi/vefa-peppol</url>
         <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
@@ -116,22 +116,22 @@
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-mode</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>no.difi.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
-                <version>1.0.1</version>
+                <version>1.0.2-SNAPSHOT</version>
             </dependency>
 
             <!-- Difi Commons -->
