@@ -25,6 +25,7 @@ import no.difi.vefa.peppol.mode.Mode;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.io.FileNotFoundException;
 import java.net.URI;
 
 public class ApacheFetcherTest {
@@ -32,22 +33,22 @@ public class ApacheFetcherTest {
     private MetadataFetcher fetcher = new ApacheFetcher(Mode.of("TEST"));
 
     @Test(expectedExceptions = LookupException.class)
-    public void simpleTimeout() throws LookupException {
+    public void simpleTimeout() throws LookupException, FileNotFoundException {
         fetcher.fetch(URI.create("http://invalid.example.com/"));
     }
 
-    @Test
-    public void simple404() throws LookupException {
-        Assert.assertNull(fetcher.fetch(URI.create("http://httpstat.us/404")));
+    @Test(expectedExceptions = FileNotFoundException.class)
+    public void simple404() throws LookupException, FileNotFoundException {
+        fetcher.fetch(URI.create("http://httpstat.us/404"));
     }
 
     @Test(expectedExceptions = LookupException.class)
-    public void simple500() throws LookupException {
+    public void simple500() throws LookupException, FileNotFoundException {
         fetcher.fetch(URI.create("http://httpstat.us/500"));
     }
 
     @Test(expectedExceptions = LookupException.class)
-    public void simpleNullPointer() throws LookupException {
+    public void simpleNullPointer() throws LookupException, FileNotFoundException {
         fetcher.fetch(null);
     }
 }

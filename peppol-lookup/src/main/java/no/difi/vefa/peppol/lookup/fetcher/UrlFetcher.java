@@ -35,7 +35,7 @@ public class UrlFetcher extends AbstractFetcher {
     }
 
     @Override
-    public FetcherResponse fetch(URI uri) throws LookupException {
+    public FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException {
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
             urlConnection.setConnectTimeout(timeout);
@@ -49,7 +49,7 @@ public class UrlFetcher extends AbstractFetcher {
                     new BufferedInputStream(urlConnection.getInputStream()),
                     urlConnection.getHeaderField("X-SMP-Namespace"));
         } catch (FileNotFoundException e) {
-            return null;
+            throw new FileNotFoundException(uri.toString());
         } catch (SocketTimeoutException | SocketException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
         } catch (IOException e) {

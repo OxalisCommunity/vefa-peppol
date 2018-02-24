@@ -30,6 +30,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
@@ -50,7 +51,7 @@ public class BasicApacheFetcher extends AbstractFetcher {
     }
 
     @Override
-    public FetcherResponse fetch(URI uri) throws LookupException {
+    public FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException {
         try (CloseableHttpClient httpClient = createClient()) {
             HttpGet httpGet = new HttpGet(uri);
 
@@ -64,7 +65,7 @@ public class BasicApacheFetcher extends AbstractFetcher {
                                         response.getFirstHeader("X-SMP-Namespace").getValue() : null
                         );
                     case 404:
-                        return null;
+                        throw new FileNotFoundException(uri.toString());
                     default:
                         throw new LookupException(String.format(
                                 "Received code %s for lookup. URI: %s", response.getStatusLine().getStatusCode(), uri));
@@ -72,7 +73,7 @@ public class BasicApacheFetcher extends AbstractFetcher {
             }
         } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
-        } catch (LookupException e) {
+        } catch (LookupException | FileNotFoundException e) {
             throw e;
         } catch (Exception e) {
             throw new LookupException(e.getMessage(), e);

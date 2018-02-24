@@ -27,6 +27,7 @@ import no.difi.vefa.peppol.lookup.api.*;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
+import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.List;
 
@@ -56,10 +57,12 @@ public class LookupClient {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
 
-        FetcherResponse fetcherResponse = fetcher.fetch(provider);
-
-        if (fetcherResponse == null)
-            throw new LookupException("Receiver not found.");
+        FetcherResponse fetcherResponse;
+        try {
+            fetcherResponse = fetcher.fetch(provider);
+        } catch (FileNotFoundException e) {
+            throw new LookupException(String.format("Receiver (%s) not found.", participantIdentifier.toString()), e);
+        }
 
         return reader.parseDocumentIdentifiers(fetcherResponse);
     }
@@ -70,10 +73,14 @@ public class LookupClient {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
 
-        FetcherResponse fetcherResponse = fetcher.fetch(provider);
-
-        if (fetcherResponse == null)
-            throw new LookupException("Combination of receiver and document type identifier not supported.");
+        FetcherResponse fetcherResponse;
+        try {
+            fetcherResponse = fetcher.fetch(provider);
+        } catch (FileNotFoundException e) {
+            throw new LookupException(String.format(
+                    "Combination of receiver (%s) and document type identifier (%s) is not supported.",
+                    participantIdentifier.toString(), documentTypeIdentifier.toString()), e);
+        }
 
         PotentiallySigned<ServiceMetadata> serviceMetadata = reader.parseServiceMetadata(fetcherResponse);
 
