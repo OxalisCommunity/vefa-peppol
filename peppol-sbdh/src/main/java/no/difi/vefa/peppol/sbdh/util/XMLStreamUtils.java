@@ -68,8 +68,13 @@ public class XMLStreamUtils {
 
                     for (int i = 0; i < reader.getNamespaceCount(); i++)
                         writer.writeNamespace(reader.getNamespacePrefix(i), reader.getNamespaceURI(i));
-                    for (int i = 0; i < reader.getAttributeCount(); i++)
-                        writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
+                    for (int i = 0; i < reader.getAttributeCount(); i++) {
+                        if (reader.getAttributePrefix(i) == null || "".equals(reader.getAttributePrefix(i)))
+                            writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
+                        else
+                            writer.writeAttribute(reader.getAttributePrefix(i),
+                                    reader.getAttributeLocalName(i), reader.getAttributeValue(i));
+                    }
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     writer.writeEndElement();

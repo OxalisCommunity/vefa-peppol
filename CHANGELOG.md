@@ -3,6 +3,8 @@
 
 ## Next release
 
+* Keeping attribute prefix while copying XML streams. [#23](https://github.com/difi/vefa-peppol/issues/23)
+
 
 ## 1.0.1
 
