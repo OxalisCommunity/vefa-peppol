@@ -19,7 +19,7 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.SimpleEndpoint;
+import no.difi.vefa.peppol.common.api.SimpleEndpoint;
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 
 import java.io.Serializable;
@@ -59,7 +59,7 @@ public abstract class AbstractServiceMetadata<T extends SimpleEndpoint> implemen
     public T getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
             throws EndpointNotFoundException {
         for (ProcessMetadata<T> processMetadata : processes)
-            if (processMetadata.getProcessIdentifier().equals(processIdentifier))
+            if (processMetadata.getProcessIdentifier().contains(processIdentifier))
                 return processMetadata.getEndpoint(transportProfiles);
 
         throw new EndpointNotFoundException(

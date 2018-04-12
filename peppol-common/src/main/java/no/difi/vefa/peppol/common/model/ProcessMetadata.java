@@ -19,7 +19,7 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import no.difi.vefa.peppol.common.SimpleEndpoint;
+import no.difi.vefa.peppol.common.api.SimpleEndpoint;
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
 
 import java.io.Serializable;
@@ -29,28 +29,38 @@ public class ProcessMetadata<T extends SimpleEndpoint> implements Serializable {
 
     private static final long serialVersionUID = -8684282659539348955L;
 
-    private final ProcessIdentifier processIdentifier;
+    private final List<ProcessIdentifier> processIdentifier;
 
     private final Map<TransportProfile, T> endpoints = new HashMap<>();
 
     public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
             ProcessIdentifier processIdentifier, T... endpoints) {
+        return of(Collections.singletonList(processIdentifier), Arrays.asList(endpoints));
+    }
+
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
+            List<ProcessIdentifier> processIdentifier, T... endpoints) {
         return of(processIdentifier, Arrays.asList(endpoints));
     }
 
     public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
             ProcessIdentifier processIdentifier, List<T> endpoints) {
+        return new ProcessMetadata<>(Collections.singletonList(processIdentifier), endpoints);
+    }
+
+    public static <T extends SimpleEndpoint> ProcessMetadata<T> of(
+            List<ProcessIdentifier> processIdentifier, List<T> endpoints) {
         return new ProcessMetadata<>(processIdentifier, endpoints);
     }
 
-    private ProcessMetadata(ProcessIdentifier processIdentifier, List<T> endpoints) {
-        this.processIdentifier = processIdentifier;
+    private ProcessMetadata(List<ProcessIdentifier> processIdentifiers, List<T> endpoints) {
+        this.processIdentifier = processIdentifiers;
 
         for (T endpoint : endpoints)
             this.endpoints.put(endpoint.getTransportProfile(), endpoint);
     }
 
-    public ProcessIdentifier getProcessIdentifier() {
+    public List<ProcessIdentifier> getProcessIdentifier() {
         return processIdentifier;
     }
 

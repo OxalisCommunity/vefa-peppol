@@ -39,8 +39,10 @@ import javax.xml.bind.Marshaller;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * @author erlend
@@ -92,7 +94,7 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
         serviceInformationType.setProcessList(new ProcessListType());
 
         for (ProcessMetadata processMetadata : serviceMetadata.getProcesses())
-            serviceInformationType.getProcessList().getProcess().add(convert(processMetadata));
+            serviceInformationType.getProcessList().getProcess().addAll(convert(processMetadata));
 
         ServiceMetadataType serviceMetadataType = new ServiceMetadataType();
         serviceMetadataType.setServiceInformation(serviceInformationType);
@@ -133,15 +135,21 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
     }
 
     @SuppressWarnings("all")
-    private ProcessType convert(ProcessMetadata<PublisherEndpoint> processMetadata) {
-        ProcessType processType = new ProcessType();
-        processType.setProcessIdentifier(convert(processMetadata.getProcessIdentifier()));
-        processType.setServiceEndpointList(new ServiceEndpointList());
+    private List<ProcessType> convert(ProcessMetadata<PublisherEndpoint> processMetadata) {
+        List<ProcessType> result = new ArrayList<>();
 
-        for (PublisherEndpoint endpoint : processMetadata.getEndpoints())
-            processType.getServiceEndpointList().getEndpoint().add(convert(endpoint));
+        for (ProcessIdentifier processIdentifier : processMetadata.getProcessIdentifier()) {
+            ProcessType processType = new ProcessType();
+            processType.setProcessIdentifier(convert(processIdentifier));
+            processType.setServiceEndpointList(new ServiceEndpointList());
 
-        return processType;
+            for (PublisherEndpoint endpoint : processMetadata.getEndpoints())
+                processType.getServiceEndpointList().getEndpoint().add(convert(endpoint));
+
+            result.add(processType);
+        }
+
+        return result;
     }
 
     private EndpointType convert(PublisherEndpoint endpoint) {

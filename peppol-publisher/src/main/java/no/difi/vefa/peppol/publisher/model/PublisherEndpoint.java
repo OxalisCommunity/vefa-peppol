@@ -19,7 +19,7 @@
 
 package no.difi.vefa.peppol.publisher.model;
 
-import no.difi.vefa.peppol.common.SimpleEndpoint;
+import no.difi.vefa.peppol.common.api.SimpleEndpoint;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 
 import java.net.URI;

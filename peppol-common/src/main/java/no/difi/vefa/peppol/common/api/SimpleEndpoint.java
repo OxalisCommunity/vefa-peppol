@@ -17,7 +17,7 @@
  * permissions and limitations under the Licence.
  */
 
-package no.difi.vefa.peppol.common;
+package no.difi.vefa.peppol.common.api;
 
 import no.difi.vefa.peppol.common.model.TransportProfile;
 
