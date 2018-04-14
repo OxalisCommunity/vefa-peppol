@@ -19,10 +19,7 @@
 
 package no.difi.vefa.peppol.publisher;
 
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.ProcessIdentifier;
-import no.difi.vefa.peppol.common.model.TransportProfile;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.reader.MultiReader;
@@ -76,7 +73,7 @@ public class PublisherServiceTest {
     @Test
     public void simpleServiceGroup() throws Exception {
         ServiceGroup serviceGroup = ServiceGroupBuilder.newInstance(ParticipantIdentifier.of("9908:999999999"))
-                .add(DTI_INVOICE)
+                .add(ServiceReference.of(DTI_INVOICE))
                 .build();
 
         Mockito.when(serviceGroupProvider.get(Mockito.any(ParticipantIdentifier.class)))
@@ -86,11 +83,11 @@ public class PublisherServiceTest {
         publisherService.serviceGroup(byteArrayOutputStream, null, URI.create("http://localhost:8080/"),
                 ParticipantIdentifier.of("9908:999999999"));
 
-        List<DocumentTypeIdentifier> result = metadataReader.parseDocumentIdentifiers(
+        List<ServiceReference> result = metadataReader.parseServiceGroup(
                 new FetcherResponse(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()), null));
 
         Assert.assertEquals(result.size(), 1);
-        Assert.assertEquals(result.get(0).toString(), DTI_INVOICE.toString());
+        Assert.assertEquals(result.get(0).getDocumentTypeIdentifier().toString(), DTI_INVOICE.toString());
     }
 
     @Test

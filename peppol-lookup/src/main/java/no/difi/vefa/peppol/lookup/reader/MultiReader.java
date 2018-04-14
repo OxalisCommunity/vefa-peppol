@@ -19,42 +19,37 @@
 
 package no.difi.vefa.peppol.lookup.reader;
 
+import com.google.common.collect.Lists;
 import com.google.common.io.ByteStreams;
 import no.difi.vefa.peppol.common.api.PotentiallySigned;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
+import no.difi.vefa.peppol.common.model.ServiceReference;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
+import no.difi.vefa.peppol.lookup.api.Namespace;
 import no.difi.vefa.peppol.lookup.util.XmlUtils;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.ServiceLoader;
 
 public class MultiReader implements MetadataReader {
 
-    private BusdoxReader busdoxReader = new BusdoxReader();
-
-    private Bdxr201407Reader bdxr201407Reader = new Bdxr201407Reader();
-
-    private Bdxr201605Reader bdxr201605Reader = new Bdxr201605Reader();
+    private static List<MetadataReader> metadataReaders = Lists.newArrayList(ServiceLoader.load(MetadataReader.class));
 
     @Override
-    public List<DocumentTypeIdentifier> parseDocumentIdentifiers(FetcherResponse fetcherResponse)
-            throws LookupException {
+    public List<ServiceReference> parseServiceGroup(FetcherResponse fetcherResponse) throws LookupException {
         FetcherResponse response = fetcherResponse;
 
         if (response.getNamespace() == null)
             response = detect(response);
 
-        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return busdoxReader.parseDocumentIdentifiers(response);
-        else if (Bdxr201407Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return bdxr201407Reader.parseDocumentIdentifiers(response);
-        else if (Bdxr201605Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return bdxr201605Reader.parseDocumentIdentifiers(response);
+        for (MetadataReader metadataReader : metadataReaders)
+            if (metadataReader.getClass().getAnnotation(Namespace.class).value().equalsIgnoreCase(response.getNamespace()))
+                return metadataReader.parseServiceGroup(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }
@@ -67,12 +62,9 @@ public class MultiReader implements MetadataReader {
         if (response.getNamespace() == null)
             response = detect(response);
 
-        if (BusdoxReader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return busdoxReader.parseServiceMetadata(response);
-        else if (Bdxr201407Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return bdxr201407Reader.parseServiceMetadata(response);
-        else if (Bdxr201605Reader.NAMESPACE.equalsIgnoreCase(response.getNamespace()))
-            return bdxr201605Reader.parseServiceMetadata(response);
+        for (MetadataReader metadataReader : metadataReaders)
+            if (metadataReader.getClass().getAnnotation(Namespace.class).value().equalsIgnoreCase(response.getNamespace()))
+                return metadataReader.parseServiceMetadata(response);
 
         throw new LookupException(String.format("Unknown namespace: %s", response.getNamespace()));
     }

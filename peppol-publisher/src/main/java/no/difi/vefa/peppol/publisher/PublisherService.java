@@ -33,7 +33,6 @@ import org.w3c.dom.Document;
 import javax.servlet.http.HttpServlet;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
 
@@ -62,7 +61,7 @@ public class PublisherService extends HttpServlet {
 
     public void serviceGroup(OutputStream outputStream, String syntax, URI rootUri,
                              ParticipantIdentifier participantIdentifier)
-            throws IOException, JAXBException, PublisherException {
+            throws JAXBException, PublisherException {
         ServiceGroup serviceGroup = serviceGroupProvider.get(participantIdentifier);
 
         PublisherSyntax publisherSyntax = publisherSyntaxProvider.getSyntax(syntax);
@@ -72,7 +71,7 @@ public class PublisherService extends HttpServlet {
 
     public void metadataProvider(OutputStream outputStream, String syntax, ParticipantIdentifier participantIdentifier,
                                  DocumentTypeIdentifier documentTypeIdentifier)
-            throws IOException, JAXBException, PublisherException {
+            throws JAXBException, PublisherException {
         PublisherServiceMetadata serviceMetadata =
                 serviceMetadataProvider.get(participantIdentifier, documentTypeIdentifier);
 

@@ -20,14 +20,12 @@
 package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
+import no.difi.vefa.peppol.common.model.ServiceReference;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -36,19 +34,14 @@ import static org.testng.Assert.*;
 
 public class Bdxr201407ReaderTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Bdxr201407ReaderTest.class);
-
     private MetadataReader reader = new Bdxr201407Reader();
 
     @Test
     public void documentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+        List<ServiceReference> result = reader.parseServiceGroup(new FetcherResponse(
                 getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
-
-        for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test

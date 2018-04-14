@@ -29,10 +29,7 @@ import no.difi.commons.busdox.jaxb.identifiers.ParticipantIdentifierType;
 import no.difi.commons.busdox.jaxb.identifiers.ProcessIdentifierType;
 import no.difi.commons.busdox.jaxb.smp.*;
 import no.difi.vefa.peppol.common.api.PerformResult;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
-import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
-import no.difi.vefa.peppol.common.model.ProcessIdentifier;
-import no.difi.vefa.peppol.common.model.ProcessMetadata;
+import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.publisher.annotation.Syntax;
 import no.difi.vefa.peppol.publisher.api.PublisherSyntax;
@@ -86,11 +83,11 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
         serviceGroupType.setParticipantIdentifier(convert(serviceGroup.getParticipantIdentifier()));
         serviceGroupType.setServiceMetadataReferenceCollection(new ServiceMetadataReferenceCollectionType());
 
-        for (DocumentTypeIdentifier documentTypeIdentifier : serviceGroup.getDocumentTypeIdentifiers())
+        for (ServiceReference serviceReference : serviceGroup.getServiceReferences())
             serviceGroupType
                     .getServiceMetadataReferenceCollection()
                     .getServiceMetadataReference()
-                    .add(convertRef(serviceGroup.getParticipantIdentifier(), documentTypeIdentifier, rootUri));
+                    .add(convertRef(serviceGroup.getParticipantIdentifier(), serviceReference.getDocumentTypeIdentifier(), rootUri));
 
         return OBJECT_FACTORY.createServiceGroup(serviceGroupType);
     }

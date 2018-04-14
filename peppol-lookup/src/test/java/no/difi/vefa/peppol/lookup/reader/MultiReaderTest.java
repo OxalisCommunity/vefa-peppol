@@ -20,13 +20,11 @@
 package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.vefa.peppol.common.lang.EndpointNotFoundException;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.model.ServiceMetadata;
+import no.difi.vefa.peppol.common.model.ServiceReference;
 import no.difi.vefa.peppol.lookup.api.FetcherResponse;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -37,41 +35,30 @@ import static org.testng.Assert.*;
 
 public class MultiReaderTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MultiReaderTest.class);
-
     private MetadataReader reader = new MultiReader();
 
     @Test
     public void busdoxDocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+        List<ServiceReference> result = reader.parseServiceGroup(new FetcherResponse(
                 getClass().getResourceAsStream("/busdox-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
-
-        for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
     public void bdxr201407DocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+        List<ServiceReference> result = reader.parseServiceGroup(new FetcherResponse(
                 getClass().getResourceAsStream("/bdxr201407-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
-
-        for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
     public void bdxr201605DocumentIdentifers() throws Exception {
-        List<DocumentTypeIdentifier> result = reader.parseDocumentIdentifiers(new FetcherResponse(
+        List<ServiceReference> result = reader.parseServiceGroup(new FetcherResponse(
                 getClass().getResourceAsStream("/bdxr201605-servicegroup-9908-991825827.xml"), null));
 
         assertEquals(result.size(), 7);
-
-        for (DocumentTypeIdentifier documentTypeIdentifier : result)
-            LOGGER.debug("{}", documentTypeIdentifier);
     }
 
     @Test
@@ -158,8 +145,8 @@ public class MultiReaderTest {
 
     @Test
     public void busdoxServiceGroup() throws Exception {
-        List<DocumentTypeIdentifier> identifiers = reader.parseDocumentIdentifiers(new FetcherResponse(
+        List<ServiceReference> serviceReferences = reader.parseServiceGroup(new FetcherResponse(
                 getClass().getResourceAsStream("/busdox-servicegroup-9915-setcce-test.xml"), null));
-        assertEquals(identifiers.size(), 1);
+        assertEquals(serviceReferences.size(), 1);
     }
 }

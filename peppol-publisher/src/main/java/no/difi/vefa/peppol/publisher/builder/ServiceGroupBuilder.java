@@ -19,8 +19,8 @@
 
 package no.difi.vefa.peppol.publisher.builder;
 
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.ServiceReference;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class ServiceGroupBuilder {
 
     private ParticipantIdentifier participantIdentifier;
 
-    private List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
+    private List<ServiceReference> serviceReferences = new ArrayList<>();
 
     public static ServiceGroupBuilder newInstance(ParticipantIdentifier participantIdentifier) {
         return new ServiceGroupBuilder(participantIdentifier);
@@ -43,12 +43,12 @@ public class ServiceGroupBuilder {
         this.participantIdentifier = participantIdentifier;
     }
 
-    public ServiceGroupBuilder add(DocumentTypeIdentifier documentTypeIdentifier) {
-        this.documentTypeIdentifiers.add(documentTypeIdentifier);
+    public ServiceGroupBuilder add(ServiceReference serviceReference) {
+        this.serviceReferences.add(serviceReference);
         return this;
     }
 
     public ServiceGroup build() {
-        return ServiceGroup.of(participantIdentifier, documentTypeIdentifiers);
+        return ServiceGroup.of(participantIdentifier, serviceReferences);
     }
 }

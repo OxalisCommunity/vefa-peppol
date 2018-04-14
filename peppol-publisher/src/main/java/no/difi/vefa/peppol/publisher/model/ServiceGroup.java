@@ -19,8 +19,8 @@
 
 package no.difi.vefa.peppol.publisher.model;
 
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
+import no.difi.vefa.peppol.common.model.ServiceReference;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -35,24 +35,24 @@ public class ServiceGroup implements Serializable {
 
     private ParticipantIdentifier participantIdentifier;
 
-    private List<DocumentTypeIdentifier> documentTypeIdentifiers;
+    private List<ServiceReference> serviceReferences;
 
     public static ServiceGroup of(ParticipantIdentifier participantIdentifier,
-                                  List<DocumentTypeIdentifier> documentTypeIdentifiers) {
-        return new ServiceGroup(participantIdentifier, documentTypeIdentifiers);
+                                  List<ServiceReference> serviceReferences) {
+        return new ServiceGroup(participantIdentifier, serviceReferences);
     }
 
     private ServiceGroup(ParticipantIdentifier participantIdentifier,
-                        List<DocumentTypeIdentifier> documentTypeIdentifiers) {
+                        List<ServiceReference> serviceReferences) {
         this.participantIdentifier = participantIdentifier;
-        this.documentTypeIdentifiers = documentTypeIdentifiers;
+        this.serviceReferences = serviceReferences;
     }
 
     public ParticipantIdentifier getParticipantIdentifier() {
         return participantIdentifier;
     }
 
-    public List<DocumentTypeIdentifier> getDocumentTypeIdentifiers() {
-        return Collections.unmodifiableList(documentTypeIdentifiers);
+    public List<ServiceReference> getServiceReferences() {
+        return Collections.unmodifiableList(serviceReferences);
     }
 }

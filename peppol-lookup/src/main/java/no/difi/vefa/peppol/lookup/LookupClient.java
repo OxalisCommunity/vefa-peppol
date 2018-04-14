@@ -29,6 +29,7 @@ import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LookupClient {
@@ -52,7 +53,18 @@ public class LookupClient {
         this.validator = validator;
     }
 
+    @Deprecated
     public List<DocumentTypeIdentifier> getDocumentIdentifiers(ParticipantIdentifier participantIdentifier)
+            throws LookupException {
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = new ArrayList<>();
+
+        for (ServiceReference serviceReference : getServiceReferences(participantIdentifier))
+            documentTypeIdentifiers.add(serviceReference.getDocumentTypeIdentifier());
+
+        return documentTypeIdentifiers;
+    }
+
+    public List<ServiceReference> getServiceReferences(ParticipantIdentifier participantIdentifier)
             throws LookupException {
         URI location = locator.lookup(participantIdentifier);
         URI provider = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
@@ -64,7 +76,7 @@ public class LookupClient {
             throw new LookupException(String.format("Receiver (%s) not found.", participantIdentifier.toString()), e);
         }
 
-        return reader.parseDocumentIdentifiers(fetcherResponse);
+        return reader.parseServiceGroup(fetcherResponse);
     }
 
     public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier,
