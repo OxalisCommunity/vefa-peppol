@@ -56,11 +56,11 @@ public class LookupClientBuilder {
     }
 
     public static LookupClientBuilder forProduction() throws PeppolLoadingException {
-        return forMode("PRODUCTION");
+        return forMode(Mode.PRODUCTION);
     }
 
     public static LookupClientBuilder forTest() throws PeppolLoadingException {
-        return forMode("TEST");
+        return forMode(Mode.TEST);
     }
 
     LookupClientBuilder(Mode mode) {

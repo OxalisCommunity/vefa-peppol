@@ -33,14 +33,21 @@ public class GenericIcd implements Icd {
 
     private final Scheme scheme;
 
+    private final String issuingAgency;
+
     public static Icd of(String identifier, String code, Scheme scheme) {
-        return new GenericIcd(identifier, code, scheme);
+        return new GenericIcd(identifier, code, scheme, null);
     }
 
-    private GenericIcd(String identifier, String code, Scheme scheme) {
+    public static Icd of(String identifier, String code, Scheme scheme, String issuingAgency) {
+        return new GenericIcd(identifier, code, scheme, issuingAgency);
+    }
+
+    private GenericIcd(String identifier, String code, Scheme scheme, String issuingAgency) {
         this.identifier = identifier;
         this.code = code;
         this.scheme = scheme;
+        this.issuingAgency = issuingAgency;
     }
 
     @Override
@@ -56,5 +63,10 @@ public class GenericIcd implements Icd {
     @Override
     public Scheme getScheme() {
         return scheme;
+    }
+
+    @Override
+    public String getIssuingAgency() {
+        return null;
     }
 }

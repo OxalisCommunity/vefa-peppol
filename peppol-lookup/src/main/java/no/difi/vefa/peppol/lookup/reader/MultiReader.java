@@ -38,7 +38,7 @@ import java.util.ServiceLoader;
 
 public class MultiReader implements MetadataReader {
 
-    private static List<MetadataReader> metadataReaders = Lists.newArrayList(ServiceLoader.load(MetadataReader.class));
+    private static final List<MetadataReader> METADATA_READERS = Lists.newArrayList(ServiceLoader.load(MetadataReader.class));
 
     @Override
     public List<ServiceReference> parseServiceGroup(FetcherResponse fetcherResponse) throws LookupException {
@@ -47,7 +47,7 @@ public class MultiReader implements MetadataReader {
         if (response.getNamespace() == null)
             response = detect(response);
 
-        for (MetadataReader metadataReader : metadataReaders)
+        for (MetadataReader metadataReader : METADATA_READERS)
             if (metadataReader.getClass().getAnnotation(Namespace.class).value().equalsIgnoreCase(response.getNamespace()))
                 return metadataReader.parseServiceGroup(response);
 
@@ -62,7 +62,7 @@ public class MultiReader implements MetadataReader {
         if (response.getNamespace() == null)
             response = detect(response);
 
-        for (MetadataReader metadataReader : metadataReaders)
+        for (MetadataReader metadataReader : METADATA_READERS)
             if (metadataReader.getClass().getAnnotation(Namespace.class).value().equalsIgnoreCase(response.getNamespace()))
                 return metadataReader.parseServiceMetadata(response);
 

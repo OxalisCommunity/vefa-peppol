@@ -6,6 +6,7 @@
 * Keeping attribute prefix while copying XML streams. [#23](https://github.com/difi/vefa-peppol/issues/23)
 * Updating model to allow for multiple process identifiers as part of one process metadata.
 * Adding concept of service reference in lookup.
+* Adding issuing agencies for ICDs.
 
 
 ## 1.0.1

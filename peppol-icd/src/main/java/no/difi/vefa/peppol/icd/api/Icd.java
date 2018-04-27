@@ -29,4 +29,6 @@ public interface Icd {
 
     Scheme getScheme();
 
+    String getIssuingAgency();
+
 }

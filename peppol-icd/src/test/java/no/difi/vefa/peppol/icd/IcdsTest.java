@@ -72,7 +72,7 @@ public class IcdsTest {
 
     @Test
     public void simpleGetCode() {
-        Assert.assertEquals(icds.findByCode("9909"), PeppolIcd.NO_VAT);
+        Assert.assertEquals(icds.findByCode("9908"), PeppolIcd.NO_ORGNR);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)
