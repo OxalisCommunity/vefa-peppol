@@ -6,6 +6,11 @@
 _Please stay tuned._
 
 
+## 1.0.3
+
+* Fixing issue after fixing [#23](https://github.com/difi/vefa-peppol/issues/23). Added test.
+
+
 ## 1.0.2
 
 * Keeping attribute prefix while copying XML streams. [#23](https://github.com/difi/vefa-peppol/issues/23)

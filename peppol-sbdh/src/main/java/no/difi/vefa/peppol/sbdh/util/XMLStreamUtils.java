@@ -69,10 +69,11 @@ public class XMLStreamUtils {
                     for (int i = 0; i < reader.getNamespaceCount(); i++)
                         writer.writeNamespace(reader.getNamespacePrefix(i), reader.getNamespaceURI(i));
                     for (int i = 0; i < reader.getAttributeCount(); i++) {
-                        if (reader.getAttributePrefix(i) == null || "".equals(reader.getAttributePrefix(i)))
+                        String prefix = reader.getAttributePrefix(i);
+                        if (prefix == null || "".equals(prefix))
                             writer.writeAttribute(reader.getAttributeLocalName(i), reader.getAttributeValue(i));
                         else
-                            writer.writeAttribute(reader.getAttributePrefix(i),
+                            writer.writeAttribute(prefix, reader.getAttributeNamespace(i),
                                     reader.getAttributeLocalName(i), reader.getAttributeValue(i));
                     }
                     break;
