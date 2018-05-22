@@ -21,6 +21,8 @@ package no.difi.vefa.peppol.sbdh.lang;
 
 import no.difi.vefa.peppol.common.lang.PeppolException;
 
+import java.util.List;
+
 public class SbdhException extends PeppolException {
 
     public SbdhException(String message) {
@@ -29,5 +31,14 @@ public class SbdhException extends PeppolException {
 
     public SbdhException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public static void notNull(String message, Object... objects) throws SbdhException {
+        for (Object o : objects) {
+            if (o == null)
+                throw new SbdhException(message);
+            else if (o instanceof List && ((List) o).size() == 0)
+                throw new SbdhException(message);
+        }
     }
 }

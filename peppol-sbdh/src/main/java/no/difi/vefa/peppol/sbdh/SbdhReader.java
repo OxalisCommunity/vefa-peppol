@@ -31,10 +31,12 @@ import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
 
+import static no.difi.vefa.peppol.sbdh.lang.SbdhException.notNull;
+
 public class SbdhReader {
 
     SbdhReader() {
-
+        // TODO Fix in Java 8.
     }
 
     public static Header read(InputStream inputStream) throws SbdhException {
@@ -43,7 +45,7 @@ public class SbdhReader {
             return read(unmarshaller
                     .unmarshal(new StreamSource(inputStream), StandardBusinessDocumentHeader.class).getValue());
         } catch (Exception e) {
-            throw new SbdhException(e.getMessage(), e);
+            throw new SbdhException("Unable to unmarshal content to SBDH.", e);
         }
     }
 
@@ -53,7 +55,7 @@ public class SbdhReader {
             return read(unmarshaller
                     .unmarshal(xmlStreamReader, StandardBusinessDocumentHeader.class).getValue());
         } catch (Exception e) {
-            throw new SbdhException(e.getMessage(), e);
+            throw new SbdhException("Unable to unmarshal content to SBDH.", e);
         }
     }
 
@@ -61,45 +63,54 @@ public class SbdhReader {
         Header header = Header.newInstance();
 
         // Sender
-        if (sbdh.getSender() == null || sbdh.getSender().size() == 0)
-            throw new SbdhException("Sender is not provided in SBDH.");
+        notNull("Sender is not provided in SBDH.",
+                sbdh.getSender());
+        notNull("Sender identifier is not provided in SBDH.",
+                sbdh.getSender().get(0).getIdentifier());
 
         PartnerIdentification senderIdentifier = sbdh.getSender().get(0).getIdentifier();
         header = header.sender(
                 ParticipantIdentifier.of(senderIdentifier.getValue(), Scheme.of(senderIdentifier.getAuthority())));
 
         // Receiver
-        if (sbdh.getReceiver() == null || sbdh.getReceiver().size() == 0)
-            throw new SbdhException("Receiver is not provided in SBDH.");
+        notNull("Receiver is not provided in SBDH.",
+                sbdh.getReceiver());
+        notNull("Receiver identifier is not provided in SBDH.",
+                sbdh.getReceiver().get(0).getIdentifier());
 
         PartnerIdentification receiverIdentifier = sbdh.getReceiver().get(0).getIdentifier();
         header = header.receiver(
                 ParticipantIdentifier.of(receiverIdentifier.getValue(), Scheme.of(receiverIdentifier.getAuthority())));
 
 
+        // Prepare...
         DocumentIdentification docIdent = sbdh.getDocumentIdentification();
-        if (docIdent == null)
-            throw new SbdhException("Document identification is not provided in SBDH.");
+        notNull("Document identification is not provided in SBDH.",
+                docIdent);
+
 
         // Identifier
-        if (docIdent.getInstanceIdentifier() == null)
-            throw new SbdhException("SBDH instance identifier is not provided in SBDH.");
+        notNull("SBDH instance identifier is not provided in SBDH.",
+                docIdent.getInstanceIdentifier());
 
         header = header.identifier(InstanceIdentifier.of(docIdent.getInstanceIdentifier()));
 
         // InstanceType
-        if (docIdent.getStandard() == null || docIdent.getType() == null || docIdent.getTypeVersion() == null)
-            throw new SbdhException("Information about standard, type or type version is not provided in SBDH.");
+        notNull("Information about standard is not provided in SBDH.",
+                docIdent.getStandard());
+        notNull("Information about type is not provided in SBDH.",
+                docIdent.getType());
+        notNull("Information about type version is not provided in SBDH.",
+                docIdent.getTypeVersion());
 
         header = header.instanceType(InstanceType.of(
                 docIdent.getStandard(), docIdent.getType(), docIdent.getTypeVersion()));
 
         // CreationTimestamp
-        if (sbdh.getDocumentIdentification().getCreationDateAndTime() == null)
-            throw new SbdhException("Element 'CreationDateAndTime' is not set or contains invalid value.");
-
+        notNull("Element 'CreationDateAndTime' is not set or contains invalid value.",
+                docIdent.getCreationDateAndTime());
         header = header.creationTimestamp(
-                SbdhHelper.fromXMLGregorianCalendar(sbdh.getDocumentIdentification().getCreationDateAndTime()));
+                SbdhHelper.fromXMLGregorianCalendar(docIdent.getCreationDateAndTime()));
 
         // Scope
         for (Scope scope : sbdh.getBusinessScope().getScope()) {
@@ -114,10 +125,10 @@ public class SbdhReader {
             }
         }
 
-        if (header.getDocumentType() == null)
-            throw new SbdhException("Scope containing document identifier is not provided in SBDH.");
-        if (header.getProcess() == null)
-            throw new SbdhException("Scope containing process identifier is not provided in SBDH.");
+        notNull("Scope containing document identifier is not provided in SBDH.",
+                header.getDocumentType());
+        notNull("Scope containing process identifier is not provided in SBDH.",
+                header.getProcess());
 
         return header;
     }
