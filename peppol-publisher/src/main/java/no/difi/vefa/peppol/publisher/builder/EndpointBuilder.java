@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.publisher.builder;
 
+import no.difi.vefa.peppol.common.model.Period;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 import no.difi.vefa.peppol.publisher.model.PublisherEndpoint;
 
@@ -92,7 +93,11 @@ public class EndpointBuilder {
     }
 
     public PublisherEndpoint build() {
-        return new PublisherEndpoint(transportProfile, address, certificate, activationDate,
-                expirationDate, description, technicalContact);
+        Period period = null;
+
+        if (activationDate != null || expirationDate != null)
+            period = Period.of(activationDate, expirationDate);
+
+        return new PublisherEndpoint(transportProfile, address, certificate, period, description, technicalContact);
     }
 }

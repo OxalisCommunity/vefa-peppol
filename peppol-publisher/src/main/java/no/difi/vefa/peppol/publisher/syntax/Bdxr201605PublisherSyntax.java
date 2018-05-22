@@ -154,8 +154,10 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
         endpointType.setTransportProfile(endpoint.getTransportProfile().getIdentifier());
         endpointType.setRequireBusinessLevelSignature(false);
         endpointType.setEndpointURI(endpoint.getAddress().toString());
-        endpointType.setServiceActivationDate(convert(endpoint.getActivationDate()));
-        endpointType.setServiceExpirationDate(convert(endpoint.getExpirationDate()));
+        if (endpoint.getPeriod() != null) {
+            endpointType.setServiceActivationDate(convert(endpoint.getPeriod().getFrom()));
+            endpointType.setServiceExpirationDate(convert(endpoint.getPeriod().getTo()));
+        }
         endpointType.setCertificate(endpoint.getCertificate());
         endpointType.setServiceDescription(endpoint.getDescription());
         endpointType.setTechnicalContactUrl(endpoint.getTechnicalContact());

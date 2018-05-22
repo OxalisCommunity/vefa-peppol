@@ -3,7 +3,7 @@
 
 ## Next release
 
-_Please stay tuned._
+* Throwing explicit exceptions in SbdhReader when information is not provided.
 
 
 ## 1.0.3

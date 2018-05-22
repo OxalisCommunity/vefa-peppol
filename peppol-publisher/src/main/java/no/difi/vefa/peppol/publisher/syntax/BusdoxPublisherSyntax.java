@@ -172,8 +172,10 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
         endpointType.setTransportProfile(endpoint.getTransportProfile().getIdentifier());
         endpointType.setEndpointReference(endpointReferenceType);
         endpointType.setRequireBusinessLevelSignature(false);
-        endpointType.setServiceActivationDate(convert(endpoint.getActivationDate()));
-        endpointType.setServiceExpirationDate(convert(endpoint.getExpirationDate()));
+        if (endpoint.getPeriod() != null) {
+            endpointType.setServiceActivationDate(convert(endpoint.getPeriod().getFrom()));
+            endpointType.setServiceExpirationDate(convert(endpoint.getPeriod().getTo()));
+        }
         endpointType.setCertificate(BASE64.encode(endpoint.getCertificate()));
         endpointType.setServiceDescription(endpoint.getDescription());
         endpointType.setTechnicalContactUrl(endpoint.getTechnicalContact());

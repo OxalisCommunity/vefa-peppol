@@ -20,6 +20,7 @@
 package no.difi.vefa.peppol.publisher.model;
 
 import no.difi.vefa.peppol.common.api.SimpleEndpoint;
+import no.difi.vefa.peppol.common.model.Period;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 
 import java.net.URI;
@@ -36,21 +37,18 @@ public class PublisherEndpoint implements SimpleEndpoint {
 
     private byte[] certificate;
 
-    private Date activationDate;
-
-    private Date expirationDate;
+    private Period period;
 
     private String description;
 
     private String technicalContact;
 
-    public PublisherEndpoint(TransportProfile transportProfile, URI address, byte[] certificate, Date activationDate,
-                             Date expirationDate, String description, String technicalContact) {
+    public PublisherEndpoint(TransportProfile transportProfile, URI address, byte[] certificate, Period period,
+                             String description, String technicalContact) {
         this.transportProfile = transportProfile;
         this.address = address;
         this.certificate = certificate;
-        this.activationDate = activationDate;
-        this.expirationDate = expirationDate;
+        this.period = period;
         this.description = description;
         this.technicalContact = technicalContact;
     }
@@ -68,12 +66,8 @@ public class PublisherEndpoint implements SimpleEndpoint {
         return certificate;
     }
 
-    public Date getActivationDate() {
-        return activationDate;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
+    public Period getPeriod() {
+        return period;
     }
 
     public String getDescription() {
