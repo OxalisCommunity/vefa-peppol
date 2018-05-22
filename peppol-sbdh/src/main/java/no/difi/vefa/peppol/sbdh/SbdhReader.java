@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.sbdh;
 
+import no.difi.commons.sbdh.jaxb.DocumentIdentification;
 import no.difi.commons.sbdh.jaxb.PartnerIdentification;
 import no.difi.commons.sbdh.jaxb.Scope;
 import no.difi.commons.sbdh.jaxb.StandardBusinessDocumentHeader;
@@ -60,24 +61,38 @@ public class SbdhReader {
         Header header = Header.newInstance();
 
         // Sender
+        if (sbdh.getSender() == null || sbdh.getSender().size() == 0)
+            throw new SbdhException("Sender is not provided in SBDH.");
+
         PartnerIdentification senderIdentifier = sbdh.getSender().get(0).getIdentifier();
         header = header.sender(
                 ParticipantIdentifier.of(senderIdentifier.getValue(), Scheme.of(senderIdentifier.getAuthority())));
 
         // Receiver
+        if (sbdh.getReceiver() == null || sbdh.getReceiver().size() == 0)
+            throw new SbdhException("Receiver is not provided in SBDH.");
+
         PartnerIdentification receiverIdentifier = sbdh.getReceiver().get(0).getIdentifier();
         header = header.receiver(
                 ParticipantIdentifier.of(receiverIdentifier.getValue(), Scheme.of(receiverIdentifier.getAuthority())));
 
+
+        DocumentIdentification docIdent = sbdh.getDocumentIdentification();
+        if (docIdent == null)
+            throw new SbdhException("Document identification is not provided in SBDH.");
+
         // Identifier
-        header = header.identifier(InstanceIdentifier.of(sbdh.getDocumentIdentification().getInstanceIdentifier()));
+        if (docIdent.getInstanceIdentifier() == null)
+            throw new SbdhException("SBDH instance identifier is not provided in SBDH.");
+
+        header = header.identifier(InstanceIdentifier.of(docIdent.getInstanceIdentifier()));
 
         // InstanceType
+        if (docIdent.getStandard() == null || docIdent.getType() == null || docIdent.getTypeVersion() == null)
+            throw new SbdhException("Information about standard, type or type version is not provided in SBDH.");
+
         header = header.instanceType(InstanceType.of(
-                sbdh.getDocumentIdentification().getStandard(),
-                sbdh.getDocumentIdentification().getType(),
-                sbdh.getDocumentIdentification().getTypeVersion()
-        ));
+                docIdent.getStandard(), docIdent.getType(), docIdent.getTypeVersion()));
 
         // CreationTimestamp
         if (sbdh.getDocumentIdentification().getCreationDateAndTime() == null)
@@ -98,6 +113,11 @@ public class SbdhReader {
                 header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier(), scheme));
             }
         }
+
+        if (header.getDocumentType() == null)
+            throw new SbdhException("Scope containing document identifier is not provided in SBDH.");
+        if (header.getProcess() == null)
+            throw new SbdhException("Scope containing process identifier is not provided in SBDH.");
 
         return header;
     }
