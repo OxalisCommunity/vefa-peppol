@@ -28,7 +28,6 @@ import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
-import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
 
 import static no.difi.vefa.peppol.sbdh.lang.SbdhException.notNull;
@@ -41,9 +40,10 @@ public class SbdhReader {
 
     public static Header read(InputStream inputStream) throws SbdhException {
         try {
+            XMLStreamReader reader = SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
             return read(unmarshaller
-                    .unmarshal(new StreamSource(inputStream), StandardBusinessDocumentHeader.class).getValue());
+                    .unmarshal(reader, StandardBusinessDocumentHeader.class).getValue());
         } catch (Exception e) {
             throw new SbdhException("Unable to unmarshal content to SBDH.", e);
         }

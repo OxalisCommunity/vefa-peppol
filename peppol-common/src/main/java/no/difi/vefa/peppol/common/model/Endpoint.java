@@ -24,6 +24,7 @@ import no.difi.vefa.peppol.common.api.SimpleEndpoint;
 import java.io.Serializable;
 import java.net.URI;
 import java.security.cert.X509Certificate;
+import java.util.Objects;
 
 public class Endpoint implements Serializable, SimpleEndpoint {
 
@@ -35,14 +36,24 @@ public class Endpoint implements Serializable, SimpleEndpoint {
 
     private final X509Certificate certificate;
 
-    public static Endpoint of(TransportProfile transportProfile, URI address, X509Certificate certificate) {
-        return new Endpoint(transportProfile, address, certificate);
+    private final Period period;
+
+    public static Endpoint of(TransportProfile transportProfile, URI address,
+                              X509Certificate certificate) {
+        return new Endpoint(transportProfile, address, certificate, null);
     }
 
-    private Endpoint(TransportProfile transportProfile, URI address, X509Certificate certificate) {
+    public static Endpoint of(TransportProfile transportProfile, URI address,
+                              X509Certificate certificate, Period period) {
+        return new Endpoint(transportProfile, address, certificate, period);
+    }
+
+    public Endpoint(TransportProfile transportProfile, URI address,
+                    X509Certificate certificate, Period period) {
         this.transportProfile = transportProfile;
         this.address = address;
         this.certificate = certificate;
+        this.period = period;
     }
 
     public TransportProfile getTransportProfile() {
@@ -57,25 +68,24 @@ public class Endpoint implements Serializable, SimpleEndpoint {
         return certificate;
     }
 
+    public Period getPeriod() {
+        return period;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Endpoint endpoint = (Endpoint) o;
-
-        if (!transportProfile.equals(endpoint.transportProfile)) return false;
-        if (!address.equals(endpoint.address)) return false;
-        return !(certificate != null ? !certificate.equals(endpoint.certificate) : endpoint.certificate != null);
-
+        return Objects.equals(transportProfile, endpoint.transportProfile) &&
+                Objects.equals(address, endpoint.address) &&
+                Objects.equals(certificate, endpoint.certificate) &&
+                Objects.equals(period, endpoint.period);
     }
 
     @Override
     public int hashCode() {
-        int result = transportProfile.hashCode();
-        result = 31 * result + address.hashCode();
-        result = 31 * result + (certificate != null ? certificate.hashCode() : 0);
-        return result;
+        return Objects.hash(transportProfile, address, certificate, period);
     }
 
     @Override
@@ -84,6 +94,7 @@ public class Endpoint implements Serializable, SimpleEndpoint {
                 "transportProfile=" + transportProfile +
                 ", address=" + address +
                 ", certificate=" + certificate +
+                ", period=" + period +
                 '}';
     }
 }

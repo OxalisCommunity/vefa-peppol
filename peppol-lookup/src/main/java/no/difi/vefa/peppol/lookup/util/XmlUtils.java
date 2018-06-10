@@ -22,6 +22,10 @@ package no.difi.vefa.peppol.lookup.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +38,14 @@ public class XmlUtils {
 
     private static final Pattern NAMESPACE_PATTERN =
             Pattern.compile("xmlns:{0,1}([A-Za-z0-9]*)\\w*=\\w*\"(.+?)\"", Pattern.MULTILINE);
+
+    private static XMLInputFactory XML_INPUT_FACTORY;
+
+    static {
+        XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+        XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        XML_INPUT_FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+    }
 
     public static String extractRootNamespace(String xmlContent) {
         Matcher matcher = ROOT_TAG_PATTERN.matcher(xmlContent);
@@ -55,6 +67,10 @@ public class XmlUtils {
         }
 
         return null;
+    }
+
+    public static XMLStreamReader streamReader(InputStream inputStream) throws XMLStreamException {
+        return XML_INPUT_FACTORY.createXMLStreamReader(inputStream);
     }
 
     XmlUtils() {

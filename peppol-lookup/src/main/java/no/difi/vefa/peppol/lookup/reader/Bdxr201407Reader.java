@@ -30,6 +30,7 @@ import no.difi.vefa.peppol.lookup.api.LookupException;
 import no.difi.vefa.peppol.lookup.api.MetadataReader;
 import no.difi.vefa.peppol.lookup.api.Namespace;
 import no.difi.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
+import no.difi.vefa.peppol.lookup.util.XmlUtils;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 import no.difi.vefa.peppol.security.xmldsig.DomUtils;
 import no.difi.vefa.peppol.security.xmldsig.XmldsigVerifier;
@@ -44,8 +45,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamSource;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -85,7 +86,7 @@ public class Bdxr201407Reader implements MetadataReader {
         try {
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
             ServiceGroupType serviceGroup = unmarshaller.unmarshal(
-                    new StreamSource(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
+                    XmlUtils.streamReader(fetcherResponse.getInputStream()), ServiceGroupType.class).getValue();
             List<ServiceReference> serviceReferences = new ArrayList<>();
 
             for (ServiceMetadataReferenceType reference :
@@ -103,7 +104,7 @@ public class Bdxr201407Reader implements MetadataReader {
             }
 
             return serviceReferences;
-        } catch (JAXBException | UnsupportedEncodingException e) {
+        } catch (JAXBException | XMLStreamException | UnsupportedEncodingException e) {
             throw new LookupException(e.getMessage(), e);
         }
     }

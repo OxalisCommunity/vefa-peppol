@@ -26,7 +26,6 @@ import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
-import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.datatype.DatatypeFactory;
@@ -56,6 +55,8 @@ class SbdhHelper {
                         JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
 
                 XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+                XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+                XML_INPUT_FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 
                 XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
 
@@ -107,7 +108,7 @@ class SbdhHelper {
         return scope;
     }
 
-    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) throws SbdhException {
+    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
         return DATATYPE_FACTORY.newXMLGregorianCalendar(c);

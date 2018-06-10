@@ -54,6 +54,7 @@ public class BdxlLocator extends AbstractLocator {
      *
      * @param hostname Hostname used as base for lookup.
      */
+    @SuppressWarnings("unused")
     public BdxlLocator(String hostname) {
         this(hostname, "SHA-256");
     }
@@ -101,7 +102,7 @@ public class BdxlLocator extends AbstractLocator {
             Record[] records = new Lookup(hostname, Type.NAPTR).run();
             if (records == null)
                 throw new LookupException(
-                        String.format("Identifier '%s' not registered in SML.", participantIdentifier.toString()));
+                        String.format("Identifier '%s' is not registered in SML.", participantIdentifier.toString()));
 
             // Loop records found.
             for (Record record : records) {
