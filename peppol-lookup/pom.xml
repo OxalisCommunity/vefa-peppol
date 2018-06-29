@@ -118,12 +118,6 @@
             <artifactId>dnsjava</artifactId>
         </dependency>
 
-        <!-- Bouncy Castle -->
-        <dependency>
-            <groupId>org.bouncycastle</groupId>
-            <artifactId>bcpkix-jdk15on</artifactId>
-        </dependency>
-
         <!-- Google Guava -->
         <dependency>
             <groupId>com.google.guava</groupId>

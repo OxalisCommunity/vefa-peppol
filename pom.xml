@@ -177,13 +177,6 @@
                 <version>2.1.8</version>
             </dependency>
 
-            <!-- Bouncy Castle -->
-            <dependency>
-                <groupId>org.bouncycastle</groupId>
-                <artifactId>bcpkix-jdk15on</artifactId>
-                <version>1.59</version>
-            </dependency>
-
             <!-- Google Guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
