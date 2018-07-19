@@ -46,10 +46,10 @@ public class PublisherServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(PublisherServlet.class);
 
     private static final Pattern PATH_SERVICE_GROUP =
-            Pattern.compile("^/([a-z0-9\\-]::[a-z0-9\\-]])$");
+            Pattern.compile("^/([a-z0-9\\-]+::[a-z0-9:]+)$");
 
     private static final Pattern PATH_SERVICE_METADATA =
-            Pattern.compile("^/([a-z0-9\\-]::[a-z0-9\\-])/services/([a-z0-9\\-]::[.+?])$");
+            Pattern.compile("^/([a-z0-9\\-]+::[a-z0-9:]+)/services/([a-z0-9\\-]+::.+)$");
 
     private PublisherService publisherService;
 
