@@ -90,7 +90,7 @@ public class PublisherServlet extends HttpServlet {
         ParticipantIdentifier participantIdentifier = ParticipantIdentifier.parse(participantParam);
 
         publisherService.serviceGroup(resp.getOutputStream(), req.getParameter("syntax"),
-                URI.create("http://localhost:8080/"), participantIdentifier);
+                URI.create(req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+"/"), participantIdentifier);
     }
 
     public void handleMetadataProvider(HttpServletRequest req, HttpServletResponse resp,
