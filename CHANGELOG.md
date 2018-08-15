@@ -1,9 +1,15 @@
 # Changelog
 
-
 ## Next release
 
+_Stay tuned._
+
+
+## 1.0.4
+
 * Throwing explicit exceptions in SbdhReader when information is not provided.
+* Fixing functionality in peppol-publisher.
+* Updated list of ICDs.
 
 
 ## 1.0.3

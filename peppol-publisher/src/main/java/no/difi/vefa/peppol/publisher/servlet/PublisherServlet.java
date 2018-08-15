@@ -90,7 +90,7 @@ public class PublisherServlet extends HttpServlet {
         ParticipantIdentifier participantIdentifier = ParticipantIdentifier.parse(participantParam);
 
         publisherService.serviceGroup(resp.getOutputStream(), req.getParameter("syntax"),
-                URI.create(req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+"/"), participantIdentifier);
+                URI.create(createPublisherRoot(req)), participantIdentifier);
     }
 
     public void handleMetadataProvider(HttpServletRequest req, HttpServletResponse resp,
@@ -101,5 +101,14 @@ public class PublisherServlet extends HttpServlet {
 
         publisherService.metadataProvider(resp.getOutputStream(), req.getParameter("syntax"),
                 participantIdentifier, documentTypeIdentifier);
+    }
+
+    private String createPublisherRoot(HttpServletRequest req) {
+        if ((req.getServerPort() == 80 && req.getScheme().equalsIgnoreCase("http")) ||
+                (req.getServerPort() == 443 && req.getScheme().equalsIgnoreCase("https"))) {
+            return req.getScheme() + "://" + req.getServerName() + "/";
+        } else {
+            return req.getScheme() + "://" + req.getServerName() + ":" + req.getServerPort() + "/";
+        }
     }
 }
