@@ -34,9 +34,11 @@
             <HandleError>
                 <CRL/>
             </HandleError>
-            <OCSP>
-                <IntermediateBucketReference>intermediate</IntermediateBucketReference>
-            </OCSP>
+            <HandleError>
+                <OCSP>
+                    <IntermediateBucketReference>intermediate</IntermediateBucketReference>
+                </OCSP>
+            </HandleError>
         </Cached>
     </Validator>
     <Validator name="AP" timeout="10">

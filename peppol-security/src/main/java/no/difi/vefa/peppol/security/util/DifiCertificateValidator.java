@@ -29,7 +29,10 @@ import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 public class DifiCertificateValidator implements CertificateValidator {
 
@@ -37,15 +40,20 @@ public class DifiCertificateValidator implements CertificateValidator {
 
     private Mode mode;
 
-    public DifiCertificateValidator(Mode mode) throws PeppolLoadingException {
+    public DifiCertificateValidator(Mode mode, Map<String, Object> objectStorage) throws PeppolLoadingException {
         this.mode = mode;
 
-        try {
-            validator = ValidatorLoader.newInstance().build(
-                    getClass().getResourceAsStream(mode.getString("security.pki")));
-        } catch (ValidatorParsingException e) {
+        try (InputStream inputStream = getClass().getResourceAsStream(mode.getString("security.pki"))) {
+            validator = ValidatorLoader.newInstance()
+                    .putAll(objectStorage)
+                    .build(inputStream);
+        } catch (ValidatorParsingException | IOException e) {
             throw new PeppolLoadingException("Unable to initiate PKI.", e);
         }
+    }
+
+    public DifiCertificateValidator(Mode mode) throws PeppolLoadingException {
+        this(mode, null);
     }
 
     @Override
