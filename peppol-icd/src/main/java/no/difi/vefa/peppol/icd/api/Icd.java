@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.icd.api;
 
+import lombok.Getter;
 import no.difi.vefa.peppol.common.model.Scheme;
 
 public interface Icd {
@@ -31,4 +32,30 @@ public interface Icd {
 
     String getIssuingAgency();
 
+    static Icd of(String identifier, String code, Scheme scheme) {
+        return new GenericIcd(identifier, code, scheme, null);
+    }
+
+    static Icd of(String identifier, String code, Scheme scheme, String issuingAgency) {
+        return new GenericIcd(identifier, code, scheme, issuingAgency);
+    }
+
+    @Getter
+    class GenericIcd implements Icd {
+
+        private final String identifier;
+
+        private final String code;
+
+        private final Scheme scheme;
+
+        private final String issuingAgency;
+
+        private GenericIcd(String identifier, String code, Scheme scheme, String issuingAgency) {
+            this.identifier = identifier;
+            this.code = code;
+            this.scheme = scheme;
+            this.issuingAgency = issuingAgency;
+        }
+    }
 }

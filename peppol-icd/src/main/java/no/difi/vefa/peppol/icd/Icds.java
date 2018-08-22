@@ -25,9 +25,11 @@ import no.difi.vefa.peppol.common.model.Scheme;
 import no.difi.vefa.peppol.icd.api.Icd;
 import no.difi.vefa.peppol.icd.model.IcdIdentifier;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author erlend
@@ -41,10 +43,10 @@ public class Icds {
     }
 
     private Icds(Icd[]... values) {
-        List<Icd> icds = new ArrayList<>();
-        for (Icd[] v : values)
-            icds.addAll(Arrays.asList(v));
-        this.values = icds;
+        this.values = Stream.of(values)
+                .map(Arrays::asList)
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
     }
 
     public IcdIdentifier parse(String s) throws PeppolParsingException {
@@ -69,26 +71,23 @@ public class Icds {
     }
 
     public Icd findBySchemeAndCode(Scheme scheme, String code) {
-        for (Icd v : values)
-            if (v.getCode().equals(code) && v.getScheme().equals(scheme))
-                return v;
-
-        throw new IllegalArgumentException(String.format("Value '%s::%s' is not valid ICD.", scheme, code));
+        return values.stream()
+                .filter(v -> v.getCode().equals(code) && v.getScheme().equals(scheme))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Value '%s::%s' is not valid ICD.", scheme, code)));
     }
 
     public Icd findByIdentifier(String identifier) {
-        for (Icd v : values)
-            if (v.getIdentifier().equals(identifier))
-                return v;
-
-        throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", identifier));
+        return values.stream()
+                .filter(v -> v.getIdentifier().equals(identifier))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", identifier)));
     }
 
     public Icd findByCode(String code) {
-        for (Icd v : values)
-            if (v.getCode().equals(code))
-                return v;
-
-        throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", code));
+        return values.stream()
+                .filter(v -> v.getCode().equals(code))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", code)));
     }
 }

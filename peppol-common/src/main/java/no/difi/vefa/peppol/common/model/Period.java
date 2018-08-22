@@ -1,5 +1,8 @@
 package no.difi.vefa.peppol.common.model;
 
+import lombok.Getter;
+import lombok.ToString;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -7,6 +10,8 @@ import java.util.Objects;
 /**
  * @author erlend
  */
+@Getter
+@ToString
 public class Period implements Serializable {
 
     private static final long serialVersionUID = 888582195965219162L;
@@ -24,14 +29,6 @@ public class Period implements Serializable {
         this.to = to;
     }
 
-    public Date getFrom() {
-        return from;
-    }
-
-    public Date getTo() {
-        return to;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,13 +41,5 @@ public class Period implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(from, to);
-    }
-
-    @Override
-    public String toString() {
-        return "Period{" +
-                "from=" + from +
-                ", to=" + to +
-                '}';
     }
 }

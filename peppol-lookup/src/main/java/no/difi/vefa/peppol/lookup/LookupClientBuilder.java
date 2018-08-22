@@ -32,15 +32,15 @@ public class LookupClientBuilder {
 
     private Mode mode;
 
-    private MetadataFetcher metadataFetcher;
+    protected MetadataFetcher metadataFetcher;
 
-    private MetadataLocator metadataLocator;
+    protected MetadataLocator metadataLocator;
 
-    private CertificateValidator certificateValidator = EmptyCertificateValidator.INSTANCE;
+    protected CertificateValidator certificateValidator = EmptyCertificateValidator.INSTANCE;
 
-    private MetadataProvider metadataProvider;
+    protected MetadataProvider metadataProvider;
 
-    private MetadataReader metadataReader;
+    protected MetadataReader metadataReader;
 
     public static LookupClientBuilder newInstance(Mode mode) {
         return new LookupClientBuilder(mode);
@@ -63,7 +63,7 @@ public class LookupClientBuilder {
         return forMode(Mode.TEST);
     }
 
-    LookupClientBuilder(Mode mode) {
+    private LookupClientBuilder(Mode mode) {
         this.mode = mode;
     }
 
@@ -119,7 +119,6 @@ public class LookupClientBuilder {
         if (metadataReader == null)
             reader(mode.initiate("lookup.reader.class", MetadataReader.class));
 
-        return new LookupClient(metadataLocator, metadataProvider,
-                metadataFetcher, metadataReader, certificateValidator);
+        return new LookupClient(this);
     }
 }

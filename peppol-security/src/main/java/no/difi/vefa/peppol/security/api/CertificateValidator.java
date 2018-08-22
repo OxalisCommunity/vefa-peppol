@@ -24,7 +24,10 @@ import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.security.cert.X509Certificate;
 
+@FunctionalInterface
 public interface CertificateValidator {
+
+    CertificateValidator EMPTY = (service, certificate) -> {};
 
     void validate(Service service, X509Certificate certificate) throws PeppolSecurityException;
     

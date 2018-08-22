@@ -25,9 +25,10 @@ import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
 
 import java.security.cert.X509Certificate;
 
+@Deprecated
 public class EmptyCertificateValidator implements CertificateValidator {
 
-    public static final CertificateValidator INSTANCE = new EmptyCertificateValidator();
+    public static final CertificateValidator INSTANCE = CertificateValidator.EMPTY;
 
     @Override
     public void validate(Service service, X509Certificate certificate) throws PeppolSecurityException {

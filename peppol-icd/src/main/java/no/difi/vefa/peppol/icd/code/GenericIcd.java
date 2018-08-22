@@ -25,48 +25,15 @@ import no.difi.vefa.peppol.icd.api.Icd;
 /**
  * @author erlend
  */
-public class GenericIcd implements Icd {
+public class GenericIcd {
 
-    private final String identifier;
-
-    private final String code;
-
-    private final Scheme scheme;
-
-    private final String issuingAgency;
-
+    @Deprecated
     public static Icd of(String identifier, String code, Scheme scheme) {
-        return new GenericIcd(identifier, code, scheme, null);
+        return Icd.of(identifier, code, scheme);
     }
 
+    @Deprecated
     public static Icd of(String identifier, String code, Scheme scheme, String issuingAgency) {
-        return new GenericIcd(identifier, code, scheme, issuingAgency);
-    }
-
-    private GenericIcd(String identifier, String code, Scheme scheme, String issuingAgency) {
-        this.identifier = identifier;
-        this.code = code;
-        this.scheme = scheme;
-        this.issuingAgency = issuingAgency;
-    }
-
-    @Override
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public Scheme getScheme() {
-        return scheme;
-    }
-
-    @Override
-    public String getIssuingAgency() {
-        return null;
+        return Icd.of(identifier, code, scheme, issuingAgency);
     }
 }

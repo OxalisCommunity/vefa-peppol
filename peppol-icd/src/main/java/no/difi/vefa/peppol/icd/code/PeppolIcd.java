@@ -19,9 +19,13 @@
 
 package no.difi.vefa.peppol.icd.code;
 
-import no.difi.vefa.peppol.icd.api.Icd;
+import lombok.Getter;
 import no.difi.vefa.peppol.common.model.Scheme;
+import no.difi.vefa.peppol.icd.api.Icd;
 
+import java.util.stream.Stream;
+
+@Getter
 public enum PeppolIcd implements Icd {
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
     SE_ORGNR("SE:ORGNR", "0007", "The National Tax Board"),
@@ -109,31 +113,15 @@ public enum PeppolIcd implements Icd {
     }
 
     @Override
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    public String getCode() {
-        return code;
-    }
-
-    @Override
     public Scheme getScheme() {
         return SCHEME;
     }
 
-    @Override
-    public String getIssuingAgency() {
-        return issuingAgency;
-    }
-
     public static Icd findByCode(String icd) {
-        for (PeppolIcd v : values())
-            if (v.code.equals(icd))
-                return v;
-
-        throw new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", icd));
+        return Stream.of(values())
+                .filter(v -> v.code.equals(icd))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", icd)));
     }
 
     public static Icd findByIdentifier(String icd) {

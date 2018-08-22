@@ -44,13 +44,12 @@ public class LookupClient {
 
     private CertificateValidator validator;
 
-    LookupClient(MetadataLocator locator, MetadataProvider provider, MetadataFetcher fetcher,
-                 MetadataReader reader, CertificateValidator validator) {
-        this.locator = locator;
-        this.provider = provider;
-        this.fetcher = fetcher;
-        this.reader = reader;
-        this.validator = validator;
+    protected LookupClient(LookupClientBuilder builder) {
+        this.locator = builder.metadataLocator;
+        this.provider = builder.metadataProvider;
+        this.fetcher = builder.metadataFetcher;
+        this.reader = builder.metadataReader;
+        this.validator = builder.certificateValidator;
     }
 
     @Deprecated
