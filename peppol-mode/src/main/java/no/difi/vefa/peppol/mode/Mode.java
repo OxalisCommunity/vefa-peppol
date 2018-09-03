@@ -24,6 +24,7 @@ import com.typesafe.config.ConfigFactory;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 public class Mode {
 
@@ -82,21 +83,38 @@ public class Mode {
     }
 
     @SuppressWarnings({"unchecked", "unused"})
-    public <T> T initiate(String key, Class<T> type) throws PeppolLoadingException {
+    public <T> T initiate(String key, Class<T> type, Map<String, Object> objectStorage) throws PeppolLoadingException {
         try {
-            return (T) initiate(Class.forName(getString(key)));
+            return (T) initiate(Class.forName(getString(key)), objectStorage);
         } catch (ClassNotFoundException e) {
             throw new PeppolLoadingException(String.format("Unable to initiate '%s'", getString(key)), e);
         }
     }
 
+    @SuppressWarnings({"unchecked", "unused"})
+    public <T> T initiate(String key, Class<T> type) throws PeppolLoadingException {
+        return initiate(key, type, null);
+    }
+
     public <T> T initiate(Class<T> cls) throws PeppolLoadingException {
+        return initiate(cls, null);
+    }
+
+    public <T> T initiate(Class<T> cls, Map<String, Object> objectStorage) throws PeppolLoadingException {
         try {
+            try {
+                return cls.getConstructor(Mode.class, Map.class).newInstance(this, objectStorage);
+            } catch (NoSuchMethodException e) {
+                // No action
+            }
+
             try {
                 return cls.getConstructor(Mode.class).newInstance(this);
             } catch (NoSuchMethodException e) {
-                return cls.newInstance();
+                // No action
             }
+
+            return cls.newInstance();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             throw new PeppolLoadingException(String.format("Unable to initiate '%s'", cls), e);
         }

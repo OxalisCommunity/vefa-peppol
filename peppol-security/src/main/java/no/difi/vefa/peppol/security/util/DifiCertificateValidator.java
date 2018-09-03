@@ -40,6 +40,10 @@ public class DifiCertificateValidator implements CertificateValidator {
 
     private Mode mode;
 
+    public DifiCertificateValidator(Mode mode) throws PeppolLoadingException {
+        this(mode, null);
+    }
+
     public DifiCertificateValidator(Mode mode, Map<String, Object> objectStorage) throws PeppolLoadingException {
         this.mode = mode;
 
@@ -50,10 +54,6 @@ public class DifiCertificateValidator implements CertificateValidator {
         } catch (ValidatorParsingException | IOException e) {
             throw new PeppolLoadingException("Unable to initiate PKI.", e);
         }
-    }
-
-    public DifiCertificateValidator(Mode mode) throws PeppolLoadingException {
-        this(mode, null);
     }
 
     @Override

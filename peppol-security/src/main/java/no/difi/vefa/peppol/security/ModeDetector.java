@@ -30,21 +30,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.security.cert.X509Certificate;
+import java.util.Map;
 
 public class ModeDetector {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ModeDetector.class);
 
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
-        return detect(certificate, ConfigFactory.load());
+        return detect(certificate, ConfigFactory.load(), null);
     }
 
-    public static Mode detect(X509Certificate certificate, Config config) throws PeppolLoadingException {
+    public static Mode detect(X509Certificate certificate, Config config, Map<String, Object> objectStorage) throws PeppolLoadingException {
         for (String token : config.getObject("mode").keySet()) {
             if (!"default".equals(token)) {
                 try {
                     Mode mode = Mode.of(config, token);
-                    mode.initiate("security.validator.class", CertificateValidator.class)
+                    mode.initiate("security.validator.class", CertificateValidator.class, objectStorage)
                             .validate(Service.ALL, certificate);
                     return mode;
                 } catch (PeppolSecurityException e) {
