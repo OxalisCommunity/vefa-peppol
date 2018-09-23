@@ -19,7 +19,6 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.model.Receipt;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.evidence.jaxb.receipt.OriginalReceiptType;
@@ -149,12 +148,9 @@ public class EvidenceWriter {
     }
 
     private void write(final Result result) throws RemEvidenceException {
-        ExceptionUtil.perform(RemEvidenceException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                Marshaller marshaller = RemHelper.getMarshaller();
-                marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), result);
-            }
+        ExceptionUtil.perform(RemEvidenceException.class, () -> {
+            Marshaller marshaller = RemHelper.getMarshaller();
+            marshaller.marshal(evidence.getType().toJAXBElement(remEvidence), result);
         });
     }
 }

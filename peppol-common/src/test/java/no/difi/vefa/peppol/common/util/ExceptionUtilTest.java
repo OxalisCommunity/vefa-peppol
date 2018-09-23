@@ -19,8 +19,6 @@
 
 package no.difi.vefa.peppol.common.util;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.lang.PeppolException;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import org.testng.annotations.Test;
@@ -36,65 +34,39 @@ public class ExceptionUtilTest {
 
     @Test
     public void simpleNoException() throws Exception {
-        ExceptionUtil.perform(Exception.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                // No action.
-            }
+        ExceptionUtil.perform(Exception.class, () -> {
         });
 
-        ExceptionUtil.perform(Exception.class, new PerformResult<Object>() {
-            @Override
-            public Object action() throws Exception {
-                return null;
-            }
-        });
+        ExceptionUtil.perform(Exception.class, () -> null);
 
-        ExceptionUtil.perform(Exception.class, "Not to be thrown.", new PerformResult<Object>() {
-            @Override
-            public Object action() throws Exception {
-                return null;
-            }
-        });
+        ExceptionUtil.perform(Exception.class, "Not to be thrown.", () -> null);
     }
 
     @Test(expectedExceptions = IOException.class, expectedExceptionsMessageRegExp = "1337")
     public void simpleThrowIOException() throws Exception {
-        ExceptionUtil.perform(IOException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                throw new Exception("1337");
-            }
+        ExceptionUtil.perform(IOException.class, () -> {
+            throw new Exception("1337");
         });
     }
 
     @Test(expectedExceptions = PeppolException.class, expectedExceptionsMessageRegExp = "42")
     public void simpleThrowPeppolException() throws Exception {
-        ExceptionUtil.perform(PeppolException.class, new PerformResult<Object>() {
-            @Override
-            public Object action() throws Exception {
-                throw new Exception("42");
-            }
+        ExceptionUtil.perform(PeppolException.class, () -> {
+            throw new Exception("42");
         });
     }
 
     @Test(expectedExceptions = PeppolRuntimeException.class, expectedExceptionsMessageRegExp = "1000")
     public void simpleThrowPeppolRuntimeException() throws Exception {
-        ExceptionUtil.perform(PeppolRuntimeException.class, "1000", new PerformResult<Object>() {
-            @Override
-            public Object action() throws Exception {
-                throw new Exception("2000");
-            }
+        ExceptionUtil.perform(PeppolRuntimeException.class, "1000", () -> {
+            throw new Exception("2000");
         });
     }
 
     @Test(expectedExceptions = PeppolRuntimeException.class)
     public void simpleTooSimpleExtension() throws Exception {
-        ExceptionUtil.perform(SimpleExtension.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                throw new Exception("Test");
-            }
+        ExceptionUtil.perform(SimpleExtension.class, () -> {
+            throw new Exception("Test");
         });
     }
 

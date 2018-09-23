@@ -19,8 +19,6 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.Scheme;
@@ -53,12 +51,9 @@ class RemHelper {
     private static DatatypeFactory datatypeFactory;
 
     static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
-                datatypeFactory = DatatypeFactory.newInstance();
-            }
+        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+            jaxbContext = JAXBContext.newInstance(REMEvidenceType.class, PeppolRemExtension.class);
+            datatypeFactory = DatatypeFactory.newInstance();
         });
     }
 
@@ -104,11 +99,6 @@ class RemHelper {
     }
 
     public static DocumentBuilder getDocumentBuilder() throws RemEvidenceException {
-        return ExceptionUtil.perform(RemEvidenceException.class, new PerformResult<DocumentBuilder>() {
-            @Override
-            public DocumentBuilder action() throws Exception {
-                return DomUtils.newDocumentBuilder();
-            }
-        });
+        return ExceptionUtil.perform(RemEvidenceException.class, () -> DomUtils.newDocumentBuilder());
     }
 }

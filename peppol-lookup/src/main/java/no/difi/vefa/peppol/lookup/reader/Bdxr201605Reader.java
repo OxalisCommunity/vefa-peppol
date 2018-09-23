@@ -20,7 +20,6 @@
 package no.difi.vefa.peppol.lookup.reader;
 
 import no.difi.commons.bdx.jaxb.smp._2016._05.*;
-import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
@@ -69,13 +68,10 @@ public class Bdxr201605Reader implements MetadataReader {
     private static CertificateFactory certificateFactory;
 
     static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
-                        ServiceMetadataType.class);
-                certificateFactory = CertificateFactory.getInstance("X.509");
-            }
+        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
+                    ServiceMetadataType.class);
+            certificateFactory = CertificateFactory.getInstance("X.509");
         });
     }
 

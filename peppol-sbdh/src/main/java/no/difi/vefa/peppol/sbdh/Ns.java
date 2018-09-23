@@ -21,18 +21,18 @@ package no.difi.vefa.peppol.sbdh;
 
 import javax.xml.namespace.QName;
 
-public class Ns {
+public interface Ns {
 
-    public static final String SBDH = "http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader";
+    String SBDH = "http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader";
 
-    public static final String EXTENSION = "http://peppol.eu/xsd/ticc/envelope/1.0";
+    String EXTENSION = "http://peppol.eu/xsd/ticc/envelope/1.0";
 
-    public static final QName QNAME_BINARY_CONTENT = new QName(EXTENSION, "BinaryContent");
+    QName QNAME_BINARY_CONTENT = new QName(EXTENSION, "BinaryContent");
 
-    public static final QName QNAME_TEXT_CONTENT = new QName(EXTENSION, "TextContent");
+    QName QNAME_TEXT_CONTENT = new QName(EXTENSION, "TextContent");
 
-    public static final QName QNAME_SBD = new QName(SBDH, "StandardBusinessDocument");
+    QName QNAME_SBD = new QName(SBDH, "StandardBusinessDocument");
 
-    public static final QName QNAME_SBDH = new QName(SBDH, "StandardBusinessDocumentHeader");
+    QName QNAME_SBDH = new QName(SBDH, "StandardBusinessDocumentHeader");
 
 }

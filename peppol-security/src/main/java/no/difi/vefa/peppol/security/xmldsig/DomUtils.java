@@ -19,7 +19,6 @@
 
 package no.difi.vefa.peppol.security.xmldsig;
 
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -56,11 +55,7 @@ public class DomUtils {
     }
 
     public static DocumentBuilder newDocumentBuilder() {
-        return ExceptionUtil.perform(IllegalStateException.class, new PerformResult<DocumentBuilder>() {
-            @Override
-            public DocumentBuilder action() throws Exception {
-                return documentBuilderFactory.newDocumentBuilder();
-            }
-        });
+        return ExceptionUtil.perform(IllegalStateException.class,
+                documentBuilderFactory::newDocumentBuilder);
     }
 }

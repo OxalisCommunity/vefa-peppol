@@ -21,8 +21,8 @@ package no.difi.vefa.peppol.sbdh;
 
 import no.difi.commons.sbdh.jaxb.*;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
-import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ArgumentIdentifier;
+import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
@@ -36,38 +36,26 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-class SbdhHelper {
+interface SbdhHelper {
 
-    public static JAXBContext JAXB_CONTEXT;
+    JAXBContext JAXB_CONTEXT = ExceptionUtil.perform(PeppolRuntimeException.class, () ->
+            JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class));
 
-    public static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
+    ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
-    public static XMLInputFactory XML_INPUT_FACTORY;
+    XMLInputFactory XML_INPUT_FACTORY = ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+        XMLInputFactory factory = XMLInputFactory.newFactory();
+        factory.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+        factory.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+        return factory;
+    });
 
-    public static XMLOutputFactory XML_OUTPUT_FACTORY;
+    XMLOutputFactory XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
 
-    public static DatatypeFactory DATATYPE_FACTORY;
+    DatatypeFactory DATATYPE_FACTORY = ExceptionUtil.perform(PeppolRuntimeException.class, () ->
+            DatatypeFactory.newInstance());
 
-    static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
-            JAXB_CONTEXT =
-                    JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
-
-            XML_INPUT_FACTORY = XMLInputFactory.newFactory();
-            XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-            XML_INPUT_FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
-
-            XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
-
-            DATATYPE_FACTORY = DatatypeFactory.newInstance();
-        });
-    }
-
-    SbdhHelper() {
-
-    }
-
-    public static Partner createPartner(ParticipantIdentifier participant) {
+    static Partner createPartner(ParticipantIdentifier participant) {
         PartnerIdentification partnerIdentification = new PartnerIdentification();
         partnerIdentification.setAuthority(participant.getScheme().getIdentifier());
         partnerIdentification.setValue(participant.getIdentifier());
@@ -78,14 +66,14 @@ class SbdhHelper {
         return partner;
     }
 
-    public static BusinessScope createBusinessScope(List<Scope> scopes) {
+    static BusinessScope createBusinessScope(List<Scope> scopes) {
         BusinessScope businessScope = new BusinessScope();
         businessScope.getScope().addAll(scopes);
 
         return businessScope;
     }
 
-    public static Scope createScope(ProcessIdentifier processIdentifier) {
+    static Scope createScope(ProcessIdentifier processIdentifier) {
         Scope scope = new Scope();
         scope.setType("PROCESSID");
         scope.setInstanceIdentifier(processIdentifier.getIdentifier());
@@ -95,7 +83,7 @@ class SbdhHelper {
         return scope;
     }
 
-    public static Scope createScope(DocumentTypeIdentifier documentTypeIdentifier) {
+    static Scope createScope(DocumentTypeIdentifier documentTypeIdentifier) {
         Scope scope = new Scope();
         scope.setType("DOCUMENTID");
         scope.setInstanceIdentifier(documentTypeIdentifier.getIdentifier());
@@ -105,7 +93,7 @@ class SbdhHelper {
         return scope;
     }
 
-    public static Scope createScope(ArgumentIdentifier argumentIdentifier) {
+    static Scope createScope(ArgumentIdentifier argumentIdentifier) {
         Scope scope = new Scope();
         scope.setType(argumentIdentifier.getKey());
         scope.setInstanceIdentifier(argumentIdentifier.getIdentifier());
@@ -113,13 +101,13 @@ class SbdhHelper {
         return scope;
     }
 
-    public static XMLGregorianCalendar toXmlGregorianCalendar(Date date) {
+    static XMLGregorianCalendar toXmlGregorianCalendar(Date date) {
         GregorianCalendar c = new GregorianCalendar();
         c.setTime(date);
         return DATATYPE_FACTORY.newXMLGregorianCalendar(c);
     }
 
-    public static Date fromXMLGregorianCalendar(XMLGregorianCalendar calendar) {
+    static Date fromXMLGregorianCalendar(XMLGregorianCalendar calendar) {
         return calendar.toGregorianCalendar().getTime();
     }
 }

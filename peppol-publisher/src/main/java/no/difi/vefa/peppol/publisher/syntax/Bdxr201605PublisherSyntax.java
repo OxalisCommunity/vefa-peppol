@@ -20,7 +20,6 @@
 package no.difi.vefa.peppol.publisher.syntax;
 
 import no.difi.commons.bdx.jaxb.smp._2016._05.*;
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.publisher.annotation.Syntax;
@@ -48,23 +47,15 @@ import java.util.List;
 public class Bdxr201605PublisherSyntax implements PublisherSyntax {
 
     private static final DatatypeFactory DATATYPE_FACTORY =
-            ExceptionUtil.perform(IllegalStateException.class, new PerformResult<DatatypeFactory>() {
-                @Override
-                public DatatypeFactory action() throws Exception {
-                    return DatatypeFactory.newInstance();
-                }
-            });
+            ExceptionUtil.perform(IllegalStateException.class, () ->
+                    DatatypeFactory.newInstance());
 
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
     private static final JAXBContext JAXB_CONTEXT =
-            ExceptionUtil.perform(IllegalStateException.class, new PerformResult<JAXBContext>() {
-                @Override
-                public JAXBContext action() throws Exception {
-                    return JAXBContext.newInstance(ServiceGroupType.class,
-                            ServiceMetadataType.class, SignedServiceMetadataType.class);
-                }
-            });
+            ExceptionUtil.perform(IllegalStateException.class, () ->
+                    JAXBContext.newInstance(ServiceGroupType.class,
+                            ServiceMetadataType.class, SignedServiceMetadataType.class));
 
     @SuppressWarnings("all")
     @Override

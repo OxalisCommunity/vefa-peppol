@@ -30,11 +30,6 @@ import java.util.Date;
 public class XMLStreamUtilsTest {
 
     @Test
-    public void simpleConstructor() {
-        new XMLStreamUtils();
-    }
-
-    @Test
     public void simpleCopy() throws Exception {
         Header header = Header.newInstance()
                 .sender(ParticipantIdentifier.of("9908:987654325"))

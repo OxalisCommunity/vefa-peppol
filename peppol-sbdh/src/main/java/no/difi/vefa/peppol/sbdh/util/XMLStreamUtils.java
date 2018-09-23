@@ -25,33 +25,33 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-public class XMLStreamUtils {
+public interface XMLStreamUtils {
 
-    public static void copy(Reader reader, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
+    static void copy(Reader reader, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
         XMLStreamReader xmlStreamReader = XMLInputFactory.newFactory().createXMLStreamReader(reader);
         copy(xmlStreamReader, xmlStreamWriter);
         xmlStreamReader.close();
     }
 
-    public static void copy(XMLStreamReader xmlStreamReader, Writer writer) throws XMLStreamException {
+    static void copy(XMLStreamReader xmlStreamReader, Writer writer) throws XMLStreamException {
         XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(writer);
         copy(xmlStreamReader, xmlStreamWriter);
         xmlStreamWriter.close();
     }
 
-    public static void copy(InputStream inputStream, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
+    static void copy(InputStream inputStream, XMLStreamWriter xmlStreamWriter) throws XMLStreamException {
         XMLStreamReader xmlStreamReader = XMLInputFactory.newFactory().createXMLStreamReader(inputStream, "UTF-8");
         copy(xmlStreamReader, xmlStreamWriter);
         xmlStreamReader.close();
     }
 
-    public static void copy(XMLStreamReader xmlStreamReader, OutputStream outputStream) throws XMLStreamException {
+    static void copy(XMLStreamReader xmlStreamReader, OutputStream outputStream) throws XMLStreamException {
         XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newFactory().createXMLStreamWriter(outputStream, "UTF-8");
         copy(xmlStreamReader, xmlStreamWriter);
         xmlStreamWriter.close();
     }
 
-    public static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
+    static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
         boolean hasNext;
 
         do {

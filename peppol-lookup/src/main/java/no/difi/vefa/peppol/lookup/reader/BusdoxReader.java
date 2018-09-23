@@ -21,7 +21,6 @@ package no.difi.vefa.peppol.lookup.reader;
 
 import com.google.common.collect.Lists;
 import no.difi.commons.busdox.jaxb.smp.*;
-import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.api.PotentiallySigned;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.*;
@@ -71,13 +70,10 @@ public class BusdoxReader implements MetadataReader {
     private static CertificateFactory certificateFactory;
 
     static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
-                        ServiceMetadataType.class);
-                certificateFactory = CertificateFactory.getInstance("X.509");
-            }
+        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+            jaxbContext = JAXBContext.newInstance(ServiceGroupType.class, SignedServiceMetadataType.class,
+                    ServiceMetadataType.class);
+            certificateFactory = CertificateFactory.getInstance("X.509");
         });
     }
 

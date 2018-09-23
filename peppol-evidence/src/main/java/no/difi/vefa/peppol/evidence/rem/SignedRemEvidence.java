@@ -19,7 +19,6 @@
 
 package no.difi.vefa.peppol.evidence.rem;
 
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.InstanceIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -45,8 +44,8 @@ import java.util.List;
  * representations like for instance XML and JAXB
  *
  * @author steinar
- *         Date: 27.11.2015
- *         Time: 11.50
+ * Date: 27.11.2015
+ * Time: 11.50
  */
 public class SignedRemEvidence {
 
@@ -99,14 +98,9 @@ public class SignedRemEvidence {
     }
 
     public String getEvidenceIssuerDetails() throws RemEvidenceException {
-        return ExceptionUtil.perform(RemEvidenceException.class, "There are no Event Issuer Details",
-                new PerformResult<String>() {
-                    @Override
-                    public String action() throws Exception {
-                        return e().getEvidenceIssuerDetails().getNamesPostalAddresses()
-                                .getNamePostalAddress().get(0).getEntityName().getName().get(0);
-                    }
-                });
+        return ExceptionUtil.perform(RemEvidenceException.class, "There are no Event Issuer Details", () ->
+                e().getEvidenceIssuerDetails().getNamesPostalAddresses()
+                        .getNamePostalAddress().get(0).getEntityName().getName().get(0));
     }
 
     public ParticipantIdentifier getSenderIdentifier() {

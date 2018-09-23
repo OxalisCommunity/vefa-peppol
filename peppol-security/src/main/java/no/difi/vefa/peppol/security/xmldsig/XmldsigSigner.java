@@ -19,7 +19,6 @@
 
 package no.difi.vefa.peppol.security.xmldsig;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
@@ -55,13 +54,9 @@ public class XmldsigSigner {
     private String signatureMethod;
 
     static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                transformerFactory = TransformerFactory.newInstance();
-
-                xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
-            }
+        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+            transformerFactory = TransformerFactory.newInstance();
+            xmlSignatureFactory = XMLSignatureFactory.getInstance("DOM");
         });
     }
 
