@@ -19,8 +19,6 @@
 
 package no.difi.vefa.peppol.sbdh;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
@@ -42,12 +40,9 @@ public class SbdReader implements Closeable {
     private Header header;
 
     public static SbdReader newInstance(final InputStream inputStream) throws SbdhException {
-        return ExceptionUtil.perform(SbdhException.class, new PerformResult<SbdReader>() {
-            @Override
-            public SbdReader action() throws Exception {
-                return newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream));
-            }
-        });
+        return ExceptionUtil.perform(SbdhException.class, () ->
+                newInstance(SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream))
+        );
     }
 
     public static SbdReader newInstance(XMLStreamReader xmlStreamReader) throws SbdhException {
@@ -110,12 +105,7 @@ public class SbdReader implements Closeable {
 
     @Override
     public void close() throws IOException {
-        ExceptionUtil.perform(IOException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                reader.close();
-            }
-        });
+        ExceptionUtil.perform(IOException.class, reader::close);
     }
 
     public enum Type {

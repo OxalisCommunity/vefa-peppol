@@ -20,9 +20,9 @@
 package no.difi.vefa.peppol.sbdh;
 
 import no.difi.commons.sbdh.jaxb.*;
-import no.difi.vefa.peppol.common.api.PerformAction;
 import no.difi.vefa.peppol.common.lang.PeppolRuntimeException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
+import no.difi.vefa.peppol.common.model.ArgumentIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.common.model.ProcessIdentifier;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
@@ -34,6 +34,7 @@ import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLOutputFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 class SbdhHelper {
 
@@ -48,20 +49,17 @@ class SbdhHelper {
     public static DatatypeFactory DATATYPE_FACTORY;
 
     static {
-        ExceptionUtil.perform(PeppolRuntimeException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                JAXB_CONTEXT =
-                        JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
+        ExceptionUtil.perform(PeppolRuntimeException.class, () -> {
+            JAXB_CONTEXT =
+                    JAXBContext.newInstance(StandardBusinessDocument.class, StandardBusinessDocumentHeader.class);
 
-                XML_INPUT_FACTORY = XMLInputFactory.newFactory();
-                XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
-                XML_INPUT_FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
+            XML_INPUT_FACTORY = XMLInputFactory.newFactory();
+            XML_INPUT_FACTORY.setProperty(XMLInputFactory.SUPPORT_DTD, false);
+            XML_INPUT_FACTORY.setProperty("javax.xml.stream.isSupportingExternalEntities", false);
 
-                XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
+            XML_OUTPUT_FACTORY = XMLOutputFactory.newFactory();
 
-                DATATYPE_FACTORY = DatatypeFactory.newInstance();
-            }
+            DATATYPE_FACTORY = DatatypeFactory.newInstance();
         });
     }
 
@@ -80,10 +78,9 @@ class SbdhHelper {
         return partner;
     }
 
-    public static BusinessScope createBusinessScope(Scope... scopes) {
+    public static BusinessScope createBusinessScope(List<Scope> scopes) {
         BusinessScope businessScope = new BusinessScope();
-        for (Scope scope : scopes)
-            businessScope.getScope().add(scope);
+        businessScope.getScope().addAll(scopes);
 
         return businessScope;
     }
@@ -104,6 +101,14 @@ class SbdhHelper {
         scope.setInstanceIdentifier(documentTypeIdentifier.getIdentifier());
         if (!documentTypeIdentifier.getScheme().equals(DocumentTypeIdentifier.DEFAULT_SCHEME))
             scope.setIdentifier(documentTypeIdentifier.getScheme().getIdentifier());
+
+        return scope;
+    }
+
+    public static Scope createScope(ArgumentIdentifier argumentIdentifier) {
+        Scope scope = new Scope();
+        scope.setType(argumentIdentifier.getKey());
+        scope.setInstanceIdentifier(argumentIdentifier.getIdentifier());
 
         return scope;
     }

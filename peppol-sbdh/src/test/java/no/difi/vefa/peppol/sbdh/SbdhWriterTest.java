@@ -68,11 +68,6 @@ public class SbdhWriterTest {
 
     }
 
-    @Test
-    public void simpleConstructor() {
-        new SbdhWriter();
-    }
-
     @Test(expectedExceptions = SbdhException.class)
     public void triggerExceptionUsingXMLStreamWriter() throws Exception {
         SbdhWriter.write(Mockito.mock(XMLStreamWriter.class), null);

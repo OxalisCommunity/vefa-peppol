@@ -20,6 +20,7 @@
 package no.difi.vefa.peppol.sbdh;
 
 import no.difi.commons.sbdh.jaxb.DocumentIdentification;
+import no.difi.commons.sbdh.jaxb.Scope;
 import no.difi.commons.sbdh.jaxb.StandardBusinessDocumentHeader;
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
@@ -27,14 +28,12 @@ import no.difi.vefa.peppol.sbdh.lang.SbdhException;
 import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-public class SbdhWriter {
+public interface SbdhWriter {
 
-    SbdhWriter() {
-
-    }
-
-    public static void write(OutputStream outputStream, Header header) throws SbdhException {
+    static void write(OutputStream outputStream, Header header) throws SbdhException {
         try {
             XMLStreamWriter streamWriter = SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
             streamWriter.writeStartDocument("UTF-8", "1.0");
@@ -46,7 +45,7 @@ public class SbdhWriter {
         }
     }
 
-    public static void write(XMLStreamWriter streamWriter, Header header) throws SbdhException {
+    static void write(XMLStreamWriter streamWriter, Header header) throws SbdhException {
         try {
             StandardBusinessDocumentHeader sbdh = new StandardBusinessDocumentHeader();
             sbdh.setHeaderVersion("1.0");
@@ -70,12 +69,15 @@ public class SbdhWriter {
             sbdh.getDocumentIdentification().setCreationDateAndTime(
                     SbdhHelper.toXmlGregorianCalendar(header.getCreationTimestamp()));
 
-            sbdh.setBusinessScope(SbdhHelper.createBusinessScope(
-                            // DocumentID
-                            SbdhHelper.createScope(header.getDocumentType()),
-                            // ProcessID
-                            SbdhHelper.createScope(header.getProcess()))
-            );
+            List<Scope> scopes = new ArrayList<>();
+            // DocumentID
+            scopes.add(SbdhHelper.createScope(header.getDocumentType()));
+            // ProcessID
+            scopes.add(SbdhHelper.createScope(header.getProcess()));
+            // Extras
+            header.getArguments().forEach(ai -> scopes.add(SbdhHelper.createScope(ai)));
+
+            sbdh.setBusinessScope(SbdhHelper.createBusinessScope(scopes));
 
             // Marshal!
             Marshaller marshaller = SbdhHelper.JAXB_CONTEXT.createMarshaller();

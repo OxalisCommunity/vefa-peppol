@@ -41,7 +41,7 @@ public class SbdhReaderTest {
                 .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"))
                 .documentType(DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
-                        "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
+                                "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
                                 ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
                 .instanceType(
                         InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
@@ -64,10 +64,5 @@ public class SbdhReaderTest {
     @Test(expectedExceptions = SbdhException.class)
     public void triggerExceptionUsingXMLStreamReader() throws Exception {
         SbdhReader.read(Mockito.mock(XMLStreamReader.class));
-    }
-
-    @Test
-    public void simpleConstructor() {
-        new SbdhReader();
     }
 }

@@ -19,9 +19,13 @@
 
 package no.difi.vefa.peppol.common.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import lombok.Getter;
 
+import java.io.Serializable;
+import java.util.*;
+import java.util.function.Consumer;
+
+@Getter
 public class Header implements Serializable {
 
     private static final long serialVersionUID = -7517561747468194479L;
@@ -40,6 +44,8 @@ public class Header implements Serializable {
 
     private Date creationTimestamp;
 
+    private Map<String, ArgumentIdentifier> arguments = new HashMap<>();
+
     public static Header newInstance() {
         return new Header();
     }
@@ -48,21 +54,21 @@ public class Header implements Serializable {
                             DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
                             InstanceType instanceType, Date creationTimestamp) {
         return new Header(sender, receiver, process, documentType, identifier,
-                instanceType, creationTimestamp);
+                instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                             DocumentTypeIdentifier documentType) {
-        return new Header(sender, receiver, process, documentType, null, null, null);
+        return new Header(sender, receiver, process, documentType, null, null, null, null);
     }
 
-    private Header() {
+    public Header() {
         // No action.
     }
 
     private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                    DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
-                   Date creationTimestamp) {
+                   Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
         this.sender = sender;
         this.receiver = receiver;
         this.process = process;
@@ -70,106 +76,71 @@ public class Header implements Serializable {
         this.identifier = identifier;
         this.instanceType = instanceType;
         this.creationTimestamp = creationTimestamp;
-    }
-
-    public ParticipantIdentifier getSender() {
-        return sender;
+        this.arguments = arguments == null ? this.arguments : arguments;
     }
 
     public Header sender(ParticipantIdentifier sender) {
-        Header header = copy();
-        header.sender = sender;
-        return header;
-    }
-
-    public ParticipantIdentifier getReceiver() {
-        return receiver;
+        return copy(h -> h.sender = sender);
     }
 
     public Header receiver(ParticipantIdentifier receiver) {
-        Header header = copy();
-        header.receiver = receiver;
-        return header;
-    }
-
-    public ProcessIdentifier getProcess() {
-        return process;
+        return copy(h -> h.receiver = receiver);
     }
 
     public Header process(ProcessIdentifier process) {
-        Header header = copy();
-        header.process = process;
-        return header;
-    }
-
-    public DocumentTypeIdentifier getDocumentType() {
-        return documentType;
+        return copy(h -> h.process = process);
     }
 
     public Header documentType(DocumentTypeIdentifier documentType) {
-        Header header = copy();
-        header.documentType = documentType;
-        return header;
-    }
-
-    public InstanceIdentifier getIdentifier() {
-        return identifier;
+        return copy(h -> h.documentType = documentType);
     }
 
     public Header identifier(InstanceIdentifier identifier) {
-        Header header = copy();
-        header.identifier = identifier;
-        return header;
-    }
-
-    public InstanceType getInstanceType() {
-        return instanceType;
+        return copy(h -> h.identifier = identifier);
     }
 
     public Header instanceType(InstanceType instanceType) {
-        Header header = copy();
-        header.instanceType = instanceType;
-        return header;
-    }
-
-    public Date getCreationTimestamp() {
-        return creationTimestamp;
+        return copy(h -> h.instanceType = instanceType);
     }
 
     public Header creationTimestamp(Date creationTimestamp) {
-        Header header = copy();
-        header.creationTimestamp = creationTimestamp;
-        return header;
+        return copy(h -> h.creationTimestamp = creationTimestamp);
+    }
+
+    public Header argument(ArgumentIdentifier identifier) {
+        return copy(h -> h.arguments.put(identifier.getKey(), identifier));
+    }
+
+    public Header arguments(List<ArgumentIdentifier> extras) {
+        return copy(h -> extras.forEach(ai -> h.arguments.put(ai.getKey(), ai)));
+    }
+
+    public ArgumentIdentifier getArgument(String key) {
+        return arguments.get(key);
+    }
+
+    public List<ArgumentIdentifier> getArguments() {
+        return new ArrayList<>(arguments.values());
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Header header = (Header) o;
-
-        if (!sender.equals(header.sender)) return false;
-        if (!receiver.equals(header.receiver)) return false;
-        if (!process.equals(header.process)) return false;
-        if (!documentType.equals(header.documentType)) return false;
-        if (identifier != null ? !identifier.equals(header.identifier) : header.identifier != null) return false;
-        if (instanceType != null ? !instanceType.equals(header.instanceType) : header.instanceType != null)
-            return false;
-        return !(creationTimestamp != null ?
-                !creationTimestamp.equals(header.creationTimestamp) : header.creationTimestamp != null);
+        return Objects.equals(sender, header.sender) &&
+                Objects.equals(receiver, header.receiver) &&
+                Objects.equals(process, header.process) &&
+                Objects.equals(documentType, header.documentType) &&
+                Objects.equals(identifier, header.identifier) &&
+                Objects.equals(instanceType, header.instanceType) &&
+                Objects.equals(creationTimestamp, header.creationTimestamp) &&
+                Objects.equals(arguments, header.arguments);
     }
 
     @Override
     public int hashCode() {
-        int result = sender.hashCode();
-        result = 31 * result + receiver.hashCode();
-        result = 31 * result + process.hashCode();
-        result = 31 * result + documentType.hashCode();
-        result = 31 * result + (identifier != null ? identifier.hashCode() : 0);
-        result = 31 * result + (instanceType != null ? instanceType.hashCode() : 0);
-        result = 31 * result + (creationTimestamp != null ? creationTimestamp.hashCode() : 0);
-        return result;
+        return Objects.hash(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp, arguments);
     }
 
     @Override
@@ -182,11 +153,14 @@ public class Header implements Serializable {
                 ", identifier=" + identifier +
                 ", instanceType=" + instanceType +
                 ", creationTimestamp=" + creationTimestamp +
+                ", arguments=" + arguments +
                 '}';
     }
 
-    private Header copy() {
-        return new Header(sender, receiver, process, documentType, identifier,
-                instanceType, creationTimestamp);
+    private Header copy(Consumer<Header> consumer) {
+        Header header = new Header(sender, receiver, process, documentType, identifier,
+                instanceType, creationTimestamp, new HashMap<>(arguments));
+        consumer.accept(header);
+        return header;
     }
 }

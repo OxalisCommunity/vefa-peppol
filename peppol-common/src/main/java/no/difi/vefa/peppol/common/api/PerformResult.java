@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.common.api;
 
+@FunctionalInterface
 public interface PerformResult<T> {
 
     T action() throws Exception;

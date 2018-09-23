@@ -19,8 +19,6 @@
 
 package no.difi.vefa.peppol.sbdh;
 
-import no.difi.vefa.peppol.common.api.PerformAction;
-import no.difi.vefa.peppol.common.api.PerformResult;
 import no.difi.vefa.peppol.common.model.Header;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.sbdh.lang.SbdhException;
@@ -43,27 +41,20 @@ public class SbdWriter implements Closeable {
     }
 
     private SbdWriter(final OutputStream outputStream, Header header) throws SbdhException {
-        writer = ExceptionUtil.perform(SbdhException.class, "Unable to initiate SBD.",
-                new PerformResult<XMLStreamWriter>() {
-                    @Override
-                    public XMLStreamWriter action() throws Exception {
-                        return SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8");
-                    }
-                });
+        writer = ExceptionUtil.perform(SbdhException.class, "Unable to initiate SBD.", () ->
+                SbdhHelper.XML_OUTPUT_FACTORY.createXMLStreamWriter(outputStream, "UTF-8"));
 
         initiateDocument(header);
     }
 
     private void initiateDocument(final Header header) throws SbdhException {
-        ExceptionUtil.perform(SbdhException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                writer.writeStartDocument("UTF-8", "1.0");
-                writer.writeStartElement("", Ns.QNAME_SBD.getLocalPart(), Ns.SBDH);
-                writer.writeDefaultNamespace(Ns.SBDH);
-                SbdhWriter.write(writer, header);
-            }
-        });
+        ExceptionUtil.perform(SbdhException.class, () -> {
+                    writer.writeStartDocument("UTF-8", "1.0");
+                    writer.writeStartElement("", Ns.QNAME_SBD.getLocalPart(), Ns.SBDH);
+                    writer.writeDefaultNamespace(Ns.SBDH);
+                    SbdhWriter.write(writer, header);
+                }
+        );
     }
 
     public XMLStreamWriter xmlWriter() {
@@ -83,23 +74,17 @@ public class SbdWriter implements Closeable {
     }
 
     private void finalizeDocument() throws SbdhException {
-        ExceptionUtil.perform(SbdhException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                writer.writeEndElement();
-                writer.writeEndDocument();
-            }
+        ExceptionUtil.perform(SbdhException.class, () -> {
+            writer.writeEndElement();
+            writer.writeEndDocument();
         });
     }
 
     @Override
     public void close() throws IOException {
-        ExceptionUtil.perform(IOException.class, new PerformAction() {
-            @Override
-            public void action() throws Exception {
-                finalizeDocument();
-                writer.close();
-            }
+        ExceptionUtil.perform(IOException.class, () -> {
+            finalizeDocument();
+            writer.close();
         });
     }
 }

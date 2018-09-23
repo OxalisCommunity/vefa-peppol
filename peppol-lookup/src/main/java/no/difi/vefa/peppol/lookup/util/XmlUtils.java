@@ -19,9 +19,6 @@
 
 package no.difi.vefa.peppol.lookup.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -30,8 +27,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class XmlUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(XmlUtils.class);
 
     private static final Pattern ROOT_TAG_PATTERN =
             Pattern.compile("<(\\w*:{0,1}[^<?|^<!]*)>", Pattern.MULTILINE);
@@ -51,15 +46,11 @@ public class XmlUtils {
         Matcher matcher = ROOT_TAG_PATTERN.matcher(xmlContent);
         if (matcher.find()) {
             String rootElement = matcher.group(1).trim();
-            LOGGER.debug("Root element: {}", rootElement);
             String rootNs = rootElement.split(" ", 2)[0].contains(":") ?
                     rootElement.substring(0, rootElement.indexOf(":")) : "";
-            LOGGER.debug("Namespace: {}", rootNs);
 
             Matcher nsMatcher = NAMESPACE_PATTERN.matcher(rootElement);
             while (nsMatcher.find()) {
-                LOGGER.debug(nsMatcher.group(0));
-
                 if (nsMatcher.group(1).equals(rootNs)) {
                     return nsMatcher.group(2);
                 }

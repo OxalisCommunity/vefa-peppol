@@ -32,13 +32,9 @@ import java.io.InputStream;
 
 import static no.difi.vefa.peppol.sbdh.lang.SbdhException.notNull;
 
-public class SbdhReader {
+public interface SbdhReader {
 
-    SbdhReader() {
-        // TODO Fix in Java 8.
-    }
-
-    public static Header read(InputStream inputStream) throws SbdhException {
+    static Header read(InputStream inputStream) throws SbdhException {
         try {
             XMLStreamReader reader = SbdhHelper.XML_INPUT_FACTORY.createXMLStreamReader(inputStream);
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
@@ -49,7 +45,7 @@ public class SbdhReader {
         }
     }
 
-    public static Header read(XMLStreamReader xmlStreamReader) throws SbdhException {
+    static Header read(XMLStreamReader xmlStreamReader) throws SbdhException {
         try {
             Unmarshaller unmarshaller = SbdhHelper.JAXB_CONTEXT.createUnmarshaller();
             return read(unmarshaller
@@ -59,7 +55,7 @@ public class SbdhReader {
         }
     }
 
-    public static Header read(StandardBusinessDocumentHeader sbdh) throws SbdhException {
+    static Header read(StandardBusinessDocumentHeader sbdh) throws SbdhException {
         Header header = Header.newInstance();
 
         // Sender
@@ -114,14 +110,24 @@ public class SbdhReader {
 
         // Scope
         for (Scope scope : sbdh.getBusinessScope().getScope()) {
-            if (scope.getType().equals("DOCUMENTID")) {
-                Scheme scheme = scope.getIdentifier() != null ?
-                        Scheme.of(scope.getIdentifier()) : DocumentTypeIdentifier.DEFAULT_SCHEME;
-                header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier(), scheme));
-            } else if (scope.getType().equals("PROCESSID")) {
-                Scheme scheme = scope.getIdentifier() != null ?
-                        Scheme.of(scope.getIdentifier()) : ProcessIdentifier.DEFAULT_SCHEME;
-                header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier(), scheme));
+            String type = scope.getType().trim();
+            switch (type) {
+                case "DOCUMENTID": {
+                    Scheme scheme = scope.getIdentifier() != null ?
+                            Scheme.of(scope.getIdentifier()) : DocumentTypeIdentifier.DEFAULT_SCHEME;
+                    header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier(), scheme));
+                    break;
+                }
+                case "PROCESSID": {
+                    Scheme scheme = scope.getIdentifier() != null ?
+                            Scheme.of(scope.getIdentifier()) : ProcessIdentifier.DEFAULT_SCHEME;
+                    header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier(), scheme));
+                    break;
+                }
+                default: {
+                    header = header.argument(ArgumentIdentifier.of(type, scope.getInstanceIdentifier()));
+                    break;
+                }
             }
         }
 
