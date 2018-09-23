@@ -19,60 +19,55 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import lombok.Getter;
+import lombok.ToString;
 import no.difi.vefa.peppol.common.code.DigestMethod;
 
 import java.io.Serializable;
 import java.util.Arrays;
 
-public class Digest implements Serializable {
+public interface Digest {
 
-    private static final long serialVersionUID = -3084522333478217556L;
+    DigestMethod getMethod();
 
-    private final DigestMethod method;
+    byte[] getValue();
 
-    private final byte[] value;
-
-    public static Digest of(DigestMethod method, byte[] value) {
-        return new Digest(method, value);
+    static Digest of(DigestMethod method, byte[] value) {
+        return new DefaultDigest(method, value);
     }
 
-    private Digest(DigestMethod method, byte[] value) {
-        this.method = method;
-        this.value = value;
-    }
+    @Getter
+    @ToString
+    class DefaultDigest implements Digest, Serializable {
 
-    public DigestMethod getMethod() {
-        return method;
-    }
+        private static final long serialVersionUID = -3084522333478217556L;
 
-    public byte[] getValue() {
-        return value;
-    }
+        private final DigestMethod method;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        private final byte[] value;
 
-        Digest digest = (Digest) o;
+        private DefaultDigest(DigestMethod method, byte[] value) {
+            this.method = method;
+            this.value = value;
+        }
 
-        if (method != digest.method) return false;
-        return Arrays.equals(value, digest.value);
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
 
-    }
+            Digest digest = (Digest) o;
 
-    @Override
-    public int hashCode() {
-        int result = method.hashCode();
-        result = 31 * result + Arrays.hashCode(value);
-        return result;
-    }
+            if (method != digest.getMethod()) return false;
+            return Arrays.equals(value, digest.getValue());
 
-    @Override
-    public String toString() {
-        return "Digest{" +
-                "method=" + method +
-                ", value=" + Arrays.toString(value) +
-                '}';
+        }
+
+        @Override
+        public int hashCode() {
+            int result = method.hashCode();
+            result = 31 * result + Arrays.hashCode(value);
+            return result;
+        }
     }
 }

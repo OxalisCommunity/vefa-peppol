@@ -27,6 +27,7 @@ import no.difi.vefa.peppol.icd.model.IcdIdentifier;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -89,5 +90,9 @@ public class Icds {
                 .filter(v -> v.getCode().equals(code))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("Value '%s' is not valid ICD.", code)));
+    }
+
+    public List<Icd> values() {
+        return Collections.unmodifiableList(values);
     }
 }

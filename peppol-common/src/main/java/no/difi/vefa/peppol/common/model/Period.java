@@ -10,36 +10,51 @@ import java.util.Objects;
 /**
  * @author erlend
  */
-@Getter
-@ToString
-public class Period implements Serializable {
+public interface Period {
 
-    private static final long serialVersionUID = 888582195965219162L;
+    Date getFrom();
 
-    private Date from;
+    Date getTo();
 
-    private Date to;
-
-    public static Period of(Date from, Date to) {
-        return new Period(from, to);
+    default boolean isCurrent(Date date) {
+        return date.after(getFrom()) && date.before(getTo());
     }
 
-    private Period(Date from, Date to) {
-        this.from = from;
-        this.to = to;
+    default boolean isCurrent() {
+        return isCurrent(new Date());
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Period period = (Period) o;
-        return Objects.equals(from, period.from) &&
-                Objects.equals(to, period.to);
+    static Period of(Date from, Date to) {
+        return new DefaultPeriod(from, to);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(from, to);
+    @Getter
+    @ToString
+    class DefaultPeriod implements Period, Serializable {
+
+        private static final long serialVersionUID = 888582195965219162L;
+
+        private Date from;
+
+        private Date to;
+
+        private DefaultPeriod(Date from, Date to) {
+            this.from = from;
+            this.to = to;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Period period = (Period) o;
+            return Objects.equals(from, period.getFrom()) &&
+                    Objects.equals(to, period.getTo());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(from, to);
+        }
     }
 }

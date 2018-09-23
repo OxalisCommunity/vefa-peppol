@@ -19,19 +19,47 @@
 
 package no.difi.vefa.peppol.common.model;
 
+import lombok.Getter;
+import no.difi.vefa.peppol.common.api.SimpleIdentifier;
+
 import java.io.Serializable;
+import java.util.Objects;
 
-public class Scheme extends AbstractSimpleIdentifier implements Serializable {
+public interface Scheme extends SimpleIdentifier {
 
-    private static final long serialVersionUID = -6022267082161778285L;
+    Scheme NONE = of("NONE");
 
-    public static final Scheme NONE = of("NONE");
-
-    public static Scheme of(String value) {
-        return new Scheme(value);
+    static Scheme of(String identifier) {
+        return new DefaultScheme(identifier);
     }
 
-    protected Scheme(String value) {
-        super(value);
+    @Getter
+    class DefaultScheme implements Scheme, Serializable {
+
+        private static final long serialVersionUID = -6022267082161778285L;
+
+        private String identifier;
+
+        private DefaultScheme(String identifier) {
+            this.identifier = identifier;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || !(o instanceof Scheme)) return false;
+            Scheme that = (Scheme) o;
+            return Objects.equals(identifier, that.getIdentifier());
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(identifier);
+        }
+
+        @Override
+        public String toString() {
+            return identifier;
+        }
     }
 }
