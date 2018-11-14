@@ -31,7 +31,6 @@ import no.difi.commons.busdox.jaxb.smp.*;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.publisher.annotation.Syntax;
-import no.difi.vefa.peppol.publisher.api.PublisherSyntax;
 import no.difi.vefa.peppol.publisher.model.PublisherEndpoint;
 import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
@@ -40,23 +39,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * @author erlend
  */
 @Syntax("busdox")
-public class BusdoxPublisherSyntax implements PublisherSyntax {
-
-    private static final DatatypeFactory DATATYPE_FACTORY =
-            ExceptionUtil.perform(IllegalStateException.class, () ->
-                    DatatypeFactory.newInstance());
+public class BusdoxPublisherSyntax extends AbstractPublisherSyntax {
 
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
@@ -65,7 +56,7 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
                     JAXBContext.newInstance(ServiceGroupType.class,
                             ServiceMetadataType.class, SignedServiceMetadataType.class));
 
-    private static final BaseEncoding BASE64 = BaseEncoding.base64().withSeparator("\r\n", 76);
+    private static final BaseEncoding BASE64 = BaseEncoding.base64().withSeparator("\n", 76);
 
     @SuppressWarnings("all")
     @Override
@@ -172,15 +163,6 @@ public class BusdoxPublisherSyntax implements PublisherSyntax {
         endpointType.setTechnicalContactUrl(endpoint.getTechnicalContact());
 
         return endpointType;
-    }
-
-    private XMLGregorianCalendar convert(final Date date) {
-        if (date == null)
-            return null;
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(date);
-        return DATATYPE_FACTORY.newXMLGregorianCalendar(gregorianCalendar);
     }
 
     private ServiceMetadataReferenceType convertRef(ParticipantIdentifier participantIdentifier,

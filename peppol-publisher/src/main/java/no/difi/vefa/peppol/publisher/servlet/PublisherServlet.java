@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.publisher.servlet;
 
+import lombok.extern.slf4j.Slf4j;
 import no.difi.vefa.peppol.common.lang.PeppolParsingException;
 import no.difi.vefa.peppol.common.model.DocumentTypeIdentifier;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
@@ -26,8 +27,6 @@ import no.difi.vefa.peppol.common.util.ModelUtils;
 import no.difi.vefa.peppol.publisher.PublisherService;
 import no.difi.vefa.peppol.publisher.lang.NotFoundException;
 import no.difi.vefa.peppol.publisher.lang.PublisherException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -41,9 +40,8 @@ import java.util.regex.Pattern;
 /**
  * @author erlend
  */
+@Slf4j
 public class PublisherServlet extends HttpServlet {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PublisherServlet.class);
 
     private static final Pattern PATH_SERVICE_GROUP =
             Pattern.compile("^/([a-z0-9\\-]+::[a-z0-9:]+)$");
@@ -80,7 +78,7 @@ public class PublisherServlet extends HttpServlet {
         } catch (NotFoundException e) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
         } catch (JAXBException | IOException | NullPointerException | PublisherException e) {
-            LOGGER.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
@@ -89,6 +87,7 @@ public class PublisherServlet extends HttpServlet {
             throws IOException, PeppolParsingException, JAXBException, PublisherException {
         ParticipantIdentifier participantIdentifier = ParticipantIdentifier.parse(participantParam);
 
+        resp.setContentType("text/xml");
         publisherService.serviceGroup(resp.getOutputStream(), req.getParameter("syntax"),
                 URI.create(createPublisherRoot(req)), participantIdentifier);
     }
@@ -99,6 +98,7 @@ public class PublisherServlet extends HttpServlet {
         ParticipantIdentifier participantIdentifier = ParticipantIdentifier.parse(participantParam);
         DocumentTypeIdentifier documentTypeIdentifier = DocumentTypeIdentifier.parse(documentTypeParam);
 
+        resp.setContentType("text/xml");
         publisherService.metadataProvider(resp.getOutputStream(), req.getParameter("syntax"),
                 participantIdentifier, documentTypeIdentifier);
     }

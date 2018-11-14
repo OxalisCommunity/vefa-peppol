@@ -23,7 +23,6 @@ import no.difi.commons.bdx.jaxb.smp._2016._05.*;
 import no.difi.vefa.peppol.common.model.*;
 import no.difi.vefa.peppol.common.util.ExceptionUtil;
 import no.difi.vefa.peppol.publisher.annotation.Syntax;
-import no.difi.vefa.peppol.publisher.api.PublisherSyntax;
 import no.difi.vefa.peppol.publisher.model.PublisherEndpoint;
 import no.difi.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import no.difi.vefa.peppol.publisher.model.ServiceGroup;
@@ -32,23 +31,15 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
  * @author erlend
  */
 @Syntax({"bdxr", "bdxr-201605"})
-public class Bdxr201605PublisherSyntax implements PublisherSyntax {
-
-    private static final DatatypeFactory DATATYPE_FACTORY =
-            ExceptionUtil.perform(IllegalStateException.class, () ->
-                    DatatypeFactory.newInstance());
+public class Bdxr201605PublisherSyntax extends AbstractPublisherSyntax {
 
     private static final ObjectFactory OBJECT_FACTORY = new ObjectFactory();
 
@@ -154,15 +145,6 @@ public class Bdxr201605PublisherSyntax implements PublisherSyntax {
         endpointType.setTechnicalContactUrl(endpoint.getTechnicalContact());
 
         return endpointType;
-    }
-
-    private XMLGregorianCalendar convert(final Date date) {
-        if (date == null)
-            return null;
-
-        GregorianCalendar gregorianCalendar = new GregorianCalendar();
-        gregorianCalendar.setTime(date);
-        return DATATYPE_FACTORY.newXMLGregorianCalendar(gregorianCalendar);
     }
 
     private ServiceMetadataReferenceType convertRef(ParticipantIdentifier participantIdentifier,
