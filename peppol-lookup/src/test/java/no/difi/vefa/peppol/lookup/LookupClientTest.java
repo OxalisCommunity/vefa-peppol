@@ -26,7 +26,7 @@ import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
 import no.difi.vefa.peppol.mode.Mode;
-import no.difi.vefa.peppol.security.util.EmptyCertificateValidator;
+import no.difi.vefa.peppol.security.api.CertificateValidator;
 import org.testng.annotations.Test;
 
 import java.util.List;
@@ -80,7 +80,7 @@ public class LookupClientTest {
     @Test
     public void simpleEndpoint() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction()
-                .certificateValidator(EmptyCertificateValidator.INSTANCE)
+                .certificateValidator(CertificateValidator.EMPTY)
                 .build();
 
         Endpoint endpoint = client.getEndpoint(
@@ -99,7 +99,7 @@ public class LookupClientTest {
     @Test
     public void simpleEndpointWithHeader() throws PeppolException {
         LookupClient client = LookupClientBuilder.forProduction()
-                .certificateValidator(EmptyCertificateValidator.INSTANCE)
+                .certificateValidator(CertificateValidator.EMPTY)
                 .build();
 
         Header header = Header.newInstance()
@@ -150,17 +150,18 @@ public class LookupClientTest {
         assertNotNull(serviceMetadata);
     }
 
-    @Test(expectedExceptions = LookupException.class)
+    @Test(enabled = false, expectedExceptions = LookupException.class)
     public void noSmp() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
                         .locator(BusdoxLocator.class)
                         .build();
 
-        client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
+        List<DocumentTypeIdentifier> dti = client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
+        System.out.println(dti);
     }
 
-    @Test(expectedExceptions = LookupException.class)
+    @Test(enabled = false, expectedExceptions = LookupException.class)
     public void noSmpApache() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)

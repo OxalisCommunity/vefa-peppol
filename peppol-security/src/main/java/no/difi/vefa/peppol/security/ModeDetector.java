@@ -21,20 +21,18 @@ package no.difi.vefa.peppol.security;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import lombok.extern.slf4j.Slf4j;
 import no.difi.vefa.peppol.common.code.Service;
 import no.difi.vefa.peppol.common.lang.PeppolLoadingException;
 import no.difi.vefa.peppol.mode.Mode;
 import no.difi.vefa.peppol.security.api.CertificateValidator;
 import no.difi.vefa.peppol.security.lang.PeppolSecurityException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.security.cert.X509Certificate;
 import java.util.Map;
 
+@Slf4j
 public class ModeDetector {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ModeDetector.class);
 
     public static Mode detect(X509Certificate certificate) throws PeppolLoadingException {
         return detect(certificate, ConfigFactory.load(), null);
@@ -49,7 +47,7 @@ public class ModeDetector {
                             .validate(Service.ALL, certificate);
                     return mode;
                 } catch (PeppolSecurityException e) {
-                    LOGGER.info("Detection error ({}): {}", token, e.getMessage());
+                    log.info("Detection error ({}): {}", token, e.getMessage());
                 }
             }
         }
