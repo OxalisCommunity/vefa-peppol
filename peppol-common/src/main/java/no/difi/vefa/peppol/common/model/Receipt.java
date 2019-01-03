@@ -39,7 +39,7 @@ public class Receipt implements Serializable {
     }
 
     private Receipt(String type, byte[] value) {
-        this.type = type;
+        this.type = type == null ? null : type.trim();
         this.value = value;
     }
 

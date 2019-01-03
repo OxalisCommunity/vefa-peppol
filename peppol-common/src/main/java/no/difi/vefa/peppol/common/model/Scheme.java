@@ -41,7 +41,7 @@ public interface Scheme extends SimpleIdentifier {
         private String identifier;
 
         private DefaultScheme(String identifier) {
-            this.identifier = identifier;
+            this.identifier = identifier == null ? null : identifier.trim();
         }
 
         @Override

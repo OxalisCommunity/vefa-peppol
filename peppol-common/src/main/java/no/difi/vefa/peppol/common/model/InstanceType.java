@@ -36,9 +36,9 @@ public class InstanceType implements Serializable {
     }
 
     public InstanceType(String standard, String type, String version) {
-        this.standard = standard;
-        this.type = type;
-        this.version = version;
+        this.standard = standard == null ? null : standard.trim();
+        this.type = type == null ? null : type.trim();
+        this.version = version == null ? null : version.trim();
     }
 
     public String getStandard() {

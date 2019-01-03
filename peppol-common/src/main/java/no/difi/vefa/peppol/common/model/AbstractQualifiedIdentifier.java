@@ -32,8 +32,8 @@ public abstract class AbstractQualifiedIdentifier implements QualifiedIdentifier
     protected final String identifier;
 
     public AbstractQualifiedIdentifier(String identifier, Scheme scheme) {
-        this.scheme = scheme;
         this.identifier = identifier == null ? null : identifier.trim();
+        this.scheme = scheme;
     }
 
     @Override
