@@ -27,6 +27,8 @@ import java.util.stream.Stream;
 
 @Getter
 public enum PeppolIcd implements Icd {
+
+    // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
     SE_ORGNR("SE:ORGNR", "0007", "The National Tax Board"),
     FR_SIRET("FR:SIRET", "0009", "DU PONT DE NEMOURS"),
@@ -45,7 +47,9 @@ public enum PeppolIcd implements Icd {
     NO_ORG("NO:ORG", "0192", "Enhetsregisteret ved Bronnøysundregisterne"),
     UBLBE("UBLBE", "0193", "UBL.BE"),
     SG_UEN("SG:UEN", "0195", "Infocomm Media Development Authority"),
+    IS_KTNR("IS:KTNR", "0196", "Directorate of Internal Revenue"),
 
+    // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
     DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
     DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
@@ -57,6 +61,7 @@ public enum PeppolIcd implements Icd {
     EU_REID("EU:REID", "9913", "Business Registers Network"),
     AT_VAT("AT:VAT", "9914", "Österreichische Umsatzsteuer-Identifikationsnummer"),
     AT_GOV("AT:GOV", "9915", "Österreichisches Verwaltungs bzw. Organisationskennzeichen"),
+    @Deprecated
     IS_KT("IS:KT", "9917", "Icelandic National Registry"),
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
@@ -97,7 +102,9 @@ public enum PeppolIcd implements Icd {
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
     SE_VAT("SE:VAT", "9955", "Swedish VAT number"),
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
-    FR_VAT("FR:VAT", "9957", "French VAT number");
+    FR_VAT("FR:VAT", "9957", "French VAT number"),
+    DE_LID("DE:LID", "9958", "German Leitweg ID"),
+    ;
 
     private static final Scheme SCHEME = Scheme.of("iso6523-actorid-upis");
 
