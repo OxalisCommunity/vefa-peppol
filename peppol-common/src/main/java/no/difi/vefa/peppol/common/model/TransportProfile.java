@@ -25,11 +25,23 @@ public class TransportProfile extends AbstractSimpleIdentifier implements Serial
 
     private static final long serialVersionUID = -8215053834194901976L;
 
-    public static final TransportProfile START = TransportProfile.of("busdox-transport-start");
+    public static final TransportProfile PEPPOL_START = of("busdox-transport-start");
 
-    public static final TransportProfile AS2_1_0 = TransportProfile.of("busdox-transport-as2-ver1p0");
+    @Deprecated
+    public static final TransportProfile START = PEPPOL_START;
 
-    public static final TransportProfile AS4 = TransportProfile.of("bdxr-transport-ebms3-as4-v1p0");
+    public static final TransportProfile PEPPOL_AS2_1_0 = of("busdox-transport-as2-ver1p0");
+
+    @Deprecated
+    public static final TransportProfile AS2_1_0 = PEPPOL_AS2_1_0;
+
+    public static final TransportProfile PEPPOL_AS2_2_0 = of("busdox-transport-as2-ver2p0");
+
+    public static final TransportProfile PEPPOL_AS4_2_0 = of("peppol-transport-as4-v2_0");
+
+    public static final TransportProfile ESENS_AS4 = of("bdxr-transport-ebms3-as4-v1p0");
+
+    public static final TransportProfile AS4 = ESENS_AS4;
 
     public static TransportProfile of(String value) {
         return new TransportProfile(value);
