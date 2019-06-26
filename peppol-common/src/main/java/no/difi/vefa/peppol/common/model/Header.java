@@ -34,6 +34,8 @@ public class Header implements Serializable {
 
     private ParticipantIdentifier receiver;
 
+    private List<ParticipantIdentifier> copyReceiver = new ArrayList<>();
+
     private ProcessIdentifier process;
 
     private DocumentTypeIdentifier documentType;
@@ -50,27 +52,33 @@ public class Header implements Serializable {
         return new Header();
     }
 
-    public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                            DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
+    public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> cc,
+                            ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
                             InstanceType instanceType, Date creationTimestamp) {
-        return new Header(sender, receiver, process, documentType, identifier,
-                instanceType, creationTimestamp, null);
+        return new Header(sender, receiver, cc, process, documentType, identifier, instanceType, creationTimestamp, null);
+    }
+
+    public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver,
+                            ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
+                            InstanceType instanceType, Date creationTimestamp) {
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, identifier, instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                             DocumentTypeIdentifier documentType) {
-        return new Header(sender, receiver, process, documentType, null, null, null, null);
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, null, null, null, null);
     }
 
     public Header() {
         // No action.
     }
 
-    private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                   DocumentTypeIdentifier documentType, InstanceIdentifier identifier, InstanceType instanceType,
-                   Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
+    private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> copyReceiver,
+                   ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
+                   InstanceType instanceType, Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
         this.sender = sender;
         this.receiver = receiver;
+        this.copyReceiver = copyReceiver;
         this.process = process;
         this.documentType = documentType;
         this.identifier = identifier;
@@ -85,6 +93,10 @@ public class Header implements Serializable {
 
     public Header receiver(ParticipantIdentifier receiver) {
         return copy(h -> h.receiver = receiver);
+    }
+
+    public Header cc(ParticipantIdentifier cc) {
+        return copy(h -> h.copyReceiver.add(cc));
     }
 
     public Header process(ProcessIdentifier process) {
@@ -148,6 +160,7 @@ public class Header implements Serializable {
         return "Header{" +
                 "sender=" + sender +
                 ", receiver=" + receiver +
+                ", copyReceiver=" + copyReceiver +
                 ", process=" + process +
                 ", documentType=" + documentType +
                 ", identifier=" + identifier +
@@ -158,7 +171,7 @@ public class Header implements Serializable {
     }
 
     private Header copy(Consumer<Header> consumer) {
-        Header header = new Header(sender, receiver, process, documentType, identifier,
+        Header header = new Header(sender, receiver, new ArrayList<>(copyReceiver), process, documentType, identifier,
                 instanceType, creationTimestamp, new HashMap<>(arguments));
         consumer.accept(header);
         return header;
