@@ -74,6 +74,10 @@ public class Mode {
         return identifier;
     }
 
+    public boolean hasString(String key) {
+        return config.hasPath(key);
+    }
+
     public String getString(String key) {
         return config.getString(key);
     }

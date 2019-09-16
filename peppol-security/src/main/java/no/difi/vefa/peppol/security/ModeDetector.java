@@ -45,6 +45,11 @@ public class ModeDetector {
                     Mode mode = Mode.of(config, token);
                     mode.initiate("security.validator.class", CertificateValidator.class, objectStorage)
                             .validate(Service.ALL, certificate);
+
+                    log.info("Detected mode: {}", mode.getIdentifier());
+                    if (mode.hasString("security.message"))
+                        log.info(mode.getString("security.message"));
+
                     return mode;
                 } catch (PeppolSecurityException e) {
                     log.info("Detection error ({}): {}", token, e.getMessage());
