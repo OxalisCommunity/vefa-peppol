@@ -10,7 +10,7 @@ build-docker:
 		-v "$(shell pwd)":/src \
 		-v $(M2):/root/.m2 \
 		-w /src \
-		maven:3.3-jdk-8 \
+		maven:3.6-jdk-8 \
 		mvn clean install
 
 release:
