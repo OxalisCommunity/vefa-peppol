@@ -41,6 +41,8 @@ public enum PeppolIcd implements Icd {
     NAL("NAL", "0130", "Directorates of the European Commission"),
     IT_SIA("IT:SIA", "0135", "SIA-Società Interbancaria per l'Automazione S.p.A."),
     IT_SECETI("IT:SECETI", "0142", "Servizi Centralizzati SECETI S.p.A."),
+    AU_ABN("AU:ABN", "0151", "Australian Taxation Office"),
+    CH_UIDB("CH:UIDB", "0183", "Swiss Federal Statistical Office (FSO)"),
     DIGST("DIGST", "0184", "The Danish Agency for Digitisation"),
     NL_OINO("NL:OINO", "0190", "Logius"),
     EE_CC("EE:CC", "0191", "Estonian Company Code"),
@@ -48,6 +50,9 @@ public enum PeppolIcd implements Icd {
     UBLBE("UBLBE", "0193", "UBL.BE"),
     SG_UEN("SG:UEN", "0195", "Infocomm Media Development Authority"),
     IS_KTNR("IS:KTNR", "0196", "Directorate of Internal Revenue"),
+    DK_ERST("DK:ERST", "0198", "The Danish Business Authority"),
+    LEI("LEI", "0199", "Legal Entity Identifier (LEI)"),
+    LT_LEV("LT:LEC", "0200", "State Enterprise Centre of Registers"),
 
     // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
