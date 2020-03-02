@@ -28,7 +28,7 @@
             <RootBucketReference>root</RootBucketReference>
             <IntermediateBucketReference>intermediate</IntermediateBucketReference>
         </Chain>
-        <Cached timeout="60">
+        <Cached timeout="1800">
             <HandleError>
                 <CRL/>
             </HandleError>
