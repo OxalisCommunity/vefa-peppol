@@ -74,10 +74,14 @@ public class ProcessMetadata<T extends SimpleEndpoint> implements Serializable {
 
     public T getEndpoint(TransportProfile... transportProfiles) throws EndpointNotFoundException {
         for (TransportProfile transportProfile : transportProfiles)
-            if (endpoints.containsKey(transportProfile))
-                return endpoints.get(transportProfile);
+            if (endpoints.containsKey(transportProfile)) {
+                SimpleEndpoint endpoint = endpoints.get(transportProfile);
 
-        throw new EndpointNotFoundException("Unable to find endpoint information for given transport profile(s).");
+                if (endpoint.getPeriod() == null || endpoint.getPeriod().isCurrent())
+                    return endpoints.get(transportProfile);
+            }
+
+        throw new EndpointNotFoundException("Unable to find active endpoint information for given transport profile(s).");
     }
 
     @Override

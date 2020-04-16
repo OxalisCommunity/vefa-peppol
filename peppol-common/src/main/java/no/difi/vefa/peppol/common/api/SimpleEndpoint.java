@@ -19,6 +19,7 @@
 
 package no.difi.vefa.peppol.common.api;
 
+import no.difi.vefa.peppol.common.model.Period;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 
 /**
@@ -27,5 +28,7 @@ import no.difi.vefa.peppol.common.model.TransportProfile;
 public interface SimpleEndpoint {
 
     TransportProfile getTransportProfile();
+
+    Period getPeriod();
 
 }

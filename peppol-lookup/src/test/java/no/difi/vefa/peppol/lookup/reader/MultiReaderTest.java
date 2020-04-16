@@ -75,12 +75,14 @@ public class MultiReaderTest {
             // Expected
         }
 
+        /*
         assertNotNull(result.getEndpoint(processIdentifier, AS2_1_0));
 
         assertEquals(
                 result.getEndpoint(processIdentifier, AS2_1_0).getCertificate().getSubjectDN().toString(),
                 "O=EVRY AS, CN=APP_1000000025, C=NO")
         ;
+         */
     }
 
     @Test

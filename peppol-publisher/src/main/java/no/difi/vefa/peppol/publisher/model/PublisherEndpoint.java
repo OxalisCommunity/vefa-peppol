@@ -24,24 +24,23 @@ import no.difi.vefa.peppol.common.model.Period;
 import no.difi.vefa.peppol.common.model.TransportProfile;
 
 import java.net.URI;
-import java.util.Date;
 
 /**
  * @author erlend
  */
 public class PublisherEndpoint implements SimpleEndpoint {
 
-    private TransportProfile transportProfile;
+    private final TransportProfile transportProfile;
 
-    private URI address;
+    private final URI address;
 
-    private byte[] certificate;
+    private final byte[] certificate;
 
-    private Period period;
+    private final Period period;
 
-    private String description;
+    private final String description;
 
-    private String technicalContact;
+    private final String technicalContact;
 
     public PublisherEndpoint(TransportProfile transportProfile, URI address, byte[] certificate, Period period,
                              String description, String technicalContact) {
@@ -66,6 +65,7 @@ public class PublisherEndpoint implements SimpleEndpoint {
         return certificate;
     }
 
+    @Override
     public Period getPeriod() {
         return period;
     }

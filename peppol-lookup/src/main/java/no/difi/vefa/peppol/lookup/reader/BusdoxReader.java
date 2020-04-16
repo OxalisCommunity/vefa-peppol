@@ -131,10 +131,18 @@ public class BusdoxReader implements MetadataReader {
             for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
                 List<Endpoint> endpoints = Lists.newArrayList();
                 for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
+                    Period period = Period.of(
+                            endpointType.getServiceActivationDate() == null ?
+                                    null : endpointType.getServiceActivationDate().toGregorianCalendar().getTime(),
+                            endpointType.getServiceActivationDate() == null ?
+                                    null : endpointType.getServiceExpirationDate().toGregorianCalendar().getTime()
+                    );
+
                     endpoints.add(Endpoint.of(
                             TransportProfile.of(endpointType.getTransportProfile()),
                             URI.create(endpointType.getEndpointReference().getAddress().getValue()),
-                            certificateInstance(Base64.decodeBase64(endpointType.getCertificate()))
+                            certificateInstance(Base64.decodeBase64(endpointType.getCertificate())),
+                            period
                     ));
                 }
 

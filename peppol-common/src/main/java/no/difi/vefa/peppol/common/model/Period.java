@@ -17,7 +17,7 @@ public interface Period {
     Date getTo();
 
     default boolean isCurrent(Date date) {
-        return date.after(getFrom()) && date.before(getTo());
+        return (getFrom() == null || date.after(getFrom())) && (getTo() == null || date.before(getTo()));
     }
 
     default boolean isCurrent() {

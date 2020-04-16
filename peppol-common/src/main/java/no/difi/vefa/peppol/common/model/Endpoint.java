@@ -68,6 +68,7 @@ public class Endpoint implements Serializable, SimpleEndpoint {
         return certificate;
     }
 
+    @Override
     public Period getPeriod() {
         return period;
     }
