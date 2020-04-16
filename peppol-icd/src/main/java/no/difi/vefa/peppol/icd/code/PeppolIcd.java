@@ -53,8 +53,10 @@ public enum PeppolIcd implements Icd {
     DK_ERST("DK:ERST", "0198", "The Danish Business Authority"),
     LEI("LEI", "0199", "Legal Entity Identifier (LEI)"),
     LT_LEV("LT:LEC", "0200", "State Enterprise Centre of Registers"),
+    IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
+    DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
 
-    // ICDs created and maintained by OpenPEPPOL
+        // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
     DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
     DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
