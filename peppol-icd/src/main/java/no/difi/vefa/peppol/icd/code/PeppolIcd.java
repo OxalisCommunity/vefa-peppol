@@ -28,6 +28,8 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
+    // Current version of code list: 6
+
     // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
     SE_ORGNR("SE:ORGNR", "0007", "The National Tax Board"),
@@ -73,6 +75,7 @@ public enum PeppolIcd implements Icd {
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
     ES_VAT("ES:VAT", "9920", "Agencia Española de Administración Tributaria"),
+    @Deprecated
     IT_IPA("IT:IPA", "9921", "Indice delle Pubbliche Amministrazioni"),
     AD_VAT("AD:VAT", "9922", "Andorra VAT number"),
     AL_VAT("AL:VAT", "9923", "Albania VAT number"),
@@ -106,10 +109,12 @@ public enum PeppolIcd implements Icd {
     SM_VAT("SM:VAT", "9951", "San Marino VAT number"),
     TR_VAT("TR:VAT", "9952", "Turkey VAT number"),
     VA_VAT("VA:VAT", "9953", "Holy See (Vatican City State) VAT number"),
+    @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
     SE_VAT("SE:VAT", "9955", "Swedish VAT number"),
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
     FR_VAT("FR:VAT", "9957", "French VAT number"),
+    @Deprecated
     DE_LID("DE:LID", "9958", "German Leitweg ID"),
     ;
 
