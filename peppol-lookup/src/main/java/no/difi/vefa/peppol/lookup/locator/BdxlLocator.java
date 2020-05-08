@@ -22,6 +22,7 @@ package no.difi.vefa.peppol.lookup.locator;
 import com.google.common.io.BaseEncoding;
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.lookup.api.NotFoundException;
 import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import no.difi.vefa.peppol.lookup.util.EncodingUtils;
 import no.difi.vefa.peppol.mode.Mode;
@@ -99,10 +100,17 @@ public class BdxlLocator extends AbstractLocator {
 
         try {
             // Fetch all records of type NAPTR registered on hostname.
-            Record[] records = new Lookup(hostname, Type.NAPTR).run();
-            if (records == null)
-                throw new LookupException(
-                        String.format("Identifier '%s' is not registered in SML.", participantIdentifier.toString()));
+            final Lookup lookup = new Lookup(hostname, Type.NAPTR);
+            Record[] records = lookup.run();
+            if (records == null) {
+                if(lookup.getResult() == Lookup.HOST_NOT_FOUND) {
+                    throw new NotFoundException(
+                            String.format("Identifier '%s' is not registered in SML.", participantIdentifier.toString()));
+                } else {
+                    throw new LookupException(
+                            String.format("Error when looking up identifier '%s' in SML.", participantIdentifier.toString()));
+                }
+            }
 
             // Loop records found.
             for (Record record : records) {
@@ -122,7 +130,7 @@ public class BdxlLocator extends AbstractLocator {
             throw new LookupException("Error when handling DNS lookup for BDXL.", e);
         }
 
-        throw new LookupException("Record for SMP not found in SML.");
+        throw new NotFoundException("Record for SMP not found in SML.");
     }
 
     public static String handleRegex(String naptrRegex, String hostname) {
