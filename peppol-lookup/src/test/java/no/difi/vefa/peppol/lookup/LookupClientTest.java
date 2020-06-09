@@ -21,7 +21,7 @@ package no.difi.vefa.peppol.lookup;
 
 import no.difi.vefa.peppol.common.lang.PeppolException;
 import no.difi.vefa.peppol.common.model.*;
-import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.lookup.api.NotFoundException;
 import no.difi.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import no.difi.vefa.peppol.lookup.fetcher.UrlFetcher;
 import no.difi.vefa.peppol.lookup.locator.BusdoxLocator;
@@ -150,7 +150,7 @@ public class LookupClientTest {
         assertNotNull(serviceMetadata);
     }
 
-    @Test(enabled = false, expectedExceptions = LookupException.class)
+    @Test(enabled = false, expectedExceptions = NotFoundException.class)
     public void noSmp() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
@@ -161,7 +161,7 @@ public class LookupClientTest {
         System.out.println(dti);
     }
 
-    @Test(enabled = false, expectedExceptions = LookupException.class)
+    @Test(enabled = false, expectedExceptions = NotFoundException.class)
     public void noSmpApache() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
@@ -172,7 +172,7 @@ public class LookupClientTest {
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
     }
 
-    @Test(expectedExceptions = LookupException.class)
+    @Test(expectedExceptions = NotFoundException.class)
     public void noSml() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)

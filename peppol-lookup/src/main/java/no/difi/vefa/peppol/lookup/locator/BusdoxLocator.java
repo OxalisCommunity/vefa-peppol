@@ -21,6 +21,7 @@ package no.difi.vefa.peppol.lookup.locator;
 
 import no.difi.vefa.peppol.common.model.ParticipantIdentifier;
 import no.difi.vefa.peppol.lookup.api.LookupException;
+import no.difi.vefa.peppol.lookup.api.NotFoundException;
 import no.difi.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import no.difi.vefa.peppol.mode.Mode;
 import org.xbill.DNS.Lookup;
@@ -55,9 +56,16 @@ public class BusdoxLocator extends AbstractLocator {
         String hostname = hostnameGenerator.generate(participantIdentifier);
 
         try {
-            if (new Lookup(hostname).run() == null)
-                throw new LookupException(
-                        String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
+            final Lookup lookup = new Lookup(hostname);
+            if (lookup.run() == null) {
+                if(lookup.getResult() == Lookup.HOST_NOT_FOUND) {
+                    throw new NotFoundException(
+                            String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
+                } else {
+                    throw new LookupException(
+                            String.format("Error when looking up identifier '%s' in SML.", participantIdentifier.getIdentifier()));
+                }
+            }
         } catch (TextParseException e) {
             throw new LookupException(e.getMessage(), e);
         }
