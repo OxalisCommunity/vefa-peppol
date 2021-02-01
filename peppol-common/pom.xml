@@ -30,23 +30,23 @@
 
     <name>VEFA PEPPOL :: Common</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
-    <url>https://github.com/difi/vefa-peppol</url>
+    <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
         <tag>HEAD</tag>
-        <url>https://github.com/difi/vefa-peppol-lookup</url>
-        <connection>scm:git:https://github.com/difi/vefa-peppol.git</connection>
-        <developerConnection>scm:git:git@github.com:difi/vefa-peppol.git</developerConnection>
+        <url>https://github.com/OxalisCommunity/vefa-peppol</url>
+        <connection>scm:git:https://github.com/OxalisCommunity/vefa-peppol.git</connection>
+        <developerConnection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</developerConnection>
     </scm>
 
     <issueManagement>
-        <url>https://github.com/difi/vefa-peppol/issues</url>
+        <url>https://github.com/OxalisCommunity/vefa-peppol/issues</url>
         <system>GitHub Issues</system>
     </issueManagement>
 
     <organization>
-        <name>Norwegian Agency for Public Management and eGovernment</name>
-        <url>http://www.difi.no</url>
+        <name>NorStella</name>
+        <url>https://en.norstella.no/</url>
     </organization>
 
     <developers>
