@@ -21,7 +21,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>no.difi.vefa</groupId>
+    <groupId>network.oxalis.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
     <version>1.1.5-SNAPSHOT</version>
@@ -65,6 +65,14 @@
             <organization>Difi</organization>
             <roles>
                 <role>Principal author</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Arun Kumar</name>
+            <email>arun.kaundal@gmail.com</email>
+            <organization>Norstella</organization>
+            <roles>
+                <role>Oxalis Technical Expert</role>
             </roles>
         </developer>
     </developers>
@@ -128,22 +136,22 @@
         <dependencies>
             <!-- VEFA PEPPOL -->
             <dependency>
-                <groupId>no.difi.vefa</groupId>
+                <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
                 <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>no.difi.vefa</groupId>
+                <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
                 <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>no.difi.vefa</groupId>
+                <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-mode</artifactId>
                 <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
-                <groupId>no.difi.vefa</groupId>
+                <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
                 <version>1.1.5-SNAPSHOT</version>
             </dependency>

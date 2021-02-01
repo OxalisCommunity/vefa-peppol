@@ -18,7 +18,7 @@ Include dependency in your pom.xml:
 
 ```xml
 <dependency>
-  <groupId>no.difi.vefa</groupId>
+  <groupId>network.oxalis.vefa</groupId>
   <artifactId>peppol-evidence</artifactId>
   <version>1.0.1</version>
 </dependency>
