@@ -31,28 +31,29 @@ import org.testng.annotations.Test;
 
 /**
  * @author erlend
+ * @author aaron-kumar
  */
 public class IcdsTest {
 
     private static final Icd ICD_TT_ORGNR = GenericIcd.of("TT:ORGNR", "9908", Scheme.of("iso6523-actorid-upis-test"));
 
-    private static final Icd ICD_TT_TEST = GenericIcd.of("TT:TEST", "9999", Scheme.of("iso6523-actorid-upis-test"));
+    private static final Icd ICD_BE_EN = GenericIcd.of("BE:EN", "0208", Scheme.of("iso6523-actorid-upis-test"));
 
-    private Icds icds = Icds.of(PeppolIcd.values(), new Icd[]{ICD_TT_ORGNR, ICD_TT_TEST});
+    private Icds icds = Icds.of(PeppolIcd.values(), new Icd[]{ICD_TT_ORGNR, ICD_BE_EN});
 
     @Test
     public void simple() throws Exception {
-        ParticipantIdentifier participantIdentifier = ParticipantIdentifier.of("9908:991825827");
+        ParticipantIdentifier participantIdentifier = ParticipantIdentifier.of("0208:0211210867");
 
         IcdIdentifier icdIdentifier = icds.parse(participantIdentifier.toString());
 
-        Assert.assertEquals(icdIdentifier.getIcd(), PeppolIcd.NO_ORGNR);
-        Assert.assertEquals(icdIdentifier.getIdentifier(), "991825827");
+        Assert.assertEquals(icdIdentifier.getIcd(), PeppolIcd.BE_EN);
+        Assert.assertEquals(icdIdentifier.getIdentifier(), "0211210867");
 
         Assert.assertEquals(icdIdentifier.toParticipantIdentifier(), participantIdentifier);
         Assert.assertEquals(icdIdentifier.toString(), participantIdentifier.toString());
 
-        Assert.assertEquals(icds.parse("NO:ORGNR", "991825827").toParticipantIdentifier(), participantIdentifier);
+        Assert.assertEquals(icds.parse("BE:EN", "0211210867").toParticipantIdentifier(), participantIdentifier);
     }
 
     @Test

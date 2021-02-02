@@ -26,13 +26,13 @@ public class PeppolIcdTest {
 
     @Test
     public void simple() {
-        Assert.assertEquals(PeppolIcd.NO_ORGNR.getIdentifier(), "NO:ORGNR");
-        Assert.assertEquals(PeppolIcd.NO_ORGNR.getCode(), "9908");
+        Assert.assertEquals(PeppolIcd.BE_EN.getIdentifier(), "BE:EN");
+        Assert.assertEquals(PeppolIcd.BE_EN.getCode(), "0208");
 
-        Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR"));
-        Assert.assertNotNull(PeppolIcd.valueOf("NO_ORGNR").getScheme());
+        Assert.assertNotNull(PeppolIcd.valueOf("BE_EN"));
+        Assert.assertNotNull(PeppolIcd.valueOf("BE_EN").getScheme());
 
-        Assert.assertEquals(PeppolIcd.findByCode("9908"), PeppolIcd.NO_ORGNR);
+        Assert.assertEquals(PeppolIcd.findByCode("0208"), PeppolIcd.BE_EN);
     }
 
     @Test(expectedExceptions = IllegalArgumentException.class)

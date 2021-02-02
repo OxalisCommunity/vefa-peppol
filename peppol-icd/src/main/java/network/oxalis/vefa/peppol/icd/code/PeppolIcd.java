@@ -57,6 +57,7 @@ public enum PeppolIcd implements Icd {
     LT_LEV("LT:LEC", "0200", "State Enterprise Centre of Registers"),
     IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
     DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
+    BE_EN("BE:EN", "0208", "Banque-Carrefour des Entreprises (BCE) / Kruispuntbank van Ondernemingen (KBO) / Zentrale Datenbank der Unternehmen (ZOU) Service public fédéral Economie, P.M.E. Classes moyennes et Energie"),
 
         // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
