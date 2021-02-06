@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/difi/vefa-peppol.svg?branch=master)](https://travis-ci.org/difi/vefa-peppol)
+[![Vefa-Peppol Master Build](https://github.com/OxalisCommunity/vefa-peppol/workflows/Vefa-Peppol%20Master%20Build/badge.svg?branch=master)](https://github.com/OxalisCommunity/vefa-peppol/actions?query=workflow%3A%22Vefa-Peppol%20Master%20Build%22)
 [![CodeCov](https://codecov.io/gh/difi/vefa-peppol/branch/master/graph/badge.svg)](https://codecov.io/gh/difi/vefa-peppol)
 [![Maven Central](https://img.shields.io/maven-central/v/no.difi.vefa/peppol-parent.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22no.difi.vefa%22%20AND%20a%3A%22peppol-parent%22)
 
