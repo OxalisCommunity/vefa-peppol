@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // Current version of code list: 6
+    // As per latest code list release v7.3 from 2020-11-16 :  https://docs.peppol.eu/edelivery/codelists/
 
     // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
@@ -39,22 +39,22 @@ public enum PeppolIcd implements Icd {
     GLN("GLN", "0088", "GS1 GLN"),
     DK_P("DK:P", "0096", "Danish Chamber of Commerce"),
     IT_FTI("IT:FTI", "0097", "FTI - Ediforum Italia"),
-    NL_KVK("NL:KVK", "0106", "Vereniging van Kamers van Koophandel en Fabrieken in Nederland, Scheme"),
-    NAL("NAL", "0130", "Directorates of the European Commission"),
+    NL_KVK("NL:KVK", "0106", "Vereniging van Kamers van Koophandel en Fabrieken in Nederland"),
+    EU_NAL("EU:NAL", "0130", "European Commission, Information Directorate, Data Transmission Service"),
     IT_SIA("IT:SIA", "0135", "SIA-Società Interbancaria per l'Automazione S.p.A."),
     IT_SECETI("IT:SECETI", "0142", "Servizi Centralizzati SECETI S.p.A."),
     AU_ABN("AU:ABN", "0151", "Australian Taxation Office"),
     CH_UIDB("CH:UIDB", "0183", "Swiss Federal Statistical Office (FSO)"),
-    DIGST("DIGST", "0184", "The Danish Agency for Digitisation"),
+    DK_DIGST("DK:DIGST", "0184", "DIGSTORG"),
     NL_OINO("NL:OINO", "0190", "Logius"),
-    EE_CC("EE:CC", "0191", "Estonian Company Code"),
-    NO_ORG("NO:ORG", "0192", "Enhetsregisteret ved Bronnøysundregisterne"),
+    EE_CC("EE:CC", "0191", "Centre of Registers and Information Systems of the Ministry of Justice"),
+    NO_ORG("NO:ORG", "0192", "The Brønnøysund Register Centre"),
     UBLBE("UBLBE", "0193", "UBL.BE"),
-    SG_UEN("SG:UEN", "0195", "Infocomm Media Development Authority"),
-    IS_KTNR("IS:KTNR", "0196", "Directorate of Internal Revenue"),
+    SG_UEN("SG:UEN", "0195", "lnfocomm Media Development Authority"),
+    IS_KTNR("IS:KTNR", "0196", "Icelandic National Registry"),
     DK_ERST("DK:ERST", "0198", "The Danish Business Authority"),
     LEI("LEI", "0199", "Legal Entity Identifier (LEI)"),
-    LT_LEV("LT:LEC", "0200", "State Enterprise Centre of Registers"),
+    LT_LEC("LT:LEC", "0200", "State Enterprise Centre of Registers"),
     IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
     DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
     BE_EN("BE:EN", "0208", "Banque-Carrefour des Entreprises (BCE) / Kruispuntbank van Ondernemingen (KBO) / Zentrale Datenbank der Unternehmen (ZOU) Service public fédéral Economie, P.M.E. Classes moyennes et Energie"),
@@ -66,7 +66,7 @@ public enum PeppolIcd implements Icd {
     DK_VANS("DK:VANS", "9905", "Danish VANS providers"),
     IT_VAT("IT:VAT", "9906", "Ufficio responsabile gestione partite IVA"),
     IT_CF("IT:CF", "9907", "TAX Authority"),
-    NO_ORGNR("NO:ORGNR", "9908", "Enhetsregisteret ved Bronnøysundregisterne"),
+    NO_ORGNR("NO:ORGNR", "9908", "The Brønnøysund Register Centre"),
     HU_VAT("HU:VAT", "9910", "Hungarian VAT number"),
     EU_REID("EU:REID", "9913", "Business Registers Network"),
     AT_VAT("AT:VAT", "9914", "Österreichische Umsatzsteuer-Identifikationsnummer"),
