@@ -1,4 +1,4 @@
-name: Vefa-Peppol package released to the Maven Central Repository and GitHub Packages
+name: Vefa-Peppol Release publish
 on:
   release:
     types: [created]
