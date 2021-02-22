@@ -24,7 +24,7 @@
     <groupId>network.oxalis.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.0-RC1</version>
+    <version>1.1.5-SNAPSHOT</version>
 
     <name>VEFA PEPPOL :: Parent</name>
     <description>Library for features to support use of PEPPOL infrastructure.</description>
@@ -138,22 +138,22 @@
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
-                <version>1.2.0-RC1</version>
+                <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
-                <version>1.2.0-RC1</version>
+                <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-mode</artifactId>
-                <version>1.2.0-RC1</version>
+                <version>1.1.5-SNAPSHOT</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
-                <version>1.2.0-RC1</version>
+                <version>1.1.5-SNAPSHOT</version>
             </dependency>
 
             <!-- Difi Commons -->
@@ -375,12 +375,15 @@
         </profile>
     </profiles>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub Packages</name>
-      <url>https://maven.pkg.github.com/oxalis-update-info/vefa-peppol</url>
-    </repository>
-  </distributionManagement>
-  
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
+
 </project>

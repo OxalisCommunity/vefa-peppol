@@ -22,14 +22,14 @@
     <parent>
         <artifactId>peppol-parent</artifactId>
         <groupId>network.oxalis.vefa</groupId>
-        <version>1.2.0-RC1</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>peppol-lookup</artifactId>
+    <artifactId>peppol-publisher</artifactId>
 
-    <name>VEFA PEPPOL :: Lookup</name>
-    <description>Library for lookup in the PEPPOL infrastructure.</description>
+    <name>VEFA PEPPOL :: Publisher</name>
+    <description>Tools for metadata publishers.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
@@ -89,11 +89,26 @@
         </dependency>
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
-            <artifactId>peppol-mode</artifactId>
+            <artifactId>peppol-lookup</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-security</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>network.oxalis.vefa</groupId>
+                    <artifactId>peppol-mode</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>no.difi.commons</groupId>
+                    <artifactId>commons-certvalidator</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>guava</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Difi Commons -->
@@ -112,18 +127,11 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
-        <!-- Apache Http Components -->
-        <!-- May be included if ApacheFetcher is used. -->
+        <!-- Java -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- DNS -->
-        <dependency>
-            <groupId>dnsjava</groupId>
-            <artifactId>dnsjava</artifactId>
         </dependency>
 
         <!-- Google Guava -->
@@ -131,6 +139,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

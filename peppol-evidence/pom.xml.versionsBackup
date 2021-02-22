@@ -22,14 +22,14 @@
     <parent>
         <artifactId>peppol-parent</artifactId>
         <groupId>network.oxalis.vefa</groupId>
-        <version>1.2.0-RC1</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>peppol-lookup</artifactId>
+    <artifactId>peppol-evidence</artifactId>
 
-    <name>VEFA PEPPOL :: Lookup</name>
-    <description>Library for lookup in the PEPPOL infrastructure.</description>
+    <name>VEFA PEPPOL :: Evidence</name>
+    <description>Implementation of ETSI REM evidence according to ETSI TS 102 640-2 with some adjustments.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
@@ -51,11 +51,17 @@
 
     <developers>
         <developer>
-            <name>Erlend Klakegg Bergheim</name>
-            <email>erlend.klakegg.bergheim@difi.no</email>
+            <name>Steinar Overbeck Cook</name>
             <organization>Difi</organization>
             <roles>
                 <role>Principal author</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Erlend Klakegg Bergheim</name>
+            <organization>Difi</organization>
+            <roles>
+                <role>Contributor</role>
             </roles>
         </developer>
         <developer>
@@ -82,6 +88,7 @@
     </licenses>
 
     <dependencies>
+
         <!-- VEFA PEPPOL -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
@@ -89,21 +96,7 @@
         </dependency>
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
-            <artifactId>peppol-mode</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-security</artifactId>
-        </dependency>
-
-        <!-- Difi Commons -->
-        <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-busdox</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-bdx</artifactId>
         </dependency>
 
         <!-- SLF4J -->
@@ -112,25 +105,36 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
 
-        <!-- Apache Http Components -->
-        <!-- May be included if ApacheFetcher is used. -->
+        <!-- Java Mail -->
         <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <scope>provided</scope>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <scope>test</scope>
         </dependency>
 
-        <!-- DNS -->
-        <dependency>
-            <groupId>dnsjava</groupId>
-            <artifactId>dnsjava</artifactId>
-        </dependency>
-
-        <!-- Google Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>jaxb2-maven-plugin</artifactId>
+                <version>1.6</version>
+                <executions>
+                    <execution>
+                        <id>xjc</id>
+                        <goals>
+                            <goal>xjc</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <target>2.1</target>
+                    <bindingDirectory>src/main/xjb</bindingDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

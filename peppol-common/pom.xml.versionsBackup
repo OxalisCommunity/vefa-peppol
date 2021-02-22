@@ -22,13 +22,13 @@
     <parent>
         <artifactId>peppol-parent</artifactId>
         <groupId>network.oxalis.vefa</groupId>
-        <version>1.2.0-RC1</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>peppol-lookup</artifactId>
+    <artifactId>peppol-common</artifactId>
 
-    <name>VEFA PEPPOL :: Lookup</name>
+    <name>VEFA PEPPOL :: Common</name>
     <description>Library for lookup in the PEPPOL infrastructure.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
@@ -80,57 +80,5 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
-
-    <dependencies>
-        <!-- VEFA PEPPOL -->
-        <dependency>
-            <groupId>network.oxalis.vefa</groupId>
-            <artifactId>peppol-common</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>network.oxalis.vefa</groupId>
-            <artifactId>peppol-mode</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>network.oxalis.vefa</groupId>
-            <artifactId>peppol-security</artifactId>
-        </dependency>
-
-        <!-- Difi Commons -->
-        <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-busdox</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-bdx</artifactId>
-        </dependency>
-
-        <!-- SLF4J -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-
-        <!-- Apache Http Components -->
-        <!-- May be included if ApacheFetcher is used. -->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <!-- DNS -->
-        <dependency>
-            <groupId>dnsjava</groupId>
-            <artifactId>dnsjava</artifactId>
-        </dependency>
-
-        <!-- Google Guava -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>
