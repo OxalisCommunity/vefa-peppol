@@ -294,7 +294,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>no/difi/vefa/peppol/**/jaxb/**</exclude>
+                        <exclude>network/oxalis/vefa/peppol/**/jaxb/**</exclude>
                     </excludes>
                 </configuration>
             </plugin>
@@ -329,24 +329,25 @@
             <build>
                 <plugins>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-source-plugin</artifactId>
                         <version>2.4</version>
                         <executions>
                             <execution>
-                                <id>package-sources</id>
+                                <id>attach-sources</id>
                                 <goals>
-                                    <goal>jar</goal>
+                                    <goal>jar-no-fork</goal>
                                 </goals>
                             </execution>
                         </executions>
                     </plugin>
                     <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.10.3</version>
+                        <version>3.2.0</version>
                         <executions>
                             <execution>
-                                <id>package-javadoc</id>
-                                <phase>package</phase>
+                                <id>attach-javadocs</id>
                                 <goals>
                                     <goal>jar</goal>
                                 </goals>
@@ -354,6 +355,9 @@
                         </executions>
                         <configuration>
                             <encoding>${java.encoding}</encoding>
+                            <additionalOptions>
+                                <additionalOption>-Xdoclint:none</additionalOption>
+                            </additionalOptions>
                         </configuration>
                     </plugin>
                     <plugin>
