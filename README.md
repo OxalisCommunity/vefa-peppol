@@ -7,13 +7,6 @@ The contents of this repository is currently in the process of switching ownersh
 The Oxalis Community annual meeting scheduled to be held on 25th of March 2021. Should you wish to sign up as a member of the Oxalis Community, please use the registration form available from this site: [link](https://www.oxalis.network/join)  
 
 ---
-# Upcoming changes
-* Organizational changes to project - GroupID, Package name refactoring etc.
-* Addition of new approved ICD values
-* Change in default lookup behavior to CNAME (as per Peppol SML specification) 
-
-
----
 # VEFA PEPPOL
 
 This project implements some aspects of PEPPOL for inclusion in other projects.
