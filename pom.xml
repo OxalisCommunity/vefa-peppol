@@ -24,7 +24,7 @@
     <groupId>network.oxalis.vefa</groupId>
     <artifactId>peppol-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.2.RC4-SNAPSHOT</version>
+    <version>1.2.RC4</version>
 
     <name>VEFA PEPPOL :: Parent</name>
     <description>Library for features to support use of PEPPOL infrastructure.</description>
@@ -42,7 +42,7 @@
     </modules>
 
     <scm>
-        <tag>HEAD</tag>
+        <tag>1.2.RC4</tag>
         <url>https://github.com/OxalisCommunity/vefa-peppol</url>
         <connection>scm:git:https://github.com/OxalisCommunity/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</developerConnection>
@@ -138,22 +138,22 @@
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-common</artifactId>
-                <version>1.2.RC4-SNAPSHOT</version>
+                <version>1.2.RC4</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-lookup</artifactId>
-                <version>1.2.RC4-SNAPSHOT</version>
+                <version>1.2.RC4</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-mode</artifactId>
-                <version>1.2.RC4-SNAPSHOT</version>
+                <version>1.2.RC4</version>
             </dependency>
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-security</artifactId>
-                <version>1.2.RC4-SNAPSHOT</version>
+                <version>1.2.RC4</version>
             </dependency>
 
             <!-- Difi Commons -->
