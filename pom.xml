@@ -60,19 +60,19 @@
 
     <developers>
         <developer>
-            <name>Erlend Klakegg Bergheim</name>
-            <email>erlend.klakegg.bergheim@difi.no</email>
-            <organization>Difi</organization>
-            <roles>
-                <role>Principal author</role>
-            </roles>
-        </developer>
-        <developer>
             <name>Arun Kumar</name>
             <email>arun.kaundal@gmail.com</email>
             <organization>Norstella</organization>
             <roles>
                 <role>Oxalis Technical Expert</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Erlend Klakegg Bergheim</name>
+            <email>erlend.klakegg.bergheim@difi.no</email>
+            <organization>Difi</organization>
+            <roles>
+                <role>Principal author</role>
             </roles>
         </developer>
     </developers>
