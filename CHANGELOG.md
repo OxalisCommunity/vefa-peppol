@@ -4,8 +4,7 @@
 
 _Stay tuned._
 
-## 1.2.RC4: Pre-Release
-
+## 2.0.0.RC1: Pre-Release
 * Organizational changes to project - GroupID, Package name refactoring etc
 * Addition of new approved ICD values - OpenPEPPOL eDEC Code Lists - Participant Identifier Schemes v7.3
 * Change in default lookup behavior to CNAME (as per Peppol SML specification) 
