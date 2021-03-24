@@ -19,20 +19,20 @@
 
 package network.oxalis.vefa.peppol.lookup.reader;
 
+import network.oxalis.vefa.peppol.common.api.PotentiallySigned;
+import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
 import network.oxalis.vefa.peppol.common.model.*;
+import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
 import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.lookup.api.MetadataReader;
 import network.oxalis.vefa.peppol.lookup.api.Namespace;
 import network.oxalis.vefa.peppol.lookup.model.DocumentTypeIdentifierWithUri;
 import network.oxalis.vefa.peppol.lookup.util.XmlUtils;
-import no.difi.commons.bdx.jaxb.smp._2016._05.*;
-import network.oxalis.vefa.peppol.common.api.PotentiallySigned;
-import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
-import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import network.oxalis.vefa.peppol.security.xmldsig.XmldsigVerifier;
+import no.difi.commons.bdx.jaxb.smp._2016._05.*;
 import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -121,42 +121,63 @@ public class Bdxr201605Reader implements MetadataReader {
                 o = ((SignedServiceMetadataType) o).getServiceMetadata();
             }
 
-            ServiceInformationType serviceInformation = ((ServiceMetadataType) o).getServiceInformation();
-
-            List<ProcessMetadata<Endpoint>> processMetadatas = new ArrayList<>();
-            for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
-                List<Endpoint> endpoints = new ArrayList<>();
-                for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
-                    endpoints.add(Endpoint.of(
-                            TransportProfile.of(endpointType.getTransportProfile()),
-                            URI.create(endpointType.getEndpointURI()),
-                            certificateInstance(endpointType.getCertificate())
-                    ));
-                }
-
-                processMetadatas.add(ProcessMetadata.of(
-                        ProcessIdentifier.of(
-                                processType.getProcessIdentifier().getValue(),
-                                Scheme.of(processType.getProcessIdentifier().getScheme())
-                        ),
-                        endpoints
-                ));
-            }
-
-            return Signed.of(ServiceMetadata.of(
-                    ParticipantIdentifier.of(
-                            serviceInformation.getParticipantIdentifier().getValue(),
-                            Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
-                    ),
-                    DocumentTypeIdentifier.of(
-                            serviceInformation.getDocumentIdentifier().getValue(),
-                            Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
-                    ),
-                    processMetadatas
-            ), signer);
+            ServiceMetadataType serviceMetadataType = (ServiceMetadataType) o;
+            ServiceMetadata serviceMetadata = getServiceMetadata(serviceMetadataType);
+            return Signed.of(serviceMetadata, signer);
         } catch (JAXBException | CertificateException | IOException | SAXException | ParserConfigurationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    private ServiceMetadata getServiceMetadata(ServiceMetadataType serviceMetadataType) throws CertificateException, LookupException {
+        ServiceInformationType serviceInformation = serviceMetadataType.getServiceInformation();
+
+        if (serviceInformation != null) {
+            return getServiceMetadata(serviceInformation);
+        }
+
+        RedirectType redirect = serviceMetadataType.getRedirect();
+
+        if (redirect != null) {
+            return ServiceMetadata.of(Redirect.of(redirect.getCertificateUID(), redirect.getHref()));
+        }
+
+        throw new LookupException("Expected one of ServiceInformationType or RedirectType");
+    }
+
+    private ServiceMetadata getServiceMetadata(ServiceInformationType serviceInformation) throws CertificateException {
+        List<ProcessMetadata<Endpoint>> processMetadatas = new ArrayList<>();
+        for (ProcessType processType : serviceInformation.getProcessList().getProcess()) {
+            List<Endpoint> endpoints = new ArrayList<>();
+            for (EndpointType endpointType : processType.getServiceEndpointList().getEndpoint()) {
+                endpoints.add(Endpoint.of(
+                        TransportProfile.of(endpointType.getTransportProfile()),
+                        URI.create(endpointType.getEndpointURI()),
+                        certificateInstance(endpointType.getCertificate())
+                ));
+            }
+
+            processMetadatas.add(ProcessMetadata.of(
+                    ProcessIdentifier.of(
+                            processType.getProcessIdentifier().getValue(),
+                            Scheme.of(processType.getProcessIdentifier().getScheme())
+                    ),
+                    endpoints
+            ));
+        }
+
+        ServiceMetadata serviceMetadata = ServiceMetadata.of(ServiceInformation.of(
+                ParticipantIdentifier.of(
+                        serviceInformation.getParticipantIdentifier().getValue(),
+                        Scheme.of(serviceInformation.getParticipantIdentifier().getScheme())
+                ),
+                DocumentTypeIdentifier.of(
+                        serviceInformation.getDocumentIdentifier().getValue(),
+                        Scheme.of(serviceInformation.getDocumentIdentifier().getScheme())
+                ),
+                processMetadatas
+        ));
+        return serviceMetadata;
     }
 
     private X509Certificate certificateInstance(byte[] content) throws CertificateException {

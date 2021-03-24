@@ -20,20 +20,27 @@
 package network.oxalis.vefa.peppol.publisher.model;
 
 import network.oxalis.vefa.peppol.common.model.AbstractServiceMetadata;
-import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
-import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
-import network.oxalis.vefa.peppol.common.model.ProcessMetadata;
-
-import java.util.List;
+import network.oxalis.vefa.peppol.common.model.Redirect;
+import network.oxalis.vefa.peppol.common.model.ServiceInformation;
 
 /**
  * @author erlend
  */
 public class PublisherServiceMetadata extends AbstractServiceMetadata<PublisherEndpoint> {
 
-    public PublisherServiceMetadata(ParticipantIdentifier participantIdentifier,
-                                    DocumentTypeIdentifier documentTypeIdentifier,
-                                    List<ProcessMetadata<PublisherEndpoint>> processes) {
-        super(participantIdentifier, documentTypeIdentifier, processes);
+    public static PublisherServiceMetadata of(ServiceInformation<PublisherEndpoint> serviceInformation) {
+        return new PublisherServiceMetadata(serviceInformation);
+    }
+
+    public static PublisherServiceMetadata of(Redirect redirect) {
+        return new PublisherServiceMetadata(redirect);
+    }
+
+    private PublisherServiceMetadata(ServiceInformation<PublisherEndpoint> serviceInformation) {
+        super(serviceInformation);
+    }
+
+    private PublisherServiceMetadata(Redirect redirect) {
+        super(redirect);
     }
 }

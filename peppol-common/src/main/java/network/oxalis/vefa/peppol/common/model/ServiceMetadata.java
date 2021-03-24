@@ -20,20 +20,25 @@
 package network.oxalis.vefa.peppol.common.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 public class ServiceMetadata extends AbstractServiceMetadata<Endpoint> implements Serializable {
 
     private static final long serialVersionUID = -7523336374349545534L;
 
-    public static ServiceMetadata of(ParticipantIdentifier participantIdentifier,
-                                     DocumentTypeIdentifier documentTypeIdentifier,
-                                     List<ProcessMetadata<Endpoint>> processes) {
-        return new ServiceMetadata(participantIdentifier, documentTypeIdentifier, processes);
+    public static ServiceMetadata of(ServiceInformation<Endpoint> serviceInformation) {
+        return new ServiceMetadata(serviceInformation);
     }
 
-    private ServiceMetadata(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier,
-                            List<ProcessMetadata<Endpoint>> processes) {
-        super(participantIdentifier, documentTypeIdentifier, processes);
+    public static ServiceMetadata of(Redirect redirect) {
+        return new ServiceMetadata(redirect);
     }
+
+    private ServiceMetadata(ServiceInformation<Endpoint> serviceInformation) {
+        super(serviceInformation);
+    }
+
+    private ServiceMetadata(Redirect redirect) {
+        super(redirect);
+    }
+
 }

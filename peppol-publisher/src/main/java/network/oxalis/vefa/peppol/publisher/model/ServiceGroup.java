@@ -24,7 +24,7 @@ import network.oxalis.vefa.peppol.common.model.ServiceReference;
 
 import java.io.Serializable;
 import java.util.Collections;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author erlend
@@ -33,17 +33,17 @@ public class ServiceGroup implements Serializable {
 
     private static final long serialVersionUID = -4268277692087478476L;
 
-    private ParticipantIdentifier participantIdentifier;
+    private final ParticipantIdentifier participantIdentifier;
 
-    private List<ServiceReference> serviceReferences;
+    private final Set<ServiceReference> serviceReferences;
 
     public static ServiceGroup of(ParticipantIdentifier participantIdentifier,
-                                  List<ServiceReference> serviceReferences) {
+                                  Set<ServiceReference> serviceReferences) {
         return new ServiceGroup(participantIdentifier, serviceReferences);
     }
 
     private ServiceGroup(ParticipantIdentifier participantIdentifier,
-                        List<ServiceReference> serviceReferences) {
+                         Set<ServiceReference> serviceReferences) {
         this.participantIdentifier = participantIdentifier;
         this.serviceReferences = serviceReferences;
     }
@@ -52,7 +52,7 @@ public class ServiceGroup implements Serializable {
         return participantIdentifier;
     }
 
-    public List<ServiceReference> getServiceReferences() {
-        return Collections.unmodifiableList(serviceReferences);
+    public Set<ServiceReference> getServiceReferences() {
+        return Collections.unmodifiableSet(serviceReferences);
     }
 }

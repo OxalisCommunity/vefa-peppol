@@ -28,6 +28,8 @@ import java.net.URI;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
 
+import static org.testng.Assert.assertEquals;
+
 public class ServiceMetadataTest {
 
     @Test
@@ -53,43 +55,58 @@ public class ServiceMetadataTest {
         ProcessMetadata<Endpoint> processMetadata2 = ProcessMetadata.of(
                 ProcessIdentifier.of("Other:Process"), endpoint2);
 
-        ServiceMetadata serviceMetadata = ServiceMetadata.of(
+        ServiceMetadata serviceMetadata = ServiceMetadata.of(ServiceInformation.of(
                 ParticipantIdentifier.of("9908:991825827"),
                 DocumentTypeIdentifier.of("Some:Document"),
                 Arrays.asList(processMetadata1, processMetadata2)
-        );
+        ));
 
-        Assert.assertEquals(serviceMetadata.getProcesses().size(), 2);
+        ServiceInformation<Endpoint> serviceInformation = serviceMetadata.getServiceInformation();
 
-        Assert.assertEquals(serviceMetadata.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
-        Assert.assertEquals(serviceMetadata.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
+        Assert.assertEquals(serviceInformation.getProcesses().size(), 2);
 
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+        Assert.assertEquals(serviceInformation.getParticipantIdentifier(), ParticipantIdentifier.of("9908:991825827"));
+        Assert.assertEquals(serviceInformation.getDocumentTypeIdentifier(), DocumentTypeIdentifier.of("Some:Document"));
+
+        Assert.assertEquals(serviceInformation.getEndpoint(ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS2_1_0),
                 endpoint1);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+        Assert.assertEquals(serviceInformation.getEndpoint(ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS2_1_0, TransportProfile.AS4),
                 endpoint1);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Some:Process"),
+        Assert.assertEquals(serviceInformation.getEndpoint(ProcessIdentifier.of("Some:Process"),
                 TransportProfile.AS4, TransportProfile.AS2_1_0),
                 endpoint3);
-        Assert.assertEquals(serviceMetadata.getEndpoint(ProcessIdentifier.of("Other:Process"),
+        Assert.assertEquals(serviceInformation.getEndpoint(ProcessIdentifier.of("Other:Process"),
                 TransportProfile.AS2_1_0),
                 endpoint2);
 
         try {
-            serviceMetadata.getEndpoint(ProcessIdentifier.of("Other:Process"), TransportProfile.AS4);
+            serviceInformation.getEndpoint(ProcessIdentifier.of("Other:Process"), TransportProfile.AS4);
             Assert.fail();
         } catch (EndpointNotFoundException e) {
             // No action.
         }
 
         try {
-            serviceMetadata.getEndpoint(ProcessIdentifier.of("Another:Process"),
+            serviceInformation.getEndpoint(ProcessIdentifier.of("Another:Process"),
                     TransportProfile.AS4, TransportProfile.AS2_1_0, TransportProfile.START);
             Assert.fail();
         } catch (EndpointNotFoundException e) {
             // No action.
         }
+    }
+
+    @Test
+    public void redirect() {
+        ServiceMetadata serviceMetadata = ServiceMetadata.of(Redirect.of(
+                "C=NO,O=Direktoratet for Forvaltning og IKT,OU=PEPPOL TEST SMP,CN=PNO000179",
+                "http://test-smp.difi.no/iso6523-actorid-upis%3A%3A0192%3A991825827/services/busdox-docid-qns%3A%3Aurn%3Aoasis%3Anames%3Aspecification%3Aubl%3Aschema%3Axsd%3AOrderResponse-2%3A%3AOrderResponse%23%23urn%3Afdc%3Apeppol.eu%3Apoacc%3Atrns%3Aorder_response%3A3%3Aextended%3Aurn%3Afdc%3Aanskaffelser.no%3A2019%3Aehf%3Aspec%3A3.0%3A%3A2.2"
+        ));
+
+        Redirect redirect = serviceMetadata.getRedirect();
+
+        assertEquals(redirect.getCertificateUID(), "C=NO,O=Direktoratet for Forvaltning og IKT,OU=PEPPOL TEST SMP,CN=PNO000179");
+        assertEquals(redirect.getHref(), "http://test-smp.difi.no/iso6523-actorid-upis%3A%3A0192%3A991825827/services/busdox-docid-qns%3A%3Aurn%3Aoasis%3Anames%3Aspecification%3Aubl%3Aschema%3Axsd%3AOrderResponse-2%3A%3AOrderResponse%23%23urn%3Afdc%3Apeppol.eu%3Apoacc%3Atrns%3Aorder_response%3A3%3Aextended%3Aurn%3Afdc%3Aanskaffelser.no%3A2019%3Aehf%3Aspec%3A3.0%3A%3A2.2");
     }
 }

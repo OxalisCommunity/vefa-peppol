@@ -20,10 +20,7 @@
 package network.oxalis.vefa.peppol.lookup.reader;
 
 import network.oxalis.vefa.peppol.common.lang.EndpointNotFoundException;
-import network.oxalis.vefa.peppol.common.model.ProcessIdentifier;
-import network.oxalis.vefa.peppol.common.model.ServiceMetadata;
-import network.oxalis.vefa.peppol.common.model.ServiceReference;
-import network.oxalis.vefa.peppol.common.model.TransportProfile;
+import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
 import network.oxalis.vefa.peppol.lookup.api.MetadataReader;
 import org.testng.annotations.Test;
@@ -51,16 +48,18 @@ public class Bdxr201407ReaderTest {
 
         ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0");
 
+        ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
+
         try {
-            result.getEndpoint(processIdentifier, TransportProfile.START);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.START);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
         }
 
-        assertNotNull(result.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
+        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.AS2_1_0));
 
-        assertEquals(result.getEndpoint(
+        assertEquals(serviceInformation.getEndpoint(
                 processIdentifier, TransportProfile.AS2_1_0).getCertificate().getSubjectDN().toString(),
                 "CN=APP_1000000005, O=DIFI, C=NO"
         );

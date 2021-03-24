@@ -1,8 +1,9 @@
 package network.oxalis.vefa.peppol.common.model;
 
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author erlend
@@ -11,17 +12,17 @@ public class ServiceReference {
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessIdentifier> processIdentifiers;
+    private Set<ProcessIdentifier> processIdentifiers;
 
     public static ServiceReference of(DocumentTypeIdentifier documentTypeIdentifier, ProcessIdentifier... processIdentifiers) {
-        return new ServiceReference(documentTypeIdentifier, Arrays.asList(processIdentifiers));
+        return new ServiceReference(documentTypeIdentifier, new HashSet<>(Arrays.asList(processIdentifiers)));
     }
 
-    public static ServiceReference of(DocumentTypeIdentifier documentTypeIdentifier, List<ProcessIdentifier> processIdentifiers) {
+    public static ServiceReference of(DocumentTypeIdentifier documentTypeIdentifier, Set<ProcessIdentifier> processIdentifiers) {
         return new ServiceReference(documentTypeIdentifier, processIdentifiers);
     }
 
-    private ServiceReference(DocumentTypeIdentifier documentTypeIdentifier, List<ProcessIdentifier> processIdentifiers) {
+    private ServiceReference(DocumentTypeIdentifier documentTypeIdentifier, Set<ProcessIdentifier> processIdentifiers) {
         this.documentTypeIdentifier = documentTypeIdentifier;
         this.processIdentifiers = processIdentifiers;
     }
@@ -30,7 +31,7 @@ public class ServiceReference {
         return documentTypeIdentifier;
     }
 
-    public List<ProcessIdentifier> getProcessIdentifiers() {
+    public Set<ProcessIdentifier> getProcessIdentifiers() {
         return processIdentifiers;
     }
 
