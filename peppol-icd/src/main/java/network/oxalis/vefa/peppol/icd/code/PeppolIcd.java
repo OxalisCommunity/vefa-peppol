@@ -58,6 +58,11 @@ public enum PeppolIcd implements Icd {
     IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
     DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
     BE_EN("BE:EN", "0208", "Banque-Carrefour des Entreprises (BCE) / Kruispuntbank van Ondernemingen (KBO) / Zentrale Datenbank der Unternehmen (ZOU) Service public fédéral Economie, P.M.E. Classes moyennes et Energie"),
+    GS1("GS1", "0209", "GS1"),
+    IT_CFI("IT:CFI", "0210", "Agenzia delle Entrate"),
+    IT_IVA("IT:IVA", "0211", "PARTITA IVA"),
+    FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
+    FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
 
         // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
