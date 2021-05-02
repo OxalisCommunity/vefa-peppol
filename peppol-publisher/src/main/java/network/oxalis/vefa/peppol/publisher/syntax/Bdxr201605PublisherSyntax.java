@@ -20,12 +20,12 @@
 package network.oxalis.vefa.peppol.publisher.syntax;
 
 import network.oxalis.vefa.peppol.common.model.*;
-import no.difi.commons.bdx.jaxb.smp._2016._05.*;
 import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 import network.oxalis.vefa.peppol.publisher.annotation.Syntax;
 import network.oxalis.vefa.peppol.publisher.model.PublisherEndpoint;
 import network.oxalis.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import network.oxalis.vefa.peppol.publisher.model.ServiceGroup;
+import no.difi.commons.bdx.jaxb.smp._2016._05.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -67,16 +67,30 @@ public class Bdxr201605PublisherSyntax extends AbstractPublisherSyntax {
     @SuppressWarnings("all")
     @Override
     public JAXBElement<?> of(PublisherServiceMetadata serviceMetadata, boolean forSigning) {
-        ServiceInformationType serviceInformationType = new ServiceInformationType();
-        serviceInformationType.setParticipantIdentifier(convert(serviceMetadata.getParticipantIdentifier()));
-        serviceInformationType.setDocumentIdentifier(convert(serviceMetadata.getDocumentTypeIdentifier()));
-        serviceInformationType.setProcessList(new ProcessListType());
-
-        for (ProcessMetadata processMetadata : serviceMetadata.getProcesses())
-            serviceInformationType.getProcessList().getProcess().addAll(convert(processMetadata));
-
         ServiceMetadataType serviceMetadataType = new ServiceMetadataType();
-        serviceMetadataType.setServiceInformation(serviceInformationType);
+
+        ServiceInformation<PublisherEndpoint> serviceInformation = serviceMetadata.getServiceInformation();
+
+        if (serviceInformation != null) {
+            ServiceInformationType serviceInformationType = new ServiceInformationType();
+            serviceInformationType.setParticipantIdentifier(convert(serviceInformation.getParticipantIdentifier()));
+            serviceInformationType.setDocumentIdentifier(convert(serviceInformation.getDocumentTypeIdentifier()));
+            serviceInformationType.setProcessList(new ProcessListType());
+
+            for (ProcessMetadata processMetadata : serviceInformation.getProcesses())
+                serviceInformationType.getProcessList().getProcess().addAll(convert(processMetadata));
+
+            serviceMetadataType.setServiceInformation(serviceInformationType);
+        }
+
+        Redirect redirect = serviceMetadata.getRedirect();
+
+        if (redirect != null) {
+            RedirectType redirectType = OBJECT_FACTORY.createRedirectType();
+            redirectType.setCertificateUID(redirect.getCertificateUID());
+            redirectType.setHref(redirect.getHref());
+            serviceMetadataType.setRedirect(redirectType);
+        }
 
         if (forSigning) {
             SignedServiceMetadataType signedServiceMetadataType = new SignedServiceMetadataType();

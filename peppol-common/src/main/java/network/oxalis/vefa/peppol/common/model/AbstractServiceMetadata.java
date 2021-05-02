@@ -19,50 +19,32 @@
 
 package network.oxalis.vefa.peppol.common.model;
 
-import network.oxalis.vefa.peppol.common.lang.EndpointNotFoundException;
 import network.oxalis.vefa.peppol.common.api.SimpleEndpoint;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
 
 public abstract class AbstractServiceMetadata<T extends SimpleEndpoint> implements Serializable {
 
     private static final long serialVersionUID = -7523336374349545534L;
 
-    private final ParticipantIdentifier participantIdentifier;
+    private final ServiceInformation<T> serviceInformation;
+    private final Redirect redirect;
 
-    private final DocumentTypeIdentifier documentTypeIdentifier;
-
-    private final List<ProcessMetadata<T>> processes;
-
-    protected AbstractServiceMetadata(ParticipantIdentifier participantIdentifier,
-                                      DocumentTypeIdentifier documentTypeIdentifier,
-                                      List<ProcessMetadata<T>> processes) {
-        this.participantIdentifier = participantIdentifier;
-        this.documentTypeIdentifier = documentTypeIdentifier;
-        this.processes = processes;
+    protected AbstractServiceMetadata(ServiceInformation<T> serviceInformation) {
+        this.serviceInformation = serviceInformation;
+        this.redirect = null;
     }
 
-    public ParticipantIdentifier getParticipantIdentifier() {
-        return participantIdentifier;
+    protected AbstractServiceMetadata(Redirect redirect) {
+        this.serviceInformation = null;
+        this.redirect = redirect;
     }
 
-    public DocumentTypeIdentifier getDocumentTypeIdentifier() {
-        return documentTypeIdentifier;
+    public ServiceInformation<T> getServiceInformation() {
+        return serviceInformation;
     }
 
-    public List<ProcessMetadata<T>> getProcesses() {
-        return Collections.unmodifiableList(processes);
-    }
-
-    public T getEndpoint(ProcessIdentifier processIdentifier, TransportProfile... transportProfiles)
-            throws EndpointNotFoundException {
-        for (ProcessMetadata<T> processMetadata : processes)
-            if (processMetadata.getProcessIdentifier().contains(processIdentifier))
-                return processMetadata.getEndpoint(transportProfiles);
-
-        throw new EndpointNotFoundException(
-                String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));
+    public Redirect getRedirect() {
+        return redirect;
     }
 }

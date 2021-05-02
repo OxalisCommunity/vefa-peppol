@@ -23,8 +23,8 @@ import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
 import network.oxalis.vefa.peppol.common.model.ServiceReference;
 import network.oxalis.vefa.peppol.publisher.model.ServiceGroup;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author erlend
@@ -32,8 +32,7 @@ import java.util.List;
 public class ServiceGroupBuilder {
 
     private ParticipantIdentifier participantIdentifier;
-
-    private List<ServiceReference> serviceReferences = new ArrayList<>();
+    private final Set<ServiceReference> serviceReferences = new HashSet<>();
 
     public static ServiceGroupBuilder newInstance(ParticipantIdentifier participantIdentifier) {
         return new ServiceGroupBuilder(participantIdentifier);

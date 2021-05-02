@@ -30,7 +30,7 @@ import network.oxalis.vefa.peppol.security.util.EmptyCertificateValidator;
 
 public class LookupClientBuilder {
 
-    private Mode mode;
+    private final Mode mode;
 
     protected MetadataFetcher metadataFetcher;
 

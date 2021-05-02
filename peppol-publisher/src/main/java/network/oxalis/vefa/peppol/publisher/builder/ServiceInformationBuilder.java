@@ -19,51 +19,49 @@
 
 package network.oxalis.vefa.peppol.publisher.builder;
 
-import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
-import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
-import network.oxalis.vefa.peppol.common.model.ProcessIdentifier;
-import network.oxalis.vefa.peppol.common.model.ProcessMetadata;
+import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.publisher.model.PublisherEndpoint;
-import network.oxalis.vefa.peppol.publisher.model.PublisherServiceMetadata;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author erlend
- */
-public class ServiceMetadataBuilder {
+public class ServiceInformationBuilder {
 
     private ParticipantIdentifier participantIdentifier;
 
     private DocumentTypeIdentifier documentTypeIdentifier;
 
-    private List<ProcessMetadata<PublisherEndpoint>> processes = new ArrayList<>();
+    private final List<ProcessMetadata<PublisherEndpoint>> processes = new ArrayList<>();
 
-    public static ServiceMetadataBuilder newInstance() {
-        return new ServiceMetadataBuilder();
+    public static ServiceInformationBuilder newInstance() {
+        return new ServiceInformationBuilder();
     }
 
-    private ServiceMetadataBuilder() {
+    private ServiceInformationBuilder() {
 
     }
 
-    public ServiceMetadataBuilder participant(ParticipantIdentifier participantIdentifier) {
+    public ServiceInformationBuilder participant(ParticipantIdentifier participantIdentifier) {
         this.participantIdentifier = participantIdentifier;
         return this;
     }
 
-    public ServiceMetadataBuilder documentTypeIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
+    public ServiceInformationBuilder documentTypeIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
         this.documentTypeIdentifier = documentTypeIdentifier;
         return this;
     }
 
-    public ServiceMetadataBuilder add(ProcessIdentifier processIdentifier, PublisherEndpoint... endpoints) {
+    public ServiceInformationBuilder add(ProcessIdentifier processIdentifier, PublisherEndpoint... endpoints) {
         this.processes.add(ProcessMetadata.of(processIdentifier, endpoints));
         return this;
     }
 
-    public PublisherServiceMetadata build() {
-        return new PublisherServiceMetadata(participantIdentifier, documentTypeIdentifier, processes);
+    public ServiceInformationBuilder add(ProcessIdentifier processIdentifier, List<PublisherEndpoint> endpoints) {
+        this.processes.add(ProcessMetadata.of(processIdentifier, endpoints));
+        return this;
+    }
+
+    public ServiceInformation<PublisherEndpoint> build() {
+        return ServiceInformation.of(participantIdentifier, documentTypeIdentifier, processes);
     }
 }

@@ -26,7 +26,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 public class ApacheFetcher extends BasicApacheFetcher {
 
-    private PoolingHttpClientConnectionManager httpClientConnectionManager;
+    private final PoolingHttpClientConnectionManager httpClientConnectionManager;
 
     public ApacheFetcher(Mode mode) {
         super(mode);

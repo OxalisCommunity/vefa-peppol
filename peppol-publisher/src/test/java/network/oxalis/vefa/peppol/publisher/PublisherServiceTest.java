@@ -27,7 +27,7 @@ import network.oxalis.vefa.peppol.publisher.api.ServiceGroupProvider;
 import network.oxalis.vefa.peppol.publisher.api.ServiceMetadataProvider;
 import network.oxalis.vefa.peppol.publisher.builder.EndpointBuilder;
 import network.oxalis.vefa.peppol.publisher.builder.ServiceGroupBuilder;
-import network.oxalis.vefa.peppol.publisher.builder.ServiceMetadataBuilder;
+import network.oxalis.vefa.peppol.publisher.builder.ServiceInformationBuilder;
 import network.oxalis.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import network.oxalis.vefa.peppol.publisher.model.ServiceGroup;
 import org.mockito.Mockito;
@@ -92,7 +92,7 @@ public class PublisherServiceTest {
 
     @Test
     public void simpleServiceMetadata() throws Exception {
-        PublisherServiceMetadata serviceMetadata = ServiceMetadataBuilder.newInstance()
+        PublisherServiceMetadata serviceMetadata = PublisherServiceMetadata.of(ServiceInformationBuilder.newInstance()
                 .participant(ParticipantIdentifier.of("9908:999888777"))
                 .documentTypeIdentifier(DTI_INVOICE)
                 .add(PI_INVOICE, EndpointBuilder.newInstance()
@@ -102,7 +102,7 @@ public class PublisherServiceTest {
                         .expirationDate(new Date())
                         .certificate("Test".getBytes())
                         .build())
-                .build();
+                .build());
 
         Mockito.when(serviceMetadataProvider.get(
                 Mockito.any(ParticipantIdentifier.class), Mockito.any(DocumentTypeIdentifier.class)))
