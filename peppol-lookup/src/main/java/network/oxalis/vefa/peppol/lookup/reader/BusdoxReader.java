@@ -156,7 +156,7 @@ public class BusdoxReader implements MetadataReader {
                 Period period = Period.of(
                         endpointType.getServiceActivationDate() == null ?
                                 null : endpointType.getServiceActivationDate().toGregorianCalendar().getTime(),
-                        endpointType.getServiceActivationDate() == null ?
+                        endpointType.getServiceExpirationDate() == null ?
                                 null : endpointType.getServiceExpirationDate().toGregorianCalendar().getTime()
                 );
 
