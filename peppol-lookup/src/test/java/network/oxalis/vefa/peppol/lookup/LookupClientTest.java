@@ -64,9 +64,8 @@ public class LookupClientTest {
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(
                 ParticipantIdentifier.of("9908:810418052"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                        "urn:www.cenbii.eu:transaction:biicoretrdm015:ver1.0" +
-                        ":#urn:www.peppol.eu:bis:peppol6a:ver1.0::2.0"));
+                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2::Catalogue##" +
+                        "urn:www.cenbii.eu:transaction:biitrns019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0::2.1"));
         assertNotNull(serviceMetadata);
     }
 
