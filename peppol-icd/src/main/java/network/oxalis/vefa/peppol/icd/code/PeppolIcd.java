@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // As per latest code list release v7.3 from 2020-11-16 :  https://docs.peppol.eu/edelivery/codelists/
+    // The latest code list release is v8.0 from 2022-01-20:  https://docs.peppol.eu/edelivery/codelists/
 
     // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
@@ -72,10 +72,16 @@ public enum PeppolIcd implements Icd {
     IT_VAT("IT:VAT", "9906", "Ufficio responsabile gestione partite IVA"),
     IT_CF("IT:CF", "9907", "TAX Authority"),
     NO_ORGNR("NO:ORGNR", "9908", "The Brønnøysund Register Centre"),
+    @Deprecated
+    NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
     HU_VAT("HU:VAT", "9910", "Hungarian VAT number"),
+    @Deprecated
+    EU_VAT("EU:VAT", "9912", "National ministries of Economy"),
     EU_REID("EU:REID", "9913", "Business Registers Network"),
     AT_VAT("AT:VAT", "9914", "Österreichische Umsatzsteuer-Identifikationsnummer"),
     AT_GOV("AT:GOV", "9915", "Österreichisches Verwaltungs bzw. Organisationskennzeichen"),
+    @Deprecated
+    AT_CID("AT:CID", "9916", "Firmenidentifikationsnummer der Statistik Austria"),
     @Deprecated
     IS_KT("IS:KT", "9917", "Icelandic National Registry"),
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
@@ -118,6 +124,7 @@ public enum PeppolIcd implements Icd {
     @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
     SE_VAT("SE:VAT", "9955", "Swedish VAT number"),
+    @Deprecated
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
     FR_VAT("FR:VAT", "9957", "French VAT number"),
     @Deprecated

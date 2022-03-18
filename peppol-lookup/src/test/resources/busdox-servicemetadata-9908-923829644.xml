@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ns2:SignedServiceMetadata xmlns:ns2="http://busdox.org/serviceMetadata/publishing/1.0/" xmlns="http://busdox.org/transport/identifiers/1.0/" xmlns:ns3="http://www.w3.org/2005/08/addressing" xmlns:ns4="http://www.w3.org/2000/09/xmldsig#">
+    <ns2:ServiceMetadata>
+        <ns2:ServiceInformation>
+            <ParticipantIdentifier scheme="iso6523-actorid-upis">9908:923829644</ParticipantIdentifier>
+            <DocumentIdentifier scheme="busdox-docid-qns">
+                urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote##urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1
+            </DocumentIdentifier>
+            <ns2:ProcessList>
+                <ns2:Process>
+                    <ProcessIdentifier scheme="cenbii-procid-ubl">urn:www.cenbii.eu:profile:bii05:ver2.0</ProcessIdentifier>
+                    <ns2:ServiceEndpointList>
+                        <ns2:Endpoint transportProfile="busdox-transport-as2-ver1p0">
+                            <ns3:EndpointReference>
+                                <ns3:Address>https://test-api.basware.com/peppol/as2</ns3:Address>
+                                <ns3:ReferenceParameters/>
+                                <ns3:Metadata/>
+                            </ns3:EndpointReference>
+                            <ns2:RequireBusinessLevelSignature>false</ns2:RequireBusinessLevelSignature>
+                            <ns2:ServiceActivationDate>2020-01-01T00:00:00.000Z</ns2:ServiceActivationDate>
+                            <ns2:ServiceExpirationDate>2022-01-01T23:59:59.000Z</ns2:ServiceExpirationDate>
+                            <ns2:Certificate>
+                                MIIFvzCCA6egAwIBAgIQBV7uSJlbeLx9GB1tBD9qhTANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQG EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTEp MCcGA1UEAxMgUEVQUE9MIEFDQ0VTUyBQT0lOVCBURVNUIENBIC0gRzIwHhcNMjAwOTE0MDAwMDAw WhcNMjIwOTA0MjM1OTU5WjBMMRIwEAYDVQQDDAlQT1AwMDAwMTAxFzAVBgNVBAsMDlBFUFBPTCBU RVNUIEFQMRAwDgYDVQQKDAdCYXN3YXJlMQswCQYDVQQGEwJGSTCCASIwDQYJKoZIhvcNAQEBBQAD ggEPADCCAQoCggEBALMwQO726jn0C2sQq8e16KVt/NRUaj5l/gOtfL0y0hEAQNRM8oM2E+LN0Gzn 4T7sLOEgcgOrnw0Sx9PBhosJjeHQmp4FxXBcTdfhpe6jeBG7oK4r4qO+d4qnssm3tW25k75o/Ocy baqWX6o9oEL9F4hMJ/cR53eINZuy/WlblEZSPrSCWhu2jH3fikbQ0yBbyneU1EQgtGYvnokg7pxy gLBnbWgpOkrPH43Ug0t+4hromsHYMo/FKs2ATxP1aKCCxzrlytSu60mhu5ZRYS+RwIP0vGQ6yb2G 7eb1r7xEWXfg0wcZMqTjs0t3jX206rSbMqcdIGpL7jibsZU0gXZkcxECAwEAAaOCAXwwggF4MAwG A1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMCMB0GA1Ud DgQWBBSsoxuqualBzUgqSE3y9J1N0QDQ5zBdBgNVHR8EVjBUMFKgUKBOhkxodHRwOi8vcGtpLWNy bC5zeW1hdXRoLmNvbS9jYV82YTkzNzczNGEzOTNhMDgwNWJmMzNjZGE4YjMzMTA5My9MYXRlc3RD UkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDovL3BraS1vY3NwLnN5bWF1 dGguY29tMB8GA1UdIwQYMBaAFGtvS7bxN7orPH8Yzborsrl8KjfrMC0GCmCGSAGG+EUBEAMEHzAd BhNghkgBhvhFARABAgMBAYGpkOEDFgY5NTc2MDgwOQYKYIZIAYb4RQEQBQQrMCkCAQAWJGFIUjBj SE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0BAQsFAAOCAgEAFJpFt3s5 T6Sjz3/yJs+6eAVuIr6lNGx7jLHeCIKHp/l4Y8KyiQPBcfP5PCo74+2HuCexEBzt7xAkwpRwo1aR VTFAr8QZlWHo4OOf7Ah5aQcbVFFSv0epTEdwNbgwWROCdD/BYEWWNPLboELeMY58LV8R2qlaglWx Fg2Ezn8/cqOZE2u/2Rp3djRW7eSvjy+XmOIBRQcgcKNRXebwPaUTq2W7TebWKwpj4E6EtFFTxGfg 41EQub5HH4HWpIvwOMzVNLj0iocAR5VWGedYjzQ4GryGM/1bml1Y1IN2EGgytZxUng8XEy8XIMey tOBbBEHLcwWPGOmES/wmod1qiEABx570S+a9ZOaNU01y1thCC6rkhLyeIOQKBm7z3d4+RqHRAIpr mldxzKS2cOQloJyczp6yBjhh2F5mzmWapDvGGsY7FnBPu+5ylk9GvuN3+pRHrzNxF+6GrH2qFqH3 CPafxQQAc/+sNFHD1bCGT4XeD5eeWhq+UEXBOfCzb7d4rXlftMAA4P8E1UnfwGzG0Qev5NGE4y0R 0BPMnCHLsFahCMO9ddnVBqjNqgvxquddtCC54d17zg6VNc5wz6wIzHdeslg20lmsv7MOrlvWAX2P 4HuZiKz3o/R7oJeqsg1jJBnyUK2ln37oqwkkYN8daHYH2LOb15YNBa6KUq6TOHrZSGE=
+                            </ns2:Certificate>
+                            <ns2:ServiceDescription>Basware PEPPOL Test Access Point</ns2:ServiceDescription>
+                            <ns2:TechnicalContactUrl>arun.kumar@basware.com</ns2:TechnicalContactUrl>
+                        </ns2:Endpoint>                    
+                        <ns2:Endpoint transportProfile="peppol-transport-as4-v2_0">
+                            <ns3:EndpointReference>
+                                <ns3:Address>https://test-api.basware.com/peppol/as4</ns3:Address>
+                                <ns3:ReferenceParameters/>
+                                <ns3:Metadata/>
+                            </ns3:EndpointReference>
+                            <ns2:RequireBusinessLevelSignature>false</ns2:RequireBusinessLevelSignature>
+                            <ns2:ServiceActivationDate>2022-01-01T00:00:00.000Z</ns2:ServiceActivationDate>
+                            <ns2:ServiceExpirationDate>2024-01-01T23:59:59.000Z</ns2:ServiceExpirationDate>
+                            <ns2:Certificate>
+                                MIIFvzCCA6egAwIBAgIQBV7uSJlbeLx9GB1tBD9qhTANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQG EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTEp MCcGA1UEAxMgUEVQUE9MIEFDQ0VTUyBQT0lOVCBURVNUIENBIC0gRzIwHhcNMjAwOTE0MDAwMDAw WhcNMjIwOTA0MjM1OTU5WjBMMRIwEAYDVQQDDAlQT1AwMDAwMTAxFzAVBgNVBAsMDlBFUFBPTCBU RVNUIEFQMRAwDgYDVQQKDAdCYXN3YXJlMQswCQYDVQQGEwJGSTCCASIwDQYJKoZIhvcNAQEBBQAD ggEPADCCAQoCggEBALMwQO726jn0C2sQq8e16KVt/NRUaj5l/gOtfL0y0hEAQNRM8oM2E+LN0Gzn 4T7sLOEgcgOrnw0Sx9PBhosJjeHQmp4FxXBcTdfhpe6jeBG7oK4r4qO+d4qnssm3tW25k75o/Ocy baqWX6o9oEL9F4hMJ/cR53eINZuy/WlblEZSPrSCWhu2jH3fikbQ0yBbyneU1EQgtGYvnokg7pxy gLBnbWgpOkrPH43Ug0t+4hromsHYMo/FKs2ATxP1aKCCxzrlytSu60mhu5ZRYS+RwIP0vGQ6yb2G 7eb1r7xEWXfg0wcZMqTjs0t3jX206rSbMqcdIGpL7jibsZU0gXZkcxECAwEAAaOCAXwwggF4MAwG A1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMCMB0GA1Ud DgQWBBSsoxuqualBzUgqSE3y9J1N0QDQ5zBdBgNVHR8EVjBUMFKgUKBOhkxodHRwOi8vcGtpLWNy bC5zeW1hdXRoLmNvbS9jYV82YTkzNzczNGEzOTNhMDgwNWJmMzNjZGE4YjMzMTA5My9MYXRlc3RD UkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDovL3BraS1vY3NwLnN5bWF1 dGguY29tMB8GA1UdIwQYMBaAFGtvS7bxN7orPH8Yzborsrl8KjfrMC0GCmCGSAGG+EUBEAMEHzAd BhNghkgBhvhFARABAgMBAYGpkOEDFgY5NTc2MDgwOQYKYIZIAYb4RQEQBQQrMCkCAQAWJGFIUjBj SE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0BAQsFAAOCAgEAFJpFt3s5 T6Sjz3/yJs+6eAVuIr6lNGx7jLHeCIKHp/l4Y8KyiQPBcfP5PCo74+2HuCexEBzt7xAkwpRwo1aR VTFAr8QZlWHo4OOf7Ah5aQcbVFFSv0epTEdwNbgwWROCdD/BYEWWNPLboELeMY58LV8R2qlaglWx Fg2Ezn8/cqOZE2u/2Rp3djRW7eSvjy+XmOIBRQcgcKNRXebwPaUTq2W7TebWKwpj4E6EtFFTxGfg 41EQub5HH4HWpIvwOMzVNLj0iocAR5VWGedYjzQ4GryGM/1bml1Y1IN2EGgytZxUng8XEy8XIMey tOBbBEHLcwWPGOmES/wmod1qiEABx570S+a9ZOaNU01y1thCC6rkhLyeIOQKBm7z3d4+RqHRAIpr mldxzKS2cOQloJyczp6yBjhh2F5mzmWapDvGGsY7FnBPu+5ylk9GvuN3+pRHrzNxF+6GrH2qFqH3 CPafxQQAc/+sNFHD1bCGT4XeD5eeWhq+UEXBOfCzb7d4rXlftMAA4P8E1UnfwGzG0Qev5NGE4y0R 0BPMnCHLsFahCMO9ddnVBqjNqgvxquddtCC54d17zg6VNc5wz6wIzHdeslg20lmsv7MOrlvWAX2P 4HuZiKz3o/R7oJeqsg1jJBnyUK2ln37oqwkkYN8daHYH2LOb15YNBa6KUq6TOHrZSGE=
+                            </ns2:Certificate>
+                            <ns2:ServiceDescription>Basware PEPPOL Test Access Point</ns2:ServiceDescription>
+                            <ns2:TechnicalContactUrl>arun.kumar@basware.com</ns2:TechnicalContactUrl>
+                        </ns2:Endpoint>
+                        <ns2:Endpoint transportProfile="busdox-transport-as2-ver2p0">
+                            <ns3:EndpointReference>
+                                <ns3:Address>https://test-api.basware.com/peppol/as2</ns3:Address>
+                                <ns3:ReferenceParameters/>
+                                <ns3:Metadata/>
+                            </ns3:EndpointReference>
+                            <ns2:RequireBusinessLevelSignature>false</ns2:RequireBusinessLevelSignature>
+                            <ns2:ServiceActivationDate>2024-01-01T00:00:00.000Z</ns2:ServiceActivationDate>
+                            <ns2:ServiceExpirationDate>2026-01-01T23:59:59.000Z</ns2:ServiceExpirationDate>
+                            <ns2:Certificate>
+                                MIIFvzCCA6egAwIBAgIQBV7uSJlbeLx9GB1tBD9qhTANBgkqhkiG9w0BAQsFADBrMQswCQYDVQQG EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTEp MCcGA1UEAxMgUEVQUE9MIEFDQ0VTUyBQT0lOVCBURVNUIENBIC0gRzIwHhcNMjAwOTE0MDAwMDAw WhcNMjIwOTA0MjM1OTU5WjBMMRIwEAYDVQQDDAlQT1AwMDAwMTAxFzAVBgNVBAsMDlBFUFBPTCBU RVNUIEFQMRAwDgYDVQQKDAdCYXN3YXJlMQswCQYDVQQGEwJGSTCCASIwDQYJKoZIhvcNAQEBBQAD ggEPADCCAQoCggEBALMwQO726jn0C2sQq8e16KVt/NRUaj5l/gOtfL0y0hEAQNRM8oM2E+LN0Gzn 4T7sLOEgcgOrnw0Sx9PBhosJjeHQmp4FxXBcTdfhpe6jeBG7oK4r4qO+d4qnssm3tW25k75o/Ocy baqWX6o9oEL9F4hMJ/cR53eINZuy/WlblEZSPrSCWhu2jH3fikbQ0yBbyneU1EQgtGYvnokg7pxy gLBnbWgpOkrPH43Ug0t+4hromsHYMo/FKs2ATxP1aKCCxzrlytSu60mhu5ZRYS+RwIP0vGQ6yb2G 7eb1r7xEWXfg0wcZMqTjs0t3jX206rSbMqcdIGpL7jibsZU0gXZkcxECAwEAAaOCAXwwggF4MAwG A1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMCMB0GA1Ud DgQWBBSsoxuqualBzUgqSE3y9J1N0QDQ5zBdBgNVHR8EVjBUMFKgUKBOhkxodHRwOi8vcGtpLWNy bC5zeW1hdXRoLmNvbS9jYV82YTkzNzczNGEzOTNhMDgwNWJmMzNjZGE4YjMzMTA5My9MYXRlc3RD UkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDovL3BraS1vY3NwLnN5bWF1 dGguY29tMB8GA1UdIwQYMBaAFGtvS7bxN7orPH8Yzborsrl8KjfrMC0GCmCGSAGG+EUBEAMEHzAd BhNghkgBhvhFARABAgMBAYGpkOEDFgY5NTc2MDgwOQYKYIZIAYb4RQEQBQQrMCkCAQAWJGFIUjBj SE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0BAQsFAAOCAgEAFJpFt3s5 T6Sjz3/yJs+6eAVuIr6lNGx7jLHeCIKHp/l4Y8KyiQPBcfP5PCo74+2HuCexEBzt7xAkwpRwo1aR VTFAr8QZlWHo4OOf7Ah5aQcbVFFSv0epTEdwNbgwWROCdD/BYEWWNPLboELeMY58LV8R2qlaglWx Fg2Ezn8/cqOZE2u/2Rp3djRW7eSvjy+XmOIBRQcgcKNRXebwPaUTq2W7TebWKwpj4E6EtFFTxGfg 41EQub5HH4HWpIvwOMzVNLj0iocAR5VWGedYjzQ4GryGM/1bml1Y1IN2EGgytZxUng8XEy8XIMey tOBbBEHLcwWPGOmES/wmod1qiEABx570S+a9ZOaNU01y1thCC6rkhLyeIOQKBm7z3d4+RqHRAIpr mldxzKS2cOQloJyczp6yBjhh2F5mzmWapDvGGsY7FnBPu+5ylk9GvuN3+pRHrzNxF+6GrH2qFqH3 CPafxQQAc/+sNFHD1bCGT4XeD5eeWhq+UEXBOfCzb7d4rXlftMAA4P8E1UnfwGzG0Qev5NGE4y0R 0BPMnCHLsFahCMO9ddnVBqjNqgvxquddtCC54d17zg6VNc5wz6wIzHdeslg20lmsv7MOrlvWAX2P 4HuZiKz3o/R7oJeqsg1jJBnyUK2ln37oqwkkYN8daHYH2LOb15YNBa6KUq6TOHrZSGE=
+                            </ns2:Certificate>
+                            <ns2:ServiceDescription>Basware PEPPOL Test Access Point</ns2:ServiceDescription>
+                            <ns2:TechnicalContactUrl>arun.kumar@basware.com</ns2:TechnicalContactUrl>
+                        </ns2:Endpoint>
+                    </ns2:ServiceEndpointList>
+                </ns2:Process>
+            </ns2:ProcessList>
+        </ns2:ServiceInformation>
+    </ns2:ServiceMetadata>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>jG3sUDzwCJK+JatorJHqenZMEcw=</DigestValue></Reference></SignedInfo><SignatureValue>uwT3clhW2DM/Q6F4j+OTi2hliFYDX7AQaza7noljuslspHB5D51S526Smtf1VuMHHa6xfcxxRGwn
+4uMUPNc3seI3clI2QrgB4GKbvwTbfu637gJ1rBULzfndVjATpDZtzFFqvxbQiLNx7bOf4QRR04zk
+sMbAeFmj0eE9H2BknVg/WQgElXqxveJKcCnFCOkvxSRVUzxYNOhzxRD+5Ld6F9OeIL+//vPbGaqj
+QqacltOMH0y0tWqg9S7rAvrW5qDWQyNGFsVcc/mxZtRsdnPceTk7XyAzGdoJlzQsnPnXWkX273tG
+UMvRrpGuLTndrcrGyLXUXDVmfSGcB5OF2n2NYA==</SignatureValue><KeyInfo><X509Data><X509SubjectName>CN=POP000010,OU=PEPPOL TEST SMP,O=Basware,C=FI</X509SubjectName><X509Certificate>MIIFzjCCA7agAwIBAgIQBkgalZBvVfIgaiKKlFOrVzANBgkqhkiG9w0BAQsFADB5MQswCQYDVQQG
+EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTE3
+MDUGA1UEAxMuUEVQUE9MIFNFUlZJQ0UgTUVUQURBVEEgUFVCTElTSEVSIFRFU1QgQ0EgLSBHMjAe
+Fw0yMTA5MjkwMDAwMDBaFw0yMzA5MTkyMzU5NTlaME0xCzAJBgNVBAYTAkZJMRAwDgYDVQQKDAdC
+YXN3YXJlMRgwFgYDVQQLDA9QRVBQT0wgVEVTVCBTTVAxEjAQBgNVBAMMCVBPUDAwMDAxMDCCASIw
+DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANBe7sa9qbfgxdFlTlCf8pU/6C4nkpPHX7/SVUNV
+LeosfCx0zC0nJ7HuyDbngCNmw8UM/OAKpre5YUrDTxJ9MZVVdANaxNrcJnLObXwKSB5inC7c4SOC
+u1HrwHkWee/MTy0gQWpxpuBpoUXPp7nW6Qss0sCm0566uorTJ9Ud3A2KD88qZ7VOMuk8ABf5qWvU
+v0ORLFFM8unaR44A5Zj1IzJkJFmaGpkArCfSdNqtMUAq6rMZn/NDf3HK8jKx/zIqwUaefRjQYMLi
+OvzZad8Dy18HRtoxNZx0WMJi0gVhq7WCnF5k8LP7vz7xDqiKd1J/43Pvrxvb3iuXRHgPij6cLlkC
+AwEAAaOCAXwwggF4MAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoG
+CCsGAQUFBwMCMB0GA1UdDgQWBBQM3c5oM9tmeOCIlBi8ADAt0DWBtTBdBgNVHR8EVjBUMFKgUKBO
+hkxodHRwOi8vcGtpLWNybC5zeW1hdXRoLmNvbS9jYV9iNmQwZGMxZGMzMTQ3NzIzZmUzNmI3NTc1
+OTk3YWZjNC9MYXRlc3RDUkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDov
+L3BraS1vY3NwLnN5bWF1dGguY29tMB8GA1UdIwQYMBaAFHwdskjxutkKBsoWY6nwek+9I517MC0G
+CmCGSAGG+EUBEAMEHzAdBhNghkgBhvhFARABAgMBAYGo1YEKFgY5NTc2MDgwOQYKYIZIAYb4RQEQ
+BQQrMCkCAQAWJGFIUjBjSE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0B
+AQsFAAOCAgEAMwO2ma+VhM4U6cOlhWwU4K3yG9W5HuVpM8/G4oQhaV+rkgtQHd0Z2pKWpLSA0nkH
+7PRqyF+nix/aSlSMtx58lUMr2IWfdCFNxWi3SCo5/U2g7f/T42yqQvTttYiOChFbsL1GLoMINa+G
+CuRVXH0qTPTiLF9ZjAWp0RrcagiX4cLe8F0vhkF4Ledh+mbscshWyK5UPic4aEvsFUuAjvQJqubA
+F5er+cJAbna43btd4edRASL4MrOEB7nQUgKUeL35gW/H0VGiyDOAeV8yhGCGUszKtpgncoYN0TWa
+AUz+6zPYfryZ29+BkP0Z+nzDaoxDPnA580NDBhain+yY9zamACNjsgvtHFbdpfW9MhTLeWxY5c1t
+gM5ad92bblpG/sjXm6RY2MLwon4Iq4KAuV29K1ZqCoqnL5qPx/TGRs4yWZ+d88g6JUE039kGt6PO
+mQldoLE2YNTEVwoycQ1gNnd1qk5cWgQBZmr8C13OwCFTWTF53xV8Sfofqs9bIpPjmAhgB9MyWU5z
+vL9QzF8sIHN9w7QBsD1YzicINCdJqLsm6Uhr50AW2dqrClXzwE3n0tSbWd0UzrqFXX53hw9pdy0v
+JkRan9RF/VQ+o+CSbVdYP4jhNjJxQpDDFmbLP3Zk/FlzsGIGnGUIdDqOA3eS3o5UFdABabQaESr2
+XRkcaY8tJvY=</X509Certificate></X509Data></KeyInfo></Signature></ns2:SignedServiceMetadata>
