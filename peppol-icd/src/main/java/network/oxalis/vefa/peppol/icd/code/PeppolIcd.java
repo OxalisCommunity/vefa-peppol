@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 public enum PeppolIcd implements Icd {
 
     // The latest code list release is v8.0 from 2022-01-20:  https://docs.peppol.eu/edelivery/codelists/
+    // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
@@ -43,9 +44,12 @@ public enum PeppolIcd implements Icd {
     EU_NAL("EU:NAL", "0130", "European Commission, Information Directorate, Data Transmission Service"),
     IT_SIA("IT:SIA", "0135", "SIA-Società Interbancaria per l'Automazione S.p.A."),
     IT_SECETI("IT:SECETI", "0142", "Servizi Centralizzati SECETI S.p.A."),
+    JP_SCC("JP:SCC", "0147", "JIPDEC"),
     AU_ABN("AU:ABN", "0151", "Australian Taxation Office"),
+    JP_TCC("JP:TCC", "0170", "TEIKOKU DATABANK LTD"),
     CH_UIDB("CH:UIDB", "0183", "Swiss Federal Statistical Office (FSO)"),
     DK_DIGST("DK:DIGST", "0184", "DIGSTORG"),
+    P_CNTSSTNS("JP:CNTSSTNS", "0188", "National Tax Agency Japan"),
     NL_OINO("NL:OINO", "0190", "Logius"),
     EE_CC("EE:CC", "0191", "Centre of Registers and Information Systems of the Ministry of Justice"),
     NO_ORG("NO:ORG", "0192", "The Brønnøysund Register Centre"),
@@ -57,12 +61,15 @@ public enum PeppolIcd implements Icd {
     LT_LEC("LT:LEC", "0200", "State Enterprise Centre of Registers"),
     IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
     DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
+    IT_CODDEST("IT:CODDEST", "0205", "Agenzia delle Entrate"),
     BE_EN("BE:EN", "0208", "Banque-Carrefour des Entreprises (BCE) / Kruispuntbank van Ondernemingen (KBO) / Zentrale Datenbank der Unternehmen (ZOU) Service public fédéral Economie, P.M.E. Classes moyennes et Energie"),
     GS1("GS1", "0209", "GS1"),
     IT_CFI("IT:CFI", "0210", "Agenzia delle Entrate"),
     IT_IVA("IT:IVA", "0211", "PARTITA IVA"),
     FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
     FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
+    FI_NETSERVICEID("FI:NETSERVICEID", "0215", "Tieto Finland Oy"),
+    FI_OVTcode("FI:OVTcode", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry "),
 
         // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
