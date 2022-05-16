@@ -49,7 +49,7 @@ public enum PeppolIcd implements Icd {
     JP_TCC("JP:TCC", "0170", "TEIKOKU DATABANK LTD"),
     CH_UIDB("CH:UIDB", "0183", "Swiss Federal Statistical Office (FSO)"),
     DK_DIGST("DK:DIGST", "0184", "DIGSTORG"),
-    P_CNTSSTNS("JP:CNTSSTNS", "0188", "National Tax Agency Japan"),
+    JP_SST("JP:SST", "0188", "National Tax Agency Japan"),
     NL_OINO("NL:OINO", "0190", "Logius"),
     EE_CC("EE:CC", "0191", "Centre of Registers and Information Systems of the Ministry of Justice"),
     NO_ORG("NO:ORG", "0192", "The Brønnøysund Register Centre"),
@@ -68,15 +68,17 @@ public enum PeppolIcd implements Icd {
     IT_IVA("IT:IVA", "0211", "PARTITA IVA"),
     FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
     FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
-    FI_NETSERVICEID("FI:NETSERVICEID", "0215", "Tieto Finland Oy"),
-    FI_OVTcode("FI:OVTcode", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry "),
+    FI_NSI("FI:NSI", "0215", "Tieto Finland Oy"),
+    FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry "),
 
         // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
     DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
     DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
     DK_VANS("DK:VANS", "9905", "Danish VANS providers"),
+    @Deprecated
     IT_VAT("IT:VAT", "9906", "Ufficio responsabile gestione partite IVA"),
+    @Deprecated
     IT_CF("IT:CF", "9907", "TAX Authority"),
     NO_ORGNR("NO:ORGNR", "9908", "The Brønnøysund Register Centre"),
     @Deprecated
