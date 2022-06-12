@@ -28,9 +28,19 @@ import java.net.URI;
 public class DocumentTypeIdentifierWithUriTest {
 
     @Test
-    public void simple() {
+    public void simpleWithBusDoxDocIdQNSDocumentTypeIdentifier() {
         DocumentTypeIdentifierWithUri documentTypeIdentifierWithUri = DocumentTypeIdentifierWithUri.of(
-                "9908:991825827", DocumentTypeIdentifier.DEFAULT_SCHEME, URI.create("http://difi.no/"));
+                "9908:991825827", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME, URI.create("http://difi.no/"));
+
+        Assert.assertNotNull(documentTypeIdentifierWithUri.getIdentifier());
+        Assert.assertNotNull(documentTypeIdentifierWithUri.getScheme());
+        Assert.assertNotNull(documentTypeIdentifierWithUri.getUri());
+    }
+
+    @Test
+    public void simpleWithPeppolDoctypeWildCardDocumentTypeIdentifier() {
+        DocumentTypeIdentifierWithUri documentTypeIdentifierWithUri = DocumentTypeIdentifierWithUri.of(
+                "9908:991825827", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME, URI.create("http://difi.no/"));
 
         Assert.assertNotNull(documentTypeIdentifierWithUri.getIdentifier());
         Assert.assertNotNull(documentTypeIdentifierWithUri.getScheme());

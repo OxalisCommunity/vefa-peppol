@@ -23,11 +23,12 @@ import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
 import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
 
 import java.net.URI;
+import java.util.List;
 
 public interface MetadataProvider {
-    
-    URI resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier);
 
-    URI resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
-                               DocumentTypeIdentifier documentTypeIdentifier);
+    List<URI>  resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier);
+
+    List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
+                                     DocumentTypeIdentifier documentTypeIdentifier);
 }

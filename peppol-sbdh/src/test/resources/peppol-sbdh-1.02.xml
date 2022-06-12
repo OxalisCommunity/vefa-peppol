@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardBusinessDocumentHeader xmlns="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader">
+    <HeaderVersion>1.0</HeaderVersion>
+    <Sender>
+        <Identifier Authority="iso6523-actorid-upis">0088:7315458756324</Identifier>
+    </Sender>
+    <Receiver>
+        <Identifier Authority="iso6523-actorid-upis">9915:helger</Identifier>
+    </Receiver>
+    <DocumentIdentification>
+        <Standard>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2</Standard>
+        <TypeVersion>2.1</TypeVersion>
+        <InstanceIdentifier>cbd8c586-4614-41d8-af42-d607473334139</InstanceIdentifier>
+        <Type>Invoice</Type>
+        <CreationDateAndTime>2017-12-06T10:17:05.734+01:00</CreationDateAndTime>
+    </DocumentIdentification>
+    <BusinessScope>
+        <Scope>
+            <Type>DOCUMENTID</Type>
+            <InstanceIdentifier>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1</InstanceIdentifier>
+            <Identifier>busdox-docid-qns</Identifier>
+        </Scope>
+        <Scope>
+            <Type>PROCESSID</Type>
+            <InstanceIdentifier>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</InstanceIdentifier>
+            <Identifier>cenbii-procid-ubl</Identifier>
+        </Scope>
+    </BusinessScope>
+</StandardBusinessDocumentHeader>

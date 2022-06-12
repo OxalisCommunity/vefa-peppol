@@ -30,7 +30,46 @@ public class DocumentTypeIdentifier extends AbstractQualifiedIdentifier implemen
 
     private static final long serialVersionUID = -3748163459655880167L;
 
-    public static final Scheme DEFAULT_SCHEME = Scheme.of("busdox-docid-qns");
+
+    /**
+     * Separator between Identifier and scheme/element
+     */
+    public static final String IDENTIFIER_SEPARATOR = "::";
+
+    /**
+     * Separator between syntax and subtype
+     */
+    public static final String SYNTAX_SUBTYPE_SEPARATOR = "##";
+
+    /**
+     * Default document identifier scheme
+     *
+     */
+    public static final String DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS = "busdox-docid-qns";
+
+    /**
+     * The "Wildcard" document type identifier scheme as per Peppol Policy for use of Identifiers 4.2.0.
+     *
+     */
+    public static final String DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD = "peppol-doctype-wildcard";
+
+    /**
+     * Scheme busdox-docid-qns is default Scheme
+     *
+     * @deprecated Use {@link #BUSDOX_DOCID_QNS_SCHEME} or {@link #PEPPOL_DOCTYPE_WILDCARD_SCHEME}
+     */
+    @Deprecated
+    public static final Scheme DEFAULT_SCHEME = Scheme.of(DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS);
+
+
+    public static final Scheme BUSDOX_DOCID_QNS_SCHEME = Scheme.of(DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS);
+
+    public static final Scheme PEPPOL_DOCTYPE_WILDCARD_SCHEME = Scheme.of(DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD);
+
+    public String getDefaultDocumentTypeIdentifierScheme ()
+    {
+        return DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS;
+    }
 
     public static DocumentTypeIdentifier of(String identifier) {
         return new DocumentTypeIdentifier(identifier, DEFAULT_SCHEME);

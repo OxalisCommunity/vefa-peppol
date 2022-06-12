@@ -192,6 +192,25 @@ public class BusdoxReaderTest {
     }
 
     @Test
+    public void serviceMetadataWithPeppolDocTypeWildCard() throws Exception {
+        ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
+                getClass().getResourceAsStream("/peppol-doctype-wildcard-servicemetadata-9901-pint_c4_jp_sb.xml"))).getContent();
+
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
+        ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
+
+        try {
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_2_0);
+            fail("Expected exception.");
+        } catch (EndpointNotFoundException e) {
+            // Expected
+        }
+
+        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0));
+
+    }
+
+    @Test
     public void serviceMetadataRedirect() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
                 getClass().getResourceAsStream("/busdox-servicemetadata-redirect-0192-991825827.xml"))).getContent();

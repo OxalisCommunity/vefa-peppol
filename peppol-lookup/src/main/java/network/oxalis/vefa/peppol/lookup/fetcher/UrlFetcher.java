@@ -27,6 +27,7 @@ import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.*;
+import java.util.List;
 
 public class UrlFetcher extends AbstractFetcher {
 
@@ -35,15 +36,49 @@ public class UrlFetcher extends AbstractFetcher {
     }
 
     @Override
-    public FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException {
+    public FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException {
+        FetcherResponse fetcherResponse = null;
+        Exception exceptionObj = null;
+
+        if (uriList == null)
+            throw new LookupException("Unable to lookup requested url");
+
+        for (URI uri : uriList) {
+           try {
+               fetcherResponse = fetchResponseFromValidUri(uri);
+               if (fetcherResponse != null) {
+                   exceptionObj = null;
+                   break;
+               }
+           } catch (FileNotFoundException e) {
+               //throw e;
+               exceptionObj = e;
+           } catch (LookupException e) {
+               //throw new LookupException(e.getMessage(), e);
+               exceptionObj = e;
+           }
+        }
+
+        if (exceptionObj instanceof FileNotFoundException) {
+            throw new FileNotFoundException ();
+        }
+
+        if (exceptionObj instanceof LookupException) {
+            throw new LookupException (exceptionObj.getMessage(), exceptionObj);
+        }
+
+        return fetcherResponse;
+    }
+
+    private FetcherResponse fetchResponseFromValidUri (URI uri) throws LookupException, FileNotFoundException {
         try {
             HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
             urlConnection.setConnectTimeout(timeout);
             urlConnection.setReadTimeout(timeout);
 
-            if (urlConnection.getResponseCode() != 200)
-                throw new LookupException(
-                        String.format("Received code '%s' from SMP.", urlConnection.getResponseCode()));
+            if (urlConnection.getResponseCode() != 200) {
+                return null;
+            }
 
             return new FetcherResponse(
                     new BufferedInputStream(urlConnection.getInputStream()),
@@ -56,4 +91,5 @@ public class UrlFetcher extends AbstractFetcher {
             throw new LookupException(e.getMessage(), e);
         }
     }
+
 }

@@ -22,9 +22,10 @@ package network.oxalis.vefa.peppol.lookup.api;
 
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.util.List;
 
 public interface MetadataFetcher {
 
-    FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException;
+    FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException;
 
 }

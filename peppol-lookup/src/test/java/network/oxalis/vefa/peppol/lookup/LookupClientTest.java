@@ -70,6 +70,26 @@ public class LookupClientTest {
     }
 
     @Test
+    public void simpleWithProvidedBusDoxDocIdQnsScheme() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forProduction()
+                .fetcher(ApacheFetcher.class)
+                .build();
+
+        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
+                ParticipantIdentifier.of("9908:810418052"));
+
+        assertNotNull(documentTypeIdentifiers);
+        assertNotEquals(documentTypeIdentifiers.size(), 0);
+
+        ServiceMetadata serviceMetadata = client.getServiceMetadata(
+                ParticipantIdentifier.of("9908:810418052"),
+                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2::Catalogue##" +
+                        "urn:www.cenbii.eu:transaction:biitrns019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME));
+        assertNotNull(serviceMetadata);
+    }
+
+
+    @Test
     public void simpleHeader() throws PeppolException {
         LookupClient client = LookupClientBuilder.forMode(testMode)
                 .fetcher(ApacheFetcher.class)
@@ -87,6 +107,26 @@ public class LookupClientTest {
 
         assertNotNull(endpoint);
     }
+
+    @Test
+    public void simpleHeaderWithProvidedBusDoxDocIdQnsScheme() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forMode(testMode)
+                .fetcher(ApacheFetcher.class)
+                .build();
+
+        Endpoint endpoint = client.getEndpoint(
+                Header.newInstance()
+                        .receiver(ParticipantIdentifier.of("9915:helger"))
+                        .documentType(DocumentTypeIdentifier.of(
+                                "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                        "urn:cen.eu:en16931:2017#compliant#" +
+                                        "urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME))
+                        .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0")),
+                TransportProfile.PEPPOL_AS4_2_0);
+
+        assertNotNull(endpoint);
+    }
+
 
     @Test
     public void simpleEndpoint() throws PeppolException {
@@ -108,7 +148,26 @@ public class LookupClientTest {
     }
 
     @Test
-    public void simpleEndpointWithHeader() throws PeppolException {
+    public void simpleEndpointWithProvidedBusDoxDocIdQnsScheme() throws PeppolException {
+        LookupClient client = LookupClientBuilder.forTest()
+                .certificateValidator(CertificateValidator.EMPTY)
+                .build();
+
+        Endpoint endpoint = client.getEndpoint(
+                ParticipantIdentifier.of("9915:helger"),
+                DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:cen.eu:en16931:2017#compliant#" +
+                                "urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME),
+                ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"),
+                TransportProfile.PEPPOL_AS4_2_0
+        );
+
+        assertNotNull(endpoint);
+    }
+
+    @Test
+    public void simpleEndpointWithHeaderAndProvidedBusDoxDocIdQnsScheme() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest()
                 .certificateValidator(CertificateValidator.EMPTY)
                 .build();
@@ -120,7 +179,67 @@ public class LookupClientTest {
                 .documentType(DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
                                 "urn:cen.eu:en16931:2017#compliant#" +
-                                "urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1"));
+                                "urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME));
+
+        Endpoint endpoint = client.getEndpoint(header, TransportProfile.PEPPOL_AS4_2_0);
+
+        assertNotNull(endpoint);
+    }
+
+    @Test
+    public void simpleEndpointWithHeaderAndPeppolDoctypeWildcard() throws PeppolException {
+
+        LookupClient client = LookupClientBuilder.forTest()
+                .certificateValidator(CertificateValidator.EMPTY)
+                .build();
+
+        Header header = Header.newInstance()
+                .sender(ParticipantIdentifier.of("0192:123456789"))
+                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
+                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
+                .documentType(DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:peppol:pint:billing-3.0::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
+
+        Endpoint endpoint = client.getEndpoint(header, TransportProfile.PEPPOL_AS4_2_0);
+
+        assertNotNull(endpoint);
+    }
+
+    @Test
+    public void simpleEndpointWithHeaderAndPeppolDoctypeWildcardAndNarrowerSchemeParts() throws PeppolException {
+
+        LookupClient client = LookupClientBuilder.forTest()
+                .certificateValidator(CertificateValidator.EMPTY)
+                .build();
+
+        Header header = Header.newInstance()
+                .sender(ParticipantIdentifier.of("0192:123456789"))
+                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
+                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
+                .documentType(DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:peppol:pint:billing-3.0@jp:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
+
+        Endpoint endpoint = client.getEndpoint(header, TransportProfile.PEPPOL_AS4_2_0);
+
+        assertNotNull(endpoint);
+    }
+
+    @Test
+    public void simpleEndpointWithHeaderAndPeppolDoctypeWildcardAndMultipleNarrowerSchemeParts() throws PeppolException {
+
+        LookupClient client = LookupClientBuilder.forTest()
+                .certificateValidator(CertificateValidator.EMPTY)
+                .build();
+
+        Header header = Header.newInstance()
+                .sender(ParticipantIdentifier.of("0192:123456789"))
+                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
+                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
+                .documentType(DocumentTypeIdentifier.of(
+                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
 
         Endpoint endpoint = client.getEndpoint(header, TransportProfile.PEPPOL_AS4_2_0);
 
@@ -265,9 +384,13 @@ public class LookupClientTest {
         }
 
         @Override
-        public FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException {
-            uriList.add(uri);
-            return super.fetch(replaceWithWireMock(uri));
+        public FetcherResponse fetch(List<URI> uriFetchList) throws LookupException, FileNotFoundException {
+            List<URI> wireMockUriFetchList = new ArrayList<URI>();
+            for (URI uri : uriFetchList) {
+                uriList.add(uri);
+                wireMockUriFetchList.add(replaceWithWireMock(uri));
+            }
+            return super.fetch(wireMockUriFetchList);
         }
 
         private URI replaceWithWireMock(URI uri) {

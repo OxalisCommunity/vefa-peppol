@@ -87,7 +87,7 @@ interface SbdhHelper {
         Scope scope = new Scope();
         scope.setType("DOCUMENTID");
         scope.setInstanceIdentifier(documentTypeIdentifier.getIdentifier());
-        if (!documentTypeIdentifier.getScheme().equals(DocumentTypeIdentifier.DEFAULT_SCHEME))
+        if (!documentTypeIdentifier.getScheme().equals(DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME))
             scope.setIdentifier(documentTypeIdentifier.getScheme().getIdentifier());
 
         return scope;

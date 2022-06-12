@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><smp:SignedServiceMetadata xmlns:smp="http://busdox.org/serviceMetadata/publishing/1.0/" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:id="http://busdox.org/transport/identifiers/1.0/" xmlns:wsa="http://www.w3.org/2005/08/addressing">    
+<smp:ServiceMetadata>
+        <smp:ServiceInformation>
+            <id:ParticipantIdentifier scheme="iso6523-actorid-upis">9901:pint_c4_jp_sb</id:ParticipantIdentifier>
+            <id:DocumentIdentifier scheme="peppol-doctype-wildcard">
+                urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:peppol:pint:billing-3.0@jp:peppol-1*::2.1
+            </id:DocumentIdentifier>
+            <smp:ProcessList>
+                <smp:Process>
+                    <id:ProcessIdentifier scheme="cenbii-procid-ubl">urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</id:ProcessIdentifier>
+                    <smp:ServiceEndpointList>
+                        <smp:Endpoint transportProfile="peppol-transport-as4-v2_0">
+                            <wsa:EndpointReference>
+                                <wsa:Address>https://c3.pint.playground.sandbox.peppol.eu/as4</wsa:Address>
+                            </wsa:EndpointReference>
+                            <smp:RequireBusinessLevelSignature>false</smp:RequireBusinessLevelSignature>
+                            <smp:Certificate>MIIFxDCCA6ygAwIBAgIQUe4KUBFI+s30LJLw2nUfZDANBgkqhkiG9w0BAQsFADBr
+                                MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UE
+                                CxMNRk9SIFRFU1QgT05MWTEpMCcGA1UEAxMgUEVQUE9MIEFDQ0VTUyBQT0lOVCBU
+                                RVNUIENBIC0gRzIwHhcNMjEwMzE4MDAwMDAwWhcNMjMwMzA4MjM1OTU5WjBRMQsw
+                                CQYDVQQGEwJCRTEZMBcGA1UECgwQT3BlblBlcHBvbCBBSVNCTDEXMBUGA1UECwwO
+                                UEVQUE9MIFRFU1QgQVAxDjAMBgNVBAMMBVBQX0MzMIIBIjANBgkqhkiG9w0BAQEF
+                                AAOCAQ8AMIIBCgKCAQEAyT/VCkrzsKE0l664wPoAzpLSloyqeYmgcJ7Z+AsscgN8
+                                DWBev0jYrTXKb/XuaKFPFYs2yVEFqBToGSj2z8M2IJqTyUr/tOsTeNzUK11tJXLR
+                                s1497ZPyozWZugulPEs1ona2nQffd+FCAWlh+ln3intv+jA4L4zhrA/2uOJh8CnD
+                                PQzYpFcjaNyj9pruhRwADOL5MmDlpFh2rOy8DOkloDhYvxAtnx6AaPQmxg/MfuT7
+                                VpE8fX4PtwZz2PeuEILpZsePoTJx6PRqJ6VQ89x5Y6PA59iVEKtRZguiBQ498/Js
+                                uMLsTt3e1Zx7Z5f28SzKgfjVZnvyZM5Li7LScEHX5wIDAQABo4IBfDCCAXgwDAYD
+                                VR0TAQH/BAIwADAOBgNVHQ8BAf8EBAMCA6gwFgYDVR0lAQH/BAwwCgYIKwYBBQUH
+                                AwIwHQYDVR0OBBYEFMrMqAuvgE00ysIGFJ5MNxDmtMy0MF0GA1UdHwRWMFQwUqBQ
+                                oE6GTGh0dHA6Ly9wa2ktY3JsLnN5bWF1dGguY29tL2NhXzZhOTM3NzM0YTM5M2Ew
+                                ODA1YmYzM2NkYThiMzMxMDkzL0xhdGVzdENSTC5jcmwwNwYIKwYBBQUHAQEEKzAp
+                                MCcGCCsGAQUFBzABhhtodHRwOi8vcGtpLW9jc3Auc3ltYXV0aC5jb20wHwYDVR0j
+                                BBgwFoAUa29LtvE3uis8fxjNuiuyuXwqN+swLQYKYIZIAYb4RQEQAwQfMB0GE2CG
+                                SAGG+EUBEAECAwEBgamQ4QMWBjk1NzYwODA5BgpghkgBhvhFARAFBCswKQIBABYk
+                                YUhSMGNITTZMeTl3YTJrdGNtRXVjM2x0WVhWMGFDNWpiMjA9MA0GCSqGSIb3DQEB
+                                CwUAA4ICAQABaxs22QIjArTWOL3rWhw4rN7Lt4UANYYMUK/jlBoW8Xfu/w+uyulY
+                                WvrOJGkH69+SA+gY4+7vZ7FlChZxo18Q8RN/E/cPfnPRtD06AjJk02EHnwQv7/FO
+                                q7RnaQznkeAgwQCUz8MGFJZfDJjSKewrDQIQYw6zNbohdfhg7isyJpCaUNQupI29
+                                pObUsfixjAKJsIrrI6aFa41eU+oZCIg50clGOOTIaocgJylKoozhD4KwKGAA7HWT
+                                DahVh5Rh9Kyj76rDzh9CTh4uQjX5a99l4FIvLGKWYbc/eFHXCj9DFRJp3bYO0IK2
+                                3efERXTpbMkfbec5QAD8CvGJ8Pc30mHKJoYRU6+ElvsoPm2wGb0CL+BNuQu1rjHz
+                                8CmXVFhUD7q1RUhzNvou/HcS2d4lHt0bl4PUcmaoBFBu3bgKEGhAASUG5X2jEyDn
+                                0bq8D6WAvWbM8Ar4WMwEZfw3UGs3jkhR3D04i/r6Nch5xtC9V9vN5tgzKt3HkWcz
+                                vosz0NdCEh/6fFMvxzDj5aLBZa3DBvpjQmzuRFPNdH+mtG3AIl9H6GrZd2iTPyRA
+                                EGVv4CI1J20pVBOV3kq/k2TJO6Dt4JaH4v/KbW/6dxFEplJ2eqOl+aAuoZsFaqF5
+                                IK/CH7Le7MmFq3G3IcsryCVBQuescj6b0qQToxWw15+Ejbq0IxLmMA==
+                            </smp:Certificate>
+                            <smp:ServiceDescription>OpenPeppol Playground C3 endpoint</smp:ServiceDescription>
+                            <smp:TechnicalContactUrl>arun.kumar@helger.com</smp:TechnicalContactUrl>
+                        </smp:Endpoint>
+                    </smp:ServiceEndpointList>
+                </smp:Process>
+            </smp:ProcessList>
+        </smp:ServiceInformation>
+    </smp:ServiceMetadata>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>L1tvAutzXn6C0lDaNp/9+zn8Pj0=</DigestValue></Reference></SignedInfo><SignatureValue>jJfhW/ozAk10IYG83vzqZjG1/2Va7gBxCvtaenJyD2rBRJ++dY0yHm2YDu2XjYY8F1xYCj8Da0ks
+7nk54ol12j7w7YrmSq6vtxcPIFZIHldSSQC8ZeSJmcFp/Xm99tnLTR/3gjHPkOw+d36uMKA4s9sI
+XjOmuWO89JtFwy08Hnh5vPevtSq+XUeRqNeE/pmFQGd01qY9ex/h5lCoJ1tJGCoxMkDqp+D5NyS5
+sJysSddqLT5t2E0YCbnjijmgF+S2FhIv2FKGfLdWYSEmJY1mRwzhQm+8tt084JFXDDQhqYm6CXtZ
+dDBHno8IkSNtVP9Z5s/vqu5tBEuihRZftB7n7g==</SignatureValue><KeyInfo><X509Data><X509SubjectName>CN=POP000010,OU=PEPPOL TEST SMP,O=Basware,C=FI</X509SubjectName><X509Certificate>MIIFzjCCA7agAwIBAgIQBkgalZBvVfIgaiKKlFOrVzANBgkqhkiG9w0BAQsFADB5MQswCQYDVQQG
+EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTE3
+MDUGA1UEAxMuUEVQUE9MIFNFUlZJQ0UgTUVUQURBVEEgUFVCTElTSEVSIFRFU1QgQ0EgLSBHMjAe
+Fw0yMTA5MjkwMDAwMDBaFw0yMzA5MTkyMzU5NTlaME0xCzAJBgNVBAYTAkZJMRAwDgYDVQQKDAdC
+YXN3YXJlMRgwFgYDVQQLDA9QRVBQT0wgVEVTVCBTTVAxEjAQBgNVBAMMCVBPUDAwMDAxMDCCASIw
+DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBANBe7sa9qbfgxdFlTlCf8pU/6C4nkpPHX7/SVUNV
+LeosfCx0zC0nJ7HuyDbngCNmw8UM/OAKpre5YUrDTxJ9MZVVdANaxNrcJnLObXwKSB5inC7c4SOC
+u1HrwHkWee/MTy0gQWpxpuBpoUXPp7nW6Qss0sCm0566uorTJ9Ud3A2KD88qZ7VOMuk8ABf5qWvU
+v0ORLFFM8unaR44A5Zj1IzJkJFmaGpkArCfSdNqtMUAq6rMZn/NDf3HK8jKx/zIqwUaefRjQYMLi
+OvzZad8Dy18HRtoxNZx0WMJi0gVhq7WCnF5k8LP7vz7xDqiKd1J/43Pvrxvb3iuXRHgPij6cLlkC
+AwEAAaOCAXwwggF4MAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoG
+CCsGAQUFBwMCMB0GA1UdDgQWBBQM3c5oM9tmeOCIlBi8ADAt0DWBtTBdBgNVHR8EVjBUMFKgUKBO
+hkxodHRwOi8vcGtpLWNybC5zeW1hdXRoLmNvbS9jYV9iNmQwZGMxZGMzMTQ3NzIzZmUzNmI3NTc1
+OTk3YWZjNC9MYXRlc3RDUkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDov
+L3BraS1vY3NwLnN5bWF1dGguY29tMB8GA1UdIwQYMBaAFHwdskjxutkKBsoWY6nwek+9I517MC0G
+CmCGSAGG+EUBEAMEHzAdBhNghkgBhvhFARABAgMBAYGo1YEKFgY5NTc2MDgwOQYKYIZIAYb4RQEQ
+BQQrMCkCAQAWJGFIUjBjSE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0B
+AQsFAAOCAgEAMwO2ma+VhM4U6cOlhWwU4K3yG9W5HuVpM8/G4oQhaV+rkgtQHd0Z2pKWpLSA0nkH
+7PRqyF+nix/aSlSMtx58lUMr2IWfdCFNxWi3SCo5/U2g7f/T42yqQvTttYiOChFbsL1GLoMINa+G
+CuRVXH0qTPTiLF9ZjAWp0RrcagiX4cLe8F0vhkF4Ledh+mbscshWyK5UPic4aEvsFUuAjvQJqubA
+F5er+cJAbna43btd4edRASL4MrOEB7nQUgKUeL35gW/H0VGiyDOAeV8yhGCGUszKtpgncoYN0TWa
+AUz+6zPYfryZ29+BkP0Z+nzDaoxDPnA580NDBhain+yY9zamACNjsgvtHFbdpfW9MhTLeWxY5c1t
+gM5ad92bblpG/sjXm6RY2MLwon4Iq4KAuV29K1ZqCoqnL5qPx/TGRs4yWZ+d88g6JUE039kGt6PO
+mQldoLE2YNTEVwoycQ1gNnd1qk5cWgQBZmr8C13OwCFTWTF53xV8Sfofqs9bIpPjmAhgB9MyWU5z
+vL9QzF8sIHN9w7QBsD1YzicINCdJqLsm6Uhr50AW2dqrClXzwE3n0tSbWd0UzrqFXX53hw9pdy0v
+JkRan9RF/VQ+o+CSbVdYP4jhNjJxQpDDFmbLP3Zk/FlzsGIGnGUIdDqOA3eS3o5UFdABabQaESr2
+XRkcaY8tJvY=</X509Certificate></X509Data></KeyInfo></Signature></smp:SignedServiceMetadata>

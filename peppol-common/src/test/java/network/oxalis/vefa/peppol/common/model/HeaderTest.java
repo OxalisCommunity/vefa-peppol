@@ -33,7 +33,7 @@ public class HeaderTest {
                 .receiver(ParticipantIdentifier.of("9908:923829644"))
                 .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0"))
                 .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote" +
-                        "##urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1"))
+                        "##urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2", "CreditNote", "2.1"))
                 .creationTimestamp(new Date())
                 .identifier(InstanceIdentifier.generateUUID());

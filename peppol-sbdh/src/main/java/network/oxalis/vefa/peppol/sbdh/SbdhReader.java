@@ -114,7 +114,7 @@ public interface SbdhReader {
             switch (type) {
                 case "DOCUMENTID": {
                     Scheme scheme = scope.getIdentifier() != null ?
-                            Scheme.of(scope.getIdentifier()) : DocumentTypeIdentifier.DEFAULT_SCHEME;
+                            Scheme.of(scope.getIdentifier()) : DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME;
                     header = header.documentType(DocumentTypeIdentifier.of(scope.getInstanceIdentifier(), scheme));
                     break;
                 }

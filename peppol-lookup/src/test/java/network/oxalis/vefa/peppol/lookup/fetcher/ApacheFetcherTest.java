@@ -26,6 +26,8 @@ import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApacheFetcherTest {
 
@@ -33,17 +35,23 @@ public class ApacheFetcherTest {
 
     @Test(expectedExceptions = LookupException.class)
     public void simpleTimeout() throws LookupException, FileNotFoundException {
-        fetcher.fetch(URI.create("http://invalid.example.com/"));
+        List<URI> uriList = new ArrayList<URI>();
+        uriList.add(URI.create("http://invalid.example.com/"));
+        fetcher.fetch(uriList);
     }
 
     @Test(expectedExceptions = FileNotFoundException.class)
     public void simple404() throws LookupException, FileNotFoundException {
-        fetcher.fetch(URI.create("http://httpstat.us/404"));
+        List<URI> uriList = new ArrayList<URI>();
+        uriList.add(URI.create("http://httpstat.us/404"));
+        fetcher.fetch(uriList);
     }
 
     @Test(expectedExceptions = LookupException.class)
     public void simple500() throws LookupException, FileNotFoundException {
-        fetcher.fetch(URI.create("http://httpstat.us/500"));
+        List<URI> uriList = new ArrayList<URI>();
+        uriList.add(URI.create("http://httpstat.us/500"));
+        fetcher.fetch(uriList);
     }
 
     @Test(expectedExceptions = LookupException.class)

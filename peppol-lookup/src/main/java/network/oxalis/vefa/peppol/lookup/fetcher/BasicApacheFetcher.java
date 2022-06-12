@@ -35,6 +35,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.URI;
 import java.net.UnknownHostException;
+import java.util.List;
 
 public class BasicApacheFetcher extends AbstractFetcher {
 
@@ -51,8 +52,42 @@ public class BasicApacheFetcher extends AbstractFetcher {
     }
 
     @Override
-    public FetcherResponse fetch(URI uri) throws LookupException, FileNotFoundException {
+    public FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException {
+        FetcherResponse fetcherResponse = null;
+        Exception exceptionObj = null;
+
+        if (uriList == null)
+            throw new LookupException("Unable to lookup requested url");
+
+        for (URI uri : uriList) {
+            try {
+                fetcherResponse = fetchResponseFromValidUri(uri);
+                if (fetcherResponse != null) {
+                    exceptionObj = null;
+                    break;
+                }
+            } catch (FileNotFoundException e) {
+                exceptionObj = e;
+            } catch (LookupException e) {
+                exceptionObj = e;
+            }
+        }
+
+        if (exceptionObj instanceof FileNotFoundException) {
+            throw new FileNotFoundException ();
+        }
+
+        if (exceptionObj instanceof LookupException) {
+            throw new LookupException (exceptionObj.getMessage(), exceptionObj);
+        }
+
+        return fetcherResponse;
+    }
+
+    private FetcherResponse fetchResponseFromValidUri (URI uri) throws LookupException, FileNotFoundException {
+
         try (CloseableHttpClient httpClient = createClient()) {
+
             HttpGet httpGet = new HttpGet(uri);
 
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
@@ -71,6 +106,7 @@ public class BasicApacheFetcher extends AbstractFetcher {
                                 "Received code %s for lookup. URI: %s", response.getStatusLine().getStatusCode(), uri));
                 }
             }
+
         } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
         } catch (LookupException | FileNotFoundException e) {

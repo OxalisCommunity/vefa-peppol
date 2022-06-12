@@ -30,6 +30,7 @@ import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,11 +53,11 @@ public class LookupClient {
     public List<ServiceReference> getServiceReferences(ParticipantIdentifier participantIdentifier)
             throws LookupException {
         URI location = locator.lookup(participantIdentifier);
-        URI serviceReferencesUri = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
+        List<URI>  serviceReferencesUriList = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
 
         FetcherResponse fetcherResponse;
         try {
-            fetcherResponse = fetcher.fetch(serviceReferencesUri);
+            fetcherResponse = fetcher.fetch(serviceReferencesUriList);
         } catch (FileNotFoundException e) {
             throw new LookupException(String.format("Receiver (%s) not found.", participantIdentifier.toString()), e);
         }
@@ -75,9 +76,9 @@ public class LookupClient {
                                               DocumentTypeIdentifier documentTypeIdentifier)
             throws LookupException, PeppolSecurityException {
         URI location = locator.lookup(participantIdentifier);
-        URI serviceMetaDataUri = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
+        List<URI> serviceMetaDataUriList = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
 
-        PotentiallySigned<ServiceMetadata> potentiallySigned = getPotentiallySignedMetadata(participantIdentifier, documentTypeIdentifier, serviceMetaDataUri);
+        PotentiallySigned<ServiceMetadata> potentiallySigned = getPotentiallySignedMetadata(participantIdentifier, documentTypeIdentifier, serviceMetaDataUriList);
 
         if (potentiallySigned instanceof Signed)
             validator.validate(Service.SMP, ((Signed<ServiceMetadata>) potentiallySigned).getCertificate());
@@ -100,8 +101,11 @@ public class LookupClient {
     }
 
     private ServiceMetadata handleRedirect(ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier documentTypeIdentifier, Redirect redirect) throws LookupException, PeppolSecurityException {
+        List<URI> redirectURIList = new ArrayList<URI>();
+        redirectURIList.add(URI.create(redirect.getHref()));
+
         PotentiallySigned<ServiceMetadata> potentiallySigned = getPotentiallySignedMetadata(
-                participantIdentifier, documentTypeIdentifier, URI.create(redirect.getHref()));
+                participantIdentifier, documentTypeIdentifier, redirectURIList);
 
         if (potentiallySigned instanceof Signed) {
             X509Certificate certificate = ((Signed<ServiceMetadata>) potentiallySigned).getCertificate();
@@ -129,9 +133,9 @@ public class LookupClient {
 
     private PotentiallySigned<ServiceMetadata> getPotentiallySignedMetadata(ParticipantIdentifier participantIdentifier,
                                                                             DocumentTypeIdentifier documentTypeIdentifier,
-                                                                            URI serviceMetaDataUri) throws LookupException, PeppolSecurityException {
+                                                                            List<URI> serviceMetaDataUriList) throws LookupException, PeppolSecurityException {
         try {
-            FetcherResponse fetcherResponse = fetcher.fetch(serviceMetaDataUri);
+            FetcherResponse fetcherResponse = fetcher.fetch(serviceMetaDataUriList);
             return reader.parseServiceMetadata(fetcherResponse);
         } catch (FileNotFoundException e) {
             throw new LookupException(String.format(
