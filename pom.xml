@@ -22,7 +22,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>network.oxalis.vefa</groupId>
-    <artifactId>peppol-parent</artifactId>
+    <artifactId>vefa-peppol</artifactId>
     <packaging>pom</packaging>
     <version>2.3.1-SNAPSHOT</version>
 
@@ -44,7 +44,7 @@
     <scm>
         <tag>HEAD</tag>
         <url>https://github.com/OxalisCommunity/vefa-peppol</url>
-        <connection>scm:git:https://github.com/OxalisCommunity/vefa-peppol.git</connection>
+        <connection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</developerConnection>
     </scm>
 
