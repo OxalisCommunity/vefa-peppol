@@ -19,7 +19,7 @@
 
 package network.oxalis.vefa.peppol.sbdh;
 
-import no.difi.commons.sbdh.jaxb.*;
+import network.oxalis.peppol.sbdh.jaxb.*;
 import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
 import network.oxalis.vefa.peppol.common.model.ArgumentIdentifier;
 import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;

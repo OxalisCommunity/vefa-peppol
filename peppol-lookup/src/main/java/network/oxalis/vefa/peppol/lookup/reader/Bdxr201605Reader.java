@@ -32,7 +32,7 @@ import network.oxalis.vefa.peppol.lookup.util.XmlUtils;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import network.oxalis.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import no.difi.commons.bdx.jaxb.smp._2016._05.*;
+import network.oxalis.peppol.bdx.jaxb.smp._2016._05.*;
 import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

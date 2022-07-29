@@ -33,7 +33,7 @@ import network.oxalis.vefa.peppol.lookup.util.XmlUtils;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import network.oxalis.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import no.difi.commons.busdox.jaxb.smp.*;
+import network.oxalis.peppol.busdox.jaxb.smp.*;
 import org.apache.commons.codec.binary.Base64;
 import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;

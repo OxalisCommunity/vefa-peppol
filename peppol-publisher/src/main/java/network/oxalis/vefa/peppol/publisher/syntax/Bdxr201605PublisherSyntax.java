@@ -25,7 +25,7 @@ import network.oxalis.vefa.peppol.publisher.annotation.Syntax;
 import network.oxalis.vefa.peppol.publisher.model.PublisherEndpoint;
 import network.oxalis.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import network.oxalis.vefa.peppol.publisher.model.ServiceGroup;
-import no.difi.commons.bdx.jaxb.smp._2016._05.*;
+import network.oxalis.peppol.bdx.jaxb.smp._2016._05.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;

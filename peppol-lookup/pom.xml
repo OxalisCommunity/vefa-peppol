@@ -97,14 +97,14 @@
             <artifactId>peppol-security</artifactId>
         </dependency>
 
-        <!-- Difi Commons -->
+        <!-- Peppol Specifications -->
         <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-busdox</artifactId>
+            <groupId>network.oxalis.peppol</groupId>
+            <artifactId>peppol-busdox</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-bdx</artifactId>
+            <groupId>network.oxalis.peppol</groupId>
+            <artifactId>peppol-bdx</artifactId>
         </dependency>
 
         <!-- SLF4J -->

@@ -21,10 +21,10 @@ package network.oxalis.vefa.peppol.security.util;
 
 import network.oxalis.vefa.peppol.security.api.CertificateValidator;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
-import no.difi.certvalidator.ValidatorGroup;
-import no.difi.certvalidator.ValidatorLoader;
-import no.difi.certvalidator.api.CertificateValidationException;
-import no.difi.certvalidator.lang.ValidatorParsingException;
+import network.oxalis.commons.certvalidator.ValidatorGroup;
+import network.oxalis.commons.certvalidator.ValidatorLoader;
+import network.oxalis.commons.certvalidator.api.CertificateValidationException;
+import network.oxalis.commons.certvalidator.lang.ValidatorParsingException;
 import network.oxalis.vefa.peppol.common.code.Service;
 import network.oxalis.vefa.peppol.common.lang.PeppolLoadingException;
 import network.oxalis.vefa.peppol.mode.Mode;

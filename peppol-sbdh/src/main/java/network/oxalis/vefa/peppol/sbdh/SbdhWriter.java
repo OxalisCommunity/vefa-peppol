@@ -19,9 +19,9 @@
 
 package network.oxalis.vefa.peppol.sbdh;
 
-import no.difi.commons.sbdh.jaxb.DocumentIdentification;
-import no.difi.commons.sbdh.jaxb.Scope;
-import no.difi.commons.sbdh.jaxb.StandardBusinessDocumentHeader;
+import network.oxalis.peppol.sbdh.jaxb.DocumentIdentification;
+import network.oxalis.peppol.sbdh.jaxb.Scope;
+import network.oxalis.peppol.sbdh.jaxb.StandardBusinessDocumentHeader;
 import network.oxalis.vefa.peppol.common.model.Header;
 import network.oxalis.vefa.peppol.sbdh.lang.SbdhException;
 

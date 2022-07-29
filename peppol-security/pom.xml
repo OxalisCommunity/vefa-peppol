@@ -93,9 +93,9 @@
             <artifactId>peppol-mode</artifactId>
         </dependency>
 
-        <!-- Difi commons -->
+        <!-- commons -->
         <dependency>
-            <groupId>no.difi.commons</groupId>
+            <groupId>network.oxalis.commons</groupId>
             <artifactId>commons-certvalidator</artifactId>
         </dependency>
 

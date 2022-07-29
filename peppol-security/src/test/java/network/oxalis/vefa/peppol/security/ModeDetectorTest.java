@@ -19,7 +19,7 @@
 
 package network.oxalis.vefa.peppol.security;
 
-import no.difi.certvalidator.Validator;
+import network.oxalis.commons.certvalidator.Validator;
 import network.oxalis.vefa.peppol.common.lang.PeppolLoadingException;
 import org.testng.Assert;
 import org.testng.annotations.Test;

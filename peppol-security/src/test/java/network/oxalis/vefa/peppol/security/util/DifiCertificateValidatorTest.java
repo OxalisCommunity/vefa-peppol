@@ -20,8 +20,8 @@
 package network.oxalis.vefa.peppol.security.util;
 
 import com.typesafe.config.ConfigFactory;
-import no.difi.certvalidator.Validator;
-import no.difi.certvalidator.api.CertificateValidationException;
+import network.oxalis.commons.certvalidator.Validator;
+import network.oxalis.commons.certvalidator.api.CertificateValidationException;
 import network.oxalis.vefa.peppol.common.code.Service;
 import network.oxalis.vefa.peppol.common.lang.PeppolLoadingException;
 import network.oxalis.vefa.peppol.mode.Mode;

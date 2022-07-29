@@ -102,7 +102,7 @@
                     <artifactId>peppol-mode</artifactId>
                 </exclusion>
                 <exclusion>
-                    <groupId>no.difi.commons</groupId>
+                    <groupId>network.oxalis.commons</groupId>
                     <artifactId>commons-certvalidator</artifactId>
                 </exclusion>
                 <exclusion>
@@ -112,14 +112,14 @@
             </exclusions>
         </dependency>
 
-        <!-- Difi Commons -->
+        <!-- Peppol Specifications -->
         <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-busdox</artifactId>
+            <groupId>network.oxalis.peppol</groupId>
+            <artifactId>peppol-busdox</artifactId>
         </dependency>
         <dependency>
-            <groupId>no.difi.commons</groupId>
-            <artifactId>commons-bdx</artifactId>
+            <groupId>network.oxalis.peppol</groupId>
+            <artifactId>peppol-bdx</artifactId>
         </dependency>
 
         <!-- SLF4J -->

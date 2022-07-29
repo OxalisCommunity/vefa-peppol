@@ -62,9 +62,9 @@ public class MultiReaderTest {
     @Test
     public void busdoxServiceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-0192-991825827.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-9908-923829644.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
@@ -74,12 +74,10 @@ public class MultiReaderTest {
             // Expected
         }
 
-        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_2_0));
-
         assertEquals(
                 serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0)
                         .getCertificate().getSubjectDN().toString(),
-                "C=NO, O=TietoEVRY, OU=PEPPOL PRODUCTION AP, CN=PNO000051"
+                "C=FI, O=Basware, OU=PEPPOL TEST AP, CN=POP000010"
         );
     }
 
