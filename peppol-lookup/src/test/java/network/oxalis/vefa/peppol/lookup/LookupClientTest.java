@@ -57,15 +57,15 @@ public class LookupClientTest {
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
-                ParticipantIdentifier.of("9908:810418052"));
+                ParticipantIdentifier.of("0195:SGUEN198305521Z"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(
-                ParticipantIdentifier.of("9908:810418052"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2::Catalogue##" +
-                        "urn:www.cenbii.eu:transaction:biitrns019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0::2.1"));
+                ParticipantIdentifier.of("0195:SGUEN198305521Z"),
+                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                        "urn:cen.eu:en16931:2017#conformant#urn:fdc:peppol.eu:2017:poacc:billing:international:sg:3.0::2.1"));
         assertNotNull(serviceMetadata);
     }
 
@@ -76,15 +76,15 @@ public class LookupClientTest {
                 .build();
 
         List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
-                ParticipantIdentifier.of("9908:810418052"));
+                ParticipantIdentifier.of("0195:SGUEN198305521Z"));
 
         assertNotNull(documentTypeIdentifiers);
         assertNotEquals(documentTypeIdentifiers.size(), 0);
 
         ServiceMetadata serviceMetadata = client.getServiceMetadata(
-                ParticipantIdentifier.of("9908:810418052"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Catalogue-2::Catalogue##" +
-                        "urn:www.cenbii.eu:transaction:biitrns019:ver2.0:extended:urn:www.peppol.eu:bis:peppol1a:ver2.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME));
+                ParticipantIdentifier.of("0195:SGUEN198305521Z"),
+                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
+                        "urn:cen.eu:en16931:2017#conformant#urn:fdc:peppol.eu:2017:poacc:billing:international:sg:3.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME));
         assertNotNull(serviceMetadata);
     }
 
