@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release is v8.0 from 2022-01-20:  https://docs.peppol.eu/edelivery/codelists/
+    // The latest code list release is v8.2 from 2022-07-08: https://docs.peppol.eu/edelivery/codelists/index.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
