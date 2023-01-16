@@ -24,10 +24,12 @@ import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.xbill.DNS.ExtendedResolver;
 import org.xbill.DNS.Lookup;
 import org.xbill.DNS.TextParseException;
 
 import java.net.URI;
+import java.time.Duration;
 
 public class BusdoxLocator extends AbstractLocator {
 
@@ -57,11 +59,42 @@ public class BusdoxLocator extends AbstractLocator {
 
         try {
             final Lookup lookup = new Lookup(hostname);
-            if (lookup.run() == null) {
-                if(lookup.getResult() == Lookup.HOST_NOT_FOUND) {
+            final int retries = 3;
+
+            ExtendedResolver  extendedResolver = new ExtendedResolver();
+            extendedResolver.addResolver (Lookup.getDefaultResolver ());
+            extendedResolver.setTimeout (Duration.ofSeconds (30L));
+            extendedResolver.setRetries (retries);
+            lookup.setResolver (extendedResolver);
+
+            int retryCountLeft = retries;
+            // TRY_AGAIN = The lookup failed due to a network error. Repeating the lookup may be helpful
+            do {
+                lookup.run();
+                --retryCountLeft;
+            } while (lookup.getResult () == Lookup.TRY_AGAIN && retryCountLeft >= 0);
+
+            // Retry with TCP as well
+            if (lookup.getResult () == Lookup.TRY_AGAIN) {
+                extendedResolver.setTCP (true);
+
+                retryCountLeft = retries;
+                do {
+                    lookup.run();
+                    --retryCountLeft;
+                } while (lookup.getResult () == Lookup.TRY_AGAIN && retryCountLeft >= 0);
+            }
+
+            if (lookup.getResult () != Lookup.SUCCESSFUL) {
+                // HOST_NOT_FOUND = The host does not exist
+                // TYPE_NOT_FOUND = The host exists, but has no records associated with the queried type
+                // Since we already tried couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
+                if(lookup.getResult() == Lookup.HOST_NOT_FOUND || lookup.getResult() == Lookup.TRY_AGAIN
+                        || lookup.getResult() == Lookup.TYPE_NOT_FOUND) {
                     throw new NotFoundException(
                             String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
                 } else {
+                    // Attribute to UNRECOVERABLE error, repeating the lookup would not be helpful
                     throw new LookupException(
                             String.format("Error when looking up identifier '%s' in SML.", participantIdentifier.getIdentifier()));
                 }

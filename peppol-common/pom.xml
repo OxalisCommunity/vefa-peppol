@@ -24,7 +24,7 @@
     <parent>
         <artifactId>vefa-peppol</artifactId>
         <groupId>network.oxalis.vefa</groupId>
-        <version>2.5.1-SNAPSHOT</version>
+        <version>3.0.0-RC1-SNAPSHOT</version>
     </parent>
 
     <artifactId>peppol-common</artifactId>
