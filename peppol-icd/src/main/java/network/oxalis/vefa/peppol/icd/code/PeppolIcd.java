@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release is v8.2 from 2022-07-08: https://docs.peppol.eu/edelivery/codelists/index.html
+    // The latest code list release is v8.4 from 2023-02-24: https://docs.peppol.eu/edelivery/codelists/index.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -59,7 +59,7 @@ public enum PeppolIcd implements Icd {
     LT_LEC("LT:LEC", "0200", "State Enterprise Centre of Registers"),
     IT_CUUO("IT:CUUO", "0201", "Agenzia per l’Italia digitale"),
     DE_LWID("DE:LWID", "0204", "Koordinierungsstelle für IT-Standards (KoSIT)"),
-    IT_CODDEST("IT:CODDEST", "0205", "Agenzia delle Entrate"),
+    IT_COD("IT:COD", "0205", "Agenzia delle Entrate"),
     BE_EN("BE:EN", "0208", "Banque-Carrefour des Entreprises (BCE) / Kruispuntbank van Ondernemingen (KBO) / Zentrale Datenbank der Unternehmen (ZOU) Service public fédéral Economie, P.M.E. Classes moyennes et Energie"),
     GS1("GS1", "0209", "GS1"),
     IT_CFI("IT:CFI", "0210", "Agenzia delle Entrate"),
@@ -74,28 +74,31 @@ public enum PeppolIcd implements Icd {
     DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
     DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
     DK_VANS("DK:VANS", "9905", "Danish VANS providers"),
-    @Deprecated
-    IT_VAT("IT:VAT", "9906", "Ufficio responsabile gestione partite IVA"),
-    @Deprecated
-    IT_CF("IT:CF", "9907", "TAX Authority"),
-    NO_ORGNR("NO:ORGNR", "9908", "The Brønnøysund Register Centre"),
+
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
+
     HU_VAT("HU:VAT", "9910", "Hungarian VAT number"),
+
     @Deprecated
     EU_VAT("EU:VAT", "9912", "National ministries of Economy"),
+
     EU_REID("EU:REID", "9913", "Business Registers Network"),
     AT_VAT("AT:VAT", "9914", "Österreichische Umsatzsteuer-Identifikationsnummer"),
     AT_GOV("AT:GOV", "9915", "Österreichisches Verwaltungs bzw. Organisationskennzeichen"),
+
     @Deprecated
     AT_CID("AT:CID", "9916", "Firmenidentifikationsnummer der Statistik Austria"),
     @Deprecated
     IS_KT("IS:KT", "9917", "Icelandic National Registry"),
+
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
     ES_VAT("ES:VAT", "9920", "Agencia Española de Administración Tributaria"),
+
     @Deprecated
     IT_IPA("IT:IPA", "9921", "Indice delle Pubbliche Amministrazioni"),
+
     AD_VAT("AD:VAT", "9922", "Andorra VAT number"),
     AL_VAT("AL:VAT", "9923", "Albania VAT number"),
     BA_VAT("BA:VAT", "9924", "Bosnia and Herzegovina VAT number"),
@@ -128,14 +131,15 @@ public enum PeppolIcd implements Icd {
     SM_VAT("SM:VAT", "9951", "San Marino VAT number"),
     TR_VAT("TR:VAT", "9952", "Turkey VAT number"),
     VA_VAT("VA:VAT", "9953", "Holy See (Vatican City State) VAT number"),
+
     @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
-    SE_VAT("SE:VAT", "9955", "Swedish VAT number"),
+
     @Deprecated
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
+
     FR_VAT("FR:VAT", "9957", "French VAT number"),
-    @Deprecated
-    DE_LID("DE:LID", "9958", "German Leitweg ID"),
+    US_EIN("US:EIN", "9959", "US Employer ID Number"),
     ;
 
     private static final Scheme SCHEME = Scheme.of("iso6523-actorid-upis");
