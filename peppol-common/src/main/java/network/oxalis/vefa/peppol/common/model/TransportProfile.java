@@ -25,16 +25,39 @@ public class TransportProfile extends AbstractSimpleIdentifier implements Serial
 
     private static final long serialVersionUID = -8215053834194901976L;
 
+    /**
+     * @deprecated  START (busdox-transport-start) is deprecated and replaced by {@link #PEPPOL_AS4_2_0}.
+     * START (busdox-transport-start) will be completely removed by 2023-08-24
+     */
+    @Deprecated
     public static final TransportProfile PEPPOL_START = of("busdox-transport-start");
 
+    /**
+     * @deprecated  START (busdox-transport-start) is deprecated and replaced by {@link #PEPPOL_AS4_2_0}.
+     * START (busdox-transport-start) will be completely removed by 2023-08-24
+     */
     @Deprecated
     public static final TransportProfile START = PEPPOL_START;
 
+    /**
+     * @deprecated  AS2v1 (busdox-transport-as2-ver1p0) deprecated in release V7.0 of "codelists" on 2020-04-30 and replaced by {@link #PEPPOL_AS4_2_0}.
+     * AS2v1 (busdox-transport-as2-ver1p0) will be completely removed by 2023-08-24
+     */
+    @Deprecated
     public static final TransportProfile PEPPOL_AS2_1_0 = of("busdox-transport-as2-ver1p0");
 
+    /**
+     * @deprecated  AS2v1 (busdox-transport-as2-ver1p0) deprecated in release V7.0 of "codelists" on 2020-04-30 and replaced by {@link #PEPPOL_AS4_2_0}.
+     * AS2v1 (busdox-transport-as2-ver1p0) will be completely removed by 2023-08-24
+     */
     @Deprecated
     public static final TransportProfile AS2_1_0 = PEPPOL_AS2_1_0;
 
+    /**
+     * @deprecated  AS2v2 (busdox-transport-as2-ver2p0) deprecated in release V8.4 of "codelists" on 2023-02-24 and replaced by {@link #PEPPOL_AS4_2_0}.
+     * AS2v1 (busdox-transport-as2-ver1p0) will be completely removed by 2023-08-24
+     */
+    @Deprecated
     public static final TransportProfile PEPPOL_AS2_2_0 = of("busdox-transport-as2-ver2p0");
 
     public static final TransportProfile PEPPOL_AS4_2_0 = of("peppol-transport-as4-v2_0");
