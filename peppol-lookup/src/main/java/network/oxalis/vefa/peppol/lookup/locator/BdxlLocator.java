@@ -26,10 +26,13 @@ import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.lookup.util.EncodingUtils;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.*;
+import org.xbill.DNS.SimpleResolver;
 import org.xbill.DNS.Record;
 
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -53,7 +56,7 @@ public class BdxlLocator extends AbstractLocator {
     }
 
     /**
-     * Initiate a new instance of BDXL lookup functionality using SHA-224 for hashing.
+     * Initiate a new instance of BDXL lookup functionality using SHA-256 for hashing.
      *
      * @param hostname Hostname used as base for lookup.
      */
@@ -108,6 +111,13 @@ public class BdxlLocator extends AbstractLocator {
             final int retries = 3;
 
             ExtendedResolver  extendedResolver = new ExtendedResolver();
+            try {
+                if (StringUtils.isNotBlank(hostname)) {
+                    extendedResolver.addResolver(new SimpleResolver(hostname));
+                }
+            } catch (final UnknownHostException ex) {
+                //Primary DNS lookup fail, now try with default resolver
+            }
             extendedResolver.addResolver (Lookup.getDefaultResolver ());
             extendedResolver.setTimeout (Duration.ofSeconds (30L));
             extendedResolver.setRetries (retries);

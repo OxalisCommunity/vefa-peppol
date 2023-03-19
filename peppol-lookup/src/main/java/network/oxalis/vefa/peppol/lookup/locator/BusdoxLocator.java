@@ -24,11 +24,14 @@ import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.ExtendedResolver;
 import org.xbill.DNS.Lookup;
+import org.xbill.DNS.SimpleResolver;
 import org.xbill.DNS.TextParseException;
 
 import java.net.URI;
+import java.net.UnknownHostException;
 import java.time.Duration;
 
 public class BusdoxLocator extends AbstractLocator {
@@ -62,6 +65,13 @@ public class BusdoxLocator extends AbstractLocator {
             final int retries = 3;
 
             ExtendedResolver  extendedResolver = new ExtendedResolver();
+            try {
+                if (StringUtils.isNotBlank(hostname)) {
+                    extendedResolver.addResolver(new SimpleResolver(hostname));
+                }
+            } catch (final UnknownHostException ex) {
+                //Primary DNS lookup fail, now try with default resolver
+            }
             extendedResolver.addResolver (Lookup.getDefaultResolver ());
             extendedResolver.setTimeout (Duration.ofSeconds (30L));
             extendedResolver.setRetries (retries);
