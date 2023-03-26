@@ -44,7 +44,11 @@ import java.util.regex.Pattern;
  */
 public class BdxlLocator extends AbstractLocator {
 
+    private long timeout = 30L;
+    private int maxRetries = 3;
+
     private DynamicHostnameGenerator hostnameGenerator;
+
 
     public BdxlLocator(Mode mode) {
         this(
@@ -53,6 +57,8 @@ public class BdxlLocator extends AbstractLocator {
                 mode.getString("lookup.locator.bdxl.algorithm"),
                 EncodingUtils.get(mode.getString("lookup.locator.bdxl.encoding"))
         );
+        maxRetries = Integer.parseInt(mode.getString("lookup.locator.bdxl.maxRetries"));
+        timeout = Long.parseLong(mode.getString("lookup.locator.bdxl.timeout"));
     }
 
     /**
@@ -108,8 +114,6 @@ public class BdxlLocator extends AbstractLocator {
             final Lookup lookup = new Lookup(hostname, Type.NAPTR);
             Record[] records;
 
-            final int retries = 3;
-
             ExtendedResolver  extendedResolver = new ExtendedResolver();
             try {
                 if (StringUtils.isNotBlank(hostname)) {
@@ -119,12 +123,12 @@ public class BdxlLocator extends AbstractLocator {
                 //Primary DNS lookup fail, now try with default resolver
             }
             extendedResolver.addResolver (Lookup.getDefaultResolver ());
-            extendedResolver.setTimeout (Duration.ofSeconds (30L));
-            extendedResolver.setRetries (retries);
+            extendedResolver.setRetries (maxRetries);
+            extendedResolver.setTimeout (Duration.ofSeconds (timeout));
             lookup.setResolver (extendedResolver);
 
-            int retryCountLeft = retries;
-            // TRY_AGAIN = The lookup failed due to a network error. Repeating the lookup may be helpful
+            int retryCountLeft = maxRetries;
+            // Retry  = The lookup may fail due to a network error. Repeating the lookup might be helpful
             do {
                 records = lookup.run();
                 --retryCountLeft;
@@ -134,7 +138,7 @@ public class BdxlLocator extends AbstractLocator {
             if (lookup.getResult () == Lookup.TRY_AGAIN) {
                 extendedResolver.setTCP (true);
 
-                retryCountLeft = retries;
+                retryCountLeft = maxRetries;
                 do {
                     records = lookup.run();
                     --retryCountLeft;

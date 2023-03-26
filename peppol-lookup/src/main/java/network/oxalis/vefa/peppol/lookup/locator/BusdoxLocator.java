@@ -36,6 +36,9 @@ import java.time.Duration;
 
 public class BusdoxLocator extends AbstractLocator {
 
+    private long timeout = 30L;
+    private int maxRetries = 3;
+
     private DynamicHostnameGenerator hostnameGenerator;
 
     public BusdoxLocator(Mode mode) {
@@ -44,6 +47,8 @@ public class BusdoxLocator extends AbstractLocator {
                 mode.getString("lookup.locator.hostname"),
                 mode.getString("lookup.locator.busdox.algorithm")
         );
+        maxRetries = Integer.parseInt(mode.getString("lookup.locator.busdox.maxRetries"));
+        timeout = Long.parseLong(mode.getString("lookup.locator.busdox.timeout"));
     }
 
     @SuppressWarnings("unused")
@@ -62,7 +67,6 @@ public class BusdoxLocator extends AbstractLocator {
 
         try {
             final Lookup lookup = new Lookup(hostname);
-            final int retries = 3;
 
             ExtendedResolver  extendedResolver = new ExtendedResolver();
             try {
@@ -73,12 +77,12 @@ public class BusdoxLocator extends AbstractLocator {
                 //Primary DNS lookup fail, now try with default resolver
             }
             extendedResolver.addResolver (Lookup.getDefaultResolver ());
-            extendedResolver.setTimeout (Duration.ofSeconds (30L));
-            extendedResolver.setRetries (retries);
+            extendedResolver.setRetries (maxRetries);
+            extendedResolver.setTimeout (Duration.ofSeconds (timeout));
             lookup.setResolver (extendedResolver);
 
-            int retryCountLeft = retries;
-            // TRY_AGAIN = The lookup failed due to a network error. Repeating the lookup may be helpful
+            int retryCountLeft = maxRetries;
+            // Retry  = The lookup may fail due to a network error. Repeating the lookup might be helpful
             do {
                 lookup.run();
                 --retryCountLeft;
@@ -88,7 +92,7 @@ public class BusdoxLocator extends AbstractLocator {
             if (lookup.getResult () == Lookup.TRY_AGAIN) {
                 extendedResolver.setTCP (true);
 
-                retryCountLeft = retries;
+                retryCountLeft = maxRetries;
                 do {
                     lookup.run();
                     --retryCountLeft;

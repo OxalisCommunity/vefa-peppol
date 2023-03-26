@@ -19,10 +19,23 @@
 
 package network.oxalis.vefa.peppol.lookup.fetcher;
 
+import com.google.common.io.ByteStreams;
+import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
+import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.URI;
+import java.net.UnknownHostException;
+import java.util.List;
 
 public class ApacheFetcher extends BasicApacheFetcher {
 
@@ -34,12 +47,75 @@ public class ApacheFetcher extends BasicApacheFetcher {
         this.httpClientConnectionManager = new PoolingHttpClientConnectionManager();
     }
 
-    @Override
     protected CloseableHttpClient createClient() {
         return HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
                 .setConnectionManager(httpClientConnectionManager)
                 .setConnectionManagerShared(true)
                 .build();
+    }
+
+    public FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException {
+        FetcherResponse fetcherResponse = null;
+        Exception exceptionObj = null;
+
+        if (uriList == null)
+            throw new LookupException("Unable to lookup requested url");
+
+        for (URI uri : uriList) {
+            try {
+                fetcherResponse = fetchResponseFromValidUri(uri);
+                if (fetcherResponse != null) {
+                    exceptionObj = null;
+                    break;
+                }
+            } catch (FileNotFoundException e) {
+                exceptionObj = e;
+            } catch (LookupException e) {
+                exceptionObj = e;
+            }
+        }
+
+        if (exceptionObj instanceof FileNotFoundException) {
+            throw new FileNotFoundException ();
+        }
+
+        if (exceptionObj instanceof LookupException) {
+            throw new LookupException (exceptionObj.getMessage(), exceptionObj);
+        }
+
+        return fetcherResponse;
+    }
+
+    private FetcherResponse fetchResponseFromValidUri (URI uri) throws LookupException, FileNotFoundException {
+
+        try (CloseableHttpClient httpClient = createClient()) {
+
+            HttpGet httpGet = new HttpGet(uri);
+
+            try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
+                switch (response.getStatusLine().getStatusCode()) {
+                    case 200:
+                        return new FetcherResponse(
+                                new ByteArrayInputStream(ByteStreams.toByteArray(response.getEntity().getContent())),
+                                // new BufferedInputStream(response.getEntity().getContent()),
+                                response.containsHeader("X-SMP-Namespace") ?
+                                        response.getFirstHeader("X-SMP-Namespace").getValue() : null
+                        );
+                    case 404:
+                        throw new FileNotFoundException(uri.toString());
+                    default:
+                        throw new LookupException(String.format(
+                                "Received code %s for lookup. URI: %s", response.getStatusLine().getStatusCode(), uri));
+                }
+            }
+
+        } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
+            throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
+        } catch (LookupException | FileNotFoundException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new LookupException(e.getMessage(), e);
+        }
     }
 }
