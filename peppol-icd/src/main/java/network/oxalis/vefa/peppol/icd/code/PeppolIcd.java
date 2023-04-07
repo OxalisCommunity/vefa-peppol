@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release is v8.4 from 2023-02-24: https://docs.peppol.eu/edelivery/codelists/index.html
+    // The latest code list release is v8.5 from 2023-03-31: https://docs.peppol.eu/edelivery/codelists/index.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -67,7 +67,9 @@ public enum PeppolIcd implements Icd {
     FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
     FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
     FI_NSI("FI:NSI", "0215", "Tieto Finland Oy"),
-    FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry "),
+    FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry"),
+    JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
+    MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
 
         // ICDs created and maintained by OpenPEPPOL
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
