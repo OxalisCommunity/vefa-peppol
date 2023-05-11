@@ -32,6 +32,8 @@ public class Mode {
 
     public static final String TEST = "TEST";
 
+    public static final String FRTEST = "FRTEST";
+
     private Config config;
 
     private String identifier;
