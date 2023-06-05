@@ -19,10 +19,13 @@
 
 package network.oxalis.vefa.peppol.lookup;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import network.oxalis.vefa.peppol.common.lang.PeppolLoadingException;
-import network.oxalis.vefa.peppol.lookup.api.MetadataProvider;
 import network.oxalis.vefa.peppol.lookup.api.MetadataFetcher;
 import network.oxalis.vefa.peppol.lookup.api.MetadataLocator;
+import network.oxalis.vefa.peppol.lookup.api.MetadataProvider;
 import network.oxalis.vefa.peppol.lookup.api.MetadataReader;
 import network.oxalis.vefa.peppol.mode.Mode;
 import network.oxalis.vefa.peppol.security.api.CertificateValidator;
@@ -118,7 +121,9 @@ public class LookupClientBuilder {
             fetcher(mode.initiate("lookup.fetcher.class", MetadataFetcher.class));
         if (metadataReader == null)
             reader(mode.initiate("lookup.reader.class", MetadataReader.class));
-
-        return new LookupClient(this);
+        
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put(LookupClientBuilder.class.getName(), this);
+        return mode.initiate("lookup.impl.class", null, map); 
     }
 }
