@@ -45,7 +45,7 @@ class DummyLookupClientTest {
 	@Test
 	public void testOverridingConfiguration() throws Exception {
 		assertEquals(LookupClient.class.getName(), LookupClientBuilder.forProduction().build().getClass().getName());
-		assertEquals(DummyLookupClient.class.getName(), LookupClientBuilder.forMode("TEST").build().getClass().getName());
+		assertEquals(LookupClient.class.getName(), LookupClientBuilder.forMode("TEST").build().getClass().getName());
 		LookupClient dummyClient = LookupClientBuilder.forMode("DUMMY").build();
 		assertEquals(DummyLookupClient.class.getName(), dummyClient.getClass().getName());
 		assertEquals("http://localhost:9090/as4", ((DummyLookupClient) dummyClient).getDefaultEndpoint().getAddress().toString());
