@@ -105,7 +105,7 @@
         <peppol-lib.version>2.0.0</peppol-lib.version>
         <httpclient.version>4.5.13</httpclient.version>
         <dnsjava.version>3.5.2</dnsjava.version>
-        <guava.version>31.1-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <typesafe-config.version>1.4.2</typesafe-config.version>
         <javax-mail.version>1.4.7</javax-mail.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
