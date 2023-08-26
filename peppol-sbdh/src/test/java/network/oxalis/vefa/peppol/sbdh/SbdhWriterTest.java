@@ -80,6 +80,19 @@ public class SbdhWriterTest {
         Assert.assertEquals(actual, expected);
     }
 
+    @Test
+    public void withC1Country() throws Exception {
+        Header expected = header
+                .c1CountryIdentifier(C1CountryIdentifier.of("IN"));
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        SbdhWriter.write(byteArrayOutputStream, expected);
+
+        Header actual = SbdhReader.read(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        Assert.assertEquals(actual, expected);
+    }
+
+
     @Test(expectedExceptions = SbdhException.class)
     public void triggerExceptionUsingXMLStreamWriter() throws Exception {
         SbdhWriter.write(Mockito.mock(XMLStreamWriter.class), null);

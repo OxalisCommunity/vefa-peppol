@@ -21,10 +21,7 @@ package network.oxalis.vefa.peppol.sbdh;
 
 import network.oxalis.peppol.sbdh.jaxb.*;
 import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
-import network.oxalis.vefa.peppol.common.model.ArgumentIdentifier;
-import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
-import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
-import network.oxalis.vefa.peppol.common.model.ProcessIdentifier;
+import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 
 import javax.xml.bind.JAXBContext;
@@ -80,6 +77,13 @@ interface SbdhHelper {
         if (!processIdentifier.getScheme().equals(ProcessIdentifier.DEFAULT_SCHEME))
             scope.setIdentifier(processIdentifier.getScheme().getIdentifier());
 
+        return scope;
+    }
+
+    static Scope createScope(C1CountryIdentifier c1CountryIdentifier) {
+        Scope scope = new Scope();
+        scope.setType("COUNTRY_C1");
+        scope.setInstanceIdentifier(c1CountryIdentifier.getIdentifier());
         return scope;
     }
 

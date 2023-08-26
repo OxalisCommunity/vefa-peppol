@@ -39,6 +39,7 @@ public class XMLStreamUtilsTest {
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
                                 "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
                                 ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0"))
+                .c1CountryIdentifier(C1CountryIdentifier.of("IN"))
                 .instanceType(
                         InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
                 .creationTimestamp(new Date())

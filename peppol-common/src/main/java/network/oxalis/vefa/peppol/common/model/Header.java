@@ -40,6 +40,8 @@ public class Header implements Serializable {
 
     private DocumentTypeIdentifier documentType;
 
+    private C1CountryIdentifier c1CountryIdentifier;
+
     private InstanceIdentifier identifier;
 
     private InstanceType instanceType;
@@ -53,20 +55,20 @@ public class Header implements Serializable {
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> cc,
-                            ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
-                            InstanceType instanceType, Date creationTimestamp) {
-        return new Header(sender, receiver, cc, process, documentType, identifier, instanceType, creationTimestamp, null);
+                            ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                            InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp) {
+        return new Header(sender, receiver, cc, process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver,
-                            ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
-                            InstanceType instanceType, Date creationTimestamp) {
-        return new Header(sender, receiver, new ArrayList<>(), process, documentType, identifier, instanceType, creationTimestamp, null);
+                            ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                            InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp) {
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
-                            DocumentTypeIdentifier documentType) {
-        return new Header(sender, receiver, new ArrayList<>(), process, documentType, null, null, null, null);
+                            DocumentTypeIdentifier documentType ) {
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, null, null, null, null, null);
     }
 
     public Header() {
@@ -74,13 +76,14 @@ public class Header implements Serializable {
     }
 
     private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> copyReceiver,
-                   ProcessIdentifier process, DocumentTypeIdentifier documentType, InstanceIdentifier identifier,
-                   InstanceType instanceType, Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
+                   ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                   InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
         this.sender = sender;
         this.receiver = receiver;
         this.copyReceiver = copyReceiver;
         this.process = process;
         this.documentType = documentType;
+        this.c1CountryIdentifier = c1CountryIdentifier;
         this.identifier = identifier;
         this.instanceType = instanceType;
         this.creationTimestamp = creationTimestamp;
@@ -105,6 +108,10 @@ public class Header implements Serializable {
 
     public Header documentType(DocumentTypeIdentifier documentType) {
         return copy(h -> h.documentType = documentType);
+    }
+
+    public Header c1CountryIdentifier(C1CountryIdentifier c1CountryIdentifier) {
+        return copy(h -> h.c1CountryIdentifier = c1CountryIdentifier);
     }
 
     public Header identifier(InstanceIdentifier identifier) {
@@ -144,6 +151,7 @@ public class Header implements Serializable {
                 Objects.equals(receiver, header.receiver) &&
                 Objects.equals(process, header.process) &&
                 Objects.equals(documentType, header.documentType) &&
+                Objects.equals(c1CountryIdentifier, header.c1CountryIdentifier) &&
                 Objects.equals(identifier, header.identifier) &&
                 Objects.equals(instanceType, header.instanceType) &&
                 Objects.equals(creationTimestamp, header.creationTimestamp) &&
@@ -152,7 +160,7 @@ public class Header implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sender, receiver, process, documentType, identifier, instanceType, creationTimestamp, arguments);
+        return Objects.hash(sender, receiver, process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, arguments);
     }
 
     @Override
@@ -163,6 +171,7 @@ public class Header implements Serializable {
                 ", copyReceiver=" + copyReceiver +
                 ", process=" + process +
                 ", documentType=" + documentType +
+                ", c1CountryIdentifier=" + c1CountryIdentifier +
                 ", identifier=" + identifier +
                 ", instanceType=" + instanceType +
                 ", creationTimestamp=" + creationTimestamp +
@@ -171,8 +180,8 @@ public class Header implements Serializable {
     }
 
     private Header copy(Consumer<Header> consumer) {
-        Header header = new Header(sender, receiver, new ArrayList<>(copyReceiver), process, documentType, identifier,
-                instanceType, creationTimestamp, new HashMap<>(arguments));
+        Header header = new Header(sender, receiver, new ArrayList<>(copyReceiver), process, documentType, c1CountryIdentifier,
+                identifier, instanceType, creationTimestamp, new HashMap<>(arguments));
         consumer.accept(header);
         return header;
     }

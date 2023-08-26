@@ -51,10 +51,10 @@ public interface SbdhWriter {
             sbdh.setHeaderVersion("1.0");
 
             // Sender
-            sbdh.getSender().add(SbdhHelper.createPartner(header.getSender()));
+            sbdh.setSender(SbdhHelper.createPartner(header.getSender()));
 
             // Receiver
-            sbdh.getReceiver().add(SbdhHelper.createPartner(header.getReceiver()));
+            sbdh.setReceiver(SbdhHelper.createPartner(header.getReceiver()));
 
             sbdh.setDocumentIdentification(new DocumentIdentification());
             // Standard
@@ -74,6 +74,11 @@ public interface SbdhWriter {
             scopes.add(SbdhHelper.createScope(header.getDocumentType()));
             // ProcessID
             scopes.add(SbdhHelper.createScope(header.getProcess()));
+            // C1CountryIdentifier
+            // C1 Country is Not mandatory yet
+            if(null != header.getC1CountryIdentifier()){
+                scopes.add(SbdhHelper.createScope(header.getC1CountryIdentifier()));
+            }
             // Extras
             header.getArguments().forEach(ai -> scopes.add(SbdhHelper.createScope(ai)));
 
@@ -85,6 +90,7 @@ public interface SbdhWriter {
             marshaller.marshal(SbdhHelper.OBJECT_FACTORY.createStandardBusinessDocumentHeader(sbdh), streamWriter);
         } catch (Exception e) {
             throw new SbdhException("Unable to write SBDH.", e);
+            //e.printStackTrace();
         }
     }
 }

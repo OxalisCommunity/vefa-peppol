@@ -34,6 +34,7 @@ public class HeaderTest {
                 .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0"))
                 .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote" +
                         "##urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME))
+                .c1CountryIdentifier(C1CountryIdentifier.of("IN"))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2", "CreditNote", "2.1"))
                 .creationTimestamp(new Date())
                 .identifier(InstanceIdentifier.generateUUID());
@@ -44,6 +45,7 @@ public class HeaderTest {
                 .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0", Scheme.of("cenbii-procid-ubl")))
                 .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2::CreditNote" +
                         "##urn:www.cenbii.eu:transaction:biitrns014:ver2.0:extended:urn:www.peppol.eu:bis:peppol5a:ver2.0::2.1"))
+                .c1CountryIdentifier(C1CountryIdentifier.of("IN"))
                 .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2", "CreditNote", "2.1"))
                 .creationTimestamp(header.getCreationTimestamp())
                 .identifier(InstanceIdentifier.of(header.getIdentifier().getIdentifier()));
@@ -60,6 +62,7 @@ public class HeaderTest {
         Assert.assertEquals(header.getReceiver(), header2.getReceiver());
         Assert.assertEquals(header.getProcess(), header2.getProcess());
         Assert.assertEquals(header.getDocumentType(), header2.getDocumentType());
+        Assert.assertEquals(header.getC1CountryIdentifier(), header2.getC1CountryIdentifier());
         Assert.assertEquals(header.getInstanceType(), header2.getInstanceType());
         Assert.assertEquals(header.getCreationTimestamp(), header2.getCreationTimestamp());
         Assert.assertEquals(header.getIdentifier(), header2.getIdentifier());
@@ -85,7 +88,7 @@ public class HeaderTest {
                 ParticipantIdentifier.of("9908123456785"),
                 ProcessIdentifier.of("Some:Process"),
                 DocumentTypeIdentifier.of("Some:Document"),
-                null, null, null
+                null,null, null, null
         )));
         Assert.assertFalse(header.equals(Header.of(
                 ParticipantIdentifier.of("9908:98764321"),

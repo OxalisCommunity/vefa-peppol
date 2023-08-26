@@ -71,10 +71,14 @@ public enum PeppolIcd implements Icd {
     JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
 
-        // ICDs created and maintained by OpenPEPPOL
+    // ICDs created and maintained by OpenPEPPOL
+    @Deprecated // Will be "REMOVED" after 30.11.2023 release
     DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
+    @Deprecated // Will be "REMOVED" after 30.11.2023 release
     DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
+    @Deprecated // Will be "REMOVED" after 30.11.2023 release
     DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
+    @Deprecated // Will be "REMOVED" after 30.11.2023 release
     DK_VANS("DK:VANS", "9905", "Danish VANS providers"),
 
     @Deprecated
@@ -98,7 +102,7 @@ public enum PeppolIcd implements Icd {
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
     ES_VAT("ES:VAT", "9920", "Agencia Española de Administración Tributaria"),
 
-    @Deprecated
+    @Deprecated //Will be "REMOVED" after 30.11.2023 release
     IT_IPA("IT:IPA", "9921", "Indice delle Pubbliche Amministrazioni"),
 
     AD_VAT("AD:VAT", "9922", "Andorra VAT number"),
@@ -137,7 +141,7 @@ public enum PeppolIcd implements Icd {
     @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
 
-    @Deprecated
+    @Deprecated // Will be "REMOVED" after 2023-10-31  release
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
 
     FR_VAT("FR:VAT", "9957", "French VAT number"),

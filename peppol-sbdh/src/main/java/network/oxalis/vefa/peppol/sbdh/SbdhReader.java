@@ -62,9 +62,9 @@ public interface SbdhReader {
         SbdhException.notNull("Sender is not provided in SBDH.",
                 sbdh.getSender());
         SbdhException.notNull("Sender identifier is not provided in SBDH.",
-                sbdh.getSender().get(0).getIdentifier());
+                sbdh.getSender().getIdentifier());
 
-        PartnerIdentification senderIdentifier = sbdh.getSender().get(0).getIdentifier();
+        PartnerIdentification senderIdentifier = sbdh.getSender().getIdentifier();
         header = header.sender(
                 ParticipantIdentifier.of(senderIdentifier.getValue(), Scheme.of(senderIdentifier.getAuthority())));
 
@@ -72,9 +72,9 @@ public interface SbdhReader {
         SbdhException.notNull("Receiver is not provided in SBDH.",
                 sbdh.getReceiver());
         SbdhException.notNull("Receiver identifier is not provided in SBDH.",
-                sbdh.getReceiver().get(0).getIdentifier());
+                sbdh.getReceiver().getIdentifier());
 
-        PartnerIdentification receiverIdentifier = sbdh.getReceiver().get(0).getIdentifier();
+        PartnerIdentification receiverIdentifier = sbdh.getReceiver().getIdentifier();
         header = header.receiver(
                 ParticipantIdentifier.of(receiverIdentifier.getValue(), Scheme.of(receiverIdentifier.getAuthority())));
 
@@ -122,6 +122,10 @@ public interface SbdhReader {
                     Scheme scheme = scope.getIdentifier() != null ?
                             Scheme.of(scope.getIdentifier()) : ProcessIdentifier.DEFAULT_SCHEME;
                     header = header.process(ProcessIdentifier.of(scope.getInstanceIdentifier(), scheme));
+                    break;
+                }
+                case "COUNTRY_C1": {
+                    header = header.c1CountryIdentifier(C1CountryIdentifier.of(scope.getInstanceIdentifier()));
                     break;
                 }
                 default: {

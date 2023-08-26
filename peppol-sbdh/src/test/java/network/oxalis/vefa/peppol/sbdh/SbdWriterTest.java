@@ -31,14 +31,13 @@ import java.util.Date;
 public class SbdWriterTest {
 
     public static final Header header = Header.newInstance()
-            .sender(ParticipantIdentifier.of("9908:987654325"))
-            .receiver(ParticipantIdentifier.of("9908:123456785"))
-            .process(ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii04:ver1.0"))
-            .documentType(DocumentTypeIdentifier.of(
-                    "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
-                            "##urn:www.cenbii.eu:transaction:biicoretrdm010:ver1.0" +
-                            ":#urn:www.peppol.eu:bis:peppol4a:ver1.0::2.0", DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME ))
-            .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.0"))
+            .sender(ParticipantIdentifier.of("0088:7315458756324"))
+            .receiver(ParticipantIdentifier.of("0088:4562458856624"))
+            .process(ProcessIdentifier.of(">urn:fdc:peppol.eu:2017:poacc:billing:01:1.0", Scheme.of("cenbii-procid-ubl")))
+            .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
+                    "##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1"))
+            .c1CountryIdentifier(C1CountryIdentifier.of("IN"))
+            .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.1"))
             .creationTimestamp(new Date())
             .identifier(InstanceIdentifier.generateUUID());
 
