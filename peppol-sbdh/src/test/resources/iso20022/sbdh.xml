@@ -22,5 +22,9 @@
       <Type>PROCESSID</Type>
       <InstanceIdentifier>urn:fdc:bits.no:2017:profile:01:1.0</InstanceIdentifier>
     </Scope>
+    <Scope>
+      <Type>COUNTRY_C1</Type>
+      <InstanceIdentifier>NO</InstanceIdentifier>
+    </Scope>
   </BusinessScope>
 </StandardBusinessDocumentHeader>
