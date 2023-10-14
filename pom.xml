@@ -24,7 +24,7 @@
     <groupId>network.oxalis.vefa</groupId>
     <artifactId>vefa-peppol</artifactId>
     <packaging>pom</packaging>
-    <version>3.2.1-SNAPSHOT</version>
+    <version>3.3.0</version>
 
     <name>VEFA PEPPOL :: Parent</name>
     <description>Library for features to support use of PEPPOL infrastructure.</description>
@@ -42,7 +42,7 @@
     </modules>
 
     <scm>
-        <tag>HEAD</tag>
+        <tag>v3.3.0</tag>
         <url>https://github.com/OxalisCommunity/vefa-peppol</url>
         <connection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</developerConnection>
@@ -100,7 +100,7 @@
         <slf4j.version>2.0.6</slf4j.version>
         <lombok.version>1.18.24</lombok.version>
         <metainf-services.version>1.9</metainf-services.version>
-        <vefa-peppol.version>3.2.1-SNAPSHOT</vefa-peppol.version>
+        <vefa-peppol.version>3.3.0</vefa-peppol.version>
         <commons-certvalidator.version>4.0.0</commons-certvalidator.version>
         <peppol-lib.version>2.2.0</peppol-lib.version>
         <httpclient.version>4.5.13</httpclient.version>
