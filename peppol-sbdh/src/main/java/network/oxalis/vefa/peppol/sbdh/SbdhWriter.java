@@ -75,10 +75,7 @@ public interface SbdhWriter {
             // ProcessID
             scopes.add(SbdhHelper.createScope(header.getProcess()));
             // C1CountryIdentifier
-            // C1 Country is Not mandatory yet
-            if(null != header.getC1CountryIdentifier()){
-                scopes.add(SbdhHelper.createScope(header.getC1CountryIdentifier()));
-            }
+            scopes.add(SbdhHelper.createScope(header.getC1CountryIdentifier()));
             // Extras
             header.getArguments().forEach(ai -> scopes.add(SbdhHelper.createScope(ai)));
 
