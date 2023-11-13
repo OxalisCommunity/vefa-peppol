@@ -64,7 +64,7 @@ public class TransportProfile extends AbstractSimpleIdentifier implements Serial
 
     public static final TransportProfile ESENS_AS4 = of("bdxr-transport-ebms3-as4-v1p0");
 
-    public static final TransportProfile AS4 = ESENS_AS4;
+    public static final TransportProfile AS4 = PEPPOL_AS4_2_0;
 
     public static TransportProfile of(String value) {
         return new TransportProfile(value);

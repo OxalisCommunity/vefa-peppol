@@ -176,14 +176,14 @@ public class BusdoxReaderTest {
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
-            serviceInformation.getEndpoint(processIdentifier, TransportProfile.AS4);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.ESENS_AS4);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
         }
 
         assertEquals(
-                serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0)
+                serviceInformation.getEndpoint(processIdentifier, TransportProfile.AS4)
                         .getCertificate().getSubjectDN().toString(),
                 "C=FI, O=Basware, OU=PEPPOL TEST AP, CN=POP000010"
         );
