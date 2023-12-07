@@ -116,7 +116,7 @@ public class LookupClientTest {
 
         Endpoint endpoint = client.getEndpoint(
                 Header.newInstance()
-                        .receiver(ParticipantIdentifier.of("9915:helger"))
+                        .receiver(ParticipantIdentifier.of("0007:baswareapas4testendpoint"))
                         .documentType(DocumentTypeIdentifier.of(
                                 "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
                                         "urn:cen.eu:en16931:2017#compliant#" +
@@ -135,7 +135,7 @@ public class LookupClientTest {
                 .build();
 
         Endpoint endpoint = client.getEndpoint(
-                ParticipantIdentifier.of("9915:helger"),
+                ParticipantIdentifier.of("0007:baswareapas4testendpoint"),
                 DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
                                 "urn:cen.eu:en16931:2017#compliant#" +
@@ -154,7 +154,7 @@ public class LookupClientTest {
                 .build();
 
         Endpoint endpoint = client.getEndpoint(
-                ParticipantIdentifier.of("9915:helger"),
+                ParticipantIdentifier.of("0007:baswareapas4testendpoint"),
                 DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
                                 "urn:cen.eu:en16931:2017#compliant#" +
@@ -174,7 +174,7 @@ public class LookupClientTest {
 
         Header header = Header.newInstance()
                 .sender(ParticipantIdentifier.of("9908:invalid"))
-                .receiver(ParticipantIdentifier.of("9915:helger"))
+                .receiver(ParticipantIdentifier.of("0007:baswareapas4testendpoint"))
                 .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
                 .documentType(DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
