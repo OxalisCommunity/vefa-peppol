@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release is v8.5 from 2023-03-31: https://docs.peppol.eu/edelivery/codelists/index.html
+    // The latest code list release is v8.7 from 2023-11-21: https://test-docs.peppol.eu/edelivery/codelists/v8.7/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v8.7.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -72,15 +72,6 @@ public enum PeppolIcd implements Icd {
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
 
     // ICDs created and maintained by OpenPEPPOL
-    @Deprecated // Will be "REMOVED" after 30.11.2023 release
-    DK_CPR("DK:CPR", "9901", "Danish Ministry of the Interior and Health"),
-    @Deprecated // Will be "REMOVED" after 30.11.2023 release
-    DK_CVR("DK:CVR", "9902", "The Danish Commerce and Companies Agency"),
-    @Deprecated // Will be "REMOVED" after 30.11.2023 release
-    DK_SE("DK:SE", "9904", "Danish Ministry of Taxation, Central Customs and Tax Administration"),
-    @Deprecated // Will be "REMOVED" after 30.11.2023 release
-    DK_VANS("DK:VANS", "9905", "Danish VANS providers"),
-
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
 
@@ -101,9 +92,6 @@ public enum PeppolIcd implements Icd {
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
     ES_VAT("ES:VAT", "9920", "Agencia Española de Administración Tributaria"),
-
-    @Deprecated //Will be "REMOVED" after 30.11.2023 release
-    IT_IPA("IT:IPA", "9921", "Indice delle Pubbliche Amministrazioni"),
 
     AD_VAT("AD:VAT", "9922", "Andorra VAT number"),
     AL_VAT("AL:VAT", "9923", "Albania VAT number"),
@@ -141,7 +129,7 @@ public enum PeppolIcd implements Icd {
     @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
 
-    @Deprecated // Will be "REMOVED" after 2023-10-31  release
+    @Deprecated // Will be "REMOVED" after 31.12.2023 release
     BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
 
     FR_VAT("FR:VAT", "9957", "French VAT number"),
