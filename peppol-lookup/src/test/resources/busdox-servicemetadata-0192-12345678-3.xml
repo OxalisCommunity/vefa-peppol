@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ns2:SignedServiceMetadata xmlns:ns2="http://busdox.org/serviceMetadata/publishing/1.0/" xmlns="http://busdox.org/transport/identifiers/1.0/" xmlns:ns3="http://www.w3.org/2005/08/addressing" xmlns:ns4="http://www.w3.org/2000/09/xmldsig#">
+    <ns2:ServiceMetadata>
+        <ns2:ServiceInformation>
+            <ParticipantIdentifier scheme="iso6523-actorid-upis">0192:12345678</ParticipantIdentifier>
+            <DocumentIdentifier scheme="busdox-docid-qns">
+                urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1
+            </DocumentIdentifier>
+            <ns2:ProcessList>
+                <ns2:Process>
+                    <ProcessIdentifier scheme="cenbii-procid-ubl">urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</ProcessIdentifier>
+                    <ns2:ServiceEndpointList>
+                        <ns2:Endpoint transportProfile="peppol-transport-as4-v2_0">
+                            <ns3:EndpointReference>
+                                <ns3:Address>https://test-api.basware.com/peppol/as4</ns3:Address>
+                                <ns3:ReferenceParameters/>
+                                <ns3:Metadata/>
+                            </ns3:EndpointReference>
+                            <ns2:RequireBusinessLevelSignature>false</ns2:RequireBusinessLevelSignature>
+                            <ns2:Certificate>
+                                MIIFvzCCA6egAwIBAgIQS2oH4Rg7dPfIXOnRW9T1tDANBgkqhkiG9w0BAQsFADBr MQswCQYDVQQGEwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UE CxMNRk9SIFRFU1QgT05MWTEpMCcGA1UEAxMgUEVQUE9MIEFDQ0VTUyBQT0lOVCBU RVNUIENBIC0gRzIwHhcNMjIwNzEwMDAwMDAwWhcNMjQwNjI5MjM1OTU5WjBMMQsw CQYDVQQGEwJGSTEQMA4GA1UECgwHQmFzd2FyZTEXMBUGA1UECwwOUEVQUE9MIFRF U1QgQVAxEjAQBgNVBAMMCVBPUDAwMDAxMDCCASIwDQYJKoZIhvcNAQEBBQADggEP ADCCAQoCggEBAL7LsC4kU4b1qnk0IGSt/u42A9TBPusTiCgKN5xh8XUyNDSI0RBZ 3+w5g8aWaDVceqh3zXdytmsEqLmQqKAvQY3GETJe9BT14PC3mGURY1Vv5GzHaNmo wBUnDnWZNNifi0+eqSUm7gRYX+RkoqF5lSR6tYL/uk2/ZrfGlzu/RawNvmM+jfhy ZVc/e/Hr4iATUUwxxCWTwCkWN0tqGmv9Kx4e+NO7+4otROK544QFx4Dtm77WWETx GkdLxpFFnYnnlhq3B2DjYxEpTZ+bM8gtQJsWnkQYJQ0Sb6vSTwQqtpNGTrw6cK1S 0by7S3u4XVtHydkgzEGaivMQI6fcXOWV7SsCAwEAAaOCAXwwggF4MAwGA1UdEwEB /wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoGCCsGAQUFBwMCMB0G A1UdDgQWBBTxQNqgX16XqGFsAwPBs4boMemrEzBdBgNVHR8EVjBUMFKgUKBOhkxo dHRwOi8vcGtpLWNybC5zeW1hdXRoLmNvbS9jYV82YTkzNzczNGEzOTNhMDgwNWJm MzNjZGE4YjMzMTA5My9MYXRlc3RDUkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggr BgEFBQcwAYYbaHR0cDovL3BraS1vY3NwLnN5bWF1dGguY29tMB8GA1UdIwQYMBaA FGtvS7bxN7orPH8Yzborsrl8KjfrMC0GCmCGSAGG+EUBEAMEHzAdBhNghkgBhvhF ARABAgMBAYGpkOEDFgY5NTc2MDgwOQYKYIZIAYb4RQEQBQQrMCkCAQAWJGFIUjBj SE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0BAQsFAAOC AgEApAiedwRZcW449knUO29vPphS1obosPrd7PdKJm3f/Ktd635FK1bppQm3yug1 JXlZ/DIH6n9Hugotwz8TXUT1UbcIBh/oETCypFj5c3TfUmMbj6K87iuMeG+beZZw hSZsIT9Gqo9G3bb5kPIBdJaxNSkAkDWdC50tF67vCVRqVrIEfnkVTTrYsQ6Nh9C1 mJwQ5cKCDbzbNtTyghHvyfP/MiLM5TJih8KEeuxv28MjTtUYmYIcNIUgdFDeNkqF AxPXiHHuXMkacpI2N+O4bfOPiuJrsHLnLmFnQs9o+uHshoiwDMYdelJBEo/ehmsD LpPj6nBlbfU/yiwq2ymSkith1voytKbGM4BCbolStHTVdY5souAXztcuabmmstqs tincm50Bwwdb7eRm9UojQo8x5vMJcyLKaFRghsDwHNjR8iRIdokhZ5JEGlix3EQr mRrgy4rMXCgC6Of8RbCeTwGAqPT2y73uRVA90FURVfw43L/jqiTXpGcY0WWS2YOB 0q9xGkv9iZ+vQ/N9FY5d0sk3udpmJZstZsn3Sh5HQCLq4hgnJI3chKXuAMFdlqxN pun1ShsjcMMctliXiIlQOrM0cjBXHDRmdkjPHl6/jHY+7JeFuTWoDERhJzNuLWue oN6vPARXI0UkRoNeqh1SxfraMURSqN59GbQFYkv92O2Obb4=
+                            </ns2:Certificate>
+                            <ns2:ServiceDescription>Basware PEPPOL Test Access Point</ns2:ServiceDescription>
+                            <ns2:TechnicalContactUrl>arun.kumar@basware.com</ns2:TechnicalContactUrl>
+                        </ns2:Endpoint>
+                    </ns2:ServiceEndpointList>
+                </ns2:Process>
+            </ns2:ProcessList>
+        </ns2:ServiceInformation>
+    </ns2:ServiceMetadata>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>75cZtUpM1r5GCS5bNzUYyHJkLXU=</DigestValue></Reference></SignedInfo><SignatureValue>NgbiH4ZPw7WUh8aWZP3AiD9SFriFOKhRh4FWy35dEFjgwp0+W0SyAB9+L2zPAqobrWgBDWcYyUj1&#13;
+58imRLerMDHAiL2y1igIZoj49vpOF5hmtZoKQBYqfKbAHlyW+bPpl+P3a+nnuIK1+gZCVqhnS7Bs&#13;
+XwFnsVHrJ5/5a3qVlvlYEPjhIxIzlQLufTLKrecgq9vXQvnOGpAHWC8lNRU50c7oYlvzEYDx1IfY&#13;
+XdTSoGkepGYSyiLvWnbsQiIBU+rP1O051fbSSXuxhja/w6q8RKpZEx2GRe5pagWebyfhMiRwvTdn&#13;
+VtO8nLlRKXsGeTVO03oaNzAn7+qTVPh8y1ax3Q==</SignatureValue><KeyInfo><X509Data><X509SubjectName>CN=POP000010,OU=PEPPOL TEST SMP,O=Basware,C=FI</X509SubjectName><X509Certificate>MIIFzjCCA7agAwIBAgIQOrxaIgKBWhwsY1wOC3JsyjANBgkqhkiG9w0BAQsFADB5MQswCQYDVQQG&#13;
+EwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBBSVNCTDEWMBQGA1UECxMNRk9SIFRFU1QgT05MWTE3&#13;
+MDUGA1UEAxMuUEVQUE9MIFNFUlZJQ0UgTUVUQURBVEEgUFVCTElTSEVSIFRFU1QgQ0EgLSBHMjAe&#13;
+Fw0yNDAyMTcwMDAwMDBaFw0yNjAyMDYyMzU5NTlaME0xCzAJBgNVBAYTAkZJMRAwDgYDVQQKDAdC&#13;
+YXN3YXJlMRgwFgYDVQQLDA9QRVBQT0wgVEVTVCBTTVAxEjAQBgNVBAMMCVBPUDAwMDAxMDCCASIw&#13;
+DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKVBi/J/IqnYJhQ8yKP7CRHuGkG+tUeCsBw9DnDp&#13;
+a+bSSBs9fGegzwppkQ4bUyMFrAf8B84jPyNb0ePMT2Kr6SYvb9hbuRFhsP2NXeBl+hbN0Ia3BDzG&#13;
+/oEmboOwJrCGIFJuAKvV434YseVxQts6LK4feFiA4L43oy0cGIxZJ/BmZQwYcDjiCpc5LYc+VwLs&#13;
+Vo/Oh95tSoCRN9/hVs70OPsU3qxKZNszhMGwpR8KgnVCi68QEJcoVnBiDWGaorwGcvgjwY9w4JFU&#13;
+Tix7Md07LTS9mUkmkyPsqaEVbrhhfmLLsG+xjAMWyKYhIrFDyBzk867UMrPyM4IlGhyaEJsHgRcC&#13;
+AwEAAaOCAXwwggF4MAwGA1UdEwEB/wQCMAAwDgYDVR0PAQH/BAQDAgOoMBYGA1UdJQEB/wQMMAoG&#13;
+CCsGAQUFBwMCMB0GA1UdDgQWBBQeIkwiciou3UGhfwqnSplMxr2riDBdBgNVHR8EVjBUMFKgUKBO&#13;
+hkxodHRwOi8vcGtpLWNybC5zeW1hdXRoLmNvbS9jYV9iNmQwZGMxZGMzMTQ3NzIzZmUzNmI3NTc1&#13;
+OTk3YWZjNC9MYXRlc3RDUkwuY3JsMDcGCCsGAQUFBwEBBCswKTAnBggrBgEFBQcwAYYbaHR0cDov&#13;
+L3BraS1vY3NwLnN5bWF1dGguY29tMB8GA1UdIwQYMBaAFHwdskjxutkKBsoWY6nwek+9I517MC0G&#13;
+CmCGSAGG+EUBEAMEHzAdBhNghkgBhvhFARABAgMBAYGo1YEKFgY5NTc2MDgwOQYKYIZIAYb4RQEQ&#13;
+BQQrMCkCAQAWJGFIUjBjSE02THk5d2Eya3RjbUV1YzNsdFlYVjBhQzVqYjIwPTANBgkqhkiG9w0B&#13;
+AQsFAAOCAgEAe2PYbBQd+47npLfqKwH5b7qz6iayCQo4BGBkkigqD6icR3KIFshLr/BbKzS8ZG+V&#13;
+RUvPfzYV6VwtBet/MeV5ofduVN5I8FnK0pRPjNuIyXKcMFQqOnMmC/A6FmLQi0vZans2WqYCQWwO&#13;
+JD4vuMZZkbG530V0HPEEkc0T+XHegj8nGoBYY7BOogwfej72NKguM/5iFOlMDKXAcyI4MNe7wemN&#13;
+8xCQ1BlYnH37sXQRAwfm9q/kN33U15mic2w1jJ5F4eKlCLu3ZDW5RcjClPcPqntEZkZPBRU/tN6x&#13;
+DOS/U0fTwPf1Uv08c2nvkVXP8BMatWSepIi6k1v3HJeerQS8b47DRugAXUK6TsAJniJ09e/g1U9i&#13;
+ghiQo6VsitWC5MO2khjxb4b6gN0hTMWoTadm9lV89vX3kOikplu5c/KIeak9/pSZOYrB0hz279GD&#13;
+Nt6ensv8HRkBDv/yQA12XYSOEN+qJpiTXIpRZkVZdLmwZeSnhlywczw3IwWNiUf4VXZx6zqSiqpv&#13;
++dpzXo87hYYbp/pEcRXShrPp+R3NPsXn45Vsy+bt9Tz5tiA4bHokPIcZmEvXwD9OGMjhHHu2OYmF&#13;
+WOk5wXlbIGa21woCuSGKX33xJ3RMdcKR7UV3geeXPQo6SP7noe26CE16r1bg0XfIWIIIo1XQ4AwY&#13;
+2pJHZsF2Gao=</X509Certificate></X509Data></KeyInfo></Signature></ns2:SignedServiceMetadata>

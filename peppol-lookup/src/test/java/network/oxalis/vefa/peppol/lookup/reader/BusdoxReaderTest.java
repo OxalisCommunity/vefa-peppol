@@ -44,13 +44,13 @@ public class BusdoxReaderTest {
     @Test
     public void rejectNoLongerActiveEndpoints() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-923829644.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-923829644-1.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
-            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_1_0);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
@@ -60,10 +60,10 @@ public class BusdoxReaderTest {
     @Test
     public void processActiveEndpoints() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-923829644.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-923829644-2.xml"))).getContent();
 
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0));
@@ -72,13 +72,13 @@ public class BusdoxReaderTest {
     @Test
     public void rejectNotYetActiveEndpoints() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-923829644.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-923829644-3.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
-            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_2_0);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
@@ -89,9 +89,9 @@ public class BusdoxReaderTest {
     public void missingBothServiceActivationDateAndServiceExpirationDate() throws Exception {
         // Still valid : CANNOT reject messages if both ServiceActivationDate and ServiceExpirationDate values are missing
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-12345678.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-12345678-3.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0));
@@ -100,35 +100,35 @@ public class BusdoxReaderTest {
     @Test
     public void missingServiceActivationDateButServiceExpirationDateIsValid() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-12345678.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-12345678-1.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
-        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_1_0));
+        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0));
     }
 
     @Test
     public void missingServiceExpirationDateButServiceActivationDateIsValid() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-12345678.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-12345678-2.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
-        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_2_0));
+        assertNotNull(serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0));
     }
 
     @Test
     public void missingServiceActivationDateAndInvalidServiceExpirationDate() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-98765432.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-98765432-3.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
-            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_1_0);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
@@ -138,13 +138,13 @@ public class BusdoxReaderTest {
     @Test
     public void missingServiceExpirationDateAndInvalidServiceActivationDate() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-98765432.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-98765432-2.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
-            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS2_2_0);
+            serviceInformation.getEndpoint(processIdentifier, TransportProfile.PEPPOL_AS4_2_0);
             fail("Expected exception.");
         } catch (EndpointNotFoundException e) {
             // Expected
@@ -156,7 +156,7 @@ public class BusdoxReaderTest {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
                 getClass().getResourceAsStream("/busdox-servicemetadata-9908-98765432.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
@@ -170,9 +170,9 @@ public class BusdoxReaderTest {
     @Test
     public void serviceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
-                getClass().getResourceAsStream("/busdox-servicemetadata-9908-923829644.xml"))).getContent();
+                getClass().getResourceAsStream("/busdox-servicemetadata-0192-923829644-2.xml"))).getContent();
 
-        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:www.cenbii.eu:profile:bii05:ver2.0");
+        ProcessIdentifier processIdentifier = ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0");
         ServiceInformation<Endpoint> serviceInformation = result.getServiceInformation();
 
         try {
@@ -185,7 +185,7 @@ public class BusdoxReaderTest {
         assertEquals(
                 serviceInformation.getEndpoint(processIdentifier, TransportProfile.AS4)
                         .getCertificate().getSubjectDN().toString(),
-                "C=FI, O=Basware, OU=PEPPOL TEST AP, CN=POP000010"
+                "CN=POP000010, OU=PEPPOL TEST AP, O=Basware, C=FI"
         );
     }
 

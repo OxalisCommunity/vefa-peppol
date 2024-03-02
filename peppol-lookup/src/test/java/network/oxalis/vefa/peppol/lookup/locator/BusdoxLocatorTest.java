@@ -31,7 +31,7 @@ public class BusdoxLocatorTest {
 
     @Test
     public void simple() throws LookupException {
-        assertEquals(busdoxLocator.lookup("9908:991825827").getHost(),
-                "B-770c6f5843e9e302de47ae4026307076.iso6523-actorid-upis.edelivery.tech.ec.europa.eu");
+        assertEquals(busdoxLocator.lookup("0192:991825827").getHost(),
+                "B-9823154777831486f5f30f7f41385a2a.iso6523-actorid-upis.edelivery.tech.ec.europa.eu");
     }
 }
