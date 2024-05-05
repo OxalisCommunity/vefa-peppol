@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release is v8.7 from 2023-11-21: https://test-docs.peppol.eu/edelivery/codelists/v8.7/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v8.7.html
+    // The latest code list release v8.8 dated 2024-04-22: https://docs.peppol.eu/edelivery/codelists/v8.8/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v8.8.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -68,6 +68,7 @@ public enum PeppolIcd implements Icd {
     FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
     FI_NSI("FI:NSI", "0215", "Tieto Finland Oy"),
     FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry"),
+    LV_URN("LV:URN", "0218", "The Register of Enterprises of the Republic of Latvia"),
     JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
 
@@ -128,9 +129,6 @@ public enum PeppolIcd implements Icd {
 
     @Deprecated
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
-
-    @Deprecated // Will be "REMOVED" after 31.12.2023 release
-    BE_CBE("BE:CBE", "9956", "Belgian Crossroad Bank of Enterprises"),
 
     FR_VAT("FR:VAT", "9957", "French VAT number"),
     US_EIN("US:EIN", "9959", "US Employer ID Number"),
