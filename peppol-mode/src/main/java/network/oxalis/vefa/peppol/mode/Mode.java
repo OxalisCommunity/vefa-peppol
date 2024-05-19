@@ -120,8 +120,8 @@ public class Mode {
                 // No action
             }
 
-            return cls.newInstance();
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            return cls.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new PeppolLoadingException(String.format("Unable to initiate '%s'", cls), e);
         }
     }
