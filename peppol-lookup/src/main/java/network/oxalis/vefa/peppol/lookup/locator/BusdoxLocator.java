@@ -102,15 +102,14 @@ public class BusdoxLocator extends AbstractLocator {
             if (lookup.getResult () != Lookup.SUCCESSFUL) {
                 // HOST_NOT_FOUND = The host does not exist
                 // TYPE_NOT_FOUND = The host exists, but has no records associated with the queried type
-                // Since we already tried couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
-                if(lookup.getResult() == Lookup.HOST_NOT_FOUND || lookup.getResult() == Lookup.TRY_AGAIN
-                        || lookup.getResult() == Lookup.TYPE_NOT_FOUND) {
-                    throw new NotFoundException(
-                            String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
-                } else {
-                    // Attribute to UNRECOVERABLE error, repeating the lookup would not be helpful
-                    throw new LookupException(
-                            String.format("Error when looking up identifier '%s' in SML.", participantIdentifier.getIdentifier()));
+                // TRY_AGAIN = Since we already tried a couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
+                switch (lookup.getResult ()) {
+                    case Lookup.HOST_NOT_FOUND:
+                    case Lookup.TYPE_NOT_FOUND:
+                        throw new NotFoundException(String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
+                    case Lookup.TRY_AGAIN:
+                    default:
+                        throw new LookupException(String.format("Error when looking up identifier '%s' in SML. DNS-Lookup-Err: %s", participantIdentifier.getIdentifier(), lookup.getErrorString()));
                 }
             }
         } catch (TextParseException e) {
