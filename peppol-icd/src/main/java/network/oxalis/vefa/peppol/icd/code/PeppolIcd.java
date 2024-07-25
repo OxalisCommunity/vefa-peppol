@@ -35,6 +35,10 @@ public enum PeppolIcd implements Icd {
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
     SE_ORGNR("SE:ORGNR", "0007", "The National Tax Board"),
     FR_SIRET("FR:SIRET", "0009", "DU PONT DE NEMOURS"),
+
+    @Deprecated // Below Finland specific participant identifier scheme will be removed per 31.12.2024. Use 0216 instead
+    FI_OVT("FI:OVT", "0037", "National Board of Taxes, (Verohallitus)"),
+
     DUNS("DUNS", "0060", "Dun and Bradstreet Ltd"),
     GLN("GLN", "0088", "GS1 GLN"),
     DK_P("DK:P", "0096", "The Danish Business Authority"),
@@ -63,7 +67,14 @@ public enum PeppolIcd implements Icd {
     GS1("GS1", "0209", "GS1"),
     IT_CFI("IT:CFI", "0210", "Agenzia delle Entrate"),
     IT_IVA("IT:IVA", "0211", "PARTITA IVA"),
+
+    @Deprecated // Below 3 Finland specific participant identifier scheme will be removed per 31.12.2024. Use 0216 instead
+    FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
+    FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
+    FI_NSI("FI:NSI", "0215", "Tieto Finland Oy"),
+
     FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry"),
+
     LV_URN("LV:URN", "0218", "The Register of Enterprises of the Republic of Latvia"),
     JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
