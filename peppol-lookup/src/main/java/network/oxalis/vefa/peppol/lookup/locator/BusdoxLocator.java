@@ -24,22 +24,31 @@ import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.mode.Mode;
-import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.ExtendedResolver;
 import org.xbill.DNS.Lookup;
-import org.xbill.DNS.SimpleResolver;
 import org.xbill.DNS.TextParseException;
 
+import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BusdoxLocator extends AbstractLocator {
 
-    private long timeout = 30L;
+    private long timeout = 20L;
     private int maxRetries = 3;
 
-    private DynamicHostnameGenerator hostnameGenerator;
+    private static final List<InetAddress> customDNSServers = new ArrayList<>();
+    //Google DNS: faster, supported by multiple data centers all around the world
+    public static InetAddress GOOGLE_PRIMARY_DNS;
+    public static InetAddress GOOGLE_SECONDARY_DNS;
+    //Cloudflare DNS: internet’s fastest DNS directory
+    public static InetAddress CLOUDFLARE_PRIMARY_DNS;
+    public static InetAddress CLOUDFLARE_SECONDARY_DNS;
+
+    private final DynamicHostnameGenerator hostnameGenerator;
 
     public BusdoxLocator(Mode mode) {
         this(
@@ -49,6 +58,22 @@ public class BusdoxLocator extends AbstractLocator {
         );
         maxRetries = Integer.parseInt(mode.getString("lookup.locator.busdox.maxRetries"));
         timeout = Long.parseLong(mode.getString("lookup.locator.busdox.timeout"));
+
+        try {
+            GOOGLE_PRIMARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff)}));
+            GOOGLE_SECONDARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (4 & 0xff), (byte) (4 & 0xff)}));
+
+            CLOUDFLARE_PRIMARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (1 & 0xff), (byte) (1 & 0xff), (byte) (1 & 0xff), (byte) (1 & 0xff)}));
+            CLOUDFLARE_SECONDARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (1 & 0xff), (byte) (0 & 0xff), (byte) (0 & 0xff), (byte) (1 & 0xff)}));
+//            CLOUDFLARE_SECONDARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (1 & 0xff), (byte) (0), (byte) (0), (byte) (1 & 0xff)}));
+        } catch (UnknownHostException e) {
+            //Unable to initialize Custom DNS server Primary DNS lookup fail, now try with default resolver
+        }
+
+        customDNSServers.add(GOOGLE_PRIMARY_DNS);
+        customDNSServers.add(GOOGLE_SECONDARY_DNS);
+        customDNSServers.add(CLOUDFLARE_PRIMARY_DNS);
+        customDNSServers.add(CLOUDFLARE_SECONDARY_DNS);
     }
 
     @SuppressWarnings("unused")
@@ -66,51 +91,39 @@ public class BusdoxLocator extends AbstractLocator {
         String hostname = hostnameGenerator.generate(participantIdentifier);
 
         try {
-            final Lookup lookup = new Lookup(hostname);
+            ExtendedResolver extendedResolver = CustomExtendedDNSResolver.createExtendedResolver(customDNSServers, timeout, maxRetries);
+            extendedResolver.setRetries(maxRetries);
+            extendedResolver.setTimeout(Duration.ofSeconds(timeout));
 
-            ExtendedResolver  extendedResolver = new ExtendedResolver();
-            try {
-                if (StringUtils.isNotBlank(hostname)) {
-                    extendedResolver.addResolver(new SimpleResolver(hostname));
-                }
-            } catch (final UnknownHostException ex) {
-                //Primary DNS lookup fail, now try with default resolver
-            }
-            extendedResolver.addResolver (Lookup.getDefaultResolver ());
-            extendedResolver.setRetries (maxRetries);
-            extendedResolver.setTimeout (Duration.ofSeconds (timeout));
-            lookup.setResolver (extendedResolver);
+            final Lookup lookup = new Lookup(hostname);
+            lookup.setResolver(extendedResolver);
 
             int retryCountLeft = maxRetries;
             // Retry  = The lookup may fail due to a network error. Repeating the lookup might be helpful
             do {
                 lookup.run();
                 --retryCountLeft;
-            } while (lookup.getResult () == Lookup.TRY_AGAIN && retryCountLeft >= 0);
+            } while (lookup.getResult() == Lookup.TRY_AGAIN && retryCountLeft >= 0);
 
             // Retry with TCP as well
-            if (lookup.getResult () == Lookup.TRY_AGAIN) {
-                extendedResolver.setTCP (true);
+            if (lookup.getResult() == Lookup.TRY_AGAIN) {
+                extendedResolver.setTCP(true);
 
                 retryCountLeft = maxRetries;
                 do {
                     lookup.run();
                     --retryCountLeft;
-                } while (lookup.getResult () == Lookup.TRY_AGAIN && retryCountLeft >= 0);
+                } while (lookup.getResult() == Lookup.TRY_AGAIN && retryCountLeft >= 0);
             }
 
-            if (lookup.getResult () != Lookup.SUCCESSFUL) {
-                // HOST_NOT_FOUND = The host does not exist
-                // TYPE_NOT_FOUND = The host exists, but has no records associated with the queried type
-                // Since we already tried couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
-                if(lookup.getResult() == Lookup.HOST_NOT_FOUND || lookup.getResult() == Lookup.TRY_AGAIN
-                        || lookup.getResult() == Lookup.TYPE_NOT_FOUND) {
-                    throw new NotFoundException(
-                            String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
-                } else {
-                    // Attribute to UNRECOVERABLE error, repeating the lookup would not be helpful
-                    throw new LookupException(
-                            String.format("Error when looking up identifier '%s' in SML.", participantIdentifier.getIdentifier()));
+            if (lookup.getResult() != Lookup.SUCCESSFUL) {
+                switch (lookup.getResult()) {
+                    case Lookup.HOST_NOT_FOUND: // HOST_NOT_FOUND = The host does not exist
+                    case Lookup.TYPE_NOT_FOUND: // TYPE_NOT_FOUND = The host exists, but has no records associated with the queried type
+                        throw new NotFoundException(String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
+                    case Lookup.TRY_AGAIN: // Since we already tried a couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
+                    default:
+                        throw new LookupException(String.format("Error when looking up identifier '%s' in SML. DNS-Lookup-Err: %s", participantIdentifier.getIdentifier(), lookup.getErrorString()));
                 }
             }
         } catch (TextParseException e) {
