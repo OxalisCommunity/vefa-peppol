@@ -37,7 +37,7 @@ import java.util.List;
 
 public class BusdoxLocator extends AbstractLocator {
 
-    private long timeout = 20L;
+    private long timeout = 30L;
     private int maxRetries = 3;
 
     private static final List<InetAddress> customDNSServers = new ArrayList<>();
