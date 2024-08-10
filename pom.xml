@@ -101,7 +101,7 @@
         <lombok.version>1.18.24</lombok.version>
         <metainf-services.version>1.9</metainf-services.version>
         <vefa-peppol.version>3.6.1-SNAPSHOT</vefa-peppol.version>
-        <commons-certvalidator.version>4.1.0</commons-certvalidator.version>
+        <commons-certvalidator.version>4.2.0</commons-certvalidator.version>
         <peppol-lib.version>2.2.0</peppol-lib.version>
         <httpclient.version>4.5.13</httpclient.version>
         <dnsjava.version>3.6.0</dnsjava.version>
