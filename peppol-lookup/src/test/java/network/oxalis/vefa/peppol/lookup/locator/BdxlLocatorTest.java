@@ -34,7 +34,7 @@ public class BdxlLocatorTest {
         MetadataLocator locator = new BdxlLocator(Mode.of("TEST"));
         Assert.assertEquals(
                 locator.lookup(ParticipantIdentifier.of("0192:810418052")),
-                URI.create("http://test-smp.difi.no/")
+                URI.create("http://test-smp.elma-smp.no/")
         );
     }
 
