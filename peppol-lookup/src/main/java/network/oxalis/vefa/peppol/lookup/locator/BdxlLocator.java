@@ -74,7 +74,7 @@ public class BdxlLocator extends AbstractLocator {
             CLOUDFLARE_PRIMARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (1 & 0xff), (byte) (1 & 0xff), (byte) (1 & 0xff), (byte) (1 & 0xff)}));
             CLOUDFLARE_SECONDARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (1 & 0xff), (byte) (0 & 0xff), (byte) (0 & 0xff), (byte) (1 & 0xff)}));
         } catch (UnknownHostException e) {
-            //Unable to initialize Custom DNS server Primary DNS lookup fail, now try with default resolver
+            //Unable to initialize Custom DNS server
         }
 
         customDNSServers.add(GOOGLE_PRIMARY_DNS);
@@ -161,10 +161,14 @@ public class BdxlLocator extends AbstractLocator {
 
             if (naptrLookup.getResult() != Lookup.SUCCESSFUL) {
                 switch (naptrLookup.getResult()) {
-                    case Lookup.HOST_NOT_FOUND: // HOST_NOT_FOUND = The host does not exist
-                    case Lookup.TYPE_NOT_FOUND: // TYPE_NOT_FOUND = The host exists, but has no records associated with the queried type
-                        throw new NotFoundException(String.format("Identifier '%s' is not registered in SML.", participantIdentifier.getIdentifier()));
-                    case Lookup.TRY_AGAIN: // Since we already tried a couple of times with TRY_AGAIN for TCP and UDP, now giving up ...
+                    case Lookup.HOST_NOT_FOUND: // The host does not exist
+                        throw new NotFoundException(String.format("Identifier '%s' is not registered in SML. The host '%s' does not exist", participantIdentifier.getIdentifier(), hostname));
+                    case Lookup.TYPE_NOT_FOUND: // The host exists, but has no records associated with the queried type
+                        throw new NotFoundException(String.format("Identifier '%s' is not registered in SML. The Host '%s' exists, but has no records associated with the queried type", participantIdentifier.getIdentifier(), hostname));
+                    case Lookup.TRY_AGAIN: // The lookup failed due to a network error. Repeating the lookup may be helpful.
+                        throw new LookupException(String.format("Error when looking up identifier '%s' in SML due to network error. Retry after sometime... DNS-Lookup-Err: %s", participantIdentifier.getIdentifier(), naptrLookup.getErrorString()));
+                    case Lookup.UNRECOVERABLE: // The lookup failed due to a data or server error. Repeating the lookup would not be helpful.
+                        throw new LookupException(String.format("Error when looking up identifier '%s' in SML due to a data or server error. Repeating the lookup immediately would not be helpful. DNS-Lookup-Err: %s", participantIdentifier.getIdentifier(), naptrLookup.getErrorString()));
                     default:
                         throw new LookupException(String.format("Error when looking up identifier '%s' in SML. DNS-Lookup-Err: %s", participantIdentifier.getIdentifier(), naptrLookup.getErrorString()));
                 }
