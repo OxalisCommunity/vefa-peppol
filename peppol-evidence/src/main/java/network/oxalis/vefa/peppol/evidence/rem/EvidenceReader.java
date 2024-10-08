@@ -30,9 +30,9 @@ import network.oxalis.vefa.peppol.evidence.jaxb.rem.ExtensionType;
 import network.oxalis.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import org.w3c.dom.Node;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;

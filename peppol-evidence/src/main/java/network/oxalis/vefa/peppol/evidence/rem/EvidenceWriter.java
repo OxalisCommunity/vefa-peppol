@@ -28,7 +28,7 @@ import network.oxalis.vefa.peppol.evidence.jaxb.rem.*;
 import network.oxalis.vefa.peppol.evidence.jaxb.xmldsig.DigestMethodType;
 import org.w3c.dom.Node;
 
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.Marshaller;
 import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMResult;
 import javax.xml.transform.stream.StreamResult;

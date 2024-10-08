@@ -26,7 +26,7 @@ import network.oxalis.peppol.sbdh.jaxb.StandardBusinessDocumentHeader;
 import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.sbdh.lang.SbdhException;
 
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLStreamReader;
 import java.io.InputStream;
 

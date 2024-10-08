@@ -31,7 +31,7 @@ import network.oxalis.vefa.peppol.publisher.lang.NotFoundException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.regex.Matcher;

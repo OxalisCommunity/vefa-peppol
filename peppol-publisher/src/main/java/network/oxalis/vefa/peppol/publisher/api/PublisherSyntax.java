@@ -22,9 +22,9 @@ package network.oxalis.vefa.peppol.publisher.api;
 import network.oxalis.vefa.peppol.publisher.model.PublisherServiceMetadata;
 import network.oxalis.vefa.peppol.publisher.model.ServiceGroup;
 
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import java.net.URI;
 
 /**
