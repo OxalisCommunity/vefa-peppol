@@ -21,7 +21,7 @@ package network.oxalis.vefa.peppol.evidence.rem;
 
 import network.oxalis.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 /**
  * REMEvidenceType is an xml complex type, which must be instantiated, see

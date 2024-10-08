@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+<jaxb:bindings xmlns:jaxb="https://jakarta.ee/xml/ns/jaxb"
                xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-               jaxb:version="2.0">
+               jaxb:version="3.0">
     <jaxb:bindings schemaLocation="../xsd/peppol-transport-receipt-1.0.xsd">
         <jaxb:schemaBindings>
             <jaxb:package name="network.oxalis.vefa.peppol.evidence.jaxb.receipt"/>

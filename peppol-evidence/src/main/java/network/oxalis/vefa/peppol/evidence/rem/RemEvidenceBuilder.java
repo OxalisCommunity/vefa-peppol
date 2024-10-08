@@ -27,7 +27,7 @@ import network.oxalis.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import org.w3c.dom.Document;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 import java.security.KeyStore;
 import java.util.Date;
 

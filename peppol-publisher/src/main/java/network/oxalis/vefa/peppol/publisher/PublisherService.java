@@ -31,8 +31,8 @@ import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServlet;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import java.io.OutputStream;
 import java.net.URI;
 

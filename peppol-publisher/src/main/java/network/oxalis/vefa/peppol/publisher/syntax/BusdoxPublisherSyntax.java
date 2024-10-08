@@ -35,10 +35,10 @@ import network.oxalis.peppol.busdox.jaxb.identifiers.ParticipantIdentifierType;
 import network.oxalis.peppol.busdox.jaxb.identifiers.ProcessIdentifierType;
 import network.oxalis.peppol.busdox.jaxb.smp.*;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBException;
+import jakarta.xml.bind.Marshaller;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
