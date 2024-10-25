@@ -24,8 +24,10 @@ import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.ExtendedResolver;
 import org.xbill.DNS.Lookup;
+import org.xbill.DNS.SimpleResolver;
 import org.xbill.DNS.TextParseException;
 
 import java.net.InetAddress;
@@ -37,8 +39,9 @@ import java.util.List;
 
 public class BusdoxLocator extends AbstractLocator {
 
-    private long timeout = 30L;
-    private int maxRetries = 3;
+    private final long timeout;
+    private final int maxRetries;
+    private final boolean enablePublicDNS;
 
     private static final List<InetAddress> customDNSServers = new ArrayList<>();
     //Google DNS: faster, supported by multiple data centers all around the world
@@ -54,10 +57,11 @@ public class BusdoxLocator extends AbstractLocator {
         this(
                 mode.getString("lookup.locator.busdox.prefix"),
                 mode.getString("lookup.locator.hostname"),
-                mode.getString("lookup.locator.busdox.algorithm")
+                mode.getString("lookup.locator.busdox.algorithm"),
+                Long.parseLong(mode.getString("lookup.locator.busdox.timeout")),
+                Integer.parseInt(mode.getString("lookup.locator.busdox.maxRetries")),
+                Boolean.parseBoolean(mode.getString("lookup.locator.busdox.enablePublicDNS"))
         );
-        maxRetries = Integer.parseInt(mode.getString("lookup.locator.busdox.maxRetries"));
-        timeout = Long.parseLong(mode.getString("lookup.locator.busdox.timeout"));
 
         try {
             GOOGLE_PRIMARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff)}));
@@ -69,18 +73,23 @@ public class BusdoxLocator extends AbstractLocator {
             //Unable to initialize Custom DNS server
         }
 
-        customDNSServers.add(GOOGLE_PRIMARY_DNS);
-        customDNSServers.add(GOOGLE_SECONDARY_DNS);
-        customDNSServers.add(CLOUDFLARE_PRIMARY_DNS);
-        customDNSServers.add(CLOUDFLARE_SECONDARY_DNS);
+        if (enablePublicDNS) {
+            customDNSServers.add(GOOGLE_PRIMARY_DNS);
+            customDNSServers.add(GOOGLE_SECONDARY_DNS);
+            customDNSServers.add(CLOUDFLARE_PRIMARY_DNS);
+            customDNSServers.add(CLOUDFLARE_SECONDARY_DNS);
+        }
     }
 
     @SuppressWarnings("unused")
     public BusdoxLocator(String hostname) {
-        this("B-", hostname, "MD5");
+        this("B-", hostname, "MD5", 30L, 3, false);
     }
 
-    public BusdoxLocator(String prefix, String hostname, String algorithm) {
+    public BusdoxLocator(String prefix, String hostname, String algorithm, long timeout, int maxRetries, boolean enablePublicDNS) {
+        this.timeout = timeout;
+        this.maxRetries = maxRetries;
+        this.enablePublicDNS = enablePublicDNS;
         hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, algorithm);
     }
 
@@ -89,8 +98,21 @@ public class BusdoxLocator extends AbstractLocator {
         // Create hostname for participant identifier.
         String hostname = hostnameGenerator.generate(participantIdentifier);
 
+        ExtendedResolver extendedResolver;
         try {
-            ExtendedResolver extendedResolver = CustomExtendedDNSResolver.createExtendedResolver(customDNSServers, timeout, maxRetries);
+            if(enablePublicDNS) {
+                extendedResolver = CustomExtendedDNSResolver.createExtendedResolver(customDNSServers, timeout, maxRetries);
+            } else {
+                extendedResolver = new ExtendedResolver();
+                try {
+                    if (StringUtils.isNotBlank(hostname)) {
+                        extendedResolver.addResolver(new SimpleResolver(hostname));
+                    }
+                } catch (final UnknownHostException ex) {
+                    //Primary DNS lookup fail, now try with default resolver
+                }
+                extendedResolver.addResolver (Lookup.getDefaultResolver ());
+            }
             extendedResolver.setRetries(maxRetries);
             extendedResolver.setTimeout(Duration.ofSeconds(timeout));
 
