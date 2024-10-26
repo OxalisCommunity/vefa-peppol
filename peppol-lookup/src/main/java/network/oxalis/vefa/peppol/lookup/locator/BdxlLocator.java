@@ -26,6 +26,7 @@ import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.lookup.util.EncodingUtils;
 import network.oxalis.vefa.peppol.mode.Mode;
+import org.apache.commons.lang3.StringUtils;
 import org.xbill.DNS.*;
 
 import java.net.InetAddress;
@@ -44,8 +45,9 @@ import java.util.regex.Pattern;
  */
 public class BdxlLocator extends AbstractLocator {
 
-    private long timeout = 30L;
-    private int maxRetries = 3;
+    private final long timeout;
+    private final int maxRetries;
+    private final boolean enablePublicDNS;
 
     private static final List<InetAddress> customDNSServers = new ArrayList<>();
     //Google DNS: faster, supported by multiple data centers all around the world
@@ -62,10 +64,11 @@ public class BdxlLocator extends AbstractLocator {
                 mode.getString("lookup.locator.bdxl.prefix"),
                 mode.getString("lookup.locator.hostname"),
                 mode.getString("lookup.locator.bdxl.algorithm"),
-                EncodingUtils.get(mode.getString("lookup.locator.bdxl.encoding"))
+                EncodingUtils.get(mode.getString("lookup.locator.bdxl.encoding")),
+                Long.parseLong(mode.getString("lookup.locator.bdxl.timeout")),
+                Integer.parseInt(mode.getString("lookup.locator.bdxl.maxRetries")),
+                Boolean.parseBoolean(mode.getString("lookup.locator.bdxl.enablePublicDNS"))
         );
-        maxRetries = Integer.parseInt(mode.getString("lookup.locator.bdxl.maxRetries"));
-        timeout = Long.parseLong(mode.getString("lookup.locator.bdxl.timeout"));
 
         try {
             GOOGLE_PRIMARY_DNS = InetAddress.getByAddress((new byte[]{(byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff), (byte) (8 & 0xff)}));
@@ -77,10 +80,12 @@ public class BdxlLocator extends AbstractLocator {
             //Unable to initialize Custom DNS server
         }
 
-        customDNSServers.add(GOOGLE_PRIMARY_DNS);
-        customDNSServers.add(GOOGLE_SECONDARY_DNS);
-        customDNSServers.add(CLOUDFLARE_PRIMARY_DNS);
-        customDNSServers.add(CLOUDFLARE_SECONDARY_DNS);
+        if (enablePublicDNS) {
+            customDNSServers.add(GOOGLE_PRIMARY_DNS);
+            customDNSServers.add(GOOGLE_SECONDARY_DNS);
+            customDNSServers.add(CLOUDFLARE_PRIMARY_DNS);
+            customDNSServers.add(CLOUDFLARE_SECONDARY_DNS);
+        }
     }
 
     /**
@@ -90,7 +95,7 @@ public class BdxlLocator extends AbstractLocator {
      */
     @SuppressWarnings("unused")
     public BdxlLocator(String hostname) {
-        this(hostname, "SHA-256");
+        this("", hostname, "SHA-256", 30L, 3, false);
     }
 
     /**
@@ -100,7 +105,7 @@ public class BdxlLocator extends AbstractLocator {
      * @param digestAlgorithm Algorithm used for generation of hostname.
      */
     public BdxlLocator(String hostname, String digestAlgorithm) {
-        this("", hostname, digestAlgorithm);
+        this("", hostname, digestAlgorithm, 30L, 3, false);
     }
 
     /**
@@ -109,9 +114,12 @@ public class BdxlLocator extends AbstractLocator {
      * @param prefix          Value attached in front of calculated hash.
      * @param hostname        Hostname used as base for lookup.
      * @param digestAlgorithm Algorithm used for generation of hostname.
+     * @param timeout Lookup timeout
+     * @param maxRetries Maximum number of retries
+     * @param enablePublicDNS Enable custom DNS lookup
      */
-    public BdxlLocator(String prefix, String hostname, String digestAlgorithm) {
-        this(prefix, hostname, digestAlgorithm, BaseEncoding.base32());
+    public BdxlLocator(String prefix, String hostname, String digestAlgorithm, long timeout, int maxRetries, boolean enablePublicDNS) {
+        this(prefix, hostname, digestAlgorithm, BaseEncoding.base32(), timeout, maxRetries, enablePublicDNS);
     }
 
     /**
@@ -121,8 +129,14 @@ public class BdxlLocator extends AbstractLocator {
      * @param hostname        Hostname used as base for lookup.
      * @param digestAlgorithm Algorithm used for generation of hostname.
      * @param encoding        Encoding of hash for hostname.
+     * @param timeout Lookup timeout
+     * @param maxRetries Maximum number of retries
+     * @param enablePublicDNS Enable custom DNS lookup
      */
-    public BdxlLocator(String prefix, String hostname, String digestAlgorithm, BaseEncoding encoding) {
+    public BdxlLocator(String prefix, String hostname, String digestAlgorithm, BaseEncoding encoding, long timeout, int maxRetries, boolean enablePublicDNS) {
+        this.timeout = timeout;
+        this.maxRetries = maxRetries;
+        this.enablePublicDNS = enablePublicDNS;
         hostnameGenerator = new DynamicHostnameGenerator(prefix, hostname, digestAlgorithm, encoding);
     }
 
@@ -131,8 +145,21 @@ public class BdxlLocator extends AbstractLocator {
         // Create hostname for participant identifier.
         String hostname = hostnameGenerator.generate(participantIdentifier).replaceAll("=*", "");
 
+        ExtendedResolver extendedResolver;
         try {
-            ExtendedResolver extendedResolver = CustomExtendedDNSResolver.createExtendedResolver(customDNSServers, timeout, maxRetries);
+            if(enablePublicDNS) {
+                extendedResolver = CustomExtendedDNSResolver.createExtendedResolver(customDNSServers, timeout, maxRetries);
+            } else {
+                extendedResolver = new ExtendedResolver();
+                try {
+                    if (StringUtils.isNotBlank(hostname)) {
+                        extendedResolver.addResolver(new SimpleResolver(hostname));
+                    }
+                } catch (final UnknownHostException ex) {
+                    //Primary DNS lookup fail, now try with default resolver
+                }
+                extendedResolver.addResolver (Lookup.getDefaultResolver ());
+            }
             extendedResolver.setRetries(maxRetries);
             extendedResolver.setTimeout(Duration.ofSeconds(timeout));
 
