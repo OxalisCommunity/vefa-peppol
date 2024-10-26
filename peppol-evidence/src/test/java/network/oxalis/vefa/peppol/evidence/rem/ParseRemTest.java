@@ -22,9 +22,9 @@ package network.oxalis.vefa.peppol.evidence.rem;
 import network.oxalis.vefa.peppol.evidence.jaxb.rem.REMEvidenceType;
 import org.testng.annotations.Test;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.Unmarshaller;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBElement;
+import jakarta.xml.bind.Unmarshaller;
 import java.io.InputStream;
 
 import static org.testng.Assert.assertEquals;

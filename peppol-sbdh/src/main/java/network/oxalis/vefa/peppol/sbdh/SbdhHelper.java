@@ -24,7 +24,7 @@ import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
 import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 
-import javax.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBContext;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.stream.XMLInputFactory;
