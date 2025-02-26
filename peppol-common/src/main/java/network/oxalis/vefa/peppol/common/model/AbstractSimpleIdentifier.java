@@ -46,7 +46,7 @@ public abstract class AbstractSimpleIdentifier implements SimpleIdentifier {
 
         AbstractSimpleIdentifier that = (AbstractSimpleIdentifier) o;
 
-        return value.equals(that.value);
+        return Objects.equals(value, that.value);
     }
 
     @Override
