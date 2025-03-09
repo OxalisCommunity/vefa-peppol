@@ -29,8 +29,8 @@
 
     <artifactId>peppol-lookup</artifactId>
 
-    <name>VEFA PEPPOL :: Lookup</name>
-    <description>Library for lookup in the PEPPOL infrastructure.</description>
+    <name>Vefa Peppol :: Lookup</name>
+    <description>Library for lookup in the Peppol infrastructure.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
@@ -83,7 +83,7 @@
     </licenses>
 
     <dependencies>
-        <!-- VEFA PEPPOL -->
+        <!-- Vefa Peppol -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-common</artifactId>

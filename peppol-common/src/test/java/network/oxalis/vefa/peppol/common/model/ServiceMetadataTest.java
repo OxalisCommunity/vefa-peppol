@@ -33,6 +33,7 @@ import static org.testng.Assert.assertEquals;
 public class ServiceMetadataTest {
 
     @Test
+    @SuppressWarnings("deprecation")
     public void simple() throws Exception {
         Endpoint endpoint1 = Endpoint.of(
                 TransportProfile.AS2_1_0,

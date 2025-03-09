@@ -36,6 +36,7 @@ public class LookupClientBuilder {
 
     protected MetadataLocator metadataLocator;
 
+    @SuppressWarnings("deprecation")
     protected CertificateValidator certificateValidator = EmptyCertificateValidator.INSTANCE;
 
     protected MetadataProvider metadataProvider;

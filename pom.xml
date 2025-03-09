@@ -26,8 +26,8 @@
     <packaging>pom</packaging>
     <version>3.7.1</version>
 
-    <name>VEFA PEPPOL :: Parent</name>
-    <description>Library for features to support use of PEPPOL infrastructure.</description>
+    <name>Vefa Peppol :: Parent</name>
+    <description>Library for features to support use of Peppol infrastructure.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <modules>
@@ -150,7 +150,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- VEFA PEPPOL -->
+            <!-- Vefa Peppol -->
             <dependency>
                 <groupId>network.oxalis.vefa</groupId>
                 <artifactId>peppol-common</artifactId>

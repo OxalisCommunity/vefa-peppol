@@ -55,7 +55,7 @@ public class DocumentTypeIdentifier extends AbstractQualifiedIdentifier implemen
 
     /**
      * Scheme busdox-docid-qns is default Scheme
-     *
+     * For PINT profile always specify @link #PEPPOL_DOCTYPE_WILDCARD_SCHEME}
      * @deprecated Use {@link #BUSDOX_DOCID_QNS_SCHEME} or {@link #PEPPOL_DOCTYPE_WILDCARD_SCHEME}
      */
     @Deprecated

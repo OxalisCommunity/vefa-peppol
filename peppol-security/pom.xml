@@ -29,8 +29,8 @@
 
     <artifactId>peppol-security</artifactId>
 
-    <name>VEFA PEPPOL :: Security</name>
-    <description>Library for security related to PEPPOL.</description>
+    <name>Vefa Peppol :: Security</name>
+    <description>Library for security related to Peppol.</description>
     <url> https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
@@ -83,7 +83,7 @@
     </licenses>
 
     <dependencies>
-        <!-- VEFA PEPPOL -->
+        <!-- Vefa Peppol -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-common</artifactId>

@@ -29,7 +29,7 @@
 
     <artifactId>peppol-icd</artifactId>
 
-    <name>VEFA PEPPOL :: ICD</name>
+    <name>Vefa Peppol :: ICD</name>
     <description>Support for ICDs.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 

@@ -28,6 +28,7 @@ import java.security.cert.X509Certificate;
 public class EmptyCertificateValidatorTest {
 
     @Test
+    @SuppressWarnings("deprecation")
     public void simple() throws Exception {
         Assert.assertNotNull(EmptyCertificateValidator.INSTANCE);
 

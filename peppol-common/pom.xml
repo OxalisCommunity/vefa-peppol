@@ -29,8 +29,8 @@
 
     <artifactId>peppol-common</artifactId>
 
-    <name>VEFA PEPPOL :: Common</name>
-    <description>Library for lookup in the PEPPOL infrastructure.</description>
+    <name>Vefa Peppol :: Common</name>
+    <description>Library for lookup in the Peppol infrastructure.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
