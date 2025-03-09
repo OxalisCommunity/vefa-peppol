@@ -28,17 +28,13 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v8.9 dated 2024-07-08: https://docs.peppol.eu/edelivery/codelists/v8.9/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v8.9.html
+    // The latest code list release v9.1 dated 2025-03-03: https://docs.peppol.eu/edelivery/codelists/v9.1/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.1.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
     FR_SIRENE("FR:SIRENE", "0002", "Institut National de la Statistique et des Etudes Economiques, (I.N.S.E.E.)"),
     SE_ORGNR("SE:ORGNR", "0007", "The National Tax Board"),
     FR_SIRET("FR:SIRET", "0009", "DU PONT DE NEMOURS"),
-
-    @Deprecated // Below Finland specific participant identifier scheme will be removed per 31.12.2024. Use 0216 instead
-    FI_OVT("FI:OVT", "0037", "National Board of Taxes, (Verohallitus)"),
-
     DUNS("DUNS", "0060", "Dun and Bradstreet Ltd"),
     GLN("GLN", "0088", "GS1 GLN"),
     DK_P("DK:P", "0096", "The Danish Business Authority"),
@@ -67,18 +63,13 @@ public enum PeppolIcd implements Icd {
     GS1("GS1", "0209", "GS1"),
     IT_CFI("IT:CFI", "0210", "Agenzia delle Entrate"),
     IT_IVA("IT:IVA", "0211", "PARTITA IVA"),
-
-    @Deprecated // Below 3 Finland specific participant identifier scheme will be removed per 31.12.2024. Use 0216 instead
-    FI_ORG("FI:ORG", "0212", "State Treasury of Finland / Valtiokonttori"),
-    FI_VAT("FI:VAT", "0213", "State Treasury of Finland / Valtiokonttori"),
-    FI_NSI("FI:NSI", "0215", "Tieto Finland Oy"),
-
     FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry"),
-
     LV_URN("LV:URN", "0218", "The Register of Enterprises of the Republic of Latvia"),
     JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
+    FR_CTC("FR:CTC", "0225", "AIFE (Agence pour l’Informatique Financière de l’Etat)"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
-
+    AE_TIN("AE:TIN", "0235", "UAE Federal Tax Authority"),
+    LU_MAT("LU:MAT", "0240", "\tCentre des technologies de l'information de l'Etat (CTIE)"),
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
@@ -100,7 +91,6 @@ public enum PeppolIcd implements Icd {
     IBAN("IBAN", "9918", "SOCIETY FOR WORLDWIDE INTERBANK FINANCIAL, TELECOMMUNICATION S.W.I.F.T"),
     AT_KUR("AT:KUR", "9919", "Kennziffer des Unternehmensregisters"),
     ES_VAT("ES:VAT", "9920", "Agencia Española de Administración Tributaria"),
-
     AD_VAT("AD:VAT", "9922", "Andorra VAT number"),
     AL_VAT("AL:VAT", "9923", "Albania VAT number"),
     BA_VAT("BA:VAT", "9924", "Bosnia and Herzegovina VAT number"),
