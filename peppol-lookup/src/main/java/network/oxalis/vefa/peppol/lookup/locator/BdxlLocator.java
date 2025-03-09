@@ -27,7 +27,13 @@ import network.oxalis.vefa.peppol.lookup.util.DynamicHostnameGenerator;
 import network.oxalis.vefa.peppol.lookup.util.EncodingUtils;
 import network.oxalis.vefa.peppol.mode.Mode;
 import org.apache.commons.lang3.StringUtils;
-import org.xbill.DNS.*;
+import org.xbill.DNS.Record;
+import org.xbill.DNS.NAPTRRecord;
+import org.xbill.DNS.ExtendedResolver;
+import org.xbill.DNS.SimpleResolver;
+import org.xbill.DNS.Lookup;
+import org.xbill.DNS.Type;
+import org.xbill.DNS.TextParseException;
 
 import java.net.InetAddress;
 import java.net.URI;
