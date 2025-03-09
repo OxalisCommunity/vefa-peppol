@@ -100,7 +100,7 @@
         <slf4j.version>2.0.6</slf4j.version>
         <lombok.version>1.18.24</lombok.version>
         <metainf-services.version>1.9</metainf-services.version>
-        <vefa-peppol.version>3.7.0</vefa-peppol.version>
+        <vefa-peppol.version>3.7.1</vefa-peppol.version>
         <commons-certvalidator.version>4.2.1</commons-certvalidator.version>
         <peppol-lib.version>2.2.0</peppol-lib.version>
         <httpclient.version>4.5.13</httpclient.version>
