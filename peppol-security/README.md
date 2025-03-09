@@ -18,6 +18,6 @@ Include dependency in your pom.xml:
 <dependency>
   <groupId>network.oxalis.vefa</groupId>
   <artifactId>peppol-security</artifactId>
-  <version>1.0.1</version>
+    <version>3.7.1</version>
 </dependency>
 ```
