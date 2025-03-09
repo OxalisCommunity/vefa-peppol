@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v9.0 dated 2025-01-06: https://docs.peppol.eu/edelivery/codelists/v9.0/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.0.html
+    // The latest code list release v9.1 dated 2025-03-03: https://docs.peppol.eu/edelivery/codelists/v9.1/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.1.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -66,8 +66,10 @@ public enum PeppolIcd implements Icd {
     FI_OVT2("FI:OVT2", "0216", "TIEKE- Tietoyhteiskunnan kehittamiskeskus ry"),
     LV_URN("LV:URN", "0218", "The Register of Enterprises of the Republic of Latvia"),
     JP_IIN("JP:IIN", "0221", "National Tax Agency Japan"),
+    FR_CTC("FR:CTC", "0225", "AIFE (Agence pour l’Informatique Financière de l’Etat)"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
-
+    AE_TIN("AE:TIN", "0235", "UAE Federal Tax Authority"),
+    LU_MAT("LU:MAT", "0240", "\tCentre des technologies de l'information de l'Etat (CTIE)"),
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
