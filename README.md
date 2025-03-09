@@ -15,7 +15,7 @@ This project implements some aspects of PEPPOL for inclusion in other projects.
 * [SBDH](peppol-sbdh) - Optimized library for handling of envelope.
 * [Security](peppol-security) - Security features for PEPPOL.
 
-Please see [changelog](/CHANGELOG.md) for changes.
+Please refer specific version [release](https://github.com/OxalisCommunity/vefa-peppol/releases) note for changes.
 
 # Contributor ?
 We are actively looking for contributors who can contribute to Oxalis and associated Git repositories. You can start fixing issues by selecting any existing issue or you can add new feature. Please refer [Pull request Checklist](/pull_request_template.md) while generating new pull request. Team will review your code and once it is found Ok then it will be merged to master.

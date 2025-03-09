@@ -42,6 +42,7 @@ public class Bdxr201605ReaderTest {
     }
 
     @Test(enabled = false)
+    @SuppressWarnings("deprecation")
     public void serviceMetadata() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
                 getClass().getResourceAsStream("/bdxr201407-servicemetadata-9908-810418052.xml"))).getContent();

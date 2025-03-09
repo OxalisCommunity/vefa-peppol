@@ -26,6 +26,7 @@ import org.testng.annotations.Test;
 public class TransportProtocolTest {
 
     @Test
+    @SuppressWarnings("deprecation")
     public void simple() throws PeppolException {
         Assert.assertTrue(TransportProtocol.AS2.equals(TransportProtocol.of(TransportProtocol.AS2.getIdentifier())));
 

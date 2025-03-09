@@ -29,8 +29,8 @@
 
     <artifactId>peppol-sbdh</artifactId>
 
-    <name>VEFA PEPPOL :: SBDH</name>
-    <description>SBDH utilities for PEPPOL.</description>
+    <name>Vefa Peppol :: SBDH</name>
+    <description>SBDH utilities for Peppol.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
@@ -83,7 +83,7 @@
     </licenses>
 
     <dependencies>
-        <!-- VEFA PEPPOL -->
+        <!-- Vefa Peppol -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-common</artifactId>

@@ -190,6 +190,7 @@ public class BusdoxReaderTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void serviceMetadataWithPeppolDocTypeWildCard() throws Exception {
         ServiceMetadata result = reader.parseServiceMetadata(new FetcherResponse(
                 getClass().getResourceAsStream("/peppol-doctype-wildcard-servicemetadata-9901-pint_c4_jp_sb.xml"))).getContent();

@@ -91,6 +91,7 @@ public class PublisherServiceTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")
     public void simpleServiceMetadata() throws Exception {
         PublisherServiceMetadata serviceMetadata = PublisherServiceMetadata.of(ServiceInformationBuilder.newInstance()
                 .participant(ParticipantIdentifier.of("9908:999888777"))

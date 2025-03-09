@@ -29,7 +29,7 @@
 
     <artifactId>peppol-evidence</artifactId>
 
-    <name>VEFA PEPPOL :: Evidence</name>
+    <name>Vefa Peppol :: Evidence</name>
     <description>Implementation of ETSI REM evidence according to ETSI TS 102 640-2 with some adjustments.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
@@ -106,7 +106,7 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- VEFA PEPPOL -->
+        <!-- Vefa Peppol -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-common</artifactId>

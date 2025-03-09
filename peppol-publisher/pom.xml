@@ -29,7 +29,7 @@
 
     <artifactId>peppol-publisher</artifactId>
 
-    <name>VEFA PEPPOL :: Publisher</name>
+    <name>Vefa Peppol :: Publisher</name>
     <description>Tools for metadata publishers.</description>
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
@@ -83,7 +83,7 @@
     </licenses>
 
     <dependencies>
-        <!-- VEFA PEPPOL -->
+        <!-- Vefa Peppol -->
         <dependency>
             <groupId>network.oxalis.vefa</groupId>
             <artifactId>peppol-common</artifactId>

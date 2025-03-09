@@ -25,7 +25,7 @@ Include dependency in your pom.xml:
 <dependency>
   <groupId>network.oxalis.vefa</groupId>
   <artifactId>peppol-lookup</artifactId>
-  <version>1.0.1</version>
+  <version>3.8.0</version>
 </dependency>
 ```
 
