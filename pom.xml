@@ -97,16 +97,16 @@
         <maven.compiler.target>11</maven.compiler.target>
         <testng.version>7.7.1</testng.version>
         <mockito-core.version>4.11.0</mockito-core.version>
-        <slf4j.version>2.0.6</slf4j.version>
-        <lombok.version>1.18.24</lombok.version>
+        <slf4j.version>2.0.17</slf4j.version>
+        <lombok.version>1.18.32</lombok.version>
         <metainf-services.version>1.9</metainf-services.version>
         <vefa-peppol.version>3.8.1-SNAPSHOT</vefa-peppol.version>
-        <commons-certvalidator.version>4.4.0</commons-certvalidator.version>
-        <peppol-lib.version>2.3.0</peppol-lib.version>
-        <httpclient.version>4.5.13</httpclient.version>
+        <commons-certvalidator.version>4.5.0</commons-certvalidator.version>
+        <peppol-lib.version>2.4.0</peppol-lib.version>
+        <httpclient.version>4.5.14</httpclient.version>
         <dnsjava.version>3.6.2</dnsjava.version>
-        <guava.version>33.3.1-jre</guava.version>
-        <typesafe-config.version>1.4.2</typesafe-config.version>
+        <guava.version>33.4.0-jre</guava.version>
+        <typesafe-config.version>1.4.3</typesafe-config.version>
         <javax-mail.version>1.4.7</javax-mail.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <commons-codec.version>1.15</commons-codec.version>
