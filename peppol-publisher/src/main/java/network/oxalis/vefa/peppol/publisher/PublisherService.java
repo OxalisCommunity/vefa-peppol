@@ -30,7 +30,7 @@ import network.oxalis.vefa.peppol.publisher.lang.PublisherException;
 import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import org.w3c.dom.Document;
 
-import javax.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServlet;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 import java.io.OutputStream;
