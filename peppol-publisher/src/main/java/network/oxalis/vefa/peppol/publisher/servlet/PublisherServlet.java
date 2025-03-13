@@ -28,9 +28,9 @@ import network.oxalis.vefa.peppol.publisher.PublisherService;
 import network.oxalis.vefa.peppol.publisher.lang.PublisherException;
 import network.oxalis.vefa.peppol.publisher.lang.NotFoundException;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.xml.bind.JAXBException;
 import java.io.IOException;
 import java.net.URI;

@@ -108,7 +108,7 @@
         <guava.version>33.4.0-jre</guava.version>
         <typesafe-config.version>1.4.3</typesafe-config.version>
         <javax-mail.version>1.4.7</javax-mail.version>
-        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+        <jakarta.servlet-api.version>5.0.0</jakarta.servlet-api.version>
         <commons-codec.version>1.15</commons-codec.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <wiremock.version>2.27.2</wiremock.version>
@@ -229,9 +229,9 @@
                 <version>${javax-mail.version}</version>
             </dependency>
             <dependency>
-                <groupId>javax.servlet</groupId>
-                <artifactId>javax.servlet-api</artifactId>
-                <version>${javax.servlet-api.version}</version>
+                <groupId>jakarta.servlet</groupId>
+                <artifactId>jakarta.servlet-api</artifactId>
+                <version>${jakarta.servlet-api.version}</version>
             </dependency>
 
             <!-- SLF4J -->
