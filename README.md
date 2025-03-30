@@ -1,5 +1,4 @@
-[![Vefa-Peppol Master Build](https://github.com/OxalisCommunity/vefa-peppol/workflows/Vefa-Peppol%20Master%20Build/badge.svg?branch=master)](https://github.com/OxalisCommunity/vefa-peppol/actions?query=workflow%3A%22Vefa-Peppol%20Master%20Build%22)
-[![CodeCov](https://codecov.io/gh/difi/vefa-peppol/branch/master/graph/badge.svg)](https://codecov.io/gh/difi/vefa-peppol)
+[![Vefa-Peppol Master Build](https://github.com/OxalisCommunity/vefa-peppol/workflows/Vefa-Peppol%20Master%20Build/badge.svg)](https://github.com/OxalisCommunity/vefa-peppol/actions?query=workflow%3A"Vefa-Peppol%20Master%20Build%22)
 [![Maven Central](https://img.shields.io/maven-central/v/network.oxalis.vefa/vefa-peppol.svg)](http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22network.oxalis.vefa%22%20AND%20a%3A%22vefa-peppol%22)
 
 # VEFA PEPPOL

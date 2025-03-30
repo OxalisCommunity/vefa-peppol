@@ -35,8 +35,10 @@ import org.testng.annotations.Test;
  */
 public class IcdsTest {
 
+    @SuppressWarnings("deprecation")
     private static final Icd ICD_TT_ORGNR = GenericIcd.of("TT:ORGNR", "9908", Scheme.of("iso6523-actorid-upis-test"));
 
+    @SuppressWarnings("deprecation")
     private static final Icd ICD_BE_EN = GenericIcd.of("BE:EN", "0208", Scheme.of("iso6523-actorid-upis-test"));
 
     private Icds icds = Icds.of(PeppolIcd.values(), new Icd[]{ICD_TT_ORGNR, ICD_BE_EN});
