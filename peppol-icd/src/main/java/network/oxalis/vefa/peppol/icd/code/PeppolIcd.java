@@ -69,7 +69,7 @@ public enum PeppolIcd implements Icd {
     FR_CTC("FR:CTC", "0225", "AIFE (Agence pour l’Informatique Financière de l’Etat)"),
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
     AE_TIN("AE:TIN", "0235", "UAE Federal Tax Authority"),
-    LU_MAT("LU:MAT", "0240", "\tCentre des technologies de l'information de l'Etat (CTIE)"),
+    LU_MAT("LU:MAT", "0240", "Centre des technologies de l'information de l'Etat (CTIE)"),
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),

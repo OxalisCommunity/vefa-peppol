@@ -20,6 +20,7 @@
 package network.oxalis.vefa.peppol.lookup.reader;
 
 import com.google.common.collect.Lists;
+import network.oxalis.peppol.busdox.jaxb.smp.*;
 import network.oxalis.vefa.peppol.common.api.PotentiallySigned;
 import network.oxalis.vefa.peppol.common.lang.PeppolRuntimeException;
 import network.oxalis.vefa.peppol.common.model.*;
@@ -33,7 +34,6 @@ import network.oxalis.vefa.peppol.lookup.util.XmlUtils;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 import network.oxalis.vefa.peppol.security.xmldsig.DomUtils;
 import network.oxalis.vefa.peppol.security.xmldsig.XmldsigVerifier;
-import network.oxalis.peppol.busdox.jaxb.smp.*;
 import org.apache.commons.codec.binary.Base64;
 import org.kohsuke.MetaInfServices;
 import org.slf4j.Logger;
@@ -109,6 +109,10 @@ public class BusdoxReader implements MetadataReader {
     @Override
     public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
+
+        if (null == fetcherResponse)
+            throw new LookupException("ServiceMetadata element not found or SMP registration is not valid for specific condition.");
+
         try {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 

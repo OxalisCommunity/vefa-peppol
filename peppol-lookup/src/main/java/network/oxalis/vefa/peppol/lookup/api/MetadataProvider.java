@@ -27,8 +27,8 @@ import java.util.List;
 
 public interface MetadataProvider {
 
-    List<URI>  resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier);
+    List<URI> resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier);
 
-    List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
-                                     DocumentTypeIdentifier documentTypeIdentifier);
+    List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier, DocumentTypeIdentifier
+            documentTypeIdentifier, int pintWildcardMigrationPhase);
 }

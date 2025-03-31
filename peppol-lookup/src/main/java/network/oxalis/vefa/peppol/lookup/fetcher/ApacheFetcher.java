@@ -43,7 +43,6 @@ public class ApacheFetcher extends BasicApacheFetcher {
 
     public ApacheFetcher(Mode mode) {
         super(mode);
-
         this.httpClientConnectionManager = new PoolingHttpClientConnectionManager();
     }
 
@@ -59,8 +58,9 @@ public class ApacheFetcher extends BasicApacheFetcher {
         FetcherResponse fetcherResponse = null;
         Exception exceptionObj = null;
 
-        if (uriList == null)
-            throw new LookupException("Unable to lookup requested url");
+        if (uriList == null || uriList.isEmpty()) {
+            throw new LookupException("Unable to lookup requested URL or SMP registration is not valid for specific condition.");
+        }
 
         for (URI uri : uriList) {
             try {
@@ -69,25 +69,23 @@ public class ApacheFetcher extends BasicApacheFetcher {
                     exceptionObj = null;
                     break;
                 }
-            } catch (FileNotFoundException e) {
-                exceptionObj = e;
-            } catch (LookupException e) {
+            } catch (FileNotFoundException | LookupException e) {
                 exceptionObj = e;
             }
         }
 
         if (exceptionObj instanceof FileNotFoundException) {
-            throw new FileNotFoundException ();
+            throw new FileNotFoundException();
         }
 
         if (exceptionObj instanceof LookupException) {
-            throw new LookupException (exceptionObj.getMessage(), exceptionObj);
+            throw new LookupException(exceptionObj.getMessage(), exceptionObj);
         }
 
         return fetcherResponse;
     }
 
-    private FetcherResponse fetchResponseFromValidUri (URI uri) throws LookupException, FileNotFoundException {
+    private FetcherResponse fetchResponseFromValidUri(URI uri) throws LookupException, FileNotFoundException {
 
         try (CloseableHttpClient httpClient = createClient()) {
 

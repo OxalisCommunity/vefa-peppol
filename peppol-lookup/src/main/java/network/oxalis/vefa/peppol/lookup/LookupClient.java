@@ -53,7 +53,7 @@ public class LookupClient {
     public List<ServiceReference> getServiceReferences(ParticipantIdentifier participantIdentifier)
             throws LookupException {
         URI location = locator.lookup(participantIdentifier);
-        List<URI>  serviceReferencesUriList = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
+        List<URI> serviceReferencesUriList = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
 
         FetcherResponse fetcherResponse;
         try {
@@ -73,10 +73,10 @@ public class LookupClient {
     }
 
     public ServiceMetadata getServiceMetadata(ParticipantIdentifier participantIdentifier,
-                                              DocumentTypeIdentifier documentTypeIdentifier)
+                                              DocumentTypeIdentifier documentTypeIdentifier, int pintWildcardMigrationPhase)
             throws LookupException, PeppolSecurityException {
         URI location = locator.lookup(participantIdentifier);
-        List<URI> serviceMetaDataUriList = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier);
+        List<URI> serviceMetaDataUriList = this.provider.resolveServiceMetadata(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase);
 
         PotentiallySigned<ServiceMetadata> potentiallySigned = getPotentiallySignedMetadata(participantIdentifier, documentTypeIdentifier, serviceMetaDataUriList);
 
@@ -163,15 +163,15 @@ public class LookupClient {
 
     public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier,
                                 DocumentTypeIdentifier documentTypeIdentifier, ProcessIdentifier processIdentifier,
-                                TransportProfile... transportProfiles)
+                                int pintWildcardMigrationPhase, TransportProfile... transportProfiles)
             throws LookupException, PeppolSecurityException, EndpointNotFoundException {
-        ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentTypeIdentifier);
+        ServiceMetadata serviceMetadata = getServiceMetadata(participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase);
         return getEndpoint(serviceMetadata, processIdentifier, transportProfiles);
     }
 
-    public Endpoint getEndpoint(Header header, TransportProfile... transportProfiles)
+    public Endpoint getEndpoint(Header header, int pintWildcardMigrationPhase, TransportProfile... transportProfiles)
             throws LookupException, PeppolSecurityException, EndpointNotFoundException {
         return getEndpoint(header.getReceiver(), header.getDocumentType(),
-                header.getProcess(), transportProfiles);
+                header.getProcess(), pintWildcardMigrationPhase, transportProfiles);
     }
 }
