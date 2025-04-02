@@ -30,104 +30,97 @@ import java.util.List;
 
 public class DefaultProvider implements MetadataProvider {
 
-    public static final int SEPARATOR_LENGTH = 2;
-    public static final String WILDCARD_INDICATOR_CHARACTER = "*";
-    public static final String NARROWER_SCHEMEPART_INDICATOR_CHARACTER = "@";
-    public static final String PINT_TEXT = "urn:peppol:pint:";
+    private static final int SEPARATOR_LENGTH = 2;
+    private static final String WILDCARD_INDICATOR_CHARACTER = "*";
+    private static final String NARROWER_SCHEMEPART_INDICATOR_CHARACTER = "@";
+    private static final String PINT_TEXT = "urn:peppol:pint:";
 
-    List<URI> resolvedServiceMetaDataURIList;
+    private List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
 
     @Override
     public List<URI> resolveDocumentIdentifiers(URI location, ParticipantIdentifier participant) {
-        List<URI> resolvedDocumentIdentifiersURIList = new ArrayList<URI>();
-        resolvedDocumentIdentifiersURIList.add(location.resolve(String.format("/%s", participant.urlencoded())));
-        return resolvedDocumentIdentifiersURIList;
+        return List.of(location.resolve("/" + participant.urlencoded()));
     }
 
     @Override
     public List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
                                             DocumentTypeIdentifier documentTypeIdentifier, int pintWildcardMigrationPhase) {
 
-        resolvedServiceMetaDataURIList = new ArrayList<URI>();
-        String documentTypeSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
+        resolvedServiceMetaDataURIList.clear();
+        String docSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
 
-        if (documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS) && !isItPINTMessage(documentTypeIdentifier)) {
-            resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
-        } else if (isItPINTMessage(documentTypeIdentifier)) {
-            resolvePintExactMatchPriorityBasedOnPhase(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase);
-            if (documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD)) {
-                String instanceIdentifier = documentTypeIdentifier.getIdentifier();
+        boolean isPintMessage = isItPINTMessage(documentTypeIdentifier);
 
-                int customizationValueStartIndex = instanceIdentifier.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
-                int customizationValueEndIndex = instanceIdentifier.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
+        if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docSchemeIdentifier) && !isPintMessage) {
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+        } else if (isPintMessage) {
+            resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase);
 
-                String syntaxSpecificId = instanceIdentifier.substring(0, customizationValueStartIndex - SEPARATOR_LENGTH);
-                String customizationIdentifier = instanceIdentifier.substring(customizationValueStartIndex, customizationValueEndIndex);
-
-                String version = instanceIdentifier.substring(customizationValueEndIndex + SEPARATOR_LENGTH);
-                String customizationIdentifierWithWildCardCharacter = customizationIdentifier + WILDCARD_INDICATOR_CHARACTER;
-                String resolvedPeppolWildCardDocTypeDocumentIdentifierUrlEncoded = ModelUtils.urlencode("%s::%s##%s::%s",
-                        documentTypeSchemeIdentifier, syntaxSpecificId, customizationIdentifierWithWildCardCharacter, version);
-
-                resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), resolvedPeppolWildCardDocTypeDocumentIdentifierUrlEncoded)));
-
-                while (customizationIdentifier.contains(NARROWER_SCHEMEPART_INDICATOR_CHARACTER)) {
-                    String trimmedCustomizationIdentifier = customizationIdentifier.substring(0,
-                            customizationIdentifier.lastIndexOf((NARROWER_SCHEMEPART_INDICATOR_CHARACTER)));
-
-                    String trimmedCustomizationIdentifierWithWildCardCharacter = trimmedCustomizationIdentifier + WILDCARD_INDICATOR_CHARACTER;
-                    String trimmedResolvedDocumentIdentifierUrlEncoded = ModelUtils.urlencode("%s::%s##%s::%s",
-                            documentTypeSchemeIdentifier, syntaxSpecificId, trimmedCustomizationIdentifierWithWildCardCharacter, version);
-
-                    resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), trimmedResolvedDocumentIdentifierUrlEncoded)));
-                    customizationIdentifier = trimmedCustomizationIdentifier;
-                }
+            if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docSchemeIdentifier)) {
+                processPintWildcards(location, participantIdentifier, documentTypeIdentifier);
             }
         }
         return resolvedServiceMetaDataURIList;
     }
 
     private boolean isItPINTMessage(DocumentTypeIdentifier documentTypeIdentifier) {
-        String customizationIdentifier = getCustomizationIdentifier(documentTypeIdentifier);
-        return isPintTextExistInCustomization(customizationIdentifier) == 1;
+        return getCustomizationIdentifier(documentTypeIdentifier).toLowerCase().contains(PINT_TEXT);
     }
 
     private String getCustomizationIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
-        String instanceIdentifier = documentTypeIdentifier.getIdentifier();
-        int customizationValueStartIndex = instanceIdentifier.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
-        int customizationValueEndIndex = instanceIdentifier.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
-        return instanceIdentifier.substring(customizationValueStartIndex, customizationValueEndIndex);
+        String instanceId = documentTypeIdentifier.getIdentifier();
+        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
+        int endIdx = instanceId.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
+        return instanceId.substring(startIdx, endIdx);
     }
 
-    private int isPintTextExistInCustomization(String customizationIdentifier) {
-        String customizationIdentifierLowerCase = customizationIdentifier.toLowerCase();
-        if (customizationIdentifierLowerCase.contains(PINT_TEXT)) {
-            return 1;
+    private void resolvePintExactMatchPriority(URI location, ParticipantIdentifier participantIdentifier,
+                                               DocumentTypeIdentifier documentTypeIdentifier, int phase) {
+        String docScheme = documentTypeIdentifier.getScheme().getIdentifier();
+
+        if (phase == 0 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme)) {
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+        } else if (phase == 1 && (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme) ||
+                DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme))) {
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+        } else if (phase >= 2 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme)) {
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
         }
-        return -1;
     }
 
-    private List<URI> resolvePintExactMatchPriorityBasedOnPhase(URI location, ParticipantIdentifier participantIdentifier,
-                                                                DocumentTypeIdentifier documentTypeIdentifier,
-                                                                int pintWildcardMigrationPhase) {
-        String documentTypeSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
+    private void processPintWildcards(URI location, ParticipantIdentifier participantIdentifier,
+                                      DocumentTypeIdentifier documentTypeIdentifier) {
+        String instanceId = documentTypeIdentifier.getIdentifier();
+        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
+        int endIdx = instanceId.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
 
-        if (pintWildcardMigrationPhase == 0) {
-            if (documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS)) {
-                resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
-            }
-        }
+        String syntaxId = instanceId.substring(0, startIdx - SEPARATOR_LENGTH);
+        String customizationId = instanceId.substring(startIdx, endIdx);
+        String version = instanceId.substring(endIdx + SEPARATOR_LENGTH);
 
-        if (pintWildcardMigrationPhase == 1) {
-            if (documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD) ||
-                    documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS)) {
-                resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
-            }
-        } else if (pintWildcardMigrationPhase >= 2) {
-            if (documentTypeSchemeIdentifier.equals(DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD)) {
-                resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s", participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
-            }
+        addWildcardUris(location, participantIdentifier, documentTypeIdentifier.getScheme().getIdentifier(),
+                syntaxId, customizationId, version);
+    }
+
+    private void addWildcardUris(URI location, ParticipantIdentifier participantIdentifier, String docScheme,
+                                 String syntaxId, String customizationId, String version) {
+
+        while (!customizationId.isEmpty()) {
+            String urlEncoded = ModelUtils.urlencode("%s::%s##%s::%s", docScheme, syntaxId,
+                    customizationId + WILDCARD_INDICATOR_CHARACTER, version);
+
+            resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
+                    participantIdentifier.urlencoded(), urlEncoded)));
+
+            int lastIdx = customizationId.lastIndexOf(NARROWER_SCHEMEPART_INDICATOR_CHARACTER);
+            if (lastIdx == -1) break;
+            customizationId = customizationId.substring(0, lastIdx);
         }
-        return resolvedServiceMetaDataURIList;
+    }
+
+    private void addResolvedUri(URI location, ParticipantIdentifier participantIdentifier,
+                                DocumentTypeIdentifier documentTypeIdentifier) {
+        resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
+                participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
     }
 }
