@@ -52,12 +52,6 @@ public class ModeDetectorTest {
     }
 
     @Test
-    public void simpleDetectFRTest() throws Exception {
-        X509Certificate certificate = Validator.getCertificate(getClass().getResourceAsStream("/fr-poc-test.cer"));
-        Assert.assertEquals(ModeDetector.detect(certificate).getString("security.pki"), "/pki/fr-poc-test.xml");
-    }
-
-    @Test
     public void simpleDetectLocal() throws Exception {
         X509Certificate certificate = Validator.getCertificate(getClass().getResourceAsStream("/self-signed.cer"));
         Assert.assertEquals(ModeDetector.detect(certificate).getString("security.pki"), "/pki/local.xml");

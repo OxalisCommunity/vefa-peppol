@@ -109,6 +109,10 @@ public class BusdoxReader implements MetadataReader {
     @Override
     public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
+
+        if (null == fetcherResponse)
+            throw new LookupException("ServiceMetadata element not found or SMP registration is not valid.");
+
         try {
             Document doc = DomUtils.parse(fetcherResponse.getInputStream());
 

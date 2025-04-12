@@ -107,7 +107,7 @@
         <dnsjava.version>3.6.2</dnsjava.version>
         <guava.version>33.4.0-jre</guava.version>
         <typesafe-config.version>1.4.3</typesafe-config.version>
-        <javax-mail.version>1.4.7</javax-mail.version>
+        <jakarta.mail.version>2.0.1</jakarta.mail.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <commons-codec.version>1.18.0</commons-codec.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
@@ -222,11 +222,11 @@
                 <version>${typesafe-config.version}</version>
             </dependency>
 
-            <!-- Java -->
+            <!-- jakarta -->
             <dependency>
-                <groupId>javax.mail</groupId>
-                <artifactId>mail</artifactId>
-                <version>${javax-mail.version}</version>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>jakarta.mail</artifactId>
+                <version>${jakarta.mail.version}</version>
             </dependency>
             <dependency>
                 <groupId>jakarta.servlet</groupId>

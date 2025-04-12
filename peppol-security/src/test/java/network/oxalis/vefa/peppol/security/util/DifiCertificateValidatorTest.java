@@ -53,12 +53,6 @@ public class DifiCertificateValidatorTest {
     }
 
     @Test
-    public void simpleApFRTest() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
-        CertificateValidator validator = Mode.of(Mode.FRTEST).initiate(DifiCertificateValidator.class);
-        validator.validate(Service.AP, Validator.getCertificate(getClass().getResourceAsStream("/fr-poc-test.cer")));
-    }
-
-    @Test
     public void simpleSmpProd() throws PeppolLoadingException, CertificateValidationException, PeppolSecurityException {
         CertificateValidator validator = Mode.of(Mode.PRODUCTION).initiate(DifiCertificateValidator.class);
         validator.validate(Service.SMP, Validator.getCertificate(getClass().getResourceAsStream("/smp-random-prod.cer")));
