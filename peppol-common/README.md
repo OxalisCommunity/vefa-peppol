@@ -11,6 +11,6 @@ Include dependency in your pom.xml:
 <dependency>
   <groupId>network.oxalis.vefa</groupId>
   <artifactId>peppol-common</artifactId>
-  <version>3.8.0</version>
+  <version>4.0.0</version>
 </dependency>
 ```
