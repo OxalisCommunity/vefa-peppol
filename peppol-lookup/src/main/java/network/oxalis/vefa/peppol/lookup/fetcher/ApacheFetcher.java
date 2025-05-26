@@ -23,11 +23,11 @@ import com.google.common.io.ByteStreams;
 import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
 import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.mode.Mode;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
@@ -86,17 +86,15 @@ public class ApacheFetcher extends BasicApacheFetcher {
     }
 
     private FetcherResponse fetchResponseFromValidUri(URI uri) throws LookupException, FileNotFoundException {
-
         try (CloseableHttpClient httpClient = createClient()) {
-
             HttpGet httpGet = new HttpGet(uri);
 
             try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
-                switch (response.getStatusLine().getStatusCode()) {
+                int statusCode = response.getCode();
+                switch (statusCode) {
                     case 200:
                         return new FetcherResponse(
                                 new ByteArrayInputStream(ByteStreams.toByteArray(response.getEntity().getContent())),
-                                // new BufferedInputStream(response.getEntity().getContent()),
                                 response.containsHeader("X-SMP-Namespace") ?
                                         response.getFirstHeader("X-SMP-Namespace").getValue() : null
                         );
@@ -104,10 +102,9 @@ public class ApacheFetcher extends BasicApacheFetcher {
                         throw new FileNotFoundException(uri.toString());
                     default:
                         throw new LookupException(String.format(
-                                "Received code %s for lookup. URI: %s", response.getStatusLine().getStatusCode(), uri));
+                                "Received code %s for lookup. URI: %s", statusCode, uri));
                 }
             }
-
         } catch (SocketTimeoutException | SocketException | UnknownHostException e) {
             throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
         } catch (LookupException | FileNotFoundException e) {

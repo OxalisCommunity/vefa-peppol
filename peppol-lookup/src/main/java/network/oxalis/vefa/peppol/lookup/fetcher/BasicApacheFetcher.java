@@ -22,7 +22,9 @@ package network.oxalis.vefa.peppol.lookup.fetcher;
 import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
 import network.oxalis.vefa.peppol.lookup.api.LookupException;
 import network.oxalis.vefa.peppol.mode.Mode;
-import org.apache.http.client.config.RequestConfig;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.core5.util.Timeout;
+
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.List;
@@ -35,9 +37,9 @@ public abstract class BasicApacheFetcher extends AbstractFetcher {
         super(mode);
 
         this.requestConfig = RequestConfig.custom()
-                .setConnectionRequestTimeout(timeout)
-                .setConnectTimeout(timeout)
-                .setSocketTimeout(timeout)
+                .setConnectionRequestTimeout(Timeout.ofMilliseconds(timeout))
+                .setConnectTimeout(Timeout.ofMilliseconds(timeout))
+                .setResponseTimeout(Timeout.ofMilliseconds(timeout))
                 .build();
     }
 

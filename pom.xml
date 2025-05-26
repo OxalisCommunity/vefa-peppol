@@ -95,23 +95,23 @@
         <java.version>11</java.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <testng.version>7.7.1</testng.version>
-        <mockito-core.version>4.11.0</mockito-core.version>
+        <testng.version>7.11.0</testng.version>
+        <mockito-core.version>5.17.0</mockito-core.version>
         <slf4j.version>2.0.17</slf4j.version>
-        <lombok.version>1.18.32</lombok.version>
-        <metainf-services.version>1.9</metainf-services.version>
+        <lombok-version>1.18.38</lombok-version>
+        <metainf-services.version>1.11</metainf-services.version>
         <vefa-peppol.version>4.0.1-SNAPSHOT</vefa-peppol.version>
-        <commons-certvalidator.version>4.5.0</commons-certvalidator.version>
-        <peppol-lib.version>2.4.0</peppol-lib.version>
-        <httpclient.version>4.5.14</httpclient.version>
-        <dnsjava.version>3.6.2</dnsjava.version>
-        <guava.version>33.4.0-jre</guava.version>
+        <commons-certvalidator.version>4.6.0</commons-certvalidator.version>
+        <peppol-lib.version>2.5.0</peppol-lib.version>
+        <httpclient.version>5.4.4</httpclient.version>
+        <dnsjava.version>3.6.3</dnsjava.version>
+        <guava.version>33.4.8-jre</guava.version>
         <typesafe-config.version>1.4.3</typesafe-config.version>
         <jakarta.mail.version>2.0.1</jakarta.mail.version>
         <jakarta.servlet-api.version>6.0.0</jakarta.servlet-api.version>
         <commons-codec.version>1.18.0</commons-codec.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
-        <wiremock.version>2.27.2</wiremock.version>
+        <wiremock.version>3.0.1</wiremock.version>
     </properties>
 
     <dependencies>
@@ -137,7 +137,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
+            <version>${lombok-version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -196,8 +196,8 @@
 
             <!-- Apache Http Components -->
             <dependency>
-                <groupId>org.apache.httpcomponents</groupId>
-                <artifactId>httpclient</artifactId>
+                <groupId>org.apache.httpcomponents.client5</groupId>
+                <artifactId>httpclient5</artifactId>
                 <version>${httpclient.version}</version>
             </dependency>
 

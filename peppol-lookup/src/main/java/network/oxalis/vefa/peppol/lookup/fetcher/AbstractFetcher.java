@@ -24,9 +24,9 @@ import network.oxalis.vefa.peppol.mode.Mode;
 
 public abstract class AbstractFetcher implements MetadataFetcher {
 
-    protected int timeout = 10000;
+    protected final long timeout;
 
     public AbstractFetcher(Mode mode) {
-        timeout = Integer.parseInt(mode.getString("lookup.fetcher.timeout"));
+        timeout = Long.parseLong(mode.getString("lookup.fetcher.timeout"));
     }
 }
