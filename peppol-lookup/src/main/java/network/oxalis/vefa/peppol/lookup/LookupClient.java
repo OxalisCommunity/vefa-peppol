@@ -19,20 +19,37 @@
 
 package network.oxalis.vefa.peppol.lookup;
 
-import network.oxalis.vefa.peppol.common.api.PotentiallySigned;
-import network.oxalis.vefa.peppol.common.code.Service;
-import network.oxalis.vefa.peppol.common.lang.EndpointNotFoundException;
-import network.oxalis.vefa.peppol.common.model.*;
-import network.oxalis.vefa.peppol.lookup.api.*;
-import network.oxalis.vefa.peppol.security.api.CertificateValidator;
-import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
-
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
+
+import network.oxalis.vefa.peppol.common.api.PotentiallySigned;
+import network.oxalis.vefa.peppol.common.code.Service;
+import network.oxalis.vefa.peppol.common.lang.EndpointNotFoundException;
+import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
+import network.oxalis.vefa.peppol.common.model.Endpoint;
+import network.oxalis.vefa.peppol.common.model.Header;
+import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
+import network.oxalis.vefa.peppol.common.model.ProcessIdentifier;
+import network.oxalis.vefa.peppol.common.model.Redirect;
+import network.oxalis.vefa.peppol.common.model.ServiceInformation;
+import network.oxalis.vefa.peppol.common.model.ServiceMetadata;
+import network.oxalis.vefa.peppol.common.model.ServiceReference;
+import network.oxalis.vefa.peppol.common.model.Signed;
+import network.oxalis.vefa.peppol.common.model.TransportProfile;
+import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
+import network.oxalis.vefa.peppol.lookup.api.LookupException;
+import network.oxalis.vefa.peppol.lookup.api.MetadataFetcher;
+import network.oxalis.vefa.peppol.lookup.api.MetadataLocator;
+import network.oxalis.vefa.peppol.lookup.api.MetadataProvider;
+import network.oxalis.vefa.peppol.lookup.api.MetadataReader;
+import network.oxalis.vefa.peppol.mode.Mode;
+import network.oxalis.vefa.peppol.security.api.CertificateValidator;
+import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 
 public class LookupClient {
 
@@ -42,6 +59,19 @@ public class LookupClient {
     private final MetadataReader reader;
     private final CertificateValidator validator;
 
+    public LookupClient(Mode mode, Map<String, Object> objectStorage) {
+    	LookupClientBuilder builder = (LookupClientBuilder) objectStorage.get(LookupClientBuilder.class.getName());
+    	if (builder != null) {
+            this.locator = builder.metadataLocator;
+            this.provider = builder.metadataProvider;
+            this.fetcher = builder.metadataFetcher;
+            this.reader = builder.metadataReader;
+            this.validator = builder.certificateValidator;
+    	} else {
+    		throw new IllegalArgumentException("Object storage is expected to contain a key "+LookupClientBuilder.class.getName()+" with a reference to a builder");
+    	}
+    }
+    
     protected LookupClient(LookupClientBuilder builder) {
         this.locator = builder.metadataLocator;
         this.provider = builder.metadataProvider;
