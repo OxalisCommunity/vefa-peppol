@@ -35,8 +35,6 @@ public class DefaultProvider implements MetadataProvider {
     private static final String NARROWER_SCHEMEPART_INDICATOR_CHARACTER = "@";
     private static final String PINT_TEXT = "urn:peppol:pint:";
 
-    private List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
-
     @Override
     public List<URI> resolveDocumentIdentifiers(URI location, ParticipantIdentifier participant) {
         return List.of(location.resolve("/" + participant.urlencoded()));
@@ -46,18 +44,18 @@ public class DefaultProvider implements MetadataProvider {
     public List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
                                             DocumentTypeIdentifier documentTypeIdentifier, int pintWildcardMigrationPhase) {
 
-        resolvedServiceMetaDataURIList.clear();
+    	List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
         String docSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
 
         boolean isPintMessage = isItPINTMessage(documentTypeIdentifier);
 
         if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docSchemeIdentifier) && !isPintMessage) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         } else if (isPintMessage) {
-            resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase);
+            resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase, resolvedServiceMetaDataURIList);
 
             if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docSchemeIdentifier)) {
-                processPintWildcards(location, participantIdentifier, documentTypeIdentifier);
+                processPintWildcards(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
             }
         }
         return resolvedServiceMetaDataURIList;
@@ -75,21 +73,21 @@ public class DefaultProvider implements MetadataProvider {
     }
 
     private void resolvePintExactMatchPriority(URI location, ParticipantIdentifier participantIdentifier,
-                                               DocumentTypeIdentifier documentTypeIdentifier, int phase) {
+                                               DocumentTypeIdentifier documentTypeIdentifier, int phase, List<URI> resolvedServiceMetaDataURIList) {
         String docScheme = documentTypeIdentifier.getScheme().getIdentifier();
 
         if (phase == 0 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme)) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         } else if (phase == 1 && (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme) ||
                 DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme))) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         } else if (phase >= 2 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme)) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier);
+            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         }
     }
 
     private void processPintWildcards(URI location, ParticipantIdentifier participantIdentifier,
-                                      DocumentTypeIdentifier documentTypeIdentifier) {
+                                      DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
         String instanceId = documentTypeIdentifier.getIdentifier();
         int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
         int endIdx = instanceId.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
@@ -99,11 +97,11 @@ public class DefaultProvider implements MetadataProvider {
         String version = instanceId.substring(endIdx + SEPARATOR_LENGTH);
 
         addWildcardUris(location, participantIdentifier, documentTypeIdentifier.getScheme().getIdentifier(),
-                syntaxId, customizationId, version);
+                syntaxId, customizationId, version, resolvedServiceMetaDataURIList);
     }
 
     private void addWildcardUris(URI location, ParticipantIdentifier participantIdentifier, String docScheme,
-                                 String syntaxId, String customizationId, String version) {
+                                 String syntaxId, String customizationId, String version, List<URI> resolvedServiceMetaDataURIList) {
 
         while (!customizationId.isEmpty()) {
             String urlEncoded = ModelUtils.urlencode("%s::%s##%s::%s", docScheme, syntaxId,
@@ -119,7 +117,7 @@ public class DefaultProvider implements MetadataProvider {
     }
 
     private void addResolvedUri(URI location, ParticipantIdentifier participantIdentifier,
-                                DocumentTypeIdentifier documentTypeIdentifier) {
+                                DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
         resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
                 participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
     }
