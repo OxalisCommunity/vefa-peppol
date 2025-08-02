@@ -139,7 +139,7 @@ For AS2 it is recommended that the entire S/MIME message, including the headers,
         </ns3:SignatureValue>
         <ns3:KeyInfo>
             <ns3:X509Data>
-                <ns3:X509SubjectName>CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown
+                <ns3:X509SubjectName>CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=ZZ
                 </ns3:X509SubjectName>
                 <ns3:X509Certificate>
                     MIIDnTCCAoWgAwIBAgIEZ/LuJzANBgkqhkiG9w0BAQsFADB/MRAwDgYDV ...... truncated for readability

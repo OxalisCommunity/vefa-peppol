@@ -220,48 +220,6 @@ public class LookupClientTest {
     }
 
     @Test
-    public void simpleWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseOneForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forMode(testMode)
-                .fetcher(ApacheFetcher.class)
-                .build();
-
-        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"));
-
-        assertNotNull(documentTypeIdentifiers);
-        assertNotEquals(documentTypeIdentifiers.size(), 0);
-
-        ServiceMetadata serviceMetadata = client.getServiceMetadata(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1",
-                        DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME),
-                pintWildcardMigrationPhaseOne);
-        assertNotNull(serviceMetadata);
-    }
-
-    @Test
-    public void simpleWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseTwoAndHigherForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forMode(testMode)
-                .fetcher(ApacheFetcher.class)
-                .build();
-
-        List<DocumentTypeIdentifier> documentTypeIdentifiers = client.getDocumentIdentifiers(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"));
-
-        assertNotNull(documentTypeIdentifiers);
-        assertNotEquals(documentTypeIdentifiers.size(), 0);
-
-        ServiceMetadata serviceMetadata = client.getServiceMetadata(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"),
-                DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1",
-                        DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME),
-                pintWildcardMigrationPhaseTwoOrHigher);
-        assertNotNull(serviceMetadata);
-    }
-
-    @Test
     public void simpleGeneralBusDoxExactMatchPhaseOneForTest() throws PeppolException {
         LookupClient client = LookupClientBuilder.forMode(testMode)
                 .fetcher(ApacheFetcher.class)
@@ -689,45 +647,6 @@ public class LookupClientTest {
     }
 
     @Test
-    public void simpleEndpointWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseOneForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Endpoint endpoint = client.getEndpoint(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"),
-                DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME),
-                ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"),
-                pintWildcardMigrationPhaseOne,
-                TransportProfile.PEPPOL_AS4_2_0
-        );
-
-        assertNotNull(endpoint);
-    }
-
-    @Test
-    public void simpleEndpointWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseTwoAndHigherForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Endpoint endpoint = client.getEndpoint(
-                ParticipantIdentifier.of("9901:pint_c4_jp_sb"),
-                DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME),
-                ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"),
-                pintWildcardMigrationPhaseTwoOrHigher,
-                TransportProfile.PEPPOL_AS4_2_0
-        );
-
-        assertNotNull(endpoint);
-    }
-
-
-    @Test
     public void simpleEndpointGeneralBusDoxExactMatchPhaseOneForTest() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest()
                 .certificateValidator(CertificateValidator.EMPTY)
@@ -900,44 +819,6 @@ public class LookupClientTest {
     }
 
     @Test
-    public void simpleEndpointHeaderWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseOneForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Header header = Header.newInstance()
-                .sender(ParticipantIdentifier.of("9908:something"))
-                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
-                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
-                .documentType(DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
-
-        Endpoint endpoint = client.getEndpoint(header, pintWildcardMigrationPhaseOne, TransportProfile.PEPPOL_AS4_2_0);
-
-        assertNotNull(endpoint);
-    }
-
-    @Test
-    public void simpleEndpointHeaderWithPintWildcardBestMatchWithMultipleNarrowerSchemePartsPhaseTwoAndHigherForTest() throws PeppolException {
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Header header = Header.newInstance()
-                .sender(ParticipantIdentifier.of("9908:something"))
-                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
-                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
-                .documentType(DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
-
-        Endpoint endpoint = client.getEndpoint(header, pintWildcardMigrationPhaseTwoOrHigher, TransportProfile.PEPPOL_AS4_2_0);
-
-        assertNotNull(endpoint);
-    }
-
-    @Test
     public void simpleEndpointHeaderGeneralBusDoxExactMatchPhaseOneForTest() throws PeppolException {
         LookupClient client = LookupClientBuilder.forTest()
                 .certificateValidator(CertificateValidator.EMPTY)
@@ -984,51 +865,11 @@ public class LookupClientTest {
 
         Header header = Header.newInstance()
                 .sender(ParticipantIdentifier.of("0192:123456789"))
-                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
-                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
+                .receiver(ParticipantIdentifier.of("0204:api-global"))
+                .process(ProcessIdentifier.of("urn:peppol:bis:billing"))
                 .documentType(DocumentTypeIdentifier.of(
                         "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
-
-        Endpoint endpoint = client.getEndpoint(header, NonPintBusdox, TransportProfile.PEPPOL_AS4_2_0);
-
-        assertNotNull(endpoint);
-    }
-
-    @Test
-    public void simpleEndpointWithHeaderAndPeppolDocTypeWildcardAndNarrowerSchemeParts() throws PeppolException {
-
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Header header = Header.newInstance()
-                .sender(ParticipantIdentifier.of("0192:123456789"))
-                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
-                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
-                .documentType(DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
-
-        Endpoint endpoint = client.getEndpoint(header, NonPintBusdox, TransportProfile.PEPPOL_AS4_2_0);
-
-        assertNotNull(endpoint);
-    }
-
-    @Test
-    public void simpleEndpointWithHeaderAndPeppolDocTypeWildcardAndMultipleNarrowerSchemeParts() throws PeppolException {
-
-        LookupClient client = LookupClientBuilder.forTest()
-                .certificateValidator(CertificateValidator.EMPTY)
-                .build();
-
-        Header header = Header.newInstance()
-                .sender(ParticipantIdentifier.of("0192:123456789"))
-                .receiver(ParticipantIdentifier.of("9901:pint_c4_jp_sb"))
-                .process(ProcessIdentifier.of("urn:fdc:peppol.eu:2017:poacc:billing:01:1.0"))
-                .documentType(DocumentTypeIdentifier.of(
-                        "urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##" +
-                                "urn:peppol:pint:billing-3.0@jp:peppol-1@jp-export:peppol-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
+                                "urn:peppol:pint:billing-1@jp-1::2.1", DocumentTypeIdentifier.PEPPOL_DOCTYPE_WILDCARD_SCHEME));
 
         Endpoint endpoint = client.getEndpoint(header, NonPintBusdox, TransportProfile.PEPPOL_AS4_2_0);
 

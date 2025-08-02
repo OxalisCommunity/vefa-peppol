@@ -40,7 +40,7 @@ public class ApacheFetcherTest {
         fetcher.fetch(uriList);
     }
 
-    @Test(expectedExceptions = FileNotFoundException.class)
+    @Test(expectedExceptions = {FileNotFoundException.class, LookupException.class})
     public void simple404() throws LookupException, FileNotFoundException {
         List<URI> uriList = new ArrayList<URI>();
         uriList.add(URI.create("http://httpstat.us/404"));

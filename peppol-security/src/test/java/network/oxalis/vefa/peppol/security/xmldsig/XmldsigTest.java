@@ -69,7 +69,7 @@ public class XmldsigTest {
                 DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
 
         Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(),
-                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
+                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=ZZ");
     }
 
     @Test
@@ -87,7 +87,7 @@ public class XmldsigTest {
                 DomUtils.parse(new ByteArrayInputStream(generatedStream.toByteArray())));
 
         Assert.assertEquals(x509Certificate.getSubjectX500Principal().getName(),
-                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=Unknown");
+                "CN=VEFA Validator self-signed,OU=Unknown,O=Unknown,L=Unknown,ST=Unknown,C=ZZ");
     }
 
     @Test
