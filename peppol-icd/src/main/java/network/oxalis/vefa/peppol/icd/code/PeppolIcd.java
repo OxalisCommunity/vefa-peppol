@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v9.1 dated 2025-03-03: https://docs.peppol.eu/edelivery/codelists/v9.1/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.1.html
+    // The latest code list release v9.3 dated 2025-07-14: https://docs.peppol.eu/edelivery/codelists/v9.3/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.3.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -70,6 +70,8 @@ public enum PeppolIcd implements Icd {
     MY_EIF("MY:EIF", "0230", "Malaysia Digital Economy Corporation Sdn Bhd (MDEC)"),
     AE_TIN("AE:TIN", "0235", "UAE Federal Tax Authority"),
     LU_MAT("LU:MAT", "0240", "Centre des technologies de l'information de l'Etat (CTIE)"),
+    SPIS("SPIS", "0242", "OpenPeppol AISBL"),
+
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
     NO_VAT("NO:VAT", "9909", "Enhetsregisteret ved Bronnoysundregisterne"),
