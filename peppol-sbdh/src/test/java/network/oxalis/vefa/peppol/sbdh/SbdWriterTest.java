@@ -37,6 +37,8 @@ public class SbdWriterTest {
             .documentType(DocumentTypeIdentifier.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice" +
                     "##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1"))
             .c1CountryIdentifier(C1CountryIdentifier.of("IN"))
+            .mlsToIdentifier(MlsToIdentifier.of("0242:000723"))
+            .mlsTypeIdentifier(MlsTypeIdentifier.of("ALWAYS_SEND"))
             .instanceType(InstanceType.of("urn:oasis:names:specification:ubl:schema:xsd:Invoice-2", "Invoice", "2.1"))
             .creationTimestamp(new Date())
             .identifier(InstanceIdentifier.generateUUID());

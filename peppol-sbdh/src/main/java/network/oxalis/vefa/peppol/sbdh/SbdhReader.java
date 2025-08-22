@@ -128,6 +128,16 @@ public interface SbdhReader {
                     header = header.c1CountryIdentifier(C1CountryIdentifier.of(scope.getInstanceIdentifier()));
                     break;
                 }
+                case "MLS_TO": {
+                    Scheme scheme = scope.getIdentifier() != null ?
+                            Scheme.of(scope.getIdentifier()) : MlsToIdentifier.DEFAULT_SCHEME;
+                    header = header.mlsToIdentifier(MlsToIdentifier.of(scope.getInstanceIdentifier(), scheme));
+                    break;
+                }
+                case "MLS_TYPE": {
+                    header = header.mlsTypeIdentifier(MlsTypeIdentifier.of(scope.getInstanceIdentifier()));
+                    break;
+                }
                 default: {
                     header = header.argument(ArgumentIdentifier.of(type, scope.getInstanceIdentifier()));
                     break;

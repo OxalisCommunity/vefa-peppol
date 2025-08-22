@@ -93,6 +93,18 @@ public class SbdhWriterTest {
         Assert.assertEquals(actual, expected);
     }
 
+    @Test
+    public void withMlsToAndMlsType() throws Exception {
+        Header expected = header
+                .mlsToIdentifier(MlsToIdentifier.of("0242:000723"))
+                .mlsTypeIdentifier(MlsTypeIdentifier.of("ALWAYS_SEND"));
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        SbdhWriter.write(byteArrayOutputStream, expected);
+
+        Header actual = SbdhReader.read(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
+        Assert.assertEquals(actual, expected);
+    }
 
     @Test(expectedExceptions = SbdhException.class)
     public void triggerExceptionUsingXMLStreamWriter() throws Exception {

@@ -76,6 +76,17 @@ public interface SbdhWriter {
             scopes.add(SbdhHelper.createScope(header.getProcess()));
             // C1CountryIdentifier
             scopes.add(SbdhHelper.createScope(header.getC1CountryIdentifier()));
+
+            // MLS_TO is Not mandatory yet
+            if(null != header.getMlsToIdentifier()){
+                scopes.add(SbdhHelper.createScope(header.getMlsToIdentifier()));
+            }
+
+            // MLS_TYPE is Not mandatory yet
+            if(null != header.getMlsTypeIdentifier()){
+                scopes.add(SbdhHelper.createScope(header.getMlsTypeIdentifier()));
+            }
+
             // Extras
             header.getArguments().forEach(ai -> scopes.add(SbdhHelper.createScope(ai)));
 

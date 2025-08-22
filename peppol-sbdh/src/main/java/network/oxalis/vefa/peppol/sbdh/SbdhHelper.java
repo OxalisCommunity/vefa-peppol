@@ -25,6 +25,7 @@ import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.common.util.ExceptionUtil;
 
 import jakarta.xml.bind.JAXBContext;
+import org.apache.commons.lang3.StringUtils;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.stream.XMLInputFactory;
@@ -32,6 +33,7 @@ import javax.xml.stream.XMLOutputFactory;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 
 interface SbdhHelper {
 
@@ -87,13 +89,27 @@ interface SbdhHelper {
         return scope;
     }
 
+    static Scope createScope(MlsTypeIdentifier mlsTypeIdentifier) {
+        Scope scope = new Scope();
+        scope.setType("MLS_TYPE");
+        scope.setInstanceIdentifier(mlsTypeIdentifier.getIdentifier());
+        return scope;
+    }
+
+    static Scope createScope(MlsToIdentifier mlsToIdentifier) {
+        Scope scope = new Scope();
+        scope.setType("MLS_TO");
+        scope.setInstanceIdentifier(mlsToIdentifier.getIdentifier());
+        scope.setIdentifier(resolveMlsToIdentifierScheme(mlsToIdentifier));
+
+        return scope;
+    }
+
     static Scope createScope(DocumentTypeIdentifier documentTypeIdentifier) {
         Scope scope = new Scope();
         scope.setType("DOCUMENTID");
         scope.setInstanceIdentifier(documentTypeIdentifier.getIdentifier());
-        if (!documentTypeIdentifier.getScheme().equals(DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME))
-            scope.setIdentifier(documentTypeIdentifier.getScheme().getIdentifier());
-
+        scope.setIdentifier(resolveDocumentTypeIdentifierScheme(documentTypeIdentifier));
         return scope;
     }
 
@@ -103,6 +119,22 @@ interface SbdhHelper {
         scope.setInstanceIdentifier(argumentIdentifier.getIdentifier());
 
         return scope;
+    }
+
+    static String resolveDocumentTypeIdentifierScheme(DocumentTypeIdentifier documentTypeIdentifier) {
+        return Optional.ofNullable(documentTypeIdentifier)
+                .map(DocumentTypeIdentifier::getScheme)
+                .map(Scheme::getIdentifier)
+                .filter(id -> !id.isEmpty())
+                .orElse(DocumentTypeIdentifier.BUSDOX_DOCID_QNS_SCHEME.getIdentifier());
+    }
+
+    static String resolveMlsToIdentifierScheme(MlsToIdentifier mlsToIdentifier) {
+        return Optional.ofNullable(mlsToIdentifier)
+                .map(MlsToIdentifier::getScheme)
+                .map(Scheme::getIdentifier)
+                .filter(id -> !id.isEmpty())
+                .orElse(MlsToIdentifier.DEFAULT_SCHEME.getIdentifier());
     }
 
     static XMLGregorianCalendar toXmlGregorianCalendar(Date date) {

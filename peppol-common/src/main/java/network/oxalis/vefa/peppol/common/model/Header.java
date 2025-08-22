@@ -42,6 +42,10 @@ public class Header implements Serializable {
 
     private C1CountryIdentifier c1CountryIdentifier;
 
+    private MlsToIdentifier mlsToIdentifier;
+
+    private MlsTypeIdentifier mlsTypeIdentifier;
+
     private InstanceIdentifier identifier;
 
     private InstanceType instanceType;
@@ -56,19 +60,21 @@ public class Header implements Serializable {
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> cc,
                             ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                            MlsToIdentifier mlsToIdentifier, MlsTypeIdentifier mlsTypeIdentifier,
                             InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp) {
-        return new Header(sender, receiver, cc, process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, null);
+        return new Header(sender, receiver, cc, process, documentType, c1CountryIdentifier, mlsToIdentifier, mlsTypeIdentifier, identifier, instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver,
                             ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                            MlsToIdentifier mlsToIdentifier, MlsTypeIdentifier mlsTypeIdentifier,
                             InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp) {
-        return new Header(sender, receiver, new ArrayList<>(), process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, null);
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, c1CountryIdentifier, mlsToIdentifier, mlsTypeIdentifier, identifier, instanceType, creationTimestamp, null);
     }
 
     public static Header of(ParticipantIdentifier sender, ParticipantIdentifier receiver, ProcessIdentifier process,
                             DocumentTypeIdentifier documentType ) {
-        return new Header(sender, receiver, new ArrayList<>(), process, documentType, null, null, null, null, null);
+        return new Header(sender, receiver, new ArrayList<>(), process, documentType, null, null, null, null, null, null, null);
     }
 
     public Header() {
@@ -77,6 +83,7 @@ public class Header implements Serializable {
 
     private Header(ParticipantIdentifier sender, ParticipantIdentifier receiver, List<ParticipantIdentifier> copyReceiver,
                    ProcessIdentifier process, DocumentTypeIdentifier documentType, C1CountryIdentifier c1CountryIdentifier,
+                   MlsToIdentifier mlsToIdentifier, MlsTypeIdentifier mlsTypeIdentifier,
                    InstanceIdentifier identifier, InstanceType instanceType, Date creationTimestamp, Map<String, ArgumentIdentifier> arguments) {
         this.sender = sender;
         this.receiver = receiver;
@@ -84,6 +91,8 @@ public class Header implements Serializable {
         this.process = process;
         this.documentType = documentType;
         this.c1CountryIdentifier = c1CountryIdentifier;
+        this.mlsToIdentifier = mlsToIdentifier;
+        this.mlsTypeIdentifier = mlsTypeIdentifier;
         this.identifier = identifier;
         this.instanceType = instanceType;
         this.creationTimestamp = creationTimestamp;
@@ -112,6 +121,13 @@ public class Header implements Serializable {
 
     public Header c1CountryIdentifier(C1CountryIdentifier c1CountryIdentifier) {
         return copy(h -> h.c1CountryIdentifier = c1CountryIdentifier);
+    }
+
+    public Header mlsToIdentifier(MlsToIdentifier mlsToIdentifier) {
+        return copy(h -> h.mlsToIdentifier = mlsToIdentifier);
+    }
+    public Header mlsTypeIdentifier(MlsTypeIdentifier mlsTypeIdentifier) {
+        return copy(h -> h.mlsTypeIdentifier = mlsTypeIdentifier);
     }
 
     public Header identifier(InstanceIdentifier identifier) {
@@ -152,6 +168,8 @@ public class Header implements Serializable {
                 Objects.equals(process, header.process) &&
                 Objects.equals(documentType, header.documentType) &&
                 Objects.equals(c1CountryIdentifier, header.c1CountryIdentifier) &&
+                Objects.equals(mlsToIdentifier, header.mlsToIdentifier) &&
+                Objects.equals(mlsTypeIdentifier, header.mlsTypeIdentifier) &&
                 Objects.equals(identifier, header.identifier) &&
                 Objects.equals(instanceType, header.instanceType) &&
                 Objects.equals(creationTimestamp, header.creationTimestamp) &&
@@ -160,7 +178,7 @@ public class Header implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sender, receiver, process, documentType, c1CountryIdentifier, identifier, instanceType, creationTimestamp, arguments);
+        return Objects.hash(sender, receiver, process, documentType, c1CountryIdentifier, mlsToIdentifier, mlsTypeIdentifier, identifier, instanceType, creationTimestamp, arguments);
     }
 
     @Override
@@ -172,6 +190,8 @@ public class Header implements Serializable {
                 ", process=" + process +
                 ", documentType=" + documentType +
                 ", c1CountryIdentifier=" + c1CountryIdentifier +
+                ", mlsToIdentifier=" + mlsToIdentifier +
+                ", mlsTypeIdentifier=" + mlsTypeIdentifier +
                 ", identifier=" + identifier +
                 ", instanceType=" + instanceType +
                 ", creationTimestamp=" + creationTimestamp +
@@ -181,7 +201,7 @@ public class Header implements Serializable {
 
     private Header copy(Consumer<Header> consumer) {
         Header header = new Header(sender, receiver, new ArrayList<>(copyReceiver), process, documentType, c1CountryIdentifier,
-                identifier, instanceType, creationTimestamp, new HashMap<>(arguments));
+                mlsToIdentifier, mlsTypeIdentifier, identifier, instanceType, creationTimestamp, new HashMap<>(arguments));
         consumer.accept(header);
         return header;
     }

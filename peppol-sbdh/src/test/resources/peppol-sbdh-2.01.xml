@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardBusinessDocumentHeader xmlns="http://www.unece.org/cefact/namespaces/StandardBusinessDocumentHeader">
+    <HeaderVersion>1.0</HeaderVersion>
+    <Sender>
+        <Identifier Authority="iso6523-actorid-upis">0088:7315458756324</Identifier>
+    </Sender>
+    <Receiver>
+        <Identifier Authority="iso6523-actorid-upis">0088:4562458856624</Identifier>
+    </Receiver>
+    <DocumentIdentification>
+        <Standard>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2</Standard>
+        <TypeVersion>2.1</TypeVersion>
+        <InstanceIdentifier>123123</InstanceIdentifier>
+        <Type>Invoice</Type>
+        <CreationDateAndTime>2017-12-06T10:17:05.734+01:00</CreationDateAndTime>
+    </DocumentIdentification>
+    <BusinessScope>
+        <Scope>
+            <Type>DOCUMENTID</Type>
+            <InstanceIdentifier>urn:oasis:names:specification:ubl:schema:xsd:Invoice-2::Invoice##urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0::2.1</InstanceIdentifier>
+            <Identifier>busdox-docid-qns</Identifier>
+        </Scope>
+        <Scope>
+            <Type>PROCESSID</Type>
+            <InstanceIdentifier>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</InstanceIdentifier>
+            <Identifier>cenbii-procid-ubl</Identifier>
+        </Scope>
+        <Scope>
+            <Type>COUNTRY_C1</Type>
+            <InstanceIdentifier>IN</InstanceIdentifier>
+        </Scope>
+        <Scope>
+            <Type>MLS_TO</Type>
+            <InstanceIdentifier>0242:000723</InstanceIdentifier>
+            <Identifier>iso6523-actorid-upis</Identifier>
+        </Scope>
+        <Scope>
+            <Type>MLS_TYPE</Type>
+            <InstanceIdentifier>ALWAYS_SEND</InstanceIdentifier>
+        </Scope>
+    </BusinessScope>
+</StandardBusinessDocumentHeader>
