@@ -7,8 +7,6 @@ public class C1CountryIdentifierTest {
 
     @Test
     public void simple() {
-        Assert.assertNotNull(InstanceIdentifier.generateUUID().getIdentifier());
-
         C1CountryIdentifier c1CountryIdentifier = C1CountryIdentifier.of("IN");
 
         Assert.assertEquals(c1CountryIdentifier.getIdentifier(), "IN");
