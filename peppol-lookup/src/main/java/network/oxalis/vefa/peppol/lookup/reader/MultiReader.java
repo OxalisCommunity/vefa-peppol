@@ -63,7 +63,7 @@ public class MultiReader implements MetadataReader {
         FetcherResponse response = fetcherResponse;
 
         if (null == fetcherResponse)
-            throw new LookupException("ServiceMetadata element not found or SMP registration is Not valid.");
+            throw new LookupException("ServiceMetadata element not found or SMP registration is not valid.");
 
         if (response.getNamespace() == null)
             response = detect(response);

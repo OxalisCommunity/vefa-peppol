@@ -42,9 +42,8 @@ public class DefaultProvider implements MetadataProvider {
 
     @Override
     public List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
-                                            DocumentTypeIdentifier documentTypeIdentifier, int pintWildcardMigrationPhase) {
-
-    	List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
+                                            DocumentTypeIdentifier documentTypeIdentifier) {
+        List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
         String docSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
 
         boolean isPintMessage = isItPINTMessage(documentTypeIdentifier);
@@ -52,7 +51,7 @@ public class DefaultProvider implements MetadataProvider {
         if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docSchemeIdentifier) && !isPintMessage) {
             addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         } else if (isPintMessage) {
-            resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, pintWildcardMigrationPhase, resolvedServiceMetaDataURIList);
+            resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
 
             if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docSchemeIdentifier)) {
                 processPintWildcards(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
@@ -73,17 +72,8 @@ public class DefaultProvider implements MetadataProvider {
     }
 
     private void resolvePintExactMatchPriority(URI location, ParticipantIdentifier participantIdentifier,
-                                               DocumentTypeIdentifier documentTypeIdentifier, int phase, List<URI> resolvedServiceMetaDataURIList) {
-        String docScheme = documentTypeIdentifier.getScheme().getIdentifier();
-
-        if (phase == 0 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme)) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
-        } else if (phase == 1 && (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme) ||
-                DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docScheme))) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
-        } else if (phase >= 2 && DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_PEPPOL_DOCTYPE_WILDCARD.equals(docScheme)) {
-            addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
-        }
+                                               DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
+        addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
     }
 
     private void processPintWildcards(URI location, ParticipantIdentifier participantIdentifier,

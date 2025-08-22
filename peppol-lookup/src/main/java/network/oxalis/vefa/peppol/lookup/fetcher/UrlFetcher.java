@@ -72,15 +72,7 @@ public class UrlFetcher extends AbstractFetcher {
 
     private FetcherResponse fetchResponseFromValidUri(URI uri) throws LookupException, FileNotFoundException {
         try {
-            HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
-            if (timeout >= Integer.MIN_VALUE && timeout <= Integer.MAX_VALUE) {
-                urlConnection.setConnectTimeout((int) timeout);
-                urlConnection.setReadTimeout((int) timeout);
-            } else { // set default timeout values if timeout (lookup.fetcher.timeout) is not set in oxalis.conf
-                urlConnection.setConnectTimeout(10000);
-                urlConnection.setReadTimeout(10000);
-            }
-
+            HttpURLConnection urlConnection = getHttpURLConnection(uri);
             if (urlConnection.getResponseCode() != 200) {
                 return null;
             }
@@ -95,6 +87,18 @@ public class UrlFetcher extends AbstractFetcher {
         } catch (IOException e) {
             throw new LookupException(e.getMessage(), e);
         }
+    }
+
+    private HttpURLConnection getHttpURLConnection(URI uri) throws IOException {
+        HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();
+        if (timeout >= Integer.MIN_VALUE && timeout <= Integer.MAX_VALUE) {
+            urlConnection.setConnectTimeout((int) timeout);
+            urlConnection.setReadTimeout((int) timeout);
+        } else { // set default timeout values if timeout (lookup.fetcher.timeout) is not set in oxalis.conf
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+        }
+        return urlConnection;
     }
 
 }
