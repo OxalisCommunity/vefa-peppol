@@ -22,7 +22,9 @@
         <Signing type="PUBLIC_SIGNED"/>
         <PrincipleName field="CN" principal="ISSUER">
             <Value>PEPPOL ACCESS POINT CA - G2</Value>
+            <Value>PEPPOL ACCESS POINT CA - G3</Value>
             <Value>PEPPOL SERVICE METADATA PUBLISHER CA - G2</Value>
+            <Value>PEPPOL SERVICE METADATA PUBLISHER CA - G3</Value>
         </PrincipleName>
         <Chain>
             <RootBucketReference>root</RootBucketReference>
@@ -42,12 +44,14 @@
     <Validator name="AP" timeout="10">
         <PrincipleName field="CN" principal="ISSUER">
             <Value>PEPPOL ACCESS POINT CA - G2</Value>
+            <Value>PEPPOL ACCESS POINT CA - G3</Value>
         </PrincipleName>
         <ValidatorReference>default</ValidatorReference>
     </Validator>
     <Validator name="SMP" timeout="10">
         <PrincipleName field="CN" principal="ISSUER">
             <Value>PEPPOL SERVICE METADATA PUBLISHER CA - G2</Value>
+            <Value>PEPPOL SERVICE METADATA PUBLISHER CA - G3</Value>
         </PrincipleName>
         <ValidatorReference>default</ValidatorReference>
     </Validator>
@@ -85,6 +89,38 @@
             +WwERYOVwJr2G0/AxT5kYbPScdiVhlsKtgJgYQROa7lDRYZzTYP2K3cOTrZl4CCv
             VZepKfP3wKITW9LAHQAbVwDj5Nuj7IiQylSPUHp81VdyRVsjs2Qt3wRn5tgskYoZ
             VJ37VKSCJBSN/R4YhvHziuYdLzdg9t2q
+        </Certificate>
+        <!-- CN=PEPPOL Root CA - G3,O=OpenPEPPOL AISBL,C=BE -->
+        <Certificate>
+            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
         </Certificate>
     </CertificateBucket>
     <CertificateBucket name="intermediate">
@@ -124,6 +160,43 @@
             DomdxXrksSDe+kFRuHP/uTJXa5EM1whPJrYvmnzxlDunpm5OEd+iScOtOyx5oVNO
             sC7z8FyaJgk=
         </Certificate>
+        <!--  CN=PEPPOL ACCESS POINT CA - G3,O=OpenPEPPOL AISBL,C=BE -->
+        <Certificate>
+            MIIGUjCCBDqgAwIBAgIUMx9lQttDmPkaFO+nmLKO85v0nvowDQYJKoZIhvcNAQEL
+            BQAwRjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEE9wZW5QRVBQT0wgQUlTQkwxHDAa
+            BgNVBAMTE1BFUFBPTCBSb290IENBIC0gRzMwHhcNMjUwMTE0MTgwNDUxWhcNMzUw
+            MTEzMTc1OTQwWjBOMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBB
+            SVNCTDEkMCIGA1UEAxMbUEVQUE9MIEFDQ0VTUyBQT0lOVCBDQSAtIEczMIICIjAN
+            BgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAnYHtmOL395qTaKVqRSzhjyVew/IZ
+            Wlaz+2fS4Xhyzn32TNHuoj+UeTk2Xj/wPtynZ96re9eCTYCHRsSPvtOgoS/kIF6K
+            hiFuZTFl/3QwNgeTDu2oFaWjEJZzRGopL7QXBQ2LHHRKUFrDctfT6bQlEu5qUOKk
+            U8jE91tP3j79rFcwzMgOnWRtWikbdLYAPQCk4ROwWPqP8V2UNbqx4IleGkkVGKWA
+            sZr5ZrQB9N5WxH3wpbUZAI2EaJ80I9PAGp72OJPuxFOHxll8r99u67i1rDAOilvl
+            Lspze/u7xFuv7AnxyAhW/J6QJ1bsykno37ClwIPo3Fa9xulbuj3awd6f/KYJIrmr
+            ArhgCn1QzK3l7jZ+f5RcROP4Ejx++Y40i8y7H3xsnfQfbcTVGCM3pYJJTLWbzcwt
+            Hnw/jyqVbJXpkwSgqaGM42m8imghdioZPvvbtL4r/mKTHwtcG8DT0KbIB+kwnO1m
+            2Z487WWsX/MhfAXYjRvPT1BjvpDP170veZwGiqm7/PuiJl99lUxSSccjF5me3n2o
+            7kawE/FBBfkZYZGSr3asJkuIn1IUvBQPc1S2I3PkU2TfqLaDrWqidG4PbgzsMu8L
+            UzWTQrfAcijm1NJAbjkSYA72Lrr8cUIp/bowoJoUasby3UTby/sYuY0eLOpT90ik
+            O3t0xKlazzwRrx0CAwEAAaOCAS4wggEqMBIGA1UdEwEB/wQIMAYBAf8CAQEwHQYD
+            VR0OBBYEFPwyVkiry8G4+YOaL4ALKMz3/+rRMB8GA1UdIwQYMBaAFMzujOyikp5J
+            u1+EP7ZpJEZVfq1mMA4GA1UdDwEB/wQEAwIBhjB/BggrBgEFBQcBAQRzMHEwKwYI
+            KwYBBQUHMAGGH2h0dHA6Ly9vY3NwLm9uZS5ubC5kaWdpY2VydC5jb20wQgYIKwYB
+            BQUHMAKGNmh0dHA6Ly9jYWNlcnRzLm9uZS5ubC5kaWdpY2VydC5jb20vUEVQUE9M
+            Um9vdENBLUczLmNydDBDBgNVHR8EPDA6MDigNqA0hjJodHRwOi8vY3JsLm9uZS5u
+            bC5kaWdpY2VydC5jb20vUEVQUE9MUm9vdENBLUczLmNybDANBgkqhkiG9w0BAQsF
+            AAOCAgEARh7lWcI/Zw7kopkddKuN4puJp1ZjhHV773HdithdvI28Mo81tjUbOWFU
+            PPeiGFeR31+h+G5lzWkmo+xH/gpnMRIzoj85URKxoaNDiBWDqWBjhCTR6b/6bOtK
+            KMSsdcpJzyP7GMXMWzFQIjmqpvOQFU/Xt3fZYoSqsVHlAzuenbidhUKti91LjVg/
+            aWgJXKH4bbqdL6X5dZblVE4uqWzwUfryVMJkNVD6y2FWOj3pNz0fT6QQDIQih8iV
+            E3fNlW3YykKyGE86lLYvafs5xDJga1Kepaoy5puNgrUTSd0Bhc6yEb4ImdlOegXB
+            C+ycKqHslMKrzm69IRsUtxPxlGMOxB8hnRhjFdGwIVktjG3MD8amet7dGOsXravz
+            lJpr4Lz1b94Ie0BvCkfpFyARgTdJj7pC2efA13jdeBqhPgaEgcjqBaqe8ZcI/HqZ
+            Mls70LTz+Ry8y8FngXbFobf7I3ZWow0wUZG22FDhj94qd+LY8rjTYMQGsAyWc/Hh
+            Be32cYNjxCdtw/LVhbG6p+QoXgGWC12Mq84Uinr46f9aewZ66oqrMIc297tX9wvY
+            +IwHAVort2ScCnokQS4eXkOYbkgC6cXtcR8dcuv75rgvNkJ/SB1F8b94QGht5UQe
+            ROxR0ofeQqQCtVxF9HEucpQssF/wJSs04f+CAt1vTFGeIvcbMvA=
+        </Certificate>
         <!-- CN=PEPPOL SERVICE METADATA PUBLISHER CA - G2,O=OpenPEPPOL AISBL,C=BE -->
         <Certificate>
             MIIGEjCCA/qgAwIBAgIQGT8jtrWG5LpuTy3DQMqZwjANBgkqhkiG9w0BAQsFADBG
@@ -159,6 +232,44 @@
             QXRtvcviN/Nn0cL8hh+thfW3zgPOlBzJ0agnINZg+Q1ynA0jSqDZ4ztONC33uDBZ
             LsS1QB8s1qGW/o4S5QGsp3Aoce0+q8MQZDidmSRuVDY9YH674+XMtuIzIoRYhVA5
             hz8C7KQd8iHl+jvTe0mZCcv2M61Ntg==
+        </Certificate>
+        <!-- CN=PEPPOL SERVICE METADATA PUBLISHER CA - G3,O=OpenPEPPOL AISBL,C=BE -->
+        <Certificate>
+            MIIGYDCCBEigAwIBAgIUS0daVPMYerMw5VCKfJFwwXnoq6EwDQYJKoZIhvcNAQEL
+            BQAwRjELMAkGA1UEBhMCQkUxGTAXBgNVBAoTEE9wZW5QRVBQT0wgQUlTQkwxHDAa
+            BgNVBAMTE1BFUFBPTCBSb290IENBIC0gRzMwHhcNMjUwMTE0MTgxMDQ4WhcNMzUw
+            MTEzMTc1OTQwWjBcMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQT3BlblBFUFBPTCBB
+            SVNCTDEyMDAGA1UEAxMpUEVQUE9MIFNFUlZJQ0UgTUVUQURBVEEgUFVCTElTSEVS
+            IENBIC0gRzMwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQDVmMiHUchr
+            dLqW8Rl0x/xR5Hq9WJpXrwlpM3EBl+7Zg4bZF2tiBoxG0FuUtqU4MvJ9xpckQE/d
+            97X6WqwFoY4vO3sht7VWdPG6tnsHSZG3OUKHTEjQxbJzMATP+R9S5UCz/FqwZviD
+            sLTbxdXJGWG5FNEATPur4F1zji1QXZzihfT89sPehVy+S0uGkH+tpL3q/UcCVOQD
+            4fFDgmBYR007rBMr6Rs5Z3pwUE7q5xM5dIBEN6Y1fw9TKQeQOpTAw0agdZGf7J4N
+            oXihrljP6N1o5N1D6SupFeNx8RqIhZ+HBV99qM1vXJFVALBHvRZbRqiJi863/wZL
+            pRD/ZzDnNG6YTTmw+1ZSm15rBdX7XBmtvjcrzBr660deZjBKJo8IzWNGk38th2Kr
+            GC3uMsbQfHOdPkcLmdq/bOn199xsaVj/9Y3jPUz+nUj3aB3ackOq7Gd8b+J5u/Z1
+            FvKj3BicFSjOFa4F9uMAlQ1/oRIwsnYkXL/YFewhcnf7//4dlXIJmgwCYxufWgQ+
+            M+xuLMSoxMv00+GEN8i7ob8R3xek/Zs7QwAVe4X7OfqqcO3ep80SAuWRDWj+S8tT
+            01J+PyvvwjcqJ+DH9hwsAtchiYUmgxfj43nks3kq1CsxDogLouK13XW9purettj2
+            L1wxVpH5F5WzvCQa28EY0SZc5kIaEazGtQIDAQABo4IBLjCCASowEgYDVR0TAQH/
+            BAgwBgEB/wIBATAdBgNVHQ4EFgQUHdzChVxWg83oCMf6kpNDxeH2jtEwHwYDVR0j
+            BBgwFoAUzO6M7KKSnkm7X4Q/tmkkRlV+rWYwDgYDVR0PAQH/BAQDAgGGMH8GCCsG
+            AQUFBwEBBHMwcTArBggrBgEFBQcwAYYfaHR0cDovL29jc3Aub25lLm5sLmRpZ2lj
+            ZXJ0LmNvbTBCBggrBgEFBQcwAoY2aHR0cDovL2NhY2VydHMub25lLm5sLmRpZ2lj
+            ZXJ0LmNvbS9QRVBQT0xSb290Q0EtRzMuY3J0MEMGA1UdHwQ8MDowOKA2oDSGMmh0
+            dHA6Ly9jcmwub25lLm5sLmRpZ2ljZXJ0LmNvbS9QRVBQT0xSb290Q0EtRzMuY3Js
+            MA0GCSqGSIb3DQEBCwUAA4ICAQCyCfSUH/bBWcZEe2vtq+NgQpVD4NXKkmnCsUNx
+            TGtwbBxPdHZQd8xctFxaN8UFIr5EQl3/QZtIGsQ6d+bVlxjkuA8XBnSM0ztGdZ0g
+            RgRrgUKG+2vdb5mZ4ceenc4VnT1pCran8K9sjuVa1Qhv65ZEyHCSbrG4ib5i07Zq
+            TQADT/ORsDmJ5iEWjLbvmUxXgbCfPqd72SGhWbADTPS09IuTClrbrA0r3d5nKsqA
+            rRM+IvUCM2UbRMgGV5zd0vI+0WC1I+kfd7kHJccvkr16wxYKN0kEZDhwdugOyPeL
+            LXJ8u4KYWJTFCFTQvhpm2uZ74IjJltOTBaowf+CLiBAEnyK5sP1SDeEy3iLExtiW
+            Dtasdz9JLx1OnrqNwjS8dTtSTcagJg4kLUXWT6a2B4wuiETufOQWtZ8Z1RBJwFLO
+            zwTd7LjEMONXf5t4HRFt6e7eORmWzapyMUxjddhXJ4PVr2RVXf3E3yCry6YIWvzV
+            DJ/rbbqXH56/+k7zwzpGwEFcraZaqlWemaQuYuNgY4FzhejWsOKhymjL021fSJuM
+            XFxEWgktxAezCqm1nhvKWHPZwtax6yDyKHQ/SnUJkRnmExD9klpOpgmbH7SqWdXc
+            5fub9xFh3OgmCgGsrWgvTB6gvys9YjYBzlR6GCzxolZSuLz6EfE4ZedEd+m/gaHC
+            IaAEQg==
         </Certificate>
     </CertificateBucket>
 </ValidatorRecipe>
