@@ -44,9 +44,6 @@ public class MultiReader implements MetadataReader {
     public List<ServiceReference> parseServiceGroup(FetcherResponse fetcherResponse) throws LookupException {
         FetcherResponse response = fetcherResponse;
 
-        if (null == fetcherResponse)
-            throw new LookupException("ServiceMetadata element not found or SMP registration is not valid.");
-
         if (response.getNamespace() == null)
             response = detect(response);
 
@@ -61,9 +58,6 @@ public class MultiReader implements MetadataReader {
     public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
         FetcherResponse response = fetcherResponse;
-
-        if (null == fetcherResponse)
-            throw new LookupException("ServiceMetadata element not found or SMP registration is not valid.");
 
         if (response.getNamespace() == null)
             response = detect(response);

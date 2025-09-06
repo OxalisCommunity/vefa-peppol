@@ -43,9 +43,8 @@ public class UrlFetcher extends AbstractFetcher {
         FetcherResponse fetcherResponse = null;
         Exception exceptionObj = null;
 
-        if (uriList == null || uriList.isEmpty()) {
-            throw new LookupException("Unable to lookup requested URL or SMP registration is not valid.");
-        }
+        if (uriList == null)
+            throw new LookupException("Unable to lookup requested url");
 
         for (URI uri : uriList) {
             try {
