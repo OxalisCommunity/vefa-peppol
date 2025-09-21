@@ -41,14 +41,16 @@ public class DefaultProvider implements MetadataProvider {
     }
 
     @Override
-    public List<URI> resolveServiceMetadata(URI location, ParticipantIdentifier participantIdentifier,
+    public List<URI> resolveServiceMetadata(URI location,
+                                            ParticipantIdentifier participantIdentifier,
                                             DocumentTypeIdentifier documentTypeIdentifier) {
         List<URI> resolvedServiceMetaDataURIList = new ArrayList<>();
         String docSchemeIdentifier = documentTypeIdentifier.getScheme().getIdentifier();
 
         boolean isPintMessage = isItPINTMessage(documentTypeIdentifier);
 
-        if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docSchemeIdentifier) && !isPintMessage) {
+        if (DocumentTypeIdentifier.DOCUMENT_TYPE_SCHEME_BUSDOX_DOCID_QNS.equals(docSchemeIdentifier)
+                && !isPintMessage) {
             addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
         } else if (isPintMessage) {
             resolvePintExactMatchPriority(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
@@ -57,42 +59,65 @@ public class DefaultProvider implements MetadataProvider {
                 processPintWildcards(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
             }
         }
+
         return resolvedServiceMetaDataURIList;
     }
 
     private boolean isItPINTMessage(DocumentTypeIdentifier documentTypeIdentifier) {
-        return getCustomizationIdentifier(documentTypeIdentifier).toLowerCase().contains(PINT_TEXT);
+        String customizationId = getCustomizationIdentifier(documentTypeIdentifier);
+        return customizationId.contains(PINT_TEXT);
     }
 
     private String getCustomizationIdentifier(DocumentTypeIdentifier documentTypeIdentifier) {
         String instanceId = documentTypeIdentifier.getIdentifier();
-        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
+        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR);
         int endIdx = instanceId.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
-        return instanceId.substring(startIdx, endIdx);
+
+        if (startIdx == -1 || endIdx == -1 || startIdx + SEPARATOR_LENGTH >= endIdx) {
+            throw new IllegalArgumentException(String.format("Unable to parse '%s' into Peppol Document Type Identifier", instanceId));
+        }
+
+        return instanceId.substring(startIdx + SEPARATOR_LENGTH, endIdx);
     }
 
-    private void resolvePintExactMatchPriority(URI location, ParticipantIdentifier participantIdentifier,
-                                               DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
+    private void resolvePintExactMatchPriority(URI location,
+                                               ParticipantIdentifier participantIdentifier,
+                                               DocumentTypeIdentifier documentTypeIdentifier,
+                                               List<URI> resolvedServiceMetaDataURIList) {
         addResolvedUri(location, participantIdentifier, documentTypeIdentifier, resolvedServiceMetaDataURIList);
     }
 
-    private void processPintWildcards(URI location, ParticipantIdentifier participantIdentifier,
-                                      DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
+    private void processPintWildcards(URI location,
+                                      ParticipantIdentifier participantIdentifier,
+                                      DocumentTypeIdentifier documentTypeIdentifier,
+                                      List<URI> resolvedServiceMetaDataURIList) {
         String instanceId = documentTypeIdentifier.getIdentifier();
-        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR) + SEPARATOR_LENGTH;
+        int startIdx = instanceId.indexOf(DocumentTypeIdentifier.SYNTAX_SUBTYPE_SEPARATOR);
         int endIdx = instanceId.lastIndexOf(DocumentTypeIdentifier.IDENTIFIER_SEPARATOR);
 
-        String syntaxId = instanceId.substring(0, startIdx - SEPARATOR_LENGTH);
-        String customizationId = instanceId.substring(startIdx, endIdx);
-        String version = instanceId.substring(endIdx + SEPARATOR_LENGTH);
+        if (startIdx == -1 || endIdx == -1 || startIdx + SEPARATOR_LENGTH >= endIdx) {
+            return;
+        }
 
-        addWildcardUris(location, participantIdentifier, documentTypeIdentifier.getScheme().getIdentifier(),
+        String syntaxId = instanceId.substring(0, startIdx);
+        String customizationId = instanceId.substring(startIdx + SEPARATOR_LENGTH, endIdx);
+        String version = "";
+        if (endIdx + SEPARATOR_LENGTH <= instanceId.length()) {
+            version = instanceId.substring(endIdx + SEPARATOR_LENGTH);
+        }
+
+        addWildcardUris(location, participantIdentifier,
+                documentTypeIdentifier.getScheme().getIdentifier(),
                 syntaxId, customizationId, version, resolvedServiceMetaDataURIList);
     }
 
-    private void addWildcardUris(URI location, ParticipantIdentifier participantIdentifier, String docScheme,
-                                 String syntaxId, String customizationId, String version, List<URI> resolvedServiceMetaDataURIList) {
-
+    private void addWildcardUris(URI location,
+                                 ParticipantIdentifier participantIdentifier,
+                                 String docScheme,
+                                 String syntaxId,
+                                 String customizationId,
+                                 String version,
+                                 List<URI> resolvedServiceMetaDataURIList) {
         while (!customizationId.isEmpty()) {
             String urlEncoded = ModelUtils.urlencode("%s::%s##%s::%s", docScheme, syntaxId,
                     customizationId + WILDCARD_INDICATOR_CHARACTER, version);
@@ -106,9 +131,12 @@ public class DefaultProvider implements MetadataProvider {
         }
     }
 
-    private void addResolvedUri(URI location, ParticipantIdentifier participantIdentifier,
-                                DocumentTypeIdentifier documentTypeIdentifier, List<URI> resolvedServiceMetaDataURIList) {
+    private void addResolvedUri(URI location,
+                                ParticipantIdentifier participantIdentifier,
+                                DocumentTypeIdentifier documentTypeIdentifier,
+                                List<URI> resolvedServiceMetaDataURIList) {
         resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
                 participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
     }
 }
+
