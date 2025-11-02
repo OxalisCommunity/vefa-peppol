@@ -44,6 +44,9 @@ public class MultiReader implements MetadataReader {
     public List<ServiceReference> parseServiceGroup(FetcherResponse fetcherResponse) throws LookupException {
         FetcherResponse response = fetcherResponse;
 
+        if (null == fetcherResponse)
+            throw new LookupException("Unable to lookup requested URI. Please make sure that SBDH content or SMP registration is valid.");
+
         if (response.getNamespace() == null)
             response = detect(response);
 
@@ -58,6 +61,9 @@ public class MultiReader implements MetadataReader {
     public PotentiallySigned<ServiceMetadata> parseServiceMetadata(FetcherResponse fetcherResponse)
             throws LookupException, PeppolSecurityException {
         FetcherResponse response = fetcherResponse;
+
+        if (null == fetcherResponse)
+            throw new LookupException("Unable to lookup requested URI. Please make sure that SBDH content or SMP registration is valid.");
 
         if (response.getNamespace() == null)
             response = detect(response);

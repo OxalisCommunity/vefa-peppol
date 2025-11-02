@@ -135,8 +135,14 @@ public class DefaultProvider implements MetadataProvider {
                                 ParticipantIdentifier participantIdentifier,
                                 DocumentTypeIdentifier documentTypeIdentifier,
                                 List<URI> resolvedServiceMetaDataURIList) {
-        resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
-                participantIdentifier.urlencoded(), documentTypeIdentifier.urlencoded())));
+        String basePath = location.toString().trim();
+        if (basePath.endsWith("/")) {
+            basePath = basePath.substring(0, basePath.length() - 1);
+        }
+        String relativePath = String.format("/%s/services/%s",
+                participantIdentifier.urlencoded(),
+                documentTypeIdentifier.urlencoded());
+        resolvedServiceMetaDataURIList.add(URI.create(basePath + relativePath));
     }
 }
 
