@@ -23,6 +23,7 @@ import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
 import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
 import network.oxalis.vefa.peppol.common.util.ModelUtils;
 import network.oxalis.vefa.peppol.lookup.api.MetadataProvider;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -36,8 +37,11 @@ public class DefaultProvider implements MetadataProvider {
     private static final String PINT_TEXT = "urn:peppol:pint:";
 
     @Override
-    public List<URI> resolveDocumentIdentifiers(URI location, ParticipantIdentifier participant) {
-        return List.of(location.resolve("/" + participant.urlencoded()));
+    public List<URI> resolveDocumentIdentifiers(URI location, ParticipantIdentifier participantIdentifier) {
+        String basePath = normalizeBasePath(location.toString());
+        URI baseUri = URI.create(basePath + "/");
+        URI resolvedUri = baseUri.resolve(participantIdentifier.urlencoded());
+        return List.of(resolvedUri);
     }
 
     @Override
@@ -118,16 +122,19 @@ public class DefaultProvider implements MetadataProvider {
                                  String customizationId,
                                  String version,
                                  List<URI> resolvedServiceMetaDataURIList) {
-        while (!customizationId.isEmpty()) {
-            String urlEncoded = ModelUtils.urlencode("%s::%s##%s::%s", docScheme, syntaxId,
-                    customizationId + WILDCARD_INDICATOR_CHARACTER, version);
 
-            resolvedServiceMetaDataURIList.add(location.resolve(String.format("/%s/services/%s",
-                    participantIdentifier.urlencoded(), urlEncoded)));
+        if (StringUtils.isBlank(customizationId)) return;
 
-            int lastIdx = customizationId.lastIndexOf(NARROWER_SCHEMEPART_INDICATOR_CHARACTER);
+        String currentCustomizationId = customizationId;
+        while (!currentCustomizationId.isEmpty()) {
+            String documentTypeIdentifierUrlEncoded = ModelUtils.urlencode("%s::%s##%s::%s", docScheme, syntaxId,
+                    currentCustomizationId + WILDCARD_INDICATOR_CHARACTER, version);
+
+            addResolvedServiceURI(location, participantIdentifier, documentTypeIdentifierUrlEncoded, resolvedServiceMetaDataURIList);
+
+            int lastIdx = currentCustomizationId.lastIndexOf(NARROWER_SCHEMEPART_INDICATOR_CHARACTER);
             if (lastIdx == -1) break;
-            customizationId = customizationId.substring(0, lastIdx);
+            currentCustomizationId = currentCustomizationId.substring(0, lastIdx);
         }
     }
 
@@ -135,14 +142,32 @@ public class DefaultProvider implements MetadataProvider {
                                 ParticipantIdentifier participantIdentifier,
                                 DocumentTypeIdentifier documentTypeIdentifier,
                                 List<URI> resolvedServiceMetaDataURIList) {
-        String basePath = location.toString().trim();
-        if (basePath.endsWith("/")) {
+        addResolvedServiceURI(location, participantIdentifier, documentTypeIdentifier.urlencoded(), resolvedServiceMetaDataURIList);
+    }
+
+    private void addResolvedServiceURI(URI location,
+                                       ParticipantIdentifier participantIdentifier,
+                                       String documentTypeIdentifierUrlEncoded,
+                                       List<URI> resolvedServiceMetaDataURIList) {
+
+        String basePath = normalizeBasePath(location.toString());
+        URI baseUri = URI.create(basePath + "/");
+
+        URI resolvedUri = baseUri.resolve(
+                String.format("%s/services/%s",
+                        participantIdentifier.urlencoded(),
+                        documentTypeIdentifierUrlEncoded)
+        );
+
+        resolvedServiceMetaDataURIList.add(resolvedUri);
+    }
+
+    private String normalizeBasePath(String location) {
+        String basePath = location.trim();
+        while (basePath.endsWith("/")) {
             basePath = basePath.substring(0, basePath.length() - 1);
         }
-        String relativePath = String.format("/%s/services/%s",
-                participantIdentifier.urlencoded(),
-                documentTypeIdentifier.urlencoded());
-        resolvedServiceMetaDataURIList.add(URI.create(basePath + relativePath));
+        return basePath;
     }
 }
 
