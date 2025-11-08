@@ -24,7 +24,7 @@
     <parent>
         <artifactId>vefa-peppol</artifactId>
         <groupId>network.oxalis.vefa</groupId>
-        <version>4.2.1-SNAPSHOT</version>
+        <version>4.2.1</version>
     </parent>
 
     <artifactId>peppol-icd</artifactId>
@@ -34,7 +34,7 @@
     <url>https://github.com/OxalisCommunity/vefa-peppol</url>
 
     <scm>
-        <tag>HEAD</tag>
+        <tag>v4.2.1</tag>
         <url>https://github.com/OxalisCommunity/vefa-peppol</url>
         <connection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</connection>
         <developerConnection>scm:git:git@github.com:OxalisCommunity/vefa-peppol.git</developerConnection>
