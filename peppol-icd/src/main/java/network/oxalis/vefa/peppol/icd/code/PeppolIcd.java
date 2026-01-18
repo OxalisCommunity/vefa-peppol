@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v9.3 dated 2025-07-14: https://docs.peppol.eu/edelivery/codelists/v9.3/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.3.html
+    // The latest code list release v9.5 dated 2025-12-23: https://docs.peppol.eu/edelivery/codelists/v9.5/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.5.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -71,6 +71,9 @@ public enum PeppolIcd implements Icd {
     AE_TIN("AE:TIN", "0235", "UAE Federal Tax Authority"),
     LU_MAT("LU:MAT", "0240", "Centre des technologies de l'information de l'Etat (CTIE)"),
     SPIS("SPIS", "0242", "OpenPeppol AISBL"),
+    NG_TID("NG:TID", "0244", "Federal Inland Revenue Service Revenue (FIRS)"),
+    SK_DIC("SK:DIC", "0245", "The tax office according to the local jurisdiction of the taxpayer. Head office: Financial Directorate of the Slovak Republic Lazovná 63 , Banská Bystrica 974 01 Banská Bystrica Slovakia"),
+    DE_GEBA("DE:GEBA", "0246", "Koordinierungsstelle für IT-Standards (KoSIT)"),
 
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
@@ -126,7 +129,7 @@ public enum PeppolIcd implements Icd {
     TR_VAT("TR:VAT", "9952", "Turkey VAT number"),
     VA_VAT("VA:VAT", "9953", "Holy See (Vatican City State) VAT number"),
 
-    @Deprecated
+    @Deprecated // Will be removed per 31.3.2026
     NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
 
     FR_VAT("FR:VAT", "9957", "French VAT number"),
