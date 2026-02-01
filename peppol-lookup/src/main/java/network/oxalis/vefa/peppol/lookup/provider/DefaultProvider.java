@@ -77,7 +77,7 @@ public class DefaultProvider implements MetadataProvider {
             // Only warn; expected non-Peppol identifier (e.g. BEAst)
             log.warn("Non-Peppol document type identifier encountered; '{}' does not conform to OpenPeppol eDEC code lists.",
                     documentTypeIdentifier != null ? documentTypeIdentifier.getIdentifier() : "null");
-            log.debug("Stack trace for non-Peppol document type identifier parsing failure:", argumentException);
+            log.debug("Stack trace for non-Peppol document type identifier parsing failure warning message:", argumentException);
             return false;
         }
         return customizationId.contains(PINT_TEXT);
