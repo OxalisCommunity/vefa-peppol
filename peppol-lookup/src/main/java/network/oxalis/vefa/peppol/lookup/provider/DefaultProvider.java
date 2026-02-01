@@ -19,6 +19,7 @@
 
 package network.oxalis.vefa.peppol.lookup.provider;
 
+import lombok.extern.slf4j.Slf4j;
 import network.oxalis.vefa.peppol.common.model.DocumentTypeIdentifier;
 import network.oxalis.vefa.peppol.common.model.ParticipantIdentifier;
 import network.oxalis.vefa.peppol.common.util.ModelUtils;
@@ -29,6 +30,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public class DefaultProvider implements MetadataProvider {
 
     private static final int SEPARATOR_LENGTH = 2;
@@ -68,7 +70,16 @@ public class DefaultProvider implements MetadataProvider {
     }
 
     private boolean isItPINTMessage(DocumentTypeIdentifier documentTypeIdentifier) {
-        String customizationId = getCustomizationIdentifier(documentTypeIdentifier);
+        String customizationId = "";
+        try {
+            customizationId = getCustomizationIdentifier(documentTypeIdentifier);
+        } catch (IllegalArgumentException argumentException) {
+            // Only warn; expected non-Peppol identifier (e.g. BEAst)
+            log.warn("Non-Peppol document type identifier encountered; '{}' does not conform to OpenPeppol eDEC code lists.",
+                    documentTypeIdentifier != null ? documentTypeIdentifier.getIdentifier() : "null");
+            log.debug("Stack trace for non-Peppol document type identifier parsing failure:", argumentException);
+            return false;
+        }
         return customizationId.contains(PINT_TEXT);
     }
 
@@ -170,4 +181,3 @@ public class DefaultProvider implements MetadataProvider {
         return basePath;
     }
 }
-
