@@ -24,9 +24,11 @@ import network.oxalis.vefa.peppol.common.code.Service;
 import network.oxalis.vefa.peppol.common.lang.EndpointNotFoundException;
 import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.lookup.api.*;
+import network.oxalis.vefa.peppol.lookup.util.X500DnComparator;
 import network.oxalis.vefa.peppol.security.api.CertificateValidator;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 
+import javax.security.auth.x500.X500Principal;
 import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.cert.X509Certificate;
@@ -109,13 +111,15 @@ public class LookupClient {
         if (potentiallySigned instanceof Signed) {
             X509Certificate certificate = ((Signed<ServiceMetadata>) potentiallySigned).getCertificate();
             validator.validate(Service.SMP, certificate);
-            if (!certificate.getSubjectX500Principal().getName().equals(redirect.getCertificateUID())) {
+            X500Principal certSubject = certificate.getSubjectX500Principal();
+            String expectedDn = redirect.getCertificateUID();
+            if (!X500DnComparator.equalsSemantically(certSubject, expectedDn)) {
                 throw new LookupException(String.format(
                         "Subject of redirected response for receiver (%s) and document type identifier (%s) does not match the expected value. Actual: '%s', Expected: '%s'",
                         participantIdentifier.toString(),
                         documentTypeIdentifier.toString(),
-                        certificate.getSubjectX500Principal().getName(),
-                        redirect.getCertificateUID()));
+                        certSubject.getName(X500Principal.RFC2253),
+                        expectedDn));
             }
         }
 
