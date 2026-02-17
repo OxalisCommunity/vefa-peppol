@@ -19,8 +19,11 @@
 
 package network.oxalis.vefa.peppol.lookup.api;
 
+import lombok.Builder;
+
 import java.io.InputStream;
 
+@Builder
 public class FetcherResponse {
 
     private InputStream inputStream;

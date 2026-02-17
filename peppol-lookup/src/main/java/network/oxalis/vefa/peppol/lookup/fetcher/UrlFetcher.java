@@ -19,19 +19,16 @@
 
 package network.oxalis.vefa.peppol.lookup.fetcher;
 
-import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
-import network.oxalis.vefa.peppol.lookup.api.LookupException;
+import lombok.extern.slf4j.Slf4j;
+import network.oxalis.vefa.peppol.lookup.api.*;
 import network.oxalis.vefa.peppol.mode.Mode;
 
 import java.io.BufferedInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.URI;
+import java.net.*;
 import java.util.List;
 
+@Slf4j
 public class UrlFetcher extends AbstractFetcher {
 
     public UrlFetcher(Mode mode) {
@@ -39,54 +36,71 @@ public class UrlFetcher extends AbstractFetcher {
     }
 
     @Override
-    public FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException {
-        FetcherResponse fetcherResponse = null;
-        Exception exceptionObj = null;
+    public FetcherResponse fetch(List<URI> uriList) throws LookupException {
 
         if (uriList == null)
-            throw new LookupException("Unable to lookup requested url");
+            throw new LookupException("Provided URI list is null. Cannot perform metadata lookup.");
+
+        LookupException lastException = null;
 
         for (URI uri : uriList) {
             try {
-                fetcherResponse = fetchResponseFromValidUri(uri);
+                FetcherResponse fetcherResponse = fetchResponseFromValidUri(uri);
                 if (fetcherResponse != null) {
-                    exceptionObj = null;
-                    break;
+                    return fetcherResponse;
                 }
-            } catch (FileNotFoundException | LookupException e) {
-                exceptionObj = e;
+            } catch (LookupException e) {
+                log.debug("Error fetching metadata from URI: {}. Exception: {}", uri, e.getMessage());
+                lastException = e;
             }
         }
 
-        if (exceptionObj instanceof FileNotFoundException) {
-            throw new FileNotFoundException();
-        }
-
-        if (exceptionObj instanceof LookupException) {
-            throw new LookupException(exceptionObj.getMessage(), exceptionObj);
-        }
-
-        return fetcherResponse;
+        throw (lastException != null) ? lastException
+                : new LookupException("Could not fetch metadata from any of the provided URIs.");
     }
 
-    private FetcherResponse fetchResponseFromValidUri(URI uri) throws LookupException, FileNotFoundException {
+    private FetcherResponse fetchResponseFromValidUri(URI uri) throws LookupException {
         try {
-            HttpURLConnection urlConnection = getHttpURLConnection(uri);
-            if (urlConnection.getResponseCode() != 200) {
-                return null;
-            }
-
-            return new FetcherResponse(
-                    new BufferedInputStream(urlConnection.getInputStream()),
-                    urlConnection.getHeaderField("X-SMP-Namespace"));
-        } catch (FileNotFoundException e) {
-            throw new FileNotFoundException(uri.toString());
-        } catch (SocketTimeoutException | SocketException e) {
-            throw new LookupException(String.format("Unable to fetch '%s'", uri), e);
+            HttpURLConnection connection = getHttpURLConnection(uri);
+            return handleResponse(uri, connection);
+        } catch (SocketTimeoutException e) {
+            throw new NetworkFailureException("Connection timed out while fetching metadata from URI: " + uri, e);
+        } catch (SocketException e) {
+            throw new NetworkFailureException("Socket error while fetching metadata from URI: " + uri, e);
+        } catch (UnknownHostException e) {
+            throw new NetworkFailureException("SMP not found or cannot be resolved while fetching metadata from URI: " + uri, e);
         } catch (IOException e) {
-            throw new LookupException(e.getMessage(), e);
+            throw new LookupException("I/O error while fetching metadata from URI: " + uri, e);
         }
     }
+
+    private static FetcherResponse handleResponse(URI uri, HttpURLConnection connection) throws IOException, LookupException {
+        int statusCode = connection.getResponseCode();
+        switch (statusCode) {
+            case 200:
+                return new FetcherResponse(new BufferedInputStream(
+                        connection.getInputStream()),
+                        connection.getHeaderField("X-SMP-Namespace")
+                );
+
+            case 404:
+                throw new PeppolResourceException("Participant metadata not found at URI: " + uri);
+
+            case 429:
+                throw new PeppolInfrastructureException("Too many requests to SMP server at URI: " + uri + ". Please retry after some time.");
+
+
+            case 500:
+            case 502:
+            case 503:
+            case 504:
+                throw new PeppolInfrastructureException("SMP server error (HTTP " + statusCode + ") while fetching metadata from URI: " + uri);
+
+            default:
+                throw new LookupException(String.format("Received HTTP status code %s for lookup at URI: %s", statusCode, uri));
+        }
+    }
+
 
     private HttpURLConnection getHttpURLConnection(URI uri) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) uri.toURL().openConnection();

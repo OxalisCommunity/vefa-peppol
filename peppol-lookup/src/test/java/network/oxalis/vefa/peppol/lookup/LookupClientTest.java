@@ -24,7 +24,7 @@ import network.oxalis.vefa.peppol.common.lang.PeppolException;
 import network.oxalis.vefa.peppol.common.model.*;
 import network.oxalis.vefa.peppol.lookup.api.FetcherResponse;
 import network.oxalis.vefa.peppol.lookup.api.LookupException;
-import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
+import network.oxalis.vefa.peppol.lookup.api.PeppolResourceException;
 import network.oxalis.vefa.peppol.lookup.fetcher.ApacheFetcher;
 import network.oxalis.vefa.peppol.lookup.fetcher.UrlFetcher;
 import network.oxalis.vefa.peppol.lookup.locator.BusdoxLocator;
@@ -35,7 +35,6 @@ import org.apache.hc.core5.http.HttpHeaders;
 import org.apache.hc.core5.http.HttpStatus;
 import org.testng.annotations.Test;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -461,7 +460,7 @@ public class LookupClientTest {
         assertNotNull(serviceMetadata);
     }
 
-    @Test(expectedExceptions = NotFoundException.class)
+    @Test(expectedExceptions = PeppolResourceException.class)
     public void noSmp() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
@@ -472,7 +471,7 @@ public class LookupClientTest {
         System.out.println(dti);
     }
 
-    @Test(expectedExceptions = NotFoundException.class)
+    @Test(expectedExceptions = PeppolResourceException.class)
     public void noSmpApache() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
@@ -483,7 +482,7 @@ public class LookupClientTest {
         client.getDocumentIdentifiers(ParticipantIdentifier.of("9908:no-smp"));
     }
 
-    @Test(expectedExceptions = NotFoundException.class)
+    @Test(expectedExceptions = PeppolResourceException.class)
     public void noSml() throws PeppolException {
         LookupClient client =
                 LookupClientBuilder.forMode(testMode)
@@ -565,7 +564,7 @@ public class LookupClientTest {
         }
 
         @Override
-        public FetcherResponse fetch(List<URI> uriFetchList) throws LookupException, FileNotFoundException {
+        public FetcherResponse fetch(List<URI> uriFetchList) throws LookupException {
             List<URI> wireMockUriFetchList = new ArrayList<URI>();
             for (URI uri : uriFetchList) {
                 uriList.add(uri);

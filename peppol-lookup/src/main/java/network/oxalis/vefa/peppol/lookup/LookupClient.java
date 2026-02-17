@@ -29,7 +29,6 @@ import network.oxalis.vefa.peppol.security.api.CertificateValidator;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 
 import javax.security.auth.x500.X500Principal;
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
@@ -52,17 +51,13 @@ public class LookupClient {
         this.validator = builder.certificateValidator;
     }
 
-    public List<ServiceReference> getServiceReferences(ParticipantIdentifier participantIdentifier)
-            throws LookupException {
+    public List<ServiceReference> getServiceReferences(ParticipantIdentifier participantIdentifier) throws LookupException {
         URI location = locator.lookup(participantIdentifier);
         List<URI> serviceReferencesUriList = this.provider.resolveDocumentIdentifiers(location, participantIdentifier);
 
         FetcherResponse fetcherResponse;
-        try {
-            fetcherResponse = fetcher.fetch(serviceReferencesUriList);
-        } catch (FileNotFoundException e) {
-            throw new LookupException(String.format("Receiver (%s) not found.", participantIdentifier.toString()), e);
-        }
+
+        fetcherResponse = fetcher.fetch(serviceReferencesUriList);
 
         return reader.parseServiceGroup(fetcherResponse);
     }
@@ -140,9 +135,8 @@ public class LookupClient {
         try {
             FetcherResponse fetcherResponse = fetcher.fetch(serviceMetaDataUriList);
             return reader.parseServiceMetadata(fetcherResponse);
-        } catch (FileNotFoundException e) {
-            throw new LookupException(String.format(
-                    "Combination of receiver (%s) and document type identifier (%s) is not supported.",
+        } catch (PeppolResourceException e) {
+            throw new PeppolResourceException(String.format("Combination of receiver (%s) and document type identifier (%s) is not supported.",
                     participantIdentifier.toString(), documentTypeIdentifier.toString()), e);
         }
     }
@@ -160,8 +154,7 @@ public class LookupClient {
             return endpoint;
         }
 
-        throw new EndpointNotFoundException(
-                String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));
+        throw new EndpointNotFoundException(String.format("Combination of '%s' and transport profile(s) not found.", processIdentifier));
     }
 
     public Endpoint getEndpoint(ParticipantIdentifier participantIdentifier,
