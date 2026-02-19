@@ -39,6 +39,7 @@
         <module>peppol-publisher</module>
         <module>peppol-sbdh</module>
         <module>peppol-security</module>
+        <module>peppol-mls</module>
     </modules>
 
     <scm>
@@ -191,6 +192,11 @@
             <dependency>
                 <groupId>network.oxalis.peppol</groupId>
                 <artifactId>peppol-sbdh</artifactId>
+                <version>${peppol-lib.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>network.oxalis.peppol</groupId>
+                <artifactId>peppol-ubl21</artifactId>
                 <version>${peppol-lib.version}</version>
             </dependency>
 
