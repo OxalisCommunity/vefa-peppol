@@ -25,7 +25,6 @@ import network.oxalis.vefa.peppol.mode.Mode;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.core5.util.Timeout;
 
-import java.io.FileNotFoundException;
 import java.net.URI;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public abstract class BasicApacheFetcher extends AbstractFetcher {
 
     protected RequestConfig requestConfig;
 
-    public BasicApacheFetcher(Mode mode) {
+    protected BasicApacheFetcher(Mode mode) {
         super(mode);
 
         this.requestConfig = RequestConfig.custom()
@@ -43,6 +42,6 @@ public abstract class BasicApacheFetcher extends AbstractFetcher {
                 .build();
     }
 
-    public abstract FetcherResponse fetch(List<URI> uriList) throws LookupException, FileNotFoundException;
+    public abstract FetcherResponse fetch(List<URI> uriList) throws LookupException;
 
 }
