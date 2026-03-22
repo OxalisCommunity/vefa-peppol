@@ -20,18 +20,23 @@
 package network.oxalis.vefa.peppol.lookup.locator;
 
 import network.oxalis.vefa.peppol.lookup.api.LookupException;
+import network.oxalis.vefa.peppol.lookup.api.NotFoundException;
 import network.oxalis.vefa.peppol.mode.Mode;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 public class BusdoxLocatorTest {
 
-    private BusdoxLocator busdoxLocator = new BusdoxLocator(Mode.of("PRODUCTION"));
+    private final BusdoxLocator busdoxLocator = new BusdoxLocator(Mode.of("PRODUCTION"));
 
     @Test
     public void simple() throws LookupException {
-        assertEquals(busdoxLocator.lookup("0192:991825827").getHost(),
-                "B-9823154777831486f5f30f7f41385a2a.iso6523-actorid-upis.edelivery.tech.ec.europa.eu");
+        try {
+            busdoxLocator.lookup("0192:991825827");
+            fail("Expected Exception - CNAME not supported");
+        } catch (NotFoundException e) {
+            //Expected
+        }
     }
 }
