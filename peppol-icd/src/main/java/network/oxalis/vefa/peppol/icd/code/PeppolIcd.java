@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v9.5 dated 2025-12-23: https://docs.peppol.eu/edelivery/codelists/v9.5/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.5.html
+    // The latest code list release v9.6 dated 2026-04-07: https://docs.peppol.eu/edelivery/codelists/v9.6/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.6.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -50,6 +50,7 @@ public enum PeppolIcd implements Icd {
     NL_OINO("NL:OINO", "0190", "Logius"),
     EE_CC("EE:CC", "0191", "Centre of Registers and Information Systems of the Ministry of Justice"),
     NO_ORG("NO:ORG", "0192", "The Brønnøysund Register Centre"),
+    @Deprecated // Deprecated 0193/UBL.BE Party Identifier and marked for removal as of 7.7.2026.
     UBLBE("UBLBE", "0193", "UBL.BE"),
     SG_UEN("SG:UEN", "0195", "lnfocomm Media Development Authority"),
     IS_KTNR("IS:KTNR", "0196", "Icelandic National Registry"),
@@ -74,6 +75,7 @@ public enum PeppolIcd implements Icd {
     NG_TID("NG:TID", "0244", "Federal Inland Revenue Service Revenue (FIRS)"),
     SK_DIC("SK:DIC", "0245", "The tax office according to the local jurisdiction of the taxpayer. Head office: Financial Directorate of the Slovak Republic Lazovná 63 , Banská Bystrica 974 01 Banská Bystrica Slovakia"),
     DE_GEBA("DE:GEBA", "0246", "Koordinierungsstelle für IT-Standards (KoSIT)"),
+    OM_VAT("OM:VAT", "0248", "Tax Authority, Oman"),
 
     // ICDs created and maintained by OpenPEPPOL
     @Deprecated
@@ -128,9 +130,6 @@ public enum PeppolIcd implements Icd {
     SM_VAT("SM:VAT", "9951", "San Marino VAT number"),
     TR_VAT("TR:VAT", "9952", "Turkey VAT number"),
     VA_VAT("VA:VAT", "9953", "Holy See (Vatican City State) VAT number"),
-
-    @Deprecated // Will be removed per 31.3.2026
-    NL_ION("NL:OIN", "9954", "Dutch Originator's Identification Number"),
 
     FR_VAT("FR:VAT", "9957", "French VAT number"),
     US_EIN("US:EIN", "9959", "US Employer ID Number"),
