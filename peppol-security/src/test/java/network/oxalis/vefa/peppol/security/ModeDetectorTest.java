@@ -39,7 +39,7 @@ public class ModeDetectorTest {
         ModeDetector.detect(certificate).getString("security.pki");
     }
 
-    @Test(enabled = false)
+    @Test
     public void simpleDetectProduction() throws Exception {
         X509Certificate certificate = Validator.getCertificate(getClass().getResourceAsStream("/ap-prod.cer"));
         Assert.assertEquals(ModeDetector.detect(certificate).getString("security.pki"), "/pki/peppol-production.xml");
