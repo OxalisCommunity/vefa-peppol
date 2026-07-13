@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 @Getter
 public enum PeppolIcd implements Icd {
 
-    // The latest code list release v9.6 dated 2026-04-07: https://docs.peppol.eu/edelivery/codelists/v9.6/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.6.html
+    // The latest code list release v9.7 dated 2026-07-02: https://docs.peppol.eu/edelivery/codelists/v9.7/Peppol%20Code%20Lists%20-%20Participant%20identifier%20schemes%20v9.7.html
     // Original Source : http://iso6523.info/icd_list.pdf
 
     // Internationally approved ICDs
@@ -44,6 +44,7 @@ public enum PeppolIcd implements Icd {
     IT_SIA("IT:SIA", "0135", "SIA-Società Interbancaria per l'Automazione S.p.A."),
     IT_SECETI("IT:SECETI", "0142", "Servizi Centralizzati SECETI S.p.A."),
     AU_ABN("AU:ABN", "0151", "Australian Taxation Office"),
+    SK_ICO("SK:ICO", "0158", "Slovak Statistical Office"),
     CH_UIDB("CH:UIDB", "0183", "Swiss Federal Statistical Office (FSO)"),
     DK_DIGST("DK:DIGST", "0184", "The Danish Business Authority"),
     JP_SST("JP:SST", "0188", "National Tax Agency Japan"),
