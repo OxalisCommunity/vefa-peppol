@@ -78,7 +78,7 @@ public class PeppolMLSIntegrityValidatorTest {
     private PartyType createValidParty() {
         PartyType party = new PartyType();
         EndpointIDType endpoint = new EndpointIDType();
-        endpoint.setValue("123456789");
+        endpoint.setValue("000723");
         endpoint.setSchemeID("0242");
         party.setEndpointID(endpoint);
         return party;

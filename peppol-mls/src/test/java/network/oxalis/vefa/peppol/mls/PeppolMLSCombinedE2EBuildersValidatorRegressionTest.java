@@ -84,7 +84,7 @@ public class PeppolMLSCombinedE2EBuildersValidatorRegressionTest extends Abstrac
                         .build();
 
         ApplicationResponseType mls =
-                new PeppolMLSBuilder("12345678", "0242", "87654321", "0242")
+                new PeppolMLSBuilder("000723", "0242", "000724", "0242")
                         .setDocumentResponse(UUID.randomUUID().toString(), MLSResponseCode.RE.getCode(), "Rejected")
                         .addLineResponse(line)
                         .build();
@@ -101,7 +101,7 @@ public class PeppolMLSCombinedE2EBuildersValidatorRegressionTest extends Abstrac
     @Test(expectedExceptions = IllegalStateException.class)
     public void builderShouldNotAllowReuse() {
         PeppolMLSBuilder builder =
-                new PeppolMLSBuilder("12345678", "0242", "87654321", "0242")
+                new PeppolMLSBuilder("000723", "0242", "000721", "0242")
                         .setDocumentResponse(UUID.randomUUID().toString(), MLSResponseCode.AP.getCode(), null);
 
         builder.build();
