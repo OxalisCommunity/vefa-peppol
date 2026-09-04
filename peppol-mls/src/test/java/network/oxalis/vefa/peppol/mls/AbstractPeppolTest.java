@@ -25,8 +25,8 @@ import java.nio.charset.StandardCharsets;
 import static org.testng.Assert.fail;
 
 public abstract class AbstractPeppolTest {
-    protected static final String SENDER_ID = "POP000723";
-    protected static final String RECEIVER_ID = "POP000010";
+    protected static final String SENDER_ID = "000723";
+    protected static final String RECEIVER_ID = "000010";
     protected static final String SCHEME_ID = "0242";
 
     protected String loadXml(String path) throws Exception {

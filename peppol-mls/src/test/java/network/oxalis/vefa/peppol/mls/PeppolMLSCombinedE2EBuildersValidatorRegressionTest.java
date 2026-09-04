@@ -120,7 +120,7 @@ public class PeppolMLSCombinedE2EBuildersValidatorRegressionTest extends Abstrac
 
 
     private ApplicationResponseType buildMinimalValidMLS(String originalSbdhInstanceIdentifier) {
-        return new PeppolMLSBuilder("123456", "0299", "234567", "0299")
+        return new PeppolMLSBuilder("000723", "0242", "000010", "0242")
                 .setDocumentResponse(originalSbdhInstanceIdentifier, MLSResponseCode.RE.getCode(), "Rejected due to validation errors")
                 .build();
     }
@@ -132,7 +132,7 @@ public class PeppolMLSCombinedE2EBuildersValidatorRegressionTest extends Abstrac
                                 MLSStatusReasonCode.BV)
                         .build();
 
-        return new PeppolMLSBuilder("123456", "0299", "234567", "0299")
+        return new PeppolMLSBuilder("000723", "0242", "000010", "0242")
                 .withIdMLS(() -> "MLS-ID123")
                 .withIssueDateMLS(() -> LocalDate.of(2025, 3, 11))
                 .withIssueTimeMLS(() -> OffsetTime.of(LocalTime.of(12, 00, 00), ZoneOffset.UTC))
