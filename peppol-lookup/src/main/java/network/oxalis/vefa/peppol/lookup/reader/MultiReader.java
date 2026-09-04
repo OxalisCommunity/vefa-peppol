@@ -31,6 +31,7 @@ import network.oxalis.vefa.peppol.lookup.api.Namespace;
 import network.oxalis.vefa.peppol.lookup.util.XmlUtils;
 import network.oxalis.vefa.peppol.security.lang.PeppolSecurityException;
 
+import java.util.zip.GZIPInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
@@ -79,6 +80,13 @@ public class MultiReader implements MetadataReader {
         try {
             byte[] fileContent = ByteStreams.toByteArray(fetcherResponse.getInputStream());
 
+            if (isGzip(fileContent)) {
+                try (GZIPInputStream gzip =
+                             new GZIPInputStream(new ByteArrayInputStream(fileContent))) {
+                    fileContent = gzip.readAllBytes();
+                }
+            }
+
             String namespace = XmlUtils.extractRootNamespace(new String(fileContent));
             if (namespace != null)
                 return new FetcherResponse(new ByteArrayInputStream(fileContent), namespace);
@@ -87,5 +95,11 @@ public class MultiReader implements MetadataReader {
         } catch (IOException e) {
             throw new LookupException(e.getMessage(), e);
         }
+    }
+
+    private boolean isGzip(byte[] content) {
+        return content.length >= 2
+                && (content[0] & 0xFF) == 0x1F
+                && (content[1] & 0xFF) == 0x8B;
     }
 }
