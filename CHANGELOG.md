@@ -2,7 +2,8 @@
 
 ## Next release
 
-_Stay tuned._
+* Java 17 is now the minimum required version (compile target raised from 11).
+* Deprecated SHA-1 signing/digest (`XmldsigSigner.SHA1()`, `DigestMethod.SHA1`); use SHA-256.
 
 ## 2.0.2
 * Bump httpclient from 4.5.12 to 4.5.13 : d9e38c457d1d2a9baa17ffdb338906327a7ca25d

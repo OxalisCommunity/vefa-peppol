@@ -60,6 +60,11 @@ public class XmldsigSigner {
         });
     }
 
+    /**
+     * @deprecated SHA-1 is deprecated in Peppol since 2023 (see SMP 1.3.0 impact analysis) and rejected by recent
+     * JDKs. Use {@link #SHA256()} instead.
+     */
+    @Deprecated
     public static XmldsigSigner SHA1() {
         return new XmldsigSigner(DigestMethod.SHA1, SignatureMethod.RSA_SHA1);
     }
